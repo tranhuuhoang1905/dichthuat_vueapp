@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class Admin
+class Leader
 {
     /**
      * Handle an incoming request.
@@ -24,8 +24,8 @@ class Admin
             // ]);
             abort(403, 'Please log in to access this page');
         }
-        elseif(!Auth::user()->hasRole('admin') ) {
-            abort(403, 'Only administrative accounts are authorized. Go back & sign in as admin.');
+        elseif(!Auth::user()->hasRole('admin') and !Auth::user()->hasRole('leader') ) {
+            abort(403, 'Only administrative or leader accounts are authorized. Go back & sign in as admin.');
             // return response()->json([
             //     'type' => 'user-logged',
             //     'msg' => 'Only administrative accounts are authorized. Go back & sign in as admin'
