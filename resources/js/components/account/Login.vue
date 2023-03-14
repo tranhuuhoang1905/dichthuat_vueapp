@@ -11,8 +11,8 @@ export default {
     data() {
         return {
             loginData: {
-                email: 'admin@gmail.com',
-                password: '123456',
+                email: '',
+                password: '',
                 submitted: false
             },
             email: "admin@themesdesign.in",
@@ -68,132 +68,6 @@ export default {
     }
 };
 </script>
-<style lang="scss">
-// @import "~bootstrap/scss/maps";
-// @import "~bootstrap/scss/utilities";
-// @import '../../../../resources/assets/scss/app.scss';
-// @import '~@/app.scss'; 
-.no-gutters {
-    margin-right: 0;
-    margin-left: 0;
-}
-
-.home-btn {
-    position: absolute;
-    top: 15px;
-    right: 25px;
-    z-index: 9;
-}
-
-.bg-overlay {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    top: 0;
-    opacity: 0.7;
-    background-color: #000;
-}
-
-.authentication-page-content {
-    height: 100vh;
-    display: flex;
-}
-
-.authentication-bg .bg-overlay {
-    background-color: #292626;
-}
-
-.authentication-bg {
-    background-image: url('../../../assets/images/authentication-bg.jpg');
-    height: 100vh;
-    background-size: cover;
-    background-position: center;
-}
-
-.col-1,
-.col-2,
-.col-3,
-.col-4,
-.col-5,
-.col-6,
-.col-7,
-.col-8,
-.col-9,
-.col-10,
-.col-11,
-.col-12,
-.col,
-.col-auto,
-.col-sm-1,
-.col-sm-2,
-.col-sm-3,
-.col-sm-4,
-.col-sm-5,
-.col-sm-6,
-.col-sm-7,
-.col-sm-8,
-.col-sm-9,
-.col-sm-10,
-.col-sm-11,
-.col-sm-12,
-.col-sm,
-.col-sm-auto,
-.col-md-1,
-.col-md-2,
-.col-md-3,
-.col-md-4,
-.col-md-5,
-.col-md-6,
-.col-md-7,
-.col-md-8,
-.col-md-9,
-.col-md-10,
-.col-md-11,
-.col-md-12,
-.col-md,
-.col-md-auto,
-.col-lg-1,
-.col-lg-2,
-.col-lg-3,
-.col-lg-4,
-.col-lg-5,
-.col-lg-6,
-.col-lg-7,
-.col-lg-8,
-.col-lg-9,
-.col-lg-10,
-.col-lg-11,
-.col-lg-12,
-.col-lg,
-.col-lg-auto,
-.col-xl-1,
-.col-xl-2,
-.col-xl-3,
-.col-xl-4,
-.col-xl-5,
-.col-xl-6,
-.col-xl-7,
-.col-xl-8,
-.col-xl-9,
-.col-xl-10,
-.col-xl-11,
-.col-xl-12,
-.col-xl,
-.col-xl-auto {
-    position: relative;
-    // padding-right: 12px;
-    // padding-left: 12px;
-}
-
-.no-gutters>.col,
-.no-gutters>[class*=col-] {
-    padding-right: 0;
-    padding-left: 0;
-}
-</style>
 <template>
     <div>
         <div class="home-btn d-none d-sm-block">
@@ -208,12 +82,12 @@ export default {
                         <div class="authentication-page-content p-4 d-flex align-items-center min-vh-100">
                             <div class="w-100">
                                 <div class="row justify-content-center">
-                                    <div class="col-lg-9">
+                                <div class="col-lg-9">
                                         <div>
                                             <div class="text-center">
                                                 <div>
                                                     <a href="/" class="logo">
-                                                        <img src="../../../images/logo-dark.png" height="20" alt="logo" />
+                                                        <img src="/images/logo-dark.png" height="20" alt="logo" />
                                                     </a>
                                                 </div>
 
@@ -264,7 +138,8 @@ export default {
                                                     </div>
 
                                                     <div class="mt-4 text-center">
-                                                        <router-link tag="a" to="/forgot-password" class="text-muted">
+                                                        <!-- tag="a" -->
+                                                        <router-link to="/forgot-password" class="text-muted">
                                                             <i class="mdi mdi-lock mr-1"></i> Forgot your password?
                                                         </router-link>
                                                     </div>
@@ -274,8 +149,10 @@ export default {
                                             <div class="mt-5 text-center">
                                                 <p>
                                                     Don't have an account ?
-                                                    <router-link tag="a" to="/register"
-                                                        class="font-weight-medium text-primary">Register</router-link>
+                                                    <!-- tag="a" -->
+                                                    <a href="/register" class="font-weight-medium text-primary">Đăng ký</a>
+                                                    <!-- <router-link :to="{ name: 'register' }"
+                                                            class="font-weight-medium text-primary">Register</router-link> -->
                                                 </p>
                                                 <p>
                                                     © 2020 Nazox. Crafted with

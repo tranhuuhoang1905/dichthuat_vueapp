@@ -32,12 +32,19 @@ export const routes = [
 
     { name: 'languages', path: '/admin/languages', component: AllLanguages },
     { name: 'add-language', path: '/admin/language/add', component: AddLanguage },
-    { name: 'edit-language', path: '/admin/language/edit/:id', component: EditLanguage },
-    {
-        path: '/register',
-        name: 'register',
-        component: Register
-    },
+    { name: 'edit-language', path: '/admin/language/edit/:id', component: EditLanguage }
+    // ,
+    // {
+    //     path: '/register',
+    //     name: 'register',
+    //     component: Register
+    // }
+    // ,
+    // {
+    //     path: '/login',
+    //     name: 'login',
+    //     component: Login
+    // }
 ];
 const router = createRouter({
     history: createWebHistory(),

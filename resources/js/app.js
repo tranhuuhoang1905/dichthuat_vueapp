@@ -14,6 +14,7 @@ import router from './router/index';
 import VueAxios from 'vue-axios';
 import axios from 'axios';
 import { store } from './store/store';
+import '../css/account.css'
 // import "../assets/scss/app.scss"; 
 // console.log(router.push);
 const app = createApp(App);

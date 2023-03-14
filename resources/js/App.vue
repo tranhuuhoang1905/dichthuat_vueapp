@@ -1,7 +1,11 @@
 <template>
     <!-- <router-view></router-view> -->
-    <div v-if="$route.path == '/'">
+    <div v-if="$route.path === '/' || $route.path === '/login'">
         <login />
+    </div>
+    <!-- <router-view></router-view> -->
+    <div v-else-if="$route.path == '/register'">
+        <register />
     </div>
     <!-- <div style="" class="d-flex unauthorized" v-else>
         <admin />
@@ -21,13 +25,13 @@
 </template>
 <script>
 import login from './components/account/Login.vue';
-// import register from './components/account/Register.vue';
+import register from './components/account/Register.vue';
 import NavbarView from './components/backend/view/NavBarView.vue'
 export default {
     components: {
         login,
         NavbarView,
-        // register
+        register
     },
     computed: {
         loginResponse() {
