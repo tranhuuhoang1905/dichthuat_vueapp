@@ -1,11 +1,11 @@
 <template>
-    <!-- <router-view></router-view> -->
-    <div v-if="$route.path == '/'">
+    <router-view></router-view>
+    <!-- <div v-if="$route.path == '/'">
         <login />
     </div>
     <div style="" class="d-flex unauthorized" v-else>
         <admin />
-    </div>
+    </div> -->
 </template>
 <script> 
     import login from './components/account/Login.vue';
