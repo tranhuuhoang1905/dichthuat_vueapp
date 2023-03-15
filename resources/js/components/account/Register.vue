@@ -1,5 +1,6 @@
 <script>
-// import { required, email } from "vuelidate/lib/validators";
+import { required, email } from "vuelidate/lib/validators";
+import { mapGetters, mapMutations, mapActions } from 'vuex';
 // import {
 //   authMethods,
 //   authFackMethods,
@@ -7,101 +8,73 @@
 // } from "@/state/helpers";
 export default {
   data() {
-    // return {
-    //   user: { username: "", email: "", password: "" },
-    //   submitted: false,
-    //   regError: null,
-    //   tryingToRegister: false,
-    //   isRegisterError: false,
-    //   registerSuccess: false
-    // };
+    return {
+      registerData: {
+        username: '',
+        email: '',
+        password: '',
+        repassword: ''
+      },
+    };
   },
-  //   computed: {
-  //     notification() {
-  //       return this.$store ? this.$store.state.notification : null;
-  //     }
-  //   },
-  //   validations: {
-  //     user: {
-  //       username: { required },
-  //       email: { required, email },
-  //       password: { required }
-  //     }
-  //   },
-  //   created() {
-  //     document.body.classList.add("auth-body-bg");
-  //   },
-  //   methods: {
-  //     ...authMethods,
-  //     ...authFackMethods,
-  //     ...notificationMethods,
-  //     // Try to register the user in with the email, username
-  //     // and password they provided.
-  //     tryToRegisterIn() {
-  //       this.submitted = true;
-  //       // stop here if form is invalid
-  //       this.$v.$touch();
-
-  //       if (this.$v.$invalid) {
-  //         return;
-  //       } else {
-  //         if (process.env.VUE_APP_DEFAULT_AUTH === "firebase") {
-  //           this.tryingToRegister = true;
-  //           // Reset the regError if it existed.
-  //           this.regError = null;
-  //           return (
-  //             this.register({
-  //               email: this.user.email,
-  //               password: this.user.password
-  //             })
-  //               // eslint-disable-next-line no-unused-vars
-  //               .then(token => {
-  //                 this.tryingToRegister = false;
-  //                 this.isRegisterError = false;
-  //                 this.registerSuccess = true;
-  //                 if (this.registerSuccess) {
-  //                   this.$router.push(
-  //                     this.$route.query.redirectFrom || { name: "home" }
-  //                   );
-  //                 }
-  //               })
-  //               .catch(error => {
-  //                 this.tryingToRegister = false;
-  //                 this.regError = error ? error : "";
-  //                 this.isRegisterError = true;
-  //               })
-  //           );
-  //         } else {
-  //           const { email, username, password } = this.user;
-  //           if (email && username && password) {
-  //             this.registeruser(this.user);
-  //           }
-  //         }
-  //       }
-  //     }
-  //   }
+  computed: {
+    ...mapGetters({
+      // registerResponse: 'getRegisterResponse',
+      loginResponse: 'getLoginResponse',
+      // getUser: 'getUser',
+      // getAge: 'getAge',
+    })
+  },
+  validations: {
+    registerData: {
+      username: { required },
+      email: { required, email },
+      password: { required },
+      repassword: { required }
+    }
+  },
+  created() {
+    document.body.classList.add("auth-body-bg");
+  },
+  methods: {
+    // ...authMethods,
+    // ...authFackMethods,
+    // ...notificationMethods,
+    // Try to register the user in with the email, username
+    // and password they provided.
+    ...mapActions(['registeruser']),
+    tryToRegisterIn() {
+      const { email, username, password, repassword } = this.registerData;
+      if (email && username && password && repassword) {
+        this.registeruser(this.registerData);
+      }
+    }
+  },
+  mounted() {
+    console.log(this.loginResponse)
+  }
 };
 </script>
 
 <template>
   <div>
-  <div class="home-btn d-none d-sm-block">
-    <a href="/">
-      <i class="mdi mdi-home-variant h2 text-white"></i>
-    </a>
-  </div>
-  <div>
-    <div class="container-fluid p-0">
-      <div class="row no-gutters">
-        <div class="col-lg-4">
-          <div class="authentication-page-content p-4 d-flex align-items-center min-vh-100">
-            <div class="w-100">
-              <div class="row justify-content-center">
-                <div class="col-lg-9">
-                  <div>
-                    <div class="text-center">
-                      <div>
-                        <a href="/" class="logo">
+    <div class="home-btn d-none d-sm-block">
+      <a href="/">
+        <i class="mdi mdi-home-variant h2 text-white"></i>
+      </a>
+    </div>
+    <div>
+      <div class="container-fluid p-0">
+        <div class="row no-gutters">
+          <div class="col-lg-4">
+            <div class="authentication-page-content p-4 d-flex align-items-center min-vh-100">
+              <div class="w-100">
+                <div class="row justify-content-center">
+                  <div class="col-lg-9">
+                    <div>
+                      <div class="text-center">
+                        <div>
+                          <a href="/" class="logo">
                             <img src="/images/logo-dark.png" height="20" alt="logo" />
                           </a>
                         </div>
@@ -113,98 +86,36 @@ export default {
                       </div>
 
                       <div class="p-2 mt-5">
-                        <!-- <b-alert
-                              v-model="registerSuccess"
-                              class="mt-3"
-                              variant="success"
-                              dismissible
-                              >Registration successfull.</b-alert
-                            > -->
-
-                        <!-- <b-alert
-                                  v-model="isRegisterError"
-                                  class="mt-3"
-                                  variant="danger"
-                                  dismissible
-                                >{{regError}}</b-alert>
-
-                                <b-alert
-                                  variant="danger"
-                                  class="mt-3"
-                                  v-if="notification.message"
-                                  show
-                                  dismissible
-                                >{{notification.message}}</b-alert> -->
 
                         <form class="form-horizontal" @submit.prevent="tryToRegisterIn">
-                          <!-- <div class="form-group auth-form-group-custom mb-4">
-                                    <i class="ri-user-2-line auti-custom-input-icon"></i>
-                                    <label for="username">Username</label>
-                                    <input
-                                      v-model="user.username"
-                                      type="text"
-                                      class="form-control"
-                                      id="username"
-                                      :class="{ 'is-invalid': submitted && $v.user.username.$error }"
-                                      placeholder="Enter username"
-                                    />
-                                    <div
-                                      v-if="submitted && !$v.user.username.required"
-                                      class="invalid-feedback"
-                                    >Username is required.</div>
-                                  </div>
-
-                                  <div class="form-group auth-form-group-custom mb-4">
-                                    <i class="ri-mail-line auti-custom-input-icon"></i>
-                                    <label for="useremail">Email</label>
-                                    <input
-                                      v-model="user.email"
-                                      type="email"
-                                      class="form-control"
-                                      id="useremail"
-                                      placeholder="Enter email"
-                                      :class="{ 'is-invalid': submitted && $v.user.email.$error }"
-                                    />
-                                    <div v-if="submitted && $v.user.email.$error" class="invalid-feedback">
-                                      <span v-if="!$v.user.email.required">Email is required.</span>
-                                      <span v-if="!$v.user.email.email">Please enter valid email.</span>
-                                    </div>
-                                  </div>
-
-                                  <div class="form-group auth-form-group-custom mb-4">
-                                    <i class="ri-lock-2-line auti-custom-input-icon"></i>
-                                    <label for="userpassword">Password</label>
-                                    <input
-                                      v-model="user.password"
-                                      type="password"
-                                      class="form-control"
-                                      id="userpassword"
-                                      placeholder="Enter password"
-                                      :class="{ 'is-invalid': submitted && $v.user.password.$error }"
-                                    />
-                                    <div
-                                      v-if="submitted && !$v.user.password.required"
-                                      class="invalid-feedback"
-                                    >Password is required.</div>
-                                  </div> -->
                           <div class="form-group auth-form-group-custom mb-4">
                             <i class="ri-user-2-line auti-custom-input-icon"></i>
                             <label for="username">Username</label>
-                            <input type="text" class="form-control" id="username" placeholder="Enter username" />
+                            <input v-model="registerData.username" type="text" class="form-control" id="username"
+                              placeholder="Enter username" />
 
                           </div>
 
                           <div class="form-group auth-form-group-custom mb-4">
                             <i class="ri-mail-line auti-custom-input-icon"></i>
                             <label for="useremail">Email</label>
-                            <input type="email" class="form-control" id="useremail" placeholder="Enter email" />
+                            <input v-model="registerData.email" type="email" class="form-control" id="useremail"
+                              placeholder="Enter email" />
 
                           </div>
 
                           <div class="form-group auth-form-group-custom mb-4">
                             <i class="ri-lock-2-line auti-custom-input-icon"></i>
                             <label for="userpassword">Password</label>
-                            <input type="password" class="form-control" id="userpassword" placeholder="Enter password" />
+                            <input v-model="registerData.password" type="password" class="form-control" id="userpassword"
+                              placeholder="Enter password" />
+
+                          </div>
+                          <div class="form-group auth-form-group-custom mb-4">
+                            <i class="ri-lock-2-line auti-custom-input-icon"></i>
+                            <label for="userpassword">Repassword</label>
+                            <input v-model="registerData.repassword" type="password" class="form-control"
+                              id="userrepassword" placeholder="Enter repassword" />
 
                           </div>
 

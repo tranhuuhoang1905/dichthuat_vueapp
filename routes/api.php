@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\LanguagesController;
 use App\Http\Controllers\API\WordsController;
+use App\Http\Controllers\API\TranslateController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -23,9 +24,10 @@ use App\Http\Controllers\API\WordsController;
 //     Route::post('login', 'App\Http\Controllers\API\AuthController@login');
 // });
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/register', [AuthController::class, 'register']);
 
 
-Route::post('/languages', [LanguagesController::class, 'index'])->middleware('auth:sanctum','leader');
+Route::post('/languages', [LanguagesController::class, 'index'])->middleware('auth:sanctum');
 Route::group(['prefix' => 'language','middleware' => ['auth:sanctum', 'admin']], function () {
     Route::post('add', [LanguagesController::class, 'add']);
     Route::get('edit/{id}', [LanguagesController::class, 'edit']);
@@ -34,7 +36,8 @@ Route::group(['prefix' => 'language','middleware' => ['auth:sanctum', 'admin']],
     Route::delete('delete/{id}', [LanguagesController::class, 'delete']);
 });
 
-Route::post('/words', [WordsController::class, 'index'])->middleware('auth:sanctum','leader');
+Route::post('/words', [WordsController::class, 'index'])->middleware('auth:sanctum');
+
 // Route::group(['prefix' => 'word','middleware' => ['auth:sanctum', 'leader']], function () {
 Route::group(['prefix' => 'word'], function () {
     Route::post('add', [WordsController::class, 'add']);
@@ -43,6 +46,10 @@ Route::group(['prefix' => 'word'], function () {
     Route::post('update/{id}', [WordsController::class, 'update']);
     //người có role:admin mới có quyền truy cập link api/posts/delete 
     Route::delete('delete/{id}', [WordsController::class, 'delete']);
+});
+
+Route::group(['prefix' => 'translate'], function () {
+    Route::post('/search', [TranslateController::class, 'search']);
 });
 Route::group(['middleware' => ['auth:sanctum']], function() {
     // Route::get('/logout', [LanguagesController::class, 'index']);

@@ -152,7 +152,7 @@ export default {
                                                     <!-- tag="a" -->
                                                     <a href="/register" class="font-weight-medium text-primary">Đăng ký</a>
                                                     <!-- <router-link :to="{ name: 'register' }"
-                                                                            class="font-weight-medium text-primary">Register</router-link> -->
+                                                                                class="font-weight-medium text-primary">Register</router-link> -->
                                                 </p>
                                                 <p>
                                                     © 2020 Nazox. Crafted with

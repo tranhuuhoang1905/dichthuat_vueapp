@@ -46,11 +46,6 @@ export default {
         }
     },
     created() {
-        //console.log(this.axios.get('/api/languages'));
-        // exit();
-        // const userJson = localStorage.getItem('user');
-        // const user = JSON.parse(userJson);
-        console.log(this.authUser)
         this.axios
             .post('/api/languages')
             .then(response => {
