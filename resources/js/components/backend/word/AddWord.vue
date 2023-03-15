@@ -45,7 +45,7 @@ export default {
     methods: {
         addWord() {
             this.axios
-                .post('http://localhost:8000/api/word/add', this.word)
+                .post('/api/word/add', this.word)
                 .then(response => {
                     console.log(response.data);
                     this.$router.push({ name: 'words' });

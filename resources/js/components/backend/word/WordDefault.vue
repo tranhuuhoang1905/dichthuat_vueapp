@@ -26,7 +26,7 @@ export default {
     },
     created() {
         this.axios
-            .get(`http://localhost:8000/api/word/default/${this.$route.params.id}`)
+            .get(`/api/word/default/${this.$route.params.id}`)
             .then((response) => {
                 this.word = response.data.word_info;
                 this.translates = response.data.translates;

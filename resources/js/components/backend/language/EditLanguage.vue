@@ -28,7 +28,7 @@ export default {
     },
     created() {
         this.axios
-            .get(`http://localhost:8000/api/language/edit/${this.$route.params.id}`)
+            .get(`/api/language/edit/${this.$route.params.id}`)
             .then((response) => {
                 this.language = response.data;
                 // console.log(response.data);
@@ -37,7 +37,7 @@ export default {
     methods: {
         updateLanguage() {
             this.axios
-                .post(`http://localhost:8000/api/language/update/${this.$route.params.id}`, this.language)
+                .post(`/api/language/update/${this.$route.params.id}`, this.language)
                 .then((response) => {
                     this.$router.push({ name: 'languages' });
                 });

@@ -28,7 +28,7 @@ export default {
     },
     created() {
         this.axios
-            .get(`http://localhost:8000/api/word/edit/${this.$route.params.id}`)
+            .get(`/api/word/edit/${this.$route.params.id}`)
             .then((response) => {
                 this.word = response.data;
                 // console.log(response.data);
@@ -37,7 +37,7 @@ export default {
     methods: {
         updateWord() {
             this.axios
-                .post(`http://localhost:8000/api/word/update/${this.$route.params.id}`, this.word)
+                .post(`/api/word/update/${this.$route.params.id}`, this.word)
                 .then((response) => {
                     this.$router.push({ name: 'words' });
                 });

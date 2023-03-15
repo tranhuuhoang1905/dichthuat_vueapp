@@ -46,13 +46,13 @@ export default {
         }
     },
     created() {
-        //console.log(this.axios.get('http://localhost:8000/api/languages'));
+        //console.log(this.axios.get('/api/languages'));
         // exit();
         // const userJson = localStorage.getItem('user');
         // const user = JSON.parse(userJson);
         console.log(this.authUser)
         this.axios
-            .post('http://localhost:8000/api/languages')
+            .post('/api/languages')
             .then(response => {
                 this.languages = response.data;
                 console.log(response.data);
@@ -61,7 +61,7 @@ export default {
     },
     methods: {
         deleteLanguage(id) {
-            this.axios.delete(`http://localhost:8000/api/language/delete/${id}`, {
+            this.axios.delete(`/api/language/delete/${id}`, {
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',

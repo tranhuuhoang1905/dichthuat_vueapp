@@ -29,7 +29,7 @@ export default {
     methods: {
         addLanguage() {
             this.axios
-                .post('http://localhost:8000/api/language/add', this.language)
+                .post('/api/language/add', this.language)
                 .then(response => (
                     this.$router.push({ name: 'languages' })
                     // console.log(response.data)

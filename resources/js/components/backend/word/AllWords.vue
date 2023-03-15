@@ -48,13 +48,13 @@ export default {
         }
     },
     created() {
-        //console.log(this.axios.get('http://localhost:8000/api/words'));
+        //console.log(this.axios.get('/api/words'));
         // exit();
         // const userJson = localStorage.getItem('user');
         // const user = JSON.parse(userJson);
         console.log(this.authUser)
         this.axios
-            .post('http://localhost:8000/api/words')
+            .post('/api/words')
             .then(response => {
                 this.words = response.data;
                 console.log(response.data);
@@ -63,7 +63,7 @@ export default {
     },
     methods: {
         deleteWord(id) {
-            this.axios.delete(`http://localhost:8000/api/word/delete/${id}`, {
+            this.axios.delete(`/api/word/delete/${id}`, {
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
