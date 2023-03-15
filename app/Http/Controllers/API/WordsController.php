@@ -23,14 +23,20 @@ class WordsController extends Controller
     // add word
     public function add(Request $request)
     {
-        $word = new Words([
-            'word' => $request->input('word'),
-            'language_id' => $request->input('language_id'),
-            'description' => $request->input('description')
-        ]);
-        $word->save();
+        $word = Words::updateOrCreate(
+            ['word' => $request->input('word'), 'language_id' => $request->input('language_id')],
+            ['word' => $request->input('word'), 'language_id' => $request->input('language_id')]
+        );
+        
         $wordId = $word->id;
 
+        $translationWord = TranslationWord::where('word_id', $wordId)
+        ->where('language_id', $request->input('language_translate_id'))
+        ->where('translate', $request->input('translate'))
+        ->first();
+        if($translationWord){
+            return response()->json('Translated word already exists');
+        }
         $translationWord = new TranslationWord([
             'word_id' => $wordId,
             'language_id' => $request->input('language_translate_id'),
@@ -39,7 +45,27 @@ class WordsController extends Controller
         ]);
         $translationWord->save();
 
-        return response()->json('The new word successfully added');
+        // lưu chéo ngược lại
+        $wordSecond = Words::updateOrCreate(
+            ['word' => $request->input('translate'), 'language_id' => $request->input('language_translate_id')],
+            ['word' => $request->input('translate'), 'language_id' => $request->input('language_translate_id')]
+        );
+        $wordSecondId = $wordSecond->id;
+        $translationWordSecond = TranslationWord::where('word_id', $wordSecondId)
+        ->where('language_id', $request->input('language_id'))
+        ->where('translate', $request->input('word'))
+        ->first();
+        // return response()->json(['msg' =>'The new word successfully added','test'=>$translationWordSecond]);
+        if(!$translationWordSecond){
+            $translationWordSecond = new TranslationWord([
+                'word_id' => $wordSecondId,
+                'language_id' => $request->input('language_id'),
+                'description' => $request->input('description'),
+                'translate' => $request->input('word')
+            ]);
+            $translationWordSecond->save();
+        }
+        return response()->json(['msg' =>'The new word successfully added','test'=>$translationWordSecond]);
     }
     // edit word
     public function default($id)

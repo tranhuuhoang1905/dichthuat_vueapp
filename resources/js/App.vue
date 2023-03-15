@@ -10,7 +10,7 @@
     <!-- <div style="" class="d-flex unauthorized" v-else>
         <admin />
     </div> -->
-    <div style="" class="d-flex unauthorized" v-else-if="
+    <div style="" v-else-if="
         !loginResponse.authenticated">
         <login />
     </div>

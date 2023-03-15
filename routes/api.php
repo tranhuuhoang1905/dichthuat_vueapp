@@ -35,7 +35,8 @@ Route::group(['prefix' => 'language','middleware' => ['auth:sanctum', 'admin']],
 });
 
 Route::post('/words', [WordsController::class, 'index'])->middleware('auth:sanctum','leader');
-Route::group(['prefix' => 'word','middleware' => ['auth:sanctum', 'leader']], function () {
+// Route::group(['prefix' => 'word','middleware' => ['auth:sanctum', 'leader']], function () {
+Route::group(['prefix' => 'word'], function () {
     Route::post('add', [WordsController::class, 'add']);
     Route::get('edit/{id}', [WordsController::class, 'edit']);
     Route::get('default/{id}', [WordsController::class, 'default']);
