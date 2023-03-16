@@ -20,15 +20,9 @@
                                 <label>Language</label>
                                 <select class="form-select" aria-label="Default select example" v-model="word.language_id"
                                     required>
-                                    <!-- <option value="-1" selected>Open this select menu</option> -->
                                     <option v-for="(language, index) in languages" :key="language.id"
                                         :value="`${language.id}`">{{ language.name }}</option>
-                                    <!-- <option value="2">Two</option>
-                            <option value="3">Three</option> -->
                                 </select>
-
-                                <!-- <label>Language Id</label>
-                        <input type="text" class="form-control" v-model="word.language_id"> -->
                             </div>
                         </div>
 

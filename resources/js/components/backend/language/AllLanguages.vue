@@ -26,7 +26,7 @@
                             <router-link :to="{ name: 'edit-language', params: { id: language.id } }"
                                 class="btn btn-primary">Edit
                             </router-link>
-                            <button class="btn btn-danger" @click="deleteLanguage(language.id)">Delete</button>
+                            <!-- <button class="btn btn-danger" @click="deleteLanguage(language.id)">Delete</button> -->
                         </div>
                     </td>
                 </tr>

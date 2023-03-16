@@ -31,6 +31,7 @@ Route::post('/languages', [LanguagesController::class, 'index'])->middleware('au
 Route::group(['prefix' => 'language','middleware' => ['auth:sanctum', 'admin']], function () {
     Route::post('add', [LanguagesController::class, 'add']);
     Route::get('edit/{id}', [LanguagesController::class, 'edit']);
+
     Route::post('update/{id}', [LanguagesController::class, 'update']);
     //người có role:admin mới có quyền truy cập link api/posts/delete 
     Route::delete('delete/{id}', [LanguagesController::class, 'delete']);
@@ -42,6 +43,7 @@ Route::post('/words', [WordsController::class, 'index'])->middleware('auth:sanct
 Route::group(['prefix' => 'word'], function () {
     Route::post('add', [WordsController::class, 'add']);
     Route::get('edit/{id}', [WordsController::class, 'edit']);
+    Route::get('alldata/{id}', [WordsController::class, 'alldata']);
     Route::get('default/{id}', [WordsController::class, 'default']);
     Route::post('update/{id}', [WordsController::class, 'update']);
     //người có role:admin mới có quyền truy cập link api/posts/delete 
@@ -50,6 +52,8 @@ Route::group(['prefix' => 'word'], function () {
 
 Route::group(['prefix' => 'translate'], function () {
     Route::post('/search', [TranslateController::class, 'search']);
+    Route::get('edit/{id}', [TranslateController::class, 'edit']);
+    Route::post('update/{id}', [TranslateController::class, 'update']);
 });
 Route::group(['middleware' => ['auth:sanctum']], function() {
     // Route::get('/logout', [LanguagesController::class, 'index']);

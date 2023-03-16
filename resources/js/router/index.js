@@ -11,7 +11,8 @@ import AllWords from '../components/backend/word/AllWords.vue';
 import AddWord from '../components/backend/word/AddWord.vue';
 import EditWord from '../components/backend/word/EditWord.vue';
 import WordDefault from '../components/backend/word/WordDefault.vue';
-import Translate from '../components/backend/word/Translate.vue';
+import Translate from '../components/backend/translate/Translate.vue';
+import EditTranslate from '../components/backend/translate/EditTranslate.vue';
 // import Login from '../../views/pages/account/login.vue';
 export const routes = [
     {
@@ -29,11 +30,15 @@ export const routes = [
     { name: 'add-word', path: '/admin/word/add', component: AddWord },
     { name: 'edit-word', path: '/admin/word/edit/:id', component: EditWord },
     { name: 'word-default', path: '/admin/word/default/:id', component: WordDefault },
-    { name: 'translate', path: '/admin/word/translate', component: Translate },
+
+    { name: 'translate', path: '/admin/translate', component: Translate },
+    { name: 'edit-translate', path: '/admin/translate/edit/:id', component: EditTranslate },
 
     { name: 'languages', path: '/admin/languages', component: AllLanguages },
     { name: 'add-language', path: '/admin/language/add', component: AddLanguage },
-    { name: 'edit-language', path: '/admin/language/edit/:id', component: EditLanguage }
+    { name: 'edit-language', path: '/admin/language/edit/:id', component: EditLanguage },
+
+    // { name: 'edit-translate', path: '/admin/translate/edit/:id', component: EditTranslate },
     // ,
     // {
     //     path: '/register',

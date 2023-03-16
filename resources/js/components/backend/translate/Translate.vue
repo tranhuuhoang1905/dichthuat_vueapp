@@ -65,9 +65,6 @@ export default {
     },
     methods: {
         searchAction() {
-            console.log("------------");
-            console.log(this.search_data);
-            console.log("------------");
             this.axios
                 .post('/api/translate/search', this.search_data)
                 .then(response => {

@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\API;
  
 use App\Http\Controllers\Controller;
-
+use App\Models\Languages;
 use App\Models\Words;
 use App\Models\TranslationWord;
- 
 use Illuminate\Http\Request;
  
 use Validator;
@@ -83,22 +82,64 @@ class WordsController extends Controller
         ];
         return response()->json($dataRep);
     }
+
+    // edit word
+    public function alldata($id)
+    {
+        $word = Words::join('languages', 'words.language_id', '=', 'languages.id')
+             ->select('words.*', 'languages.name as language')
+             ->where('words.id', $id)
+             ->first();
+        // $TranslationWords = TranslationWord::where('id', $id)->get()->toArray();
+        // $word = Words::where('language_id', $request->input('language_id'))
+        // ->where('word', $request->input('key_word'))
+        // ->first();
+        if(!$word){
+            return response()->json([]);
+        }
+        // $TranslationWords = TranslationWord::where('id', $id)->get()->toArray();
+        $Translates = TranslationWord::join('languages', 'translation_word.language_id', '=', 'languages.id')
+            ->select('languages.name as language', 'translation_word.*')
+            ->where('translation_word.word_id', $word->id)
+            ->get()
+            ->toArray();
+        // $dataRep = [
+        //     'word_info' =>$word,
+        //     'translates' => $TranslationWords 
+        // ];
+        $languages = Languages::all()->toArray();
+        return response()->json([
+            'languages'=>$languages,
+            'translates' => $Translates,
+            'word_default' => $word
+        ]);
+        return response()->json($dataRep);
+    }
+    
  
-    // // edit word
-    // public function edit($id)
-    // {
-    //     $language = Languages::find($id);
-    //     return response()->json($language);
-    // }
+    // edit word
+    public function edit($id)
+    {
+        $word = Words::join('languages', 'words.language_id', '=', 'languages.id')
+             ->select('words.*', 'languages.name as language')
+             ->where('words.id', $id)
+             ->first();
+
+             $languages = Languages::all()->toArray();
+        return response()->json([
+            'word'=>$word,
+            'languages'=>$languages
+        ]);
+    }
  
-    // // update language
-    // public function update($id, Request $request)
-    // {
-    //     $language = Languages::find($id);
-    //     $language->update($request->all());
+    // update language
+    public function update($id, Request $request)
+    {
+        $word = Words::find($id);
+        $word->update($request->all());
  
-    //     return response()->json('The language successfully updated');
-    // }
+        return response()->json('The language successfully updated');
+    }
  
     // // delete language
     // public function delete($id)
