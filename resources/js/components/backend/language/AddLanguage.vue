@@ -6,11 +6,12 @@
                 <form @submit.prevent="addLanguage">
                     <div class="form-group">
                         <label>Language name</label>
-                        <input type="text" class="form-control" v-model="language.name">
+                        <input type="text" placeholder="Enter language name" class="form-control" v-model="language.name">
                     </div>
                     <div class="form-group">
                         <label>Description</label>
-                        <input type="text" class="form-control" v-model="language.description">
+                        <input type="text" placeholder="Enter description" class="form-control"
+                            v-model="language.description">
                     </div>
                     <button type="submit" class="btn btn-primary">Add Language</button>
                 </form>

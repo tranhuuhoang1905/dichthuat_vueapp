@@ -10,7 +10,13 @@ var path = require('path');
  | file for the application as well as bundling up all the JS files.
  |
  */
-
+mix.webpackConfig({
+    resolve: {
+        alias: {
+            '@resources': path.resolve(__dirname, 'resources/')
+        }
+    }
+});
 mix.js("resources/js/app.js", "public/js")
     .vue()
     .webpackConfig({
@@ -29,10 +35,13 @@ mix.js("resources/js/app.js", "public/js")
             ]
         },
         resolve: {
-           alias: {
-             '@': path.resolve('resources/assets/sass')
-           }
-         }
+            alias: {
+                '@': path.resolve('resources/assets/sass')
+            },
+            alias: {
+                '@resources': path.resolve(__dirname, 'resources/')
+            }
+        }
     })
     // .sass('resources/assets/sass/app.scss', 'public/css')
     .postCss("resources/css/app.css", "public/css", [

@@ -22,16 +22,70 @@
         <br />
         <router-view></router-view>
     </div>
+
+
+    <!-- <div v-else> -->
+    <!-- <Layout> -->
+    <!-- <PageHeader :title="title" :items="items" />
+            <div class="row">
+            <div class="col-xl-8">
+                <Stat />
+                <RevenueAnalytics />
+            </div>
+            <div class="col-xl-4">
+                <SalesAnalytics />
+                <EarningReport />
+            </div>
+            </div>
+            <div class="row">
+            <div class="col-lg-4">
+                <Sources />
+            </div>
+            <div class="col-lg-4">
+                <RecentActivity />
+            </div>
+            <div class="col-lg-4">
+                <RevenueLocation />
+            </div>
+            </div>
+            <div class="row">
+            <div class="col-lg-4">
+                <Chat />
+            </div>
+            <div class="col-lg-8">
+                <Transaction />
+            </div>
+            </div> -->
+    <!-- </Layout> -->
+    <!-- </div> -->
 </template>
 <script>
 import login from './components/account/Login.vue';
 import register from './components/account/Register.vue';
 import NavbarView from './components/backend/view/NavBarView.vue'
+// import rightSidebar from './components/layouts/right-sidebar.vue'
+
+import Layout from "./components/layouts/horizontal.vue";
 export default {
     components: {
         login,
         NavbarView,
-        register
+        register,
+        Layout
+    },
+    data() {
+        return {
+            title: "Dashboard",
+            items: [
+                {
+                    text: "Nazox"
+                },
+                {
+                    text: "Dashboard",
+                    active: true
+                }
+            ]
+        };
     },
     computed: {
         loginResponse() {
@@ -67,6 +121,7 @@ export default {
             }
             return JSON.parse(sessionStorage.getItem('authUser'));
         },
+
     },
     mounted() {
         // console.log(this.loginResponse)
