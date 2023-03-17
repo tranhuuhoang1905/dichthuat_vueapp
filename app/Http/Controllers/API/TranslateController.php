@@ -56,6 +56,7 @@ class TranslateController extends Controller
             ->leftJoin(DB::raw('(SELECT MIN(id) AS min_id, word_id FROM translation_word GROUP BY word_id) AS min_tw'), 'words.id', '=', 'min_tw.word_id')
             ->leftJoin('translation_word AS tw', 'min_tw.min_id', '=', 'tw.id')
             ->where('words.word', 'like', '%' . $word . '%')
+            ->where('words.word', '!=', $word)
             ->take(10)
             ->get()
             ->toArray();
