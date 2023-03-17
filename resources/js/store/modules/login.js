@@ -34,7 +34,7 @@ const actions = {
                                     'authUser',
                                     JSON.stringify(response.data)
                                 );
-                                Router.push('/admin');
+                                Router.push('/admin/translate');
                             }
                         });
                     }
@@ -80,7 +80,7 @@ const actions = {
                                     'authUser',
                                     JSON.stringify(response.data)
                                 );
-                                Router.push('/admin');
+                                Router.push('/admin/translate');
                             }
                         });
                     }

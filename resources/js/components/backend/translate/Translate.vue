@@ -1,5 +1,5 @@
 <template>
-    <div class="container-xl">
+    <div class="container-xl translate">
         <h3 class="text-center">Search</h3>
         <div class="">
             <form class="" @submit.prevent="searchAction">
@@ -22,22 +22,52 @@
                 </div>
 
             </form>
-            <div class="search_data translate-body">
-                <div class="title">
-                    <p>{{ this.key_word_action }}</p>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="translate-left-sidebar">
+                        <h6>Resuft</h6>
+                        <div class="result search_data translate-body">
+                            <div class="search_content">
+                                <div class="">
+                                    <p class="title">{{ this.key_word_action }}</p>
+
+                                    <p class="box_mean-language">{{ this.resuft }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h6>Suggested words</h6>
+                        <div class="result search_data translate-body" v-for="(suggested_word, index) in suggested_words">
+                            <div class="search_content">
+                                <div class="">
+                                    <p class="title">{{ suggested_word.word }}</p>
+
+                                    <p class="box_mean-language">{{ suggested_word.translate }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div>{{ translates.length === 0 ? 'không tìm thấy kết quả nào' : '' }}</div>
-                <div class="search_content" v-for="(translate, index) in translates">
-                    <hr>
-                    <div class="icon_dot">{{ index + 1 }})</div>
-                    <div class="box_mean">
-                        <p class="box_mean-language">{{ translate.language }}</p>
-                        <p class="box_mean-translate"> {{ translate.translate }}</p>
-                        <p class="box_mean-description">{{ translate.description }}</p>
+                <div class="col-md-9">
+
+                    <h6>Word details</h6>
+                    <div class="search_data translate-body">
+                        <div class="title">
+                            <p>{{ this.key_word_action }}</p>
+                        </div>
+                        <div>{{ translates.length === 0 ? 'không tìm thấy kết quả nào' : '' }}</div>
+                        <div class="search_content" v-for="(translate, index) in translates">
+                            <hr>
+                            <div class="icon_dot">{{ index + 1 }})</div>
+                            <div class="box_mean">
+                                <p class="box_mean-language">{{ translate.language }}</p>
+                                <p class="box_mean-translate"> {{ translate.translate }}</p>
+                                <p class="box_mean-description">{{ translate.description }}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </template>
@@ -49,10 +79,12 @@ export default {
             languages: [],
             search_data: {
                 'key_word': 'con mèo',
-                'language_id': 1
+                'language_id': 3
             },
             translates: [],
-            key_word_action: ""
+            suggested_words: [],
+            key_word_action: "",
+            resuft: ""
         }
     },
     created() {
@@ -70,8 +102,12 @@ export default {
                 .then(response => {
                     // this.$router.push({ name: 'languages' })
 
-                    this.translates = response.data;
+                    this.translates = response.data.translation_words;
+                    this.suggested_words = response.data.suggested_words;
                     this.key_word_action = this.search_data.key_word;
+                    if (response.data.translation_words.length > 0) {
+                        this.resuft = response.data.translation_words[0].translate;
+                    }
                     console.log(response.data);
                 })
                 .catch(error => console.log(error))
@@ -82,8 +118,13 @@ export default {
 </script>
 
 <style>
-.translate-body {
+.translate .translate-body {
     margin: 10px 0;
+}
+
+.translate .result {
+    min-height: 100px !important;
+
 }
 
 .custom-search {
