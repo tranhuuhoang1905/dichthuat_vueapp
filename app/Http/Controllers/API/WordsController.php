@@ -40,6 +40,7 @@ class WordsController extends Controller
             'word_id' => $wordId,
             'language_id' => $request->input('language_translate_id'),
             'description' => $request->input('translate_description'),
+            'original_language_description' => $request->input('description'),
             'translate' => $request->input('translate')
         ]);
         $translationWord->save();
@@ -60,6 +61,7 @@ class WordsController extends Controller
                 'word_id' => $wordSecondId,
                 'language_id' => $request->input('language_id'),
                 'description' => $request->input('description'),
+                'original_language_description' => $request->input('translate_description'),
                 'translate' => $request->input('word')
             ]);
             $translationWordSecond->save();
@@ -111,7 +113,7 @@ class WordsController extends Controller
         return response()->json([
             'languages'=>$languages,
             'translates' => $Translates,
-            'word_default' => $word
+            'wordDefault' => $word
         ]);
         return response()->json($dataRep);
     }
@@ -141,12 +143,15 @@ class WordsController extends Controller
         return response()->json('The language successfully updated');
     }
  
-    // // delete language
-    // public function delete($id)
-    // {
-    //     $language = Languages::find($id);
-    //     $language->delete();
- 
-    //     return response()->json('The language successfully deleted');
-    // }
+    // get top search words
+    public function getTopSearchWords()
+    {
+        $words = Words::select('id','word')
+        ->orderByDesc('number_search')
+        ->orderByDesc('id')
+        ->take(10)
+        ->get()
+        ->toArray();
+        return $words;
+    }
 }

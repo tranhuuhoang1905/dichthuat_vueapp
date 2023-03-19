@@ -46,6 +46,7 @@ class CreateWordsTable extends Migration
             $table->foreign('language_id')->references('id')->on('languages');
             $table->string('translate');
             $table->text('description')->nullable()->default(null);
+            $table->text('original_language_description')->nullable()->default(null);
             $table->string('pronunciation')->nullable()->default(null);
             $table->string('user_manual')->nullable()->default(null);
             $table->string('slug')->nullable()->default(null);

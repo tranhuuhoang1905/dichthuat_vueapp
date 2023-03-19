@@ -34,7 +34,7 @@ const actions = {
                                     'authUser',
                                     JSON.stringify(response.data)
                                 );
-                                Router.push('/admin/translate');
+                                Router.push('/admin');
                             }
                         });
                     }
@@ -46,7 +46,7 @@ const actions = {
         axios.get('/api/logout').then(() => {
             sessionStorage.removeItem('loginResponse');
             sessionStorage.removeItem('authUser');
-            Router.push('/');
+            Router.push('/login');
         });
     },
     registeruser({ commit, getters }, registerData) {
@@ -80,7 +80,7 @@ const actions = {
                                     'authUser',
                                     JSON.stringify(response.data)
                                 );
-                                Router.push('/admin/translate');
+                                Router.push('/admin');
                             }
                         });
                     }
