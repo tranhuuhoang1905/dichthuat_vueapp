@@ -17,14 +17,14 @@ class TranslateController extends Controller
     {
         $languageId = $request->input('language_id');
         $word = $request->input('keyword');
-
-        $translationWords = TranslationWord::searchTranslationWords($languageId, $word);
+        $mTranslationWord = new TranslationWord();
+        $translationWords = $mTranslationWord->searchTranslationWords($languageId, $word);
         if($translationWords){
             Words::where('id', $translationWords[0]['word_id'])
             ->increment('number_search');
             
         }
-        $suggestedWords = TranslationWord::searchSuggestedWords($languageId, $word);
+        $suggestedWords = $mTranslationWord->searchSuggestedWords($languageId, $word);
         return response()->json(['suggestedWords' =>$suggestedWords,'translationWords' =>$translationWords]);
     }
  // edit word
