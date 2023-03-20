@@ -49,7 +49,7 @@ class TranslationWord extends Model
             ->where('translation_word.language_id', '=', $languageId)
             ->where('words.word', 'like', '%' . $word . '%')
             ->where('words.word', '!=' , $word)
-            ->select(DB::raw('MAX(translation_word.id) AS translation_word_id'), 'words.id', 'words.word', DB::raw('ANY_VALUE(translation_word.translate) as translate'))
+            ->select(DB::raw('MAX(translation_word.id) AS translation_word_id'), 'words.id', 'words.word', DB::raw("SUBSTRING_INDEX(GROUP_CONCAT(translation_word.translate SEPARATOR ' '), ' ', 1) as translate"))
             ->groupBy('words.id')
             ->get()
             ->toArray();
