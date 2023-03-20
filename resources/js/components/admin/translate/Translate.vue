@@ -77,7 +77,8 @@
             </div>
         </div>
     </div>
-    <div :class="keyboardClass"></div>
+    <!-- code test keyboard -->
+    <!-- <div :class="keyboardClass"></div> -->
 </template>
 
 <script>
@@ -165,12 +166,14 @@ export default {
                 layoutName: shiftToggle
             });
         }
-    },
-    watch: {
-        input(input) {
-            this.keyboard.setInput(input);
-        }
     }
+    // code test keyboard
+    // ,
+    // watch: {
+    //     input(input) {
+    //         this.keyboard.setInput(input);
+    //     }
+    // }
 }
 </script>
 

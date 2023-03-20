@@ -6,8 +6,7 @@
                     <span class="text-white">Laravel Vue CRUD Example</span>
                 </div>
                 <div class="navbar-nav ">
-                    <router-link to="/admin" class="nav-item nav-link p-4 text-white"
-                        @click="navigateToDashboard">Dashboard</router-link>
+                    <router-link to="/admin" class="nav-item nav-link p-4 text-white">Dashboard</router-link>
                     <button class="btn btn-danger mb-2" @click="logoutSubmit">
                         Logout
                     </button>
@@ -24,9 +23,6 @@ export default {
         ...mapActions(['logout']),
         logoutSubmit() {
             this.logout(this.loginData);
-        },
-        navigateToDashboard() {
-            this.$emit('navigateToDashboard');
         },
         reloadPage() {
             location.reload();

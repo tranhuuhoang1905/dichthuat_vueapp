@@ -15,10 +15,10 @@ import Translate from '../components/admin/translate/Translate.vue';
 import EditTranslate from '../components/admin/translate/EditTranslate.vue';
 import Login from '../components/account/Login.vue';
 export const routes = [
+    { name: 'home', path: '/', component: Translate },
     {
-        name: 'home', path: '/', component: Translate, meta: { requiresAuth: true } // thêm meta để kiểm tra xem route này cần đăng nhập hay không
+        name: 'admin', path: '/admin', component: Dashboard, meta: { requiresAuth: true } // thêm meta để kiểm tra xem route này cần đăng nhập hay không
     },
-    { name: 'admin', path: '/admin', component: Dashboard, },
     { name: 'words', path: '/admin/words', component: AllWords },
     { name: 'add-word', path: '/admin/word/add', component: AddWord },
     { name: 'edit-word', path: '/admin/word/edit/:id', component: EditWord },
