@@ -66,7 +66,7 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
         
         return $user;
     });
-
+    Route::post('/alluser', [TranslateController::class, 'search']);
 
 
     // Route::group(['prefix' => 'admin'], function(){

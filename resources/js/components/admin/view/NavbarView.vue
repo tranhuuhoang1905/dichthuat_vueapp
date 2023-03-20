@@ -13,6 +13,8 @@
                     <router-link to="/admin/words" class="nav-item nav-link p-4 text-white">Words</router-link>
                     <router-link to="/admin/word/add" class="nav-item nav-link p-4 text-white">Add
                         Word</router-link>
+                    <router-link to="/admin/user-manager" class="nav-item nav-link p-4 text-white">User manager
+                    </router-link>
                     <button class="btn btn-danger mb-2" @click="logoutSubmit">
                         Logout
                     </button>

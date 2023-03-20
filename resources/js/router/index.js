@@ -13,6 +13,8 @@ import EditWord from '../components/admin/word/EditWord.vue';
 import WordDefault from '../components/admin/word/WordDefault.vue';
 import Translate from '../components/admin/translate/Translate.vue';
 import EditTranslate from '../components/admin/translate/EditTranslate.vue';
+import UserManager from '../components/admin/user/UserManager.vue';
+
 import Login from '../components/account/Login.vue';
 export const routes = [
     { name: 'home', path: '/', component: Translate },
@@ -28,7 +30,7 @@ export const routes = [
     { name: 'languages', path: '/admin/languages', component: AllLanguages },
     { name: 'add-language', path: '/admin/language/add', component: AddLanguage },
     { name: 'edit-language', path: '/admin/language/edit/:id', component: EditLanguage },
-
+    { name: 'user-manager', path: '/admin/user-manager', component: UserManager },
     // { name: 'edit-translate', path: '/admin/translate/edit/:id', component: EditTranslate },
     // ,
     // {
