@@ -34,7 +34,16 @@ const actions = {
                                     'authUser',
                                     JSON.stringify(response.data)
                                 );
-                                Router.push('/admin');
+                                console.log(response.data.roles);
+                                console.log("----------check login authe");
+                                if (getters.getAuthUser.roles.some(role => role.name === "admin")) {
+                                    // Chuyển hướng đến trang admin
+                                    Router.push('/admin');
+                                } else {
+                                    // Chuyển hướng đến trang chính
+                                    Router.push('/');
+                                }
+                                // Router.push('/admin');
                             }
                         });
                     }

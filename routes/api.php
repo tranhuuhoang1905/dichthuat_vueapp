@@ -61,7 +61,10 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     // Route::get('/logout', [LanguagesController::class, 'index']);
 
     Route::get('/user', function (Request $request) {
-        return $request->user();
+        $user = $request->user();
+        $user->load('roles'); // load roles của user
+        
+        return $user;
     });
 
 

@@ -69,7 +69,7 @@ export default {
     },
     created() {
         this.axios
-            .post('/api/languages')
+            .get('/api/languages')
             .then((response) => {
                 this.languages = response.data;
                 if (response.data.length > 0) {

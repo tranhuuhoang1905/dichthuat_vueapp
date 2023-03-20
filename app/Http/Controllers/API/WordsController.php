@@ -72,7 +72,6 @@ class WordsController extends Controller
     public function default($id)
     {
         $word = Words::find($id);
-        // $TranslationWords = TranslationWord::where('id', $id)->get()->toArray();
         $TranslationWords = TranslationWord::join('languages', 'translation_word.language_id', '=', 'languages.id')
             ->select('languages.name as language', 'translation_word.*')
             ->where('translation_word.word_id', $id)
@@ -92,14 +91,9 @@ class WordsController extends Controller
              ->select('words.*', 'languages.name as language')
              ->where('words.id', $id)
              ->first();
-        // $TranslationWords = TranslationWord::where('id', $id)->get()->toArray();
-        // $word = Words::where('language_id', $request->input('language_id'))
-        // ->where('word', $request->input('key_word'))
-        // ->first();
         if(!$word){
             return response()->json([]);
         }
-        // $TranslationWords = TranslationWord::where('id', $id)->get()->toArray();
         $Translates = TranslationWord::join('languages', 'translation_word.language_id', '=', 'languages.id')
             ->select('languages.name as language', 'translation_word.*')
             ->where('translation_word.word_id', $word->id)
