@@ -86,21 +86,21 @@ import Keyboard from "simple-keyboard";
 import "simple-keyboard/build/css/index.css";
 import { and } from "vuelidate/lib/validators";
 export default {
-    props: {
-        keyboardClass: {
-            default: "simple-keyboard",
-            type: String
-        },
-        input: {
-            type: String
-        }
-    },
-    mounted() {
-        this.keyboard = new Keyboard(this.keyboardClass, {
-            onChange: this.onChange,
-            onKeyPress: this.onKeyPress
-        });
-    },
+    // props: {
+    //     keyboardClass: {
+    //         default: "simple-keyboard",
+    //         type: String
+    //     },
+    //     input: {
+    //         type: String
+    //     }
+    // },
+    // mounted() {
+    //     this.keyboard = new Keyboard(this.keyboardClass, {
+    //         onChange: this.onChange,
+    //         onKeyPress: this.onKeyPress
+    //     });
+    // },
     data() {
         return {
             languages: [],
