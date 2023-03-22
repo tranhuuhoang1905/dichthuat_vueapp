@@ -82,9 +82,9 @@ export default {
                         <div class="authentication-page-content p-4 d-flex align-items-center min-vh-100">
                             <div class="w-100">
                                 <div class="row justify-content-center">
-                                <div class="col-lg-9">
+                                    <div class="col-lg-9">
                                         <div>
-                                            <div class="text-center">
+                                        <div class="text-center">
                                                 <div>
                                                     <a href="/" class="logo">
                                                         <img src="/images/logo-dark.png" height="20" alt="logo" />
@@ -126,10 +126,12 @@ export default {
                                                     </div>
 
                                                     <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="custom-control-input"
-                                                            id="customControlInline" />
-                                                        <label class="custom-control-label"
-                                                            for="customControlInline">Remember me</label>
+
+                                                        <label class="custom-control-label" for="customControlInline">
+                                                            <input type="checkbox" class="custom-control-input"
+                                                                id="customControlInline" />
+                                                            Remember me
+                                                        </label>
                                                     </div>
 
                                                     <div class="mt-4 text-center">
@@ -152,7 +154,7 @@ export default {
                                                     <!-- tag="a" -->
                                                     <a href="/register" class="font-weight-medium text-primary">Đăng ký</a>
                                                     <!-- <router-link :to="{ name: 'register' }"
-                                                                                class="font-weight-medium text-primary">Register</router-link> -->
+                                                                                    class="font-weight-medium text-primary">Register</router-link> -->
                                                 </p>
                                                 <p>
                                                     © 2020 Nazox. Crafted with
@@ -175,3 +177,10 @@ export default {
         </div>
     </div>
 </template>
+
+<style>
+.custom-control-input {
+    height: 17px;
+    width: 30px !important;
+}
+</style>
