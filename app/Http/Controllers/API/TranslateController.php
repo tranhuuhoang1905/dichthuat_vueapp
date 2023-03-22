@@ -48,8 +48,5 @@ class TranslateController extends Controller
         $translationWord = TranslationWord::find($id);
         $translationWord->update($request->all());
         return response()->json('The language successfully updated');
-    }
-    
-    
-    
+    }  
 }

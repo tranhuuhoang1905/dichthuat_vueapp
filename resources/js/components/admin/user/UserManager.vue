@@ -1,5 +1,6 @@
 <template>
-    <div>
+    <div class="container-xl user-namager">
+        <h3 class="text-center">User Manager</h3>
         <table class="table">
             <thead>
                 <tr>
@@ -15,45 +16,43 @@
                     <td>{{ index + 1 }}</td>
                     <td>{{ user.name }}</td>
                     <td>{{ user.email }}</td>
-                    <td>{{ user.role }}</td>
                     <td>
-                        <button @click="editUser(user)" class="btn btn-primary btn-sm">Sửa</button>
-                        <button @click="deleteUser(user)" class="btn btn-danger btn-sm">Xóa</button>
+                        <p v-for="role in user.roles" :key="role.id">{{ role.name }}</p>
+                    </td>
+                    <td>
+                        <router-link :to="{ name: 'change-role-user', params: { id: user.id } }"
+                            class="btn btn-primary">Change role
+                        </router-link>
+                        <router-link :to="{ name: 'change-password-user', params: { id: user.id } }"
+                            class="btn btn-primary">Change password
+                        </router-link>
                     </td>
                 </tr>
             </tbody>
         </table>
-        <button @click="showUserForm = true" class="btn btn-success">Thêm mới</button>
-        <div v-if="showUserForm">
-            <h2>Thêm mới người dùng</h2>
-            <form @submit.prevent="addUser">
-                <div class="form-group">
-                    <label for="name">Tên</label>
-                    <input type="text" id="name" v-model="newUser.name" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email đăng nhập</label>
-                    <input type="email" id="email" v-model="newUser.email" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label for="role">Chức vụ</label>
-                    <input type="text" id="role" v-model="newUser.role" class="form-control" required>
-                </div>
-                <button class="btn btn-success">Thêm mới</button>
-                <button type="button" @click="showUserForm = false" class="btn btn-secondary">Hủy</button>
+        <router-link to="/admin/user-manager/create-new-user">Create new user</router-link>
+        <div>
+            <a href="/api/export" download>Download Users Excel</a>
+        </div>
+
+        <div>
+            <form @submit.prevent="handleFileUpload">
+                <input type="file" ref="fileInput">
+                <button type="submit">Upload</button>
             </form>
         </div>
     </div>
 </template>
   
 <script>
+import { saveAs } from 'file-saver';
 export default {
     data() {
         return {
             users: [
-                { id: 1, name: 'John Doe', email: 'johndoe@gmail.com', role: 'Quản lý' },
-                { id: 2, name: 'Jane Smith', email: 'janesmith@yahoo.com', role: 'Nhân viên' },
-                { id: 3, name: 'Peter Parker', email: 'peterparker@hotmail.com', role: 'Nhân viên kinh doanh' }
+                // { id: 1, name: 'John Doe', email: 'johndoe@gmail.com', role: 'Quản lý' },
+                // { id: 2, name: 'Jane Smith', email: 'janesmith@yahoo.com', role: 'Nhân viên' },
+                // { id: 3, name: 'Peter Parker', email: 'peterparker@hotmail.com', role: 'Nhân viên kinh doanh' }
             ],
             showUserForm: false, // biến đánh dấu hiển thị form thêm mới người dùng
             newUser: { // đối tượng người dùng mới
@@ -65,12 +64,12 @@ export default {
     },
 
     created() {
-        // this.axios
-        //     .get('/api/allusers')
-        //     .then((response) => {
-        //         // this.users = response.data;
-        //         console.log(response.data);
-        //     });
+        this.axios
+            .get('/api/user/allusers')
+            .then((response) => {
+                this.users = response.data;
+                console.log(response.data);
+            });
     },
     methods: {
         // thêm mới người dùng
@@ -91,6 +90,24 @@ export default {
         // xóa người dùng
         deleteUser(user) {
             // thực hiện các xử lý để xóa người dùng khỏi danh sách
+        },
+
+        //test import file excel
+        handleFileUpload() {
+            const fileInput = this.$refs.fileInput;
+            const file = fileInput.files[0];
+            const formData = new FormData();
+            formData.append('file', file);
+            axios.post('/api/upload', formData, {
+                responseType: 'blob'
+            })
+                .then(response => {
+                    const blob = new Blob([response.data], { type: 'application/vnd.ms-excel' });
+                    saveAs(blob, 'usersedit.xlsx');
+                })
+                .catch(error => {
+                    console.log(error);
+                });
         }
     }
 }

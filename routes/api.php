@@ -6,6 +6,8 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\LanguagesController;
 use App\Http\Controllers\API\WordsController;
 use App\Http\Controllers\API\TranslateController;
+use App\Http\Controllers\API\UserController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -49,6 +51,9 @@ Route::group(['prefix' => 'word'], function () {
     Route::post('update/{id}', [WordsController::class, 'update']);
     //người có role:admin mới có quyền truy cập link api/posts/delete 
     Route::delete('delete/{id}', [WordsController::class, 'delete']);
+    Route::post('/save-words-from-excel', [WordsController::class, 'importWordsFromExcel']);
+    Route::post('/translate-words-from-excel', [WordsController::class, 'translateWordsFromExcel']);
+    
 });
 
 Route::group(['prefix' => 'translate'], function () {
@@ -57,18 +62,25 @@ Route::group(['prefix' => 'translate'], function () {
     Route::post('update/{id}', [TranslateController::class, 'update']);
     
 });
-Route::group(['middleware' => ['auth:sanctum']], function() {
+Route::group(['prefix' => 'user','middleware' => ['auth:sanctum']], function() {
     // Route::get('/logout', [LanguagesController::class, 'index']);
 
-    Route::get('/user', function (Request $request) {
+    Route::get('/', function (Request $request) {
         $user = $request->user();
         $user->load('roles'); // load roles của user
         
         return $user;
     });
-    Route::post('/alluser', [TranslateController::class, 'search']);
+    Route::get('allusers', [UserController::class, 'allusers']);
+    Route::get('roles', [UserController::class, 'roles']);
+    Route::post('create-new-user', [UserController::class, 'createNewUser']);
+    Route::get('edit/{id}', [UserController::class, 'edit']);
+    Route::post('change-role-user/{id}', [UserController::class, 'changeRoleUser']);
+    Route::post('change-password-user/{id}', [UserController::class, 'changePasswordUser']);
+    
 
-
+    //test export fie excel
+    
     // Route::group(['prefix' => 'admin'], function(){
     //     Route::get('/', [ProductController::class, 'index']);
     //     Route::get('/products/delete', [ProductController::class, 'del']);
@@ -78,3 +90,5 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     //     Route::resource('permissions', PermissionController::class);
     // });
 });
+Route:: get('/export', [UserController::class, 'export']);
+Route::post('/upload', [UserController::class, 'uploadExcel']);

@@ -15,6 +15,13 @@
                         Word</router-link>
                     <router-link to="/admin/user-manager" class="nav-item nav-link p-4 text-white">User manager
                     </router-link>
+                    <router-link to="/admin/word/import-word-from-excel" class="nav-item nav-link p-4 text-white">Import
+                        file excel
+                    </router-link>
+                    <router-link to="/admin/word/translate-word-from-excel"
+                        class="nav-item nav-link p-4 text-white">Translate
+                        file excel
+                    </router-link>
                     <button class="btn btn-danger mb-2" @click="logoutSubmit">
                         Logout
                     </button>

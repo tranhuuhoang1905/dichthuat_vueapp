@@ -49,8 +49,6 @@
                             </div>
                         </div>
                     </div>
-
-
                     <button type="submit" class="btn btn-primary">Add Word</button>
                 </form>
             </div>
@@ -64,7 +62,8 @@ export default {
         return {
             languages: [],
             word: {
-            }
+            },
+            WordsFromExcel: {}
         }
     },
     created() {

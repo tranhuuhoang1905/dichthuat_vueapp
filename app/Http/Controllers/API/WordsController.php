@@ -7,7 +7,13 @@ use App\Models\Languages;
 use App\Models\Words;
 use App\Models\TranslationWord;
 use Illuminate\Http\Request;
- 
+use Illuminate\Support\Facades\DB;
+// export file excel
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\UsersExport;
+use App\Exports\DataExport;
+use Illuminate\Support\Collection;
+// export file excel
 use Validator;
 
 class WordsController extends Controller
@@ -22,51 +28,17 @@ class WordsController extends Controller
     // add word
     public function add(Request $request)
     {
-        $word = Words::updateOrCreate(
-            ['word' => $request->input('word'), 'language_id' => $request->input('language_id')],
-            ['word' => $request->input('word'), 'language_id' => $request->input('language_id')]
-        );
-        
-        $wordId = $word->id;
-
-        $translationWord = TranslationWord::where('word_id', $wordId)
-        ->where('language_id', $request->input('language_translate_id'))
-        ->where('translate', $request->input('translate'))
-        ->first();
-        if($translationWord){
-            return response()->json('Translated word already exists');
-        }
-        $translationWord = new TranslationWord([
-            'word_id' => $wordId,
-            'language_id' => $request->input('language_translate_id'),
-            'description' => $request->input('translate_description'),
-            'original_language_description' => $request->input('description'),
-            'translate' => $request->input('translate')
-        ]);
-        $translationWord->save();
-
+        $languageId = $request->input('language_id');
+        $languageTranslateId = $request->input('language_translate_id');
+        $word = $request->input('word');
+        $translate = $request->input('translate');
+        $description = $request->input('description');
+        $translateDescription = $request->input('translate_description');
+        $words = new Words();
+        $words->saveWithTranslation($languageId, $languageTranslateId, $word, $translate, $description, $translateDescription);
         // lưu chéo ngược lại
-        $wordSecond = Words::updateOrCreate(
-            ['word' => $request->input('translate'), 'language_id' => $request->input('language_translate_id')],
-            ['word' => $request->input('translate'), 'language_id' => $request->input('language_translate_id')]
-        );
-        $wordSecondId = $wordSecond->id;
-        $translationWordSecond = TranslationWord::where('word_id', $wordSecondId)
-        ->where('language_id', $request->input('language_id'))
-        ->where('translate', $request->input('word'))
-        ->first();
-        // return response()->json(['msg' =>'The new word successfully added','test'=>$translationWordSecond]);
-        if(!$translationWordSecond){
-            $translationWordSecond = new TranslationWord([
-                'word_id' => $wordSecondId,
-                'language_id' => $request->input('language_id'),
-                'description' => $request->input('description'),
-                'original_language_description' => $request->input('translate_description'),
-                'translate' => $request->input('word')
-            ]);
-            $translationWordSecond->save();
-        }
-        return response()->json(['msg' =>'The new word successfully added','test'=>$translationWordSecond]);
+        $words->saveWithTranslation($languageTranslateId, $languageId, $translate, $word, $translateDescription, $description);
+        return response()->json(['msg' =>'The new word successfully added']);
     }
     // edit word
     public function default($id)
@@ -148,4 +120,74 @@ class WordsController extends Controller
         ->toArray();
         return $words;
     }
+
+    public function importWordsFromExcel(Request $request)
+    {
+        $file = $request->file('file');
+        $data = Excel::toArray(new Excel(), $file);
+        $languageId = $request->input('language_id');
+        $languageTranslateId = $request->input('language_translate_id');
+        foreach ($data[0] as $key => $element){
+            if ($key > 0 && !empty($element[0]) && !empty($element[1]) && !empty($element[2]) && !empty($element[3])) {
+                $word = $element[0];
+                $description = $element[1];
+                $translate = $element[2];
+                $translateDescription = $element[3];
+                $words = new Words();
+                $words->saveWithTranslation($languageId, $languageTranslateId, $word, $translate, $description, $translateDescription);
+                // lưu chéo ngược lại
+                $words->saveWithTranslation($languageTranslateId, $languageId, $translate, $word, $translateDescription, $description);
+            }
+        }
+        
+        return response()->json(["success"=>"success",'data'=>$data, 'languageId'=>$request->input('language_id')]);
+    }
+    public function translateWordsFromExcel(Request $request)
+    {
+        $file = $request->file('file');
+        $data = Excel::toArray(new Excel(), $file);
+        $data = $data[0];
+        $languageId = $request->input('language_id');
+        $languageTranslateId = $request->input('language_translate_id');
+        $words = array_map(function($subarray) {
+            return $subarray[0];
+        }, $data);
+        $words = array_filter($words, function ($value) {
+            return !is_null($value) && $value !== ''&& $value !== ' ';
+        });
+
+        
+        $translations = DB::table('translation_word')
+        ->join('words', 'words.id', '=', 'translation_word.word_id')
+        ->select(
+            'translation_word.translate',
+            'translation_word.description',
+            'translation_word.original_language_description',
+            'words.word as word')
+        ->whereIn('words.word', $words)
+        ->where('words.language_id', '=', $languageId)
+        ->where('translation_word.language_id', '=', $languageTranslateId)
+        ->whereIn('translation_word.id', function ($query) {
+            $query->select(DB::raw('MAX(id)'))
+                ->from('translation_word')
+                ->groupBy('word_id');
+        })
+        ->get()
+        ->toArray();
+        $dataResponse = [];
+        foreach ($data as $element){
+            $key = array_search($element[0], array_column($translations, 'word'));
+            if ($key !== false) {
+                $foundElement = $translations[$key];
+                $dataResponse[] = [$element[0],$foundElement->translate,$foundElement->description,$foundElement->original_language_description];
+            } else {
+                $dataResponse[] = [$element[0]];
+            }
+        }
+        $export = new DataExport(collect($dataResponse));
+        $fileName = 'translatecallback.xlsx';
+        return Excel::download($export, $fileName);
+        // return response()->json(["success"=>"success",'data'=>$data,'translations'=>$dataResponse]);
+    }
+    
 }

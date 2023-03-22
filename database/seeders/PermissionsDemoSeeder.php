@@ -48,12 +48,12 @@ class PermissionsDemoSeeder extends Seeder
         ]);
         $leader->assignRole('leader');
 
-        $leader = User::create([
+        $department = User::create([
             'name' => "department",
             'email' => "department@gmail.com",
             'password' => Hash::make('123456'),
         ]);
-        $leader->assignRole('department');
+        $department->assignRole('department');
 
         $user = User::create([
             'name' => "user",
