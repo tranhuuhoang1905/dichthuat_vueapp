@@ -172,7 +172,7 @@ export default {
 }
 
 .language label {
-    color: #7c7c7c;
+    color: #000;
     width: 150px;
 }
 </style>

@@ -1,9 +1,9 @@
 <template>
-    <div class="container-xl">
+    <!-- <div class="container-xl"> -->
         <nav class="navbar navbar-expand-lg navbar-light bg-main">
             <div class="collapse navbar-collapse d-flex justify-content-around ">
                 <div class="text-center py-4">
-                    <span class="text-white">Laravel Vue CRUD Example</span>
+                    <span class="text-white">Laravel Admin Example</span>
                 </div>
                 <div class="navbar-nav ">
                     <router-link to="/" class="nav-item nav-link p-4 text-white">Home</router-link>
@@ -21,7 +21,7 @@
                 </div>
             </div>
         </nav>
-    </div>
+    <!-- </div> -->
 </template>
 
 <script>

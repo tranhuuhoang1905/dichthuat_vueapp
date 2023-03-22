@@ -9,15 +9,20 @@
         !loginResponse.authenticated">
         <login />
     </div>
-    <div class="container" v-else>
-        <div class="text-center" style="margin: 20px 0px 20px 0px;">
+    <div v-else>
+        <!-- <div class="text-center" style="margin: 20px 0px 20px 0px;">
             <span class="text-secondary" v-if="isHomeRoute">Laravel Home Example</span>
             <span class="text-secondary" v-if="isAdminRoute">Laravel Admin Example</span>
+        </div> -->
+        <div class="container-xl">
+            <HomeNavbarView v-if="isHomeRoute" />
+            <!-- <AdminNavbarView v-if="isAdminRoute" /> -->
+            <horizontal v-if="isAdminRoute"/>
         </div>
-        <HomeNavbarView v-if="isHomeRoute" />
-        <AdminNavbarView v-if="isAdminRoute" />
-        <br />
-        <router-view></router-view>
+        <div class="container">
+            <br />
+            <router-view></router-view>
+        </div>
     </div>
 
 
@@ -59,18 +64,20 @@
 <script>
 import login from './components/account/Login.vue';
 import register from './components/account/Register.vue';
-import AdminNavbarView from './components/admin/view/NavBarView.vue';
-
+// import AdminNavbarView from './components/admin/view/NavBarView';
 import HomeNavbarView from './components/home/view/NavbarView.vue';
+import Horizontal from './components/layouts/horizontal.vue';
 // import rightSidebar from './components/layouts/right-sidebar.vue'
 
 // import Layout from "./components/layouts/horizontal.vue";
 export default {
     components: {
         login,
-        AdminNavbarView,
+        // AdminNavbarView,
         HomeNavbarView,
         register,
+        // horizontalTopbar,
+        Horizontal,
         // Layout
     },
     data() {
@@ -137,3 +144,17 @@ export default {
     }
 }
 </script>
+<style>
+.navbar{
+    padding:0 !important;
+}
+.container-xl{
+    padding: 0 !important;
+    max-width: 100% !important;
+}
+.container{
+    max-width: 1140px !important;
+}
+
+
+</style>

@@ -126,10 +126,13 @@ export default {
                                                     </div>
 
                                                     <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="custom-control-input"
-                                                            id="customControlInline" />
+                                                       
                                                         <label class="custom-control-label"
-                                                            for="customControlInline">Remember me</label>
+                                                            for="customControlInline">
+                                                            <input type="checkbox" class="custom-control-input"
+                                                            id="customControlInline" />
+                                                            Remember me
+                                                        </label>
                                                     </div>
 
                                                     <div class="mt-4 text-center">
@@ -175,3 +178,10 @@ export default {
         </div>
     </div>
 </template>
+
+<style>
+.custom-control-input{
+    height: 17px;
+    width: 30px !important;
+}
+</style>
