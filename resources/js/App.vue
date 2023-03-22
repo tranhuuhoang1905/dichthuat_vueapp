@@ -16,8 +16,8 @@
         </div> -->
         <div class="container-xl">
             <HomeNavbarView v-if="isHomeRoute" />
-            <!-- <AdminNavbarView v-if="isAdminRoute" /> -->
-            <horizontal v-if="isAdminRoute"/>
+            <AdminNavbarView v-if="isAdminRoute" />
+            <!-- <horizontal v-if="isAdminRoute"/> -->
         </div>
         <div class="container">
             <br />
@@ -64,20 +64,20 @@
 <script>
 import login from './components/account/Login.vue';
 import register from './components/account/Register.vue';
-// import AdminNavbarView from './components/admin/view/NavBarView';
+import AdminNavbarView from './components/admin/view/NavBarView';
 import HomeNavbarView from './components/home/view/NavbarView.vue';
-import Horizontal from './components/layouts/horizontal.vue';
+// import Horizontal from './components/layouts/horizontal.vue';
 // import rightSidebar from './components/layouts/right-sidebar.vue'
 
 // import Layout from "./components/layouts/horizontal.vue";
 export default {
     components: {
         login,
-        // AdminNavbarView,
+        AdminNavbarView,
         HomeNavbarView,
         register,
         // horizontalTopbar,
-        Horizontal,
+        // Horizontal,
         // Layout
     },
     data() {
