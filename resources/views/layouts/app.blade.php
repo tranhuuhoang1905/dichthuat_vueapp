@@ -51,7 +51,7 @@
 <script src="{{ asset('assets/libs/node-waves/waves.min.js') }}"></script>
 
 <!-- apexcharts -->
-<!-- <script src="{{ asset('assets/libs/apexcharts/apexcharts.min.js') }}"></script> -->
+<script src="{{ asset('assets/libs/apexcharts/apexcharts.min.js') }}"></script>
 
 <!-- jquery.vectormap map -->
 <script src="{{ asset('assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js') }}"></script>
@@ -66,6 +66,7 @@
 <script src="{{ asset('assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}"></script>
 
 <!-- <script src="{{ asset('assets/js/pages/dashboard.init.js') }}"></script> -->
+<script src="{{ asset('assets/js/pages/datatables.init.js') }}"></script>
 
 <script src="{{ asset('assets/js/app2.js') }}"></script>
 </body>

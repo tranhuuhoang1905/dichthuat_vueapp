@@ -150,3 +150,25 @@ textarea {
 .translate .box_mean-description {
   color: rgba(9, 30, 66, 0.9490196078);
 }
+
+.all_languages_word .row .custom-select {
+  padding-right: 25px;
+}
+.all_languages_word .row .page-item.active .page-link {
+  background: #252b3b;
+}
+.all_languages_word .row .page-item.active .page-link:hover {
+  background: #4b5a83;
+}
+.all_languages_word .row #datatable {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+}
+.all_languages_word .row #datatable .btn-actions {
+  background: #252b3b;
+  color: #fff;
+}
+.all_languages_word .row #datatable .btn-actions:hover {
+  background: #4b5a83;
+}
