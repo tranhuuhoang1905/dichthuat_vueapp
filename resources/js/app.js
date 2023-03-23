@@ -17,6 +17,7 @@ import { store } from './store/store';
 // import '../assets/css/account.css';
 // import "../assets/scss/app.scss"; 
 // console.log(router.push);
+// import '@resources/assets/js/pages/datatables.init.js';
 const app = createApp(App);
 // app.use(Vuex);
 app.use(VueAxios, axios, BootstrapVue3);

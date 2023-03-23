@@ -128,11 +128,12 @@ class WordsController extends Controller
         $languageId = $request->input('language_id');
         $languageTranslateId = $request->input('language_translate_id');
         foreach ($data[0] as $key => $element){
-            if ($key > 0 && !empty($element[0]) && !empty($element[1]) && !empty($element[2]) && !empty($element[3])) {
+            // if ($key > 0 && !empty($element[0]) && !empty($element[1]) && !empty($element[2]) && !empty($element[3])) {
+            if ($key > 0 && !empty($element[0]) && !empty($element[1]) ) {
                 $word = $element[0];
-                $description = $element[1];
-                $translate = $element[2];
-                $translateDescription = $element[3];
+                $translate = $element[1];
+                $description = $element[2] ?? $element[3] ?? "";
+                $translateDescription = $element[3] ?? $element[2] ?? "";
                 $words = new Words();
                 $words->saveWithTranslation($languageId, $languageTranslateId, $word, $translate, $description, $translateDescription);
                 // lưu chéo ngược lại
