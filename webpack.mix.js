@@ -17,7 +17,7 @@ mix.webpackConfig({
         }
     }
 });
-mix.js("resources/js/app.js", "public/js")
+mix.js("resources/js/app.js", "public/assets/js")
     .vue()
     .webpackConfig({
         module: {
@@ -43,7 +43,7 @@ mix.js("resources/js/app.js", "public/js")
             }
         }
     })
-    // .sass('resources/assets/sass/app.scss', 'public/css')
-    .postCss("resources/css/app.css", "public/css", [
-        //
-    ]);
+    .sass('resources/assets/scss/style.scss', 'public/assets/css')
+    // .postCss("resources/assets/css/app.css", "public/assets/css", [
+    //     //
+    // ]);

@@ -15,8 +15,8 @@ import TranslateWordFromExcel from '../components/admin/word/TranslateWordFromEx
 import EditWord from '../components/admin/word/EditWord.vue';
 import WordDefault from '../components/admin/word/WordDefault.vue';
 
-import Translate from '../components/admin/translate/Translate.vue';
-import EditTranslate from '../components/admin/translate/EditTranslate.vue';
+import Translate from '../components/translate/Translate.vue';
+import EditTranslate from '../components/translate/EditTranslate.vue';
 
 import UserManager from '../components/admin/user/UserManager.vue';
 import CreateNewUser from '../components/admin/user/CreateNewUser.vue';

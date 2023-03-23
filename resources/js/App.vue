@@ -9,83 +9,37 @@
         !loginResponse.authenticated">
         <login />
     </div>
-    <div class="container" v-else>
+    <div class="container" v-else-if="isHomeRoute">
         <div class="text-center" style="margin: 20px 0px 20px 0px;">
-            <span class="text-secondary" v-if="isHomeRoute">Laravel Home Example</span>
-            <span class="text-secondary" v-if="isAdminRoute">Laravel Admin Example</span>
+            <span class="text-secondary">Laravel Home Example</span>
         </div>
-        <HomeNavbarView v-if="isHomeRoute" />
-        <AdminNavbarView v-if="isAdminRoute" />
+        <HomeNavbarView />
         <br />
         <router-view></router-view>
     </div>
-
-
-    <!-- <div v-else> -->
-    <!-- <Layout> -->
-    <!-- <PageHeader :title="title" :items="items" />
-            <div class="row">
-            <div class="col-xl-8">
-                <Stat />
-                <RevenueAnalytics />
-            </div>
-            <div class="col-xl-4">
-                <SalesAnalytics />
-                <EarningReport />
-            </div>
-            </div>
-            <div class="row">
-            <div class="col-lg-4">
-                <Sources />
-            </div>
-            <div class="col-lg-4">
-                <RecentActivity />
-            </div>
-            <div class="col-lg-4">
-                <RevenueLocation />
-            </div>
-            </div>
-            <div class="row">
-            <div class="col-lg-4">
-                <Chat />
-            </div>
-            <div class="col-lg-8">
-                <Transaction />
-            </div>
-            </div> -->
-    <!-- </Layout> -->
-    <!-- </div> -->
+    <div class="" v-else>
+        <LayoutWrapper />
+        <!-- <AdminNavbarView /> -->
+        <!-- <router-view></router-view> -->
+        <RightSidebar />
+    </div>
 </template>
 <script>
 import login from './components/account/Login.vue';
 import register from './components/account/Register.vue';
-import AdminNavbarView from './components/admin/view/NavBarView.vue';
+import LayoutWrapper from './components/layouts/LayoutWrapper.vue';
+import RightSidebar from './components/layouts/RightSidebar.vue';
 
 import HomeNavbarView from './components/home/view/NavbarView.vue';
-// import rightSidebar from './components/layouts/right-sidebar.vue'
-
-// import Layout from "./components/layouts/horizontal.vue";
+// import AdminNavbarView from './components/admin/view/NavbarView.vue';
 export default {
     components: {
         login,
-        AdminNavbarView,
+        // AdminNavbarView,
+        LayoutWrapper,
+        RightSidebar,
         HomeNavbarView,
         register,
-        // Layout
-    },
-    data() {
-        return {
-            title: "Dashboard",
-            items: [
-                {
-                    text: "Nazox"
-                },
-                {
-                    text: "Dashboard",
-                    active: true
-                }
-            ]
-        };
     },
     computed: {
         loginResponse() {
@@ -128,12 +82,6 @@ export default {
             return this.$route.path.startsWith("/admin/") || this.$route.path.startsWith("/admin");
         },
 
-    },
-    mounted() {
-        // console.log(this.loginResponse)
-        console.log(this.authUser)
-        // const parsedAuthUser = JSON.parse(this.authUser)
-        // console.log(parsedAuthUser)
     }
 }
 </script>

@@ -87,7 +87,7 @@ export default {
                                         <div class="text-center">
                                                 <div>
                                                     <a href="/" class="logo">
-                                                        <img src="/images/logo-dark.png" height="20" alt="logo" />
+                                                        <img src="/assets/images/logo-dark.png" height="20" alt="logo" />
                                                     </a>
                                                 </div>
 
@@ -154,7 +154,7 @@ export default {
                                                     <!-- tag="a" -->
                                                     <a href="/register" class="font-weight-medium text-primary">Đăng ký</a>
                                                     <!-- <router-link :to="{ name: 'register' }"
-                                                                                    class="font-weight-medium text-primary">Register</router-link> -->
+                                                                                                                class="font-weight-medium text-primary">Register</router-link> -->
                                                 </p>
                                                 <p>
                                                     © 2020 Nazox. Crafted with
