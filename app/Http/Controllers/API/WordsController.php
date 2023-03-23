@@ -124,15 +124,19 @@ class WordsController extends Controller
     public function importWordsFromExcel(Request $request)
     {
         $file = $request->file('file');
+        if (!$file->isValid() || $file->getClientOriginalExtension() != 'xlsx' && $file->getClientOriginalExtension() != 'xls') {
+            return 'Tệp không phải là tệp Excel';
+        }
         $data = Excel::toArray(new Excel(), $file);
         $languageId = $request->input('language_id');
         $languageTranslateId = $request->input('language_translate_id');
         foreach ($data[0] as $key => $element){
-            if ($key > 0 && !empty($element[0]) && !empty($element[1]) && !empty($element[2]) && !empty($element[3])) {
+            // if ($key > 0 && !empty($element[0]) && !empty($element[1]) && !empty($element[2]) && !empty($element[3])) {
+            if ($key > 0 && !empty($element[0]) && !empty($element[1]) ) {
                 $word = $element[0];
-                $description = $element[1];
-                $translate = $element[2];
-                $translateDescription = $element[3];
+                $translate = $element[1];
+                $description = $element[2] ?? $element[3] ?? "";
+                $translateDescription = $element[3] ?? $element[2] ?? "";
                 $words = new Words();
                 $words->saveWithTranslation($languageId, $languageTranslateId, $word, $translate, $description, $translateDescription);
                 // lưu chéo ngược lại
@@ -140,11 +144,14 @@ class WordsController extends Controller
             }
         }
         
-        return response()->json(["success"=>"success",'data'=>$data, 'languageId'=>$request->input('language_id')]);
+        return response()->json(["success"=>"success"]);
     }
     public function translateWordsFromExcel(Request $request)
     {
         $file = $request->file('file');
+        if (!$file->isValid() || $file->getClientOriginalExtension() != 'xlsx' && $file->getClientOriginalExtension() != 'xls') {
+            return 'Tệp không phải là tệp Excel';
+        }
         $data = Excel::toArray(new Excel(), $file);
         $data = $data[0];
         $languageId = $request->input('language_id');
