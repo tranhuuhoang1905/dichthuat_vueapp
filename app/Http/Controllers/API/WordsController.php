@@ -124,6 +124,9 @@ class WordsController extends Controller
     public function importWordsFromExcel(Request $request)
     {
         $file = $request->file('file');
+        if (!$file->isValid() || $file->getClientOriginalExtension() != 'xlsx' && $file->getClientOriginalExtension() != 'xls') {
+            return 'Tệp không phải là tệp Excel';
+        }
         $data = Excel::toArray(new Excel(), $file);
         $languageId = $request->input('language_id');
         $languageTranslateId = $request->input('language_translate_id');
@@ -141,11 +144,14 @@ class WordsController extends Controller
             }
         }
         
-        return response()->json(["success"=>"success",'data'=>$data, 'languageId'=>$request->input('language_id')]);
+        return response()->json(["success"=>"success"]);
     }
     public function translateWordsFromExcel(Request $request)
     {
         $file = $request->file('file');
+        if (!$file->isValid() || $file->getClientOriginalExtension() != 'xlsx' && $file->getClientOriginalExtension() != 'xls') {
+            return 'Tệp không phải là tệp Excel';
+        }
         $data = Excel::toArray(new Excel(), $file);
         $data = $data[0];
         $languageId = $request->input('language_id');
