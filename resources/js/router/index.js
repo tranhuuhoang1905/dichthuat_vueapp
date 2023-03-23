@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Dashboard from '../components/admin/Dashboard.vue';
 import HomePage from '../components/admin/HomePage.vue';
 // import Login from '../components/account/Login.vue';
-// import Register from '../components/account/Register.vue';
+import Register from '../components/account/Register.vue';
 
 import AllLanguages from '../components/admin/language/AllLanguages.vue';
 import AddLanguage from '../components/admin/language/AddLanguage.vue';
@@ -46,11 +46,11 @@ export const routes = [
     { name: 'change-password-user', path: '/admin/user-manager/change-pasword-user/:id', component: ChangePasswordUser },
     // { name: 'edit-translate', path: '/admin/translate/edit/:id', component: EditTranslate },
     // ,
-    // {
-    //     path: '/register',
-    //     name: 'register',
-    //     component: Register
-    // },
+    {
+        path: '/register',
+        name: 'register',
+        component: Register
+    },
     {
         path: '/login',
         name: 'login',

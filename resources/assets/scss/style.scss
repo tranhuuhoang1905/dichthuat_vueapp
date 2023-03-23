@@ -5,7 +5,53 @@ body {
 textarea {
     overflow: hidden;
 }
-
+.app_vue{
+    .container-xl{
+        padding: 0 !important;
+        max-width: 100% !important;
+    }
+    .container{
+    max-width: 1140px !important;
+    }
+}
+.login_register{
+    .container-fluid{
+        .row{
+            margin: 0 !important;
+            .custom-control-input {
+                height: 17px;
+                width: 30px !important;
+            }
+        }
+    }
+}
+.navbar_home {
+    .navbar {
+      padding: 0;
+      .btn-logout:hover {
+        color: blue !important;
+      }
+      .navbar_menu {
+        margin-right: 30px;
+        position: relative;
+        &:hover .border_link {
+          display: block;
+        }
+        .border_link {
+          width: 100%;
+          position: absolute;
+          height: 4px;
+          background: white !important;
+          bottom: 0;
+          left: 0;
+          display: none;
+        }
+      }
+    }
+    .bg-main {
+      background-color: #091e42f2;
+    }
+}
 .translate {
     .translate-body {
         margin: 10px 0;
@@ -94,10 +140,6 @@ textarea {
             cursor: pointer;
         }
     }
-
-
-
-
     .language {
         margin-right: 10px;
         color: #000;
@@ -107,9 +149,9 @@ textarea {
         label {
             display: inline-block;
             width: 100%;
+            margin-bottom: 0 !important;
         }
     }
-
     .btn-keyboard i {
         cursor: pointer;
         color: #091e42f2;

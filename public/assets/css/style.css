@@ -6,6 +6,48 @@ textarea {
   overflow: hidden;
 }
 
+.app_vue .container-xl {
+  padding: 0 !important;
+  max-width: 100% !important;
+}
+.app_vue .container {
+  max-width: 1140px !important;
+}
+
+.login_register .container-fluid .row {
+  margin: 0 !important;
+}
+.login_register .container-fluid .row .custom-control-input {
+  height: 17px;
+  width: 30px !important;
+}
+
+.navbar_home .navbar {
+  padding: 0;
+}
+.navbar_home .navbar .btn-logout:hover {
+  color: blue !important;
+}
+.navbar_home .navbar .navbar_menu {
+  margin-right: 30px;
+  position: relative;
+}
+.navbar_home .navbar .navbar_menu:hover .border_link {
+  display: block;
+}
+.navbar_home .navbar .navbar_menu .border_link {
+  width: 100%;
+  position: absolute;
+  height: 4px;
+  background: white !important;
+  bottom: 0;
+  left: 0;
+  display: none;
+}
+.navbar_home .bg-main {
+  background-color: rgba(9, 30, 66, 0.9490196078);
+}
+
 .translate .translate-body {
   margin: 10px 0;
 }
@@ -90,6 +132,7 @@ textarea {
 .translate .language label {
   display: inline-block;
   width: 100%;
+  margin-bottom: 0 !important;
 }
 .translate .btn-keyboard i {
   cursor: pointer;

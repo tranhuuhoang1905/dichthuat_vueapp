@@ -1,4 +1,5 @@
 <template>
+   <div class="app_vue">
     <div v-if="$route.path === '/login'">
         <login />
     </div>
@@ -9,13 +10,17 @@
         !loginResponse.authenticated">
         <login />
     </div>
-    <div class="container" v-else-if="isHomeRoute">
-        <div class="text-center" style="margin: 20px 0px 20px 0px;">
+    <div v-else-if="isHomeRoute">
+       <div class="container-xl">
+        <!-- <div class="text-center" style="margin: 20px 0px 20px 0px;">
             <span class="text-secondary">Laravel Home Example</span>
-        </div>
+        </div> -->
         <HomeNavbarView />
-        <br />
+       </div>
+        <div class="container">
+            <br />
         <router-view></router-view>
+        </div>
     </div>
     <div class="" v-else>
         <LayoutWrapper />
@@ -23,6 +28,7 @@
         <!-- <router-view></router-view> -->
         <RightSidebar />
     </div>
+   </div>
 </template>
 <script>
 import login from './components/account/Login.vue';
