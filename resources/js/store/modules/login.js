@@ -38,7 +38,10 @@ const actions = {
                                 console.log("----------check login authe");
                                 if (getters.getAuthUser.roles.some(role => role.name === "admin")) {
                                     // Chuyển hướng đến trang admin
-                                    Router.push('/admin');
+                                    // Router.push('/admin').then(() => {
+                                    //     location.reload();
+                                    // });
+                                    window.location.replace('/admin');
                                 } else {
                                     // Chuyển hướng đến trang chính
                                     Router.push('/');
@@ -89,7 +92,10 @@ const actions = {
                                     'authUser',
                                     JSON.stringify(response.data)
                                 );
-                                Router.push('/admin');
+                                // Router.push('/admin').then(() => {
+                                //     location.reload();
+                                // });
+                                window.location.replace('/admin');
                             }
                         });
                     }

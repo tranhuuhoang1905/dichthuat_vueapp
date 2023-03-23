@@ -29,7 +29,7 @@ export const routes = [
     {
         name: 'admin', path: '/admin', component: Dashboard, meta: { requiresAuth: true } // thêm meta để kiểm tra xem route này cần đăng nhập hay không
     },
-    { name: 'words', path: '/admin/words', component: AllWords },
+    { name: 'words', path: '/admin/words', component: AllWords, meta: { requiresAuth: true } },
     { name: 'add-word', path: '/admin/word/add', component: AddWord },
     { name: 'import-word-from-excel', path: '/admin/word/import-word-from-excel', component: ImportWordFromExcel },
     { name: 'translate-word-from-excel', path: '/admin/word/translate-word-from-excel', component: TranslateWordFromExcel },

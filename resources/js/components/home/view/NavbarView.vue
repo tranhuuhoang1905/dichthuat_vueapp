@@ -6,10 +6,9 @@
                 <span class="text-white">Laravel Home Example</span>
             </div>
             <div class="navbar-nav px-5 align-items-center">
-                <router-link to="/admin" class="navbar_menu nav-item nav-link py-4 text-white">
-                    Dashboard
+                <a href="/admin" class="navbar_menu nav-item nav-link py-4 text-white">Dashboard
                     <div class="border_link"></div>
-                </router-link>
+                </a>
                 <button class="btn-logout bg-white text-black py-2 px-4 rounded-1 border border-0" @click="logoutSubmit">
                     Logout
                 </button>
@@ -26,9 +25,6 @@ export default {
         ...mapActions(['logout']),
         logoutSubmit() {
             this.logout(this.loginData);
-        },
-        reloadPage() {
-            location.reload();
         },
     },
     computed: {
@@ -70,4 +66,5 @@ export default {
     bottom: 0;
     left: 0;
     display: none;
-}</style>
+}
+</style>

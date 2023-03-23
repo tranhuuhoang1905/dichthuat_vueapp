@@ -68,3 +68,28 @@
     </div>
     <!-- Left Sidebar End -->
 </template>
+<script>
+export default {
+    data() {
+        return {
+            isExpanded: false
+        }
+    },
+    methods: {
+        toggleExpand() {
+            this.isExpanded = !this.isExpanded;
+        }
+    },
+    mounted() {
+        // Đặt lại thuộc tính aria-expanded khi component được tải lại
+        // const element = document.getElementsByClassName('has-arrow');
+        // if (element) {
+        //     element.setAttribute('aria-expanded', this.isExpanded);
+        // }
+        const element = document.querySelector('.has-arrow');
+        if (element instanceof Element) {
+            element.setAttribute('aria-expanded', 'true');
+        }
+    }
+}
+</script>
