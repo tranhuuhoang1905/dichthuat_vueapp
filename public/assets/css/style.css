@@ -172,3 +172,17 @@ textarea {
 .all_languages_word .row #datatable .btn-actions:hover {
   background: #4b5a83;
 }
+
+.add-edit-language .card {
+  width: initial;
+}
+.add-edit-language .card form {
+  width: 700px;
+}
+.add-edit-language .card form .btn-add-edit {
+  background: #252b3b;
+  color: #fff;
+}
+.add-edit-language .card form .btn-add-edit:hover {
+  background: #4b5a83;
+}
