@@ -1,6 +1,13 @@
-@charset "UTF-8";
 body {
   background-color: #f7f7f7 !important;
+}
+body .btn-all-add-edit {
+  background: #252b3b;
+  color: #fff;
+}
+body .btn-all-add-edit:hover {
+  background: #4b5a83;
+  color: #fff;
 }
 
 textarea {
@@ -152,89 +159,24 @@ textarea {
   color: rgba(9, 30, 66, 0.9490196078);
 }
 
-.all_languages_word .row .custom-select {
+.user_manager .row .custom-select, .all_word .row .custom-select {
   padding-right: 25px;
 }
-.all_languages_word .row .page-item.active .page-link {
+.user_manager .row .page-item.active .page-link, .all_word .row .page-item.active .page-link {
   background: #252b3b;
 }
-.all_languages_word .row .page-item.active .page-link:hover {
+.user_manager .row .page-item.active .page-link:hover, .all_word .row .page-item.active .page-link:hover {
   background: #4b5a83;
 }
-.all_languages_word .row #datatable {
+.user_manager .row #datatable, .all_word .row #datatable {
   border-collapse: collapse;
   border-spacing: 0;
   width: 100%;
 }
-.all_languages_word .row #datatable .btn-actions {
-  background: #252b3b;
-  color: #fff;
-}
-.all_languages_word .row #datatable .btn-actions:hover {
-  background: #4b5a83;
-}
 
-/* Phân trang */
-.dataTables_paginate .paginate_button {
-  display: inline-block;
-  margin-bottom: 0;
-  font-weight: normal;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-          user-select: none;
-  cursor: pointer;
-  border: 1px solid #ddd;
-  padding: 6px 12px;
-  line-height: 1.42857143;
-  border-radius: 4px;
-  color: #337ab7;
-  background-color: #fff;
-  margin-left: -1px;
+.add_language .card, .edit_translate .card, .edit_language .card, .edit_word .card, .import_word_from_excel .card, .translate_word_from_excel .card {
+  width: initial;
 }
-
-.dataTables_paginate .paginate_button.active {
-  z-index: 3;
-  color: #fff;
-  background-color: #337ab7;
-  border-color: #337ab7;
-}
-
-.dataTables_paginate .paginate_button.disabled {
-  cursor: default;
-  color: #777;
-  background-color: #fff;
-  border-color: #ddd;
-}
-
-/* Thanh search */
-.dataTables_filter {
-  margin-bottom: 10px;
-}
-
-.dataTables_filter label {
-  font-weight: normal;
-}
-
-.dataTables_filter input[type=search] {
-  width: 100%;
-  height: 35px;
-  padding: 6px 12px;
-  font-size: 14px;
-  line-height: 1.42857143;
-  color: #555;
-  background-color: #fff;
-  background-image: none;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-}
-
-.dataTables_filter input[type=search]:focus {
-  border-color: #66afe9;
-  outline: 0;
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+.add_language .card form, .edit_translate .card form, .edit_language .card form, .edit_word .card form, .import_word_from_excel .card form, .translate_word_from_excel .card form {
+  width: 700px;
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="all_languages_word">
+  <div class="all_word">
     <div class="row">
       <div class="col-12">
         <div class="card show border border-0">

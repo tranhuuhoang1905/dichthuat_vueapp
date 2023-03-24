@@ -1,14 +1,21 @@
 <template>
-    <div class="container-xl user-namager">
-        <h3 class="text-center">User Manager</h3>
-        <table class="table">
+    <div class="user_manager">
+    <div class="row position-relative">
+      <div class="col-12">
+          <div class="card show border border-0">
+            <router-link :to="{name:'create-new-user'}" class="btn btn-all-add-edit my-3 mx-3 position-absolute ">Create new user</router-link>
+          <div class="card-body">
+            <h4 class="card-title text-center fs-4 my-3">User Manager</h4>
+           
+              <table id="datatable"
+              class="table table-bordered dt-responsive nowrap my-3">
             <thead>
                 <tr>
                     <th>STT</th>
                     <th>Tên</th>
                     <th>Email đăng nhập</th>
                     <th>Chức vụ</th>
-                    <th></th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -19,28 +26,22 @@
                     <td>
                         <p v-for="role in user.roles" :key="role.id">{{ role.name }}</p>
                     </td>
-                    <td>
+                    <td class="d-flex justify-content-evenly">
                         <router-link :to="{ name: 'change-role-user', params: { id: user.id } }"
-                            class="btn btn-primary">Change role
+                            class="btn btn-all-add-edit">Change role
                         </router-link>
                         <router-link :to="{ name: 'change-password-user', params: { id: user.id } }"
-                            class="btn btn-primary">Change password
+                            class="btn btn-all-add-edit">Change password
                         </router-link>
                     </td>
                 </tr>
             </tbody>
         </table>
-        <router-link to="/admin/user-manager/create-new-user">Create new user</router-link>
-        <div>
-            <a href="/api/export" download>Download Users Excel</a>
-        </div>
-
-        <div>
-            <form @submit.prevent="handleFileUpload">
-                <input type="file" ref="fileInput">
-                <button type="submit">Upload</button>
-            </form>
-        </div>
+       
+    </div>
+    </div>
+    </div>
+    </div>
     </div>
 </template>
   

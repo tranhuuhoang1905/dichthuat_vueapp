@@ -1,27 +1,32 @@
 body {
     background-color: #f7f7f7 !important;
+    .btn-all-add-edit{
+        background: #252b3b;
+        color: #fff;
+        &:hover{
+            background: #4b5a83;
+            color: #fff;
+        }
+    }
 }
 
 textarea {
     overflow: hidden;
 }
 
-.app_vue {
-    .container-xl {
+.app_vue{
+    .container-xl{
         padding: 0 !important;
         max-width: 100% !important;
     }
-
-    .container {
-        max-width: 1140px !important;
+    .container{
+    max-width: 1140px !important;
     }
 }
-
-.login_register {
-    .container-fluid {
-        .row {
+.login_register{
+    .container-fluid{
+        .row{
             margin: 0 !important;
-
             .custom-control-input {
                 height: 17px;
                 width: 30px !important;
@@ -29,40 +34,33 @@ textarea {
         }
     }
 }
-
 .navbar_home {
     .navbar {
-        padding: 0;
-
-        .btn-logout:hover {
-            color: blue !important;
+      padding: 0;
+      .btn-logout:hover {
+        color: blue !important;
+      }
+      .navbar_menu {
+        margin-right: 30px;
+        position: relative;
+        &:hover .border_link {
+          display: block;
         }
-
-        .navbar_menu {
-            margin-right: 30px;
-            position: relative;
-
-            &:hover .border_link {
-                display: block;
-            }
-
-            .border_link {
-                width: 100%;
-                position: absolute;
-                height: 4px;
-                background: white !important;
-                bottom: 0;
-                left: 0;
-                display: none;
-            }
+        .border_link {
+          width: 100%;
+          position: absolute;
+          height: 4px;
+          background: white !important;
+          bottom: 0;
+          left: 0;
+          display: none;
         }
+      }
     }
-
     .bg-main {
-        background-color: #091e42f2;
+      background-color: #091e42f2;
     }
 }
-
 .translate {
     .translate-body {
         margin: 10px 0;
@@ -151,7 +149,6 @@ textarea {
             cursor: pointer;
         }
     }
-
     .language {
         margin-right: 10px;
         color: #000;
@@ -164,7 +161,6 @@ textarea {
             margin-bottom: 0 !important;
         }
     }
-
     .btn-keyboard i {
         cursor: pointer;
         color: #091e42f2;
@@ -184,103 +180,30 @@ textarea {
         color: #091e42f2;
     }
 }
-
-.all_languages_word {
-    .row {
-        .custom-select {
-            padding-right: 25px;
+.user_manager,.all_word{
+    .row{
+        .custom-select{
+            padding-right:25px;
         }
-
-        .page-item.active .page-link {
+        .page-item.active .page-link{
             background: #252b3b;
-
-            &:hover {
+            &:hover{
                 background: #4b5a83;
             }
         }
-
-        #datatable {
+        #datatable{
             border-collapse: collapse;
             border-spacing: 0;
             width: 100%;
-
-            .btn-actions {
-                background: #252b3b;
-                color: #fff;
-
-                &:hover {
-                    background: #4b5a83;
-                }
-            }
         }
-
-
     }
 }
-
-/* Phân trang */
-.dataTables_paginate .paginate_button {
-    display: inline-block;
-    margin-bottom: 0;
-    font-weight: normal;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    user-select: none;
-    cursor: pointer;
-    border: 1px solid #ddd;
-    padding: 6px 12px;
-    line-height: 1.42857143;
-    border-radius: 4px;
-    color: #337ab7;
-    background-color: #fff;
-    margin-left: -1px;
-}
-
-.dataTables_paginate .paginate_button.active {
-    z-index: 3;
-    color: #fff;
-    background-color: #337ab7;
-    border-color: #337ab7;
-}
-
-.dataTables_paginate .paginate_button.disabled {
-    cursor: default;
-    color: #777;
-    background-color: #fff;
-    border-color: #ddd;
-}
-
-/* Thanh search */
-.dataTables_filter {
-    margin-bottom: 10px;
-}
-
-.dataTables_filter label {
-    font-weight: normal;
-}
-
-.dataTables_filter input[type="search"] {
-    width: 100%;
-    height: 35px;
-    padding: 6px 12px;
-    font-size: 14px;
-    line-height: 1.42857143;
-    color: #555;
-    background-color: #fff;
-    background-image: none;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
-    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
-    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-}
-
-.dataTables_filter input[type="search"]:focus {
-    border-color: #66afe9;
-    outline: 0;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+.add_language,.edit_translate,.edit_language,.edit_word,.import_word_from_excel,.translate_word_from_excel{
+    // margin: 20px;
+    .card{
+        width: initial;
+        form{
+            width: 700px;
+        }
+    }
 }
