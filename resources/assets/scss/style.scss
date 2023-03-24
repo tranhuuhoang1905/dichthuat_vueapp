@@ -194,7 +194,21 @@ textarea {
                 }
             }
         }
-        
-        
+    }
+}
+.add-edit-language {
+    // margin: 20px;
+    .card{
+        width: initial;
+        form{
+            width: 700px;
+            .btn-add-edit{
+                background: #252b3b;
+                color: #fff;
+                &:hover{
+                    background: #4b5a83;
+                }
+            }
+        }
     }
 }
