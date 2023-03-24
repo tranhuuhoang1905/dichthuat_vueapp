@@ -1,8 +1,11 @@
 <template>
-    <div>
-        <h3 class="text-center">Edit Word</h3>
+    <div class="edit_word">
         <div class="row">
-            <div class="col-md-6">
+      <div class="row d-flex justify-content-center">
+        <div class="card show border border-0">
+        <div class="card-body">
+          <h4 class="card-title text-center fs-4">Edit Word</h4>
+          <div class="col-md-12">
                 <form @submit.prevent="updateWord">
                     <div class="form-group">
                         <label>Word:</label>
@@ -11,20 +14,25 @@
                     </div>
                     <div class="form-group">
                         <label>Description</label>
-                        <input type="text" placeholder="Enter description" class="form-control"
-                            v-model="wordForm.description" required>
+                        <textarea type="text" placeholder="Enter description" class="form-control"
+                            v-model="wordForm.description" rows="7" required></textarea>
                     </div>
                     <div class="form-group">
                         <label>Language</label>
                         <select class="form-select" aria-label="Default select example" v-model="wordForm.language_id"
                             required>
-                            <option v-for="(language, index) in languages" :key="language.id" :value="`${language.id}`">{{
+                            <option v-for="(language) in languages" :key="language.id" :value="`${language.id}`">{{
                                 language.name }}</option>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary">Update Word</button>
+                    <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-all-add-edit">Update Word</button>
+                    </div>
                 </form>
             </div>
+        </div>
+            </div>
+        </div>
         </div>
     </div>
 </template>

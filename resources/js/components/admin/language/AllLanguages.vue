@@ -33,7 +33,7 @@
                             name: 'edit-language',
                             params: { id: language.id },
                           }"
-                          class="btn btn-actions rounded-3 mx-3"
+                          class="btn btn-all-add-edit rounded-3 mx-3"
                           ><i class="fas fa-edit"></i></router-link
                         >
                         <button

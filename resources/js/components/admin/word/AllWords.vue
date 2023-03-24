@@ -1,5 +1,5 @@
 <template>
-  <div class="all_languages_word">
+  <div class="all_word">
     <div class="row">
       <div class="col-12">
         <div class="card show border border-0">
@@ -32,7 +32,7 @@
                     <div class="btn-group" role="group">
                       <router-link
                         :to="{ name: 'word-default', params: { id: word.id } }"
-                        class="btn btn-actions"
+                        class="btn btn-all-add-edit"
                         >default
                       </router-link>
                       <!-- <router-link :to="{ name: 'edit-word', params: { id: word.id } }" class="btn btn-primary">Edit

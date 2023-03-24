@@ -1,5 +1,5 @@
 <template>
-  <div class="add-edit-language">
+  <div class="edit_language">
     <div class="row">
       <div class="row d-flex justify-content-center">
         <div class="card show border border-0">
@@ -29,7 +29,7 @@
                   ></textarea>
                 </div>
                 <div class="d-flex justify-content-center">
-                  <button type="submit" class="btn btn-add-edit">
+                  <button type="submit" class="btn btn-all-add-edit">
                     Update Language
                   </button>
                 </div>

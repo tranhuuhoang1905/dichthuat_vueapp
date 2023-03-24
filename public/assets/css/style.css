@@ -1,6 +1,14 @@
 body {
   background-color: #f7f7f7 !important;
 }
+body .btn-all-add-edit {
+  background: #252b3b;
+  color: #fff;
+}
+body .btn-all-add-edit:hover {
+  background: #4b5a83;
+  color: #fff;
+}
 
 textarea {
   overflow: hidden;
@@ -151,38 +159,24 @@ textarea {
   color: rgba(9, 30, 66, 0.9490196078);
 }
 
-.all_languages_word .row .custom-select {
+.user_manager .row .custom-select, .all_word .row .custom-select {
   padding-right: 25px;
 }
-.all_languages_word .row .page-item.active .page-link {
+.user_manager .row .page-item.active .page-link, .all_word .row .page-item.active .page-link {
   background: #252b3b;
 }
-.all_languages_word .row .page-item.active .page-link:hover {
+.user_manager .row .page-item.active .page-link:hover, .all_word .row .page-item.active .page-link:hover {
   background: #4b5a83;
 }
-.all_languages_word .row #datatable {
+.user_manager .row #datatable, .all_word .row #datatable {
   border-collapse: collapse;
   border-spacing: 0;
   width: 100%;
 }
-.all_languages_word .row #datatable .btn-actions {
-  background: #252b3b;
-  color: #fff;
-}
-.all_languages_word .row #datatable .btn-actions:hover {
-  background: #4b5a83;
-}
 
-.add-edit-language .card {
+.add_language .card, .edit_translate .card, .edit_language .card, .edit_word .card, .import_word_from_excel .card, .translate_word_from_excel .card {
   width: initial;
 }
-.add-edit-language .card form {
+.add_language .card form, .edit_translate .card form, .edit_language .card form, .edit_word .card form, .import_word_from_excel .card form, .translate_word_from_excel .card form {
   width: 700px;
-}
-.add-edit-language .card form .btn-add-edit {
-  background: #252b3b;
-  color: #fff;
-}
-.add-edit-language .card form .btn-add-edit:hover {
-  background: #4b5a83;
 }

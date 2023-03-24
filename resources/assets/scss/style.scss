@@ -1,10 +1,19 @@
 body {
     background-color: #f7f7f7 !important;
+    .btn-all-add-edit{
+        background: #252b3b;
+        color: #fff;
+        &:hover{
+            background: #4b5a83;
+            color: #fff;
+        }
+    }
 }
 
 textarea {
     overflow: hidden;
 }
+
 .app_vue{
     .container-xl{
         padding: 0 !important;
@@ -171,7 +180,7 @@ textarea {
         color: #091e42f2;
     }
 }
-.all_languages_word{
+.user_manager,.all_word{
     .row{
         .custom-select{
             padding-right:25px;
@@ -186,29 +195,15 @@ textarea {
             border-collapse: collapse;
             border-spacing: 0;
             width: 100%;
-            .btn-actions{
-                background: #252b3b;
-                color: #fff;
-                &:hover{
-                    background: #4b5a83;
-                }
-            }
         }
     }
 }
-.add-edit-language {
+.add_language,.edit_translate,.edit_language,.edit_word,.import_word_from_excel,.translate_word_from_excel{
     // margin: 20px;
     .card{
         width: initial;
         form{
             width: 700px;
-            .btn-add-edit{
-                background: #252b3b;
-                color: #fff;
-                &:hover{
-                    background: #4b5a83;
-                }
-            }
         }
     }
 }

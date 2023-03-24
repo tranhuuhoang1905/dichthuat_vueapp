@@ -1,36 +1,36 @@
 <template>
-    <div class="container-xl">
+    <div class="word_default">
         <h3 class="text-center">Word Default</h3>
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <h4>Word</h4>
-                <div class="word-default-data  translate-body">
+                <div class="word-default-data shadow-lg border border-0  translate-body">
                     <div class="search_content">
                         <div class="box_mean">
                             <div class="title">
                                 <p>{{ word.word }}</p>
                             </div>
                             <p class="box_mean-language">Language: {{ word.language }}</p>
-                            <router-link :to="{ name: 'edit-word', params: { id: wordId } }" class="btn btn-primary">Edit
+                            <router-link :to="{ name: 'edit-word', params: { id: wordId } }" class="btn btn-all-add-edit"><i class="fas fa-edit"></i>
                             </router-link>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-9">
+            <div class="col-md-8">
                 <h4>Translate</h4>
-                <div class="search-data translate-body">
-                    <div class="search_content" v-for="(translate, index) in translates">
+                <div class="search-data shadow-lg border border-0 translate-body">
+                    <div class="search_content" v-for="(translate, index) in translates " :key="index">
                         <hr v-if="index > 0">
-                        <div class="icon_dot">{{ index + 1 }})</div>
+                        <div class="icon_dot">{{ index + 1 }})  &nbsp;<span class="box_mean-language">Language: {{ translate.language }}</span></div>
                         <div class="box_mean">
-                            <p class="box_mean-language">Language: {{ translate.language }}</p>
+                            
                             <p class="box_mean-translate">Translate: {{ translate.translate }}</p>
                             <p class="box_mean-description">Description: {{ translate.description }}</p>
                             <p class="box_mean-description">Description in original language: {{
                                 translate.original_language_description }}</p>
                             <router-link :to="{ name: 'edit-translate', params: { id: translate.id } }"
-                                class="btn btn-primary">Edit
+                                class="btn btn-all-add-edit"><i class="fas fa-edit"></i>
                             </router-link>
                         </div>
                     </div>

@@ -81,7 +81,7 @@
 
 <!-- <script src="{{ asset('assets/js/pages/dashboard.init.js') }}"></script> -->
 <script src="{{ asset('assets/js/pages/datatables.init.js') }}"></script>
-<script src="{{ asset('assets/js/pages/form-wizard.init.js') }}"></script>
+<!-- <script src="{{ asset('assets/js/pages/form-wizard.init.js') }}"></script> -->
 
 <script src="{{ asset('assets/js/app2.js') }}"></script>
 </body>
