@@ -26049,7 +26049,8 @@ var _hoisted_14 = {
   "class": "px-0 py-2",
   type: "file",
   accept: ".xlsx",
-  ref: "fileInput"
+  ref: "fileInput",
+  required: ""
 };
 var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "d-flex justify-content-center"
@@ -26145,7 +26146,8 @@ var _hoisted_14 = {
   "class": "px-0 py-2",
   type: "file",
   accept: ".xlsx",
-  ref: "fileInput"
+  ref: "fileInput",
+  required: ""
 };
 var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "d-flex justify-content-center"
