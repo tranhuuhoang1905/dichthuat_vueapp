@@ -5,10 +5,7 @@
         <div class="card show border border-0">
           <div class="card-body">
             <h4 class="card-title text-center fs-4">All Words</h4>
-            <table
-              id="datatable"
-              class="table table-bordered dt-responsive nowrap"
-            >
+            <table ref="myTable" class="table table-bordered table-striped table-hover">
               <thead>
                 <tr>
                   <th>ID</th>
@@ -30,10 +27,7 @@
                   <td>{{ word.updated_at }}</td>
                   <td>
                     <div class="btn-group" role="group">
-                      <router-link
-                        :to="{ name: 'word-default', params: { id: word.id } }"
-                        class="btn btn-actions"
-                        >default
+                      <router-link :to="{ name: 'word-default', params: { id: word.id } }" class="btn btn-actions">default
                       </router-link>
                       <!-- <router-link :to="{ name: 'edit-word', params: { id: word.id } }" class="btn btn-primary">Edit
                             </router-link> -->
@@ -52,25 +46,19 @@
  
 <script>
 import { exit } from "process";
+import DataTable from 'datatables.net-vue3';
+import DataTablesCore from 'datatables.net';
+import $ from 'jquery';
 
+DataTable.use(DataTablesCore);
 export default {
   data() {
     return {
       words: [],
-      roles: [],
     };
   },
   created() {
-    //console.log(this.axios.get('/api/words'));
-    // exit();
-    // const userJson = localStorage.getItem('user');
-    // const user = JSON.parse(userJson);
-    console.log(this.authUser);
-    this.axios.post("/api/words").then((response) => {
-      this.words = response.data;
-      console.log(response.data);
-    });
-    console.log(this.words);
+    this.fetchData();
   },
   methods: {
     deleteWord(id) {
@@ -86,6 +74,30 @@ export default {
           let i = this.words.map((item) => item.id).indexOf(id); // find index of your object
           this.words.splice(i, 1);
         });
+    },
+    fetchData() {
+      this.axios.post("/api/words").then((response) => {
+        // this.words = response.data;
+        this.table = $(this.$refs.myTable).DataTable({
+          data: response.data,
+          columns: [
+            { data: 'id' },
+            { data: 'word' },
+            { data: 'description' },
+            { data: 'status' },
+            { data: 'created_at' },
+            { data: 'updated_at' },
+            {
+              data: 'id',
+              render: function (data, type, row) {
+                return '<div class="btn-group" role="group">' +
+                  '<router-link :to="{ name: \'word-default\', params: { id: ' + row.id + ' } }" class="btn btn-actions">default</router-link>' +
+                  '</div>';
+              }
+            }
+          ]
+        });
+      });
     },
   },
 };

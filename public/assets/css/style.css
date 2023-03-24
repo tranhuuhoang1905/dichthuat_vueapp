@@ -1,3 +1,4 @@
+@charset "UTF-8";
 body {
   background-color: #f7f7f7 !important;
 }
@@ -171,4 +172,69 @@ textarea {
 }
 .all_languages_word .row #datatable .btn-actions:hover {
   background: #4b5a83;
+}
+
+/* Phân trang */
+.dataTables_paginate .paginate_button {
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: normal;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  cursor: pointer;
+  border: 1px solid #ddd;
+  padding: 6px 12px;
+  line-height: 1.42857143;
+  border-radius: 4px;
+  color: #337ab7;
+  background-color: #fff;
+  margin-left: -1px;
+}
+
+.dataTables_paginate .paginate_button.active {
+  z-index: 3;
+  color: #fff;
+  background-color: #337ab7;
+  border-color: #337ab7;
+}
+
+.dataTables_paginate .paginate_button.disabled {
+  cursor: default;
+  color: #777;
+  background-color: #fff;
+  border-color: #ddd;
+}
+
+/* Thanh search */
+.dataTables_filter {
+  margin-bottom: 10px;
+}
+
+.dataTables_filter label {
+  font-weight: normal;
+}
+
+.dataTables_filter input[type=search] {
+  width: 100%;
+  height: 35px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+
+.dataTables_filter input[type=search]:focus {
+  border-color: #66afe9;
+  outline: 0;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
 }
