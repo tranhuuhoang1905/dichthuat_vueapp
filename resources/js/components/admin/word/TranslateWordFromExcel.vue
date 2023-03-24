@@ -11,35 +11,19 @@
               <form @submit.prevent="translateWordsFromExcel">
                 <div class="form-group">
                   <label>Language</label>
-                  <select
-                    class="form-select"
-                    aria-label="Default select example"
-                    v-model="WordsFromExcel.language_id"
-                    required
-                  >
-                    <option
-                      v-for="language in languages"
-                      :key="language.id"
-                      :value="`${language.id}`"
-                    >
+                  <select class="form-select" aria-label="Default select example" v-model="WordsFromExcel.language_id"
+                    required>
+                    <option v-for="language in languages" :key="language.id" :value="`${language.id}`">
                       {{ language.name }}
                     </option>
                   </select>
                 </div>
                 <div class="form-group">
-                  <label>Language translate id</label>
-                  <select
-                    class="form-select"
-                    aria-label="Default select example"
-                    v-model="WordsFromExcel.language_translate_id"
-                    required
-                  >
+                  <label>Target language</label>
+                  <select class="form-select" aria-label="Default select example"
+                    v-model="WordsFromExcel.language_translate_id" required>
                     <!-- <option :value="-1" selected>Open this select menu</option> -->
-                    <option
-                      v-for="language in languages"
-                      :key="language.id"
-                      :value="`${language.id}`"
-                    >
+                    <option v-for="language in languages" :key="language.id" :value="`${language.id}`">
                       {{ language.name }}
                     </option>
                   </select>
@@ -47,8 +31,10 @@
                 </div>
                 <input class="px-0 py-2" type="file" accept=".xlsx" ref="fileInput" />
                 <div class="d-flex justify-content-center">
-                <button type="submit" class="btn-all-add-edit py-2 px-5 rounded border border-0">Upload</button>
+                  <button type="submit" class="btn-all-add-edit py-2 px-5 rounded border border-0">Upload</button>
                 </div>
+                <p style="color: red;">*: Provide an Excel file with the words you want to translate in column A. We'll
+                  send back a file with search results in column B (blank if the word isn't in our database).</p>
               </form>
             </div>
           </div>
