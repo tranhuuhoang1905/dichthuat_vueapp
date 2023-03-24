@@ -1,12 +1,11 @@
 <template>
-  <div class="all_languages_word">
+  <div class="all_languages">
     <div class="row">
       <div class="col-12">
         <div class="card show border border-0">
           <div class="card-body">
             <h4 class="card-title text-center fs-4">All Languages</h4>
-              <table id="datatable"
-              class="table table-bordered dt-responsive nowrap">
+              <table ref="myTable" class="table table-bordered table-striped table-hover">
                 <thead>
                   <tr>
                     <th>ID</th>
@@ -26,6 +25,7 @@
                     <td>{{ language.status }}</td>
                     <td>{{ language.created_at }}</td>
                     <td>{{ language.updated_at }}</td>
+                    
                     <td>
                       <div class="btn-group" role="group">
                         <router-link
@@ -55,23 +55,29 @@
 </template>
 
 <script>
+import { exit } from "process";
+import DataTable from 'datatables.net-vue3';
+import DataTablesCore from 'datatables.net';
+import $ from 'jquery';
+DataTable.use(DataTablesCore);
 export default {
   data() {
     return {
       languages: [],
       roles: [],
     };
-  },
+  },  
   created() {
-    this.axios
-      .get("/api/languages")
-      .then((response) => {
-        this.languages = response.data;
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    this.fetchData();
+    // this.axios
+    //   .get("/api/languages")
+    //   .then((response) => {
+    //     this.languages = response.data;
+    //     console.log(response.data);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
   },
   methods: {
     deleteLanguage(id) {
@@ -90,6 +96,31 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+    fetchData() {
+      this.axios.get("/api/languages").then((response) => {
+        // this.words = response.data;
+        this.table = $(this.$refs.myTable).DataTable({
+          data: response.data,
+          columns: [
+            { data: 'id' },
+            { data: 'name' },
+            { data: 'description' },
+            { data: 'state' },
+            { data: 'created_at' },
+            { data: 'updated_at' },
+            {
+              data: 'id',
+              render: function (data, type, row) {
+                return '<div class="btn-group" role="group">' +
+                  '<router-link :to="{ name: \'edit-language\', params: { id: ' + row.id + ' } }" class="btn btn-all-add-edit rounded-3 mx-3"><i class="fas fa-edit"></i></router-link>' +
+                  '<button @click="deleteLanguage('+ row.id +')"  class="btn btn-danger rounded-3"><i class="fas fa-trash"></i></button>'+
+                  '</div>';
+              }
+            }
+          ]
+        });
+      });
     },
   },
 };

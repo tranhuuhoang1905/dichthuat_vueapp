@@ -45,7 +45,7 @@
                   </select>
                   <!-- <input type="text" class="form-control" v-model="word.language_translate_id"> -->
                 </div>
-                <input class="px-0 py-2" type="file" accept=".xlsx" ref="fileInput" />
+                <div class="choose-file"><input class="px-0 py-2" type="file" accept=".xlsx" ref="fileInput" /></div>
                 <div class="d-flex justify-content-center">
                 <button type="submit" class="btn-all-add-edit py-2 px-5 rounded border border-0">Upload</button>
                 </div>

@@ -27,7 +27,7 @@
                   <td>{{ word.updated_at }}</td>
                   <td>
                     <div class="btn-group" role="group">
-                      <router-link :to="{ name: 'word-default', params: { id: word.id } }" class="btn btn-actions">default
+                      <router-link :to="{ name: 'word-default', params: { id: word.id } }" class="btn btn-all-add-edit">Default
                       </router-link>
                       <!-- <router-link :to="{ name: 'edit-word', params: { id: word.id } }" class="btn btn-primary">Edit
                             </router-link> -->
@@ -91,7 +91,7 @@ export default {
               data: 'id',
               render: function (data, type, row) {
                 return '<div class="btn-group" role="group">' +
-                  '<router-link :to="{ name: \'word-default\', params: { id: ' + row.id + ' } }" class="btn btn-actions">default</router-link>' +
+                  '<router-link :to="{ name: \'word-default\', params: { id: ' + row.id + ' } }" class="btn btn-all-add-edit">Default</router-link>' +
                   '</div>';
               }
             }
