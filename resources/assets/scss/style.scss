@@ -180,30 +180,50 @@ textarea {
         color: #091e42f2;
     }
 }
-.user_manager,.all_word{
+.user_manager,.all_word,.all_languages{
     .row{
-        .custom-select{
-            padding-right:25px;
+        select{
+            padding: 2px;
+            border-radius: 5px;
         }
-        .page-item.active .page-link{
-            background: #252b3b;
+        .previous{
+           
+            margin-right: 5px;
+        }
+        .current{
+            border-radius: 20px;
+            border: none;
+            background: #252b3b !important;
+            color: #fff;
             &:hover{
                 background: #4b5a83;
+                color: #fff;
             }
         }
-        #datatable{
-            border-collapse: collapse;
-            border-spacing: 0;
-            width: 100%;
+        .next{
+            border-radius: 5px;
+            margin-left: 5px;
         }
+        
     }
 }
-.add_language,.edit_translate,.edit_language,.edit_word,.import_word_from_excel,.translate_word_from_excel{
+.add_language,.edit_translate,.edit_language,.edit_word,.import_word_from_excel,.translate_word_from_excel,.change_role_user,.change_password_user,.create_user{
     // margin: 20px;
     .card{
         width: initial;
         form{
             width: 700px;
+            .choose-file{
+                width: 200px;
+                input{
+                    #file-upload-button{
+                        color: red;
+                    }
+                    width: 250px;
+                    height: 60px;
+                    padding: 0;
+                }
+            }
         }
     }
 }

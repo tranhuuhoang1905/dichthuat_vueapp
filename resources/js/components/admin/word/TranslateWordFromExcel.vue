@@ -19,7 +19,7 @@
                   </select>
                 </div>
                 <div class="form-group">
-                  <label>Target language</label>
+                  <label>Language translate id</label>
                   <select class="form-select" aria-label="Default select example"
                     v-model="WordsFromExcel.language_translate_id" required>
                     <!-- <option :value="-1" selected>Open this select menu</option> -->
@@ -29,12 +29,11 @@
                   </select>
                   <!-- <input type="text" class="form-control" v-model="word.language_translate_id"> -->
                 </div>
-                <input class="px-0 py-2" type="file" accept=".xlsx" ref="fileInput" required />
+                <div class="choose-file"><input class="px-0 py-2" type="file" accept=".xlsx" ref="fileInput" required />
+                </div>
                 <div class="d-flex justify-content-center">
                   <button type="submit" class="btn-all-add-edit py-2 px-5 rounded border border-0">Upload</button>
                 </div>
-                <p style="color: red;">*: Provide an Excel file with the words you want to translate in column A. We'll
-                  send back a file with search results in column B (blank if the word isn't in our database).</p>
               </form>
             </div>
           </div>
