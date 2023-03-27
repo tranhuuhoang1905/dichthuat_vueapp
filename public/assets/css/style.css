@@ -184,17 +184,34 @@ textarea {
 .add_language .card, .edit_translate .card, .edit_language .card, .edit_word .card, .import_word_from_excel .card, .translate_word_from_excel .card, .change_role_user .card, .change_password_user .card, .create_user .card {
   width: initial;
 }
-.add_language .card form, .edit_translate .card form, .edit_language .card form, .edit_word .card form, .import_word_from_excel .card form, .translate_word_from_excel .card form, .change_role_user .card form, .change_password_user .card form, .create_user .card form {
-  width: 700px;
-}
 .add_language .card form .choose-file, .edit_translate .card form .choose-file, .edit_language .card form .choose-file, .edit_word .card form .choose-file, .import_word_from_excel .card form .choose-file, .translate_word_from_excel .card form .choose-file, .change_role_user .card form .choose-file, .change_password_user .card form .choose-file, .create_user .card form .choose-file {
-  width: 200px;
+  position: relative;
+  width: 100% !important;
 }
-.add_language .card form .choose-file input, .edit_translate .card form .choose-file input, .edit_language .card form .choose-file input, .edit_word .card form .choose-file input, .import_word_from_excel .card form .choose-file input, .translate_word_from_excel .card form .choose-file input, .change_role_user .card form .choose-file input, .change_password_user .card form .choose-file input, .create_user .card form .choose-file input {
-  width: 250px;
-  height: 60px;
-  padding: 0;
+.add_language .card form .choose-file input[type=file], .edit_translate .card form .choose-file input[type=file], .edit_language .card form .choose-file input[type=file], .edit_word .card form .choose-file input[type=file], .import_word_from_excel .card form .choose-file input[type=file], .translate_word_from_excel .card form .choose-file input[type=file], .change_role_user .card form .choose-file input[type=file], .change_password_user .card form .choose-file input[type=file], .create_user .card form .choose-file input[type=file] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  width: 10px;
+  height: 10px;
+  cursor: pointer;
 }
-.add_language .card form .choose-file input #file-upload-button, .edit_translate .card form .choose-file input #file-upload-button, .edit_language .card form .choose-file input #file-upload-button, .edit_word .card form .choose-file input #file-upload-button, .import_word_from_excel .card form .choose-file input #file-upload-button, .translate_word_from_excel .card form .choose-file input #file-upload-button, .change_role_user .card form .choose-file input #file-upload-button, .change_password_user .card form .choose-file input #file-upload-button, .create_user .card form .choose-file input #file-upload-button {
+.add_language .card form .choose-file .btn-choose-file, .edit_translate .card form .choose-file .btn-choose-file, .edit_language .card form .choose-file .btn-choose-file, .edit_word .card form .choose-file .btn-choose-file, .import_word_from_excel .card form .choose-file .btn-choose-file, .translate_word_from_excel .card form .choose-file .btn-choose-file, .change_role_user .card form .choose-file .btn-choose-file, .change_password_user .card form .choose-file .btn-choose-file, .create_user .card form .choose-file .btn-choose-file {
+  position: relative;
+  z-index: 1;
+}
+.add_language .card form .choose-file span, .edit_translate .card form .choose-file span, .edit_language .card form .choose-file span, .edit_word .card form .choose-file span, .import_word_from_excel .card form .choose-file span, .translate_word_from_excel .card form .choose-file span, .change_role_user .card form .choose-file span, .change_password_user .card form .choose-file span, .create_user .card form .choose-file span {
+  position: relative;
+  z-index: 0;
+  padding-left: 5px;
+}
+.add_language .card form p, .edit_translate .card form p, .edit_language .card form p, .edit_word .card form p, .import_word_from_excel .card form p, .translate_word_from_excel .card form p, .change_role_user .card form p, .change_password_user .card form p, .create_user .card form p {
   color: red;
+}
+
+.profile .form-group .label-item::before {
+  content: "*";
+  color: #ff4949;
+  margin-right: 4px;
 }

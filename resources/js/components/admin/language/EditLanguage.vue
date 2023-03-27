@@ -22,6 +22,7 @@
                   <textarea
                     id="language-description"
                     rows="7"
+                    cols="70"
                     type="text"
                     class="form-control"
                     v-model="language.description"

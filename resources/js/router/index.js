@@ -27,6 +27,10 @@ import CreateNewUser from '../components/admin/user/CreateNewUser.vue';
 import ChangeRoleUser from '../components/admin/user/ChangeRoleUser.vue';
 import ChangePasswordUser from '../components/admin/user/ChangePasswordUser.vue';
 
+
+import ProfileParent from '../components/admin/profile/ProfileParent.vue';
+import Profile from '../components/admin/profile/Profile.vue'
+import ChangePasswordProfile from '../components/admin/profile/ChangePassword.vue'
 import Login from '../components/account/Login.vue';
 export const routes = [
     { name: 'home', path: '/', component: Translate },
@@ -135,6 +139,26 @@ export const routes = [
                         name: 'Change Password User',
                         path: 'change-pasword-user/:id',
                         component: ChangePasswordUser,
+                        meta: { requiresAuth: true }
+                    }
+                ]
+            },
+            {
+                name: 'Profile',
+                path: 'profile',
+                component: ProfileParent,
+                meta: { requiresAuth: true },
+                children: [
+                    {
+                        name: 'Profile User',
+                        path: 'profile-user/:id',
+                        component: Profile,
+                        meta: { requiresAuth: true }
+                    },
+                    {
+                        name: 'Change Password',
+                        path: 'change-pasword/:id',
+                        component: ChangePasswordProfile,
                         meta: { requiresAuth: true }
                     }
                 ]

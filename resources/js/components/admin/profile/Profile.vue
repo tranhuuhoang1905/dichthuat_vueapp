@@ -1,0 +1,66 @@
+<template>
+  <div class="profile">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card show border border-0">
+          <div class="card-body">
+            <h4 class="card-title text-center fs-4">Profile</h4>
+            <div class="form-group">
+              <i class="fas fa-user text-secondary mx-3"></i>
+              <router-link :to="{ name: 'Profile User', params: { id: 1 } }" class="text-secondary">Profile</router-link>
+            </div>
+            <div class="form-group">
+              <i class="fas fa-lock text-secondary mx-3"></i>
+              <router-link :to="{ name: 'Change Password', params: { id: 1 } }" class="text-secondary">Đổi mật
+                khẩu</router-link>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-8">
+        <div class="card show border border-0">
+          <div class="card-body">
+            <h4 class="card-title text-center fs-4">Chỉnh sửa thông tin</h4>
+            <div class="col-md-12">
+              <form @submit.prevent="">
+                <div class="row">
+                  <div class="col-md-6 col-sm-12">
+                    <div class="form-group">
+                      <label>UserName</label>
+                      <input type="text" placeholder="username" class="form-control" disabled />
+                    </div>
+                    <div class="form-group">
+                      <label>FirstName</label>
+                      <input type="text" placeholder="FirstName" class="form-control" />
+                    </div>
+                  </div>
+
+                  <div class="col-md-6 col-sm-12">
+                    <div class="form-group">
+                      <label>Email</label>
+                      <input type="email" placeholder="Email" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                      <label>LastName</label>
+                      <input type="text" placeholder="LastName" class="form-control" />
+                    </div>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-center">
+                  <button type="submit" class="btn btn-all-add-edit py-2 px-4">Lưu</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {};
+</script>
+
+<style></style>
