@@ -1,11 +1,11 @@
 <template>
   <div class="change_password_user">
-    <div class="row">
-      <div class="row d-flex justify-content-center">
+    <div class="row  d-flex justify-content-center">
+      <div class="col-md-7">
         <div class="card show border border-0">
           <div class="card-body">
             <h4 class="card-title text-center fs-4">Change password user</h4>
-            <div class="col-md-12 d-flex flex-column align-items-center">
+            <div class="col-md-12">
               <form @submit.prevent="updateUser">
                 <div class="row">
                   <div class=" col-md-12">
