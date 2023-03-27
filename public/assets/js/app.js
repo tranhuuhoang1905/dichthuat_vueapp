@@ -26857,15 +26857,15 @@ var _hoisted_2 = {
   "class": "navbar navbar-expand-lg navbar-light bg-main shadow-sm"
 };
 var _hoisted_3 = {
-  "class": "collapse navbar-collapse d-flex justify-content-between"
+  "class": "collapse navbar-collapse d-flex justify-content-around"
 };
 var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "text-center py-4 px-5"
+  "class": "text-center py-4 ps-1 ps-md-5"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "text-white"
 }, "Laravel Home Example")], -1 /* HOISTED */);
 var _hoisted_5 = {
-  "class": "navbar-nav px-5 align-items-center"
+  "class": "navbar-nav align-items-center flex-row pe-2 pe-md-5"
 };
 var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
   href: "/admin",

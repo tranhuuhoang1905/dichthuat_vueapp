@@ -137,6 +137,10 @@ textarea {
   width: 150px;
   font-size: 1rem;
 }
+.translate .language .btn-check {
+  width: 0;
+  height: 0;
+}
 .translate .language label {
   display: inline-block;
   width: 100%;
