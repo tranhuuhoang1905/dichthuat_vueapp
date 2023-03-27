@@ -24,6 +24,7 @@
                   type="text"
                   placeholder="Enter description"
                   class="form-control"
+                  cols="70"
                   rows="7"
                   v-model="language.description"
                 ></textarea>

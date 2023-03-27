@@ -15,7 +15,7 @@
                     <div class="form-group">
                         <label>Description</label>
                         <textarea type="text" placeholder="Enter description" class="form-control"
-                            v-model="wordForm.description" rows="7" required></textarea>
+                            v-model="wordForm.description" rows="7" cols="70" required></textarea>
                     </div>
                     <div class="form-group">
                         <label>Language</label>

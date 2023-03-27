@@ -1,49 +1,79 @@
 <template>
   <div class="import_word_from_excel">
     <div class="row">
-      <div class="row d-flex justify-content-center">
-        <div class="card show border border-0">
-          <div class="card-body">
-            <h4 class="card-title text-center fs-4">Import Word From Excel</h4>
-            <div class="col-md-12 d-flex flex-column align-items-center">
-              <form @submit.prevent="importWordsFromExcel">
-                <div class="form-group">
-                  <label>Language</label>
-                  <select class="form-select" aria-label="Default select example" v-model="WordsFromExcel.language_id"
-                    required>
-                    <option v-for="language in languages" :key="language.id" :value="`${language.id}`">
-                      {{ language.name }}
-                    </option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label>Language translate id</label>
-                  <select class="form-select" aria-label="Default select example"
-                    v-model="WordsFromExcel.language_translate_id" required>
-                    <!-- <option :value="-1" selected>Open this select menu</option> -->
-                    <option v-for="language in languages" :key="language.id" :value="`${language.id}`">
-                      {{ language.name }}
-                    </option>
-                  </select>
-                  <!-- <input type="text" class="form-control" v-model="word.language_translate_id"> -->
-                </div>
-                <div class="choose-file">
-                  <!-- <label> -->
-                  <input style="width: 10px; height: 10px;" class="px-0 py-2" type="file" accept=".xlsx, .xls"
-                    ref="fileInput" required @change="onFileChange" />
-                  <button class="btn-choose-file" @click.prevent="openFileDialog">Choose file</button>
-                  <span v-if="!fileSelected">No file chosen</span>
-                  <span v-else>{{ selectedFile }}</span>
-                  <!-- </label> -->
-                </div>
-                <div class="d-flex justify-content-center">
-                  <button type="submit " class="btn-all-add-edit py-2 px-5 rounded border border-0">Upload</button>
-                </div>
-                <p style="color: red;">*: Provide an Excel file. Use column A for new words, column B for translations,
-                  column C for descriptions in the original language (optional), and column D for translations (optional).
-                  Leave the description columns blank if there is no information.</p>
-              </form>
-            </div>
+      <div class="card show border border-0">
+        <div class="card-body">
+          <h4 class="card-title text-center fs-4">Import Word From Excel</h4>
+          <div class="col-md-12 d-flex flex-column align-items-center">
+            <form @submit.prevent="importWordsFromExcel">
+              <div class="form-group">
+                <label>Language</label>
+                <select
+                  class="form-select"
+                  aria-label="Default select example"
+                  v-model="WordsFromExcel.language_id"
+                  required
+                >
+                  <option
+                    v-for="language in languages"
+                    :key="language.id"
+                    :value="`${language.id}`"
+                  >
+                    {{ language.name }}
+                  </option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Language translate id</label>
+                <select
+                  class="form-select"
+                  aria-label="Default select example"
+                  v-model="WordsFromExcel.language_translate_id"
+                  required
+                >
+                  <!-- <option :value="-1" selected>Open this select menu</option> -->
+                  <option
+                    v-for="language in languages"
+                    :key="language.id"
+                    :value="`${language.id}`"
+                  >
+                    {{ language.name }}
+                  </option>
+                </select>
+                <!-- <input type="text" class="form-control" v-model="word.language_translate_id"> -->
+              </div>
+              <div class="choose-file">
+                <!-- <label> -->
+                <input
+                  class="px-0 py-2"
+                  type="file"
+                  accept=".xlsx, .xls"
+                  ref="fileInput"
+                  required
+                  @change="onFileChange"
+                />
+                <button class="btn-choose-file" @click.prevent="openFileDialog">
+                  Choose file
+                </button>
+                <span v-if="!fileSelected">No file chosen</span>
+                <span v-else>{{ selectedFile }}</span>
+                <!-- </label> -->
+              </div>
+              <div class="d-flex justify-content-center">
+                <button
+                  type="submit "
+                  class="btn-all-add-edit py-2 px-5 rounded border border-0 my-3"
+                >
+                  Upload
+                </button>
+              </div>
+              <p>
+                *: Provide an Excel file. Use column A for new words, column B
+                for translations, column C for descriptions in the original
+                language (optional), and column D for translations (optional).
+                Leave the description columns blank if there is no information.
+              </p>
+            </form>
           </div>
         </div>
       </div>
@@ -59,7 +89,7 @@ export default {
       word: {},
       WordsFromExcel: {},
       fileSelected: false,
-      selectedFile: '',
+      selectedFile: "",
     };
   },
   created() {
@@ -113,29 +143,3 @@ export default {
   },
 };
 </script>
-<style>
-.choose-file {
-  position: relative;
-  width: 500px !important;
-}
-
-.choose-file input[type="file"] {
-  position: absolute;
-  top: 0;
-  left: 0;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
-}
-
-.btn-choose-file {
-  position: relative;
-  z-index: 1;
-}
-
-.choose-file span {
-  position: relative;
-  z-index: 0;
-}
-</style>
