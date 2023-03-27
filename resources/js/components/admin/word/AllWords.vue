@@ -5,6 +5,7 @@
         <div class="card show border border-0">
           <div class="card-body">
             <h4 class="card-title text-center fs-4">All Words</h4>
+            <div class="table-responsive-lg">
             <table ref="myTable" class="table table-bordered table-striped table-hover">
               <thead>
                 <tr>
@@ -38,6 +39,7 @@
                 </tr>
               </tbody>
             </table>
+          </div>
           </div>
         </div>
       </div>
