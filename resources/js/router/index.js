@@ -22,6 +22,9 @@ import CreateNewUser from '../components/admin/user/CreateNewUser.vue';
 import ChangeRoleUser from '../components/admin/user/ChangeRoleUser.vue';
 import ChangePasswordUser from '../components/admin/user/ChangePasswordUser.vue';
 
+import Profile from '../components/admin/profile/Profile.vue'
+import ChangePasswordProfile from '../components/admin/profile/ChangePassword.vue'
+
 import Login from '../components/account/Login.vue';
 export const routes = [
     { name: 'home', path: '/', component: Translate },
@@ -41,6 +44,9 @@ export const routes = [
     { name: 'create-new-user', path: '/admin/user-manager/create-new-user', component: CreateNewUser, meta: { requiresAuth: true } },
     { name: 'change-role-user', path: '/admin/user-manager/change-role-user/:id', component: ChangeRoleUser, meta: { requiresAuth: true } },
     { name: 'change-password-user', path: '/admin/user-manager/change-pasword-user/:id', component: ChangePasswordUser, meta: { requiresAuth: true } },
+
+    { name: 'profile', path: '/admin/profile', component: Profile, meta: { requiresAuth: true } },
+    { name: 'changepassword', path: '/admin/profile/change-password', component: ChangePasswordProfile, meta: { requiresAuth: true } },
     {
         path: '/register',
         name: 'register',

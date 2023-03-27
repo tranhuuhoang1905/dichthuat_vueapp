@@ -198,3 +198,9 @@ textarea {
 .add_language .card form .choose-file input #file-upload-button, .edit_translate .card form .choose-file input #file-upload-button, .edit_language .card form .choose-file input #file-upload-button, .edit_word .card form .choose-file input #file-upload-button, .import_word_from_excel .card form .choose-file input #file-upload-button, .translate_word_from_excel .card form .choose-file input #file-upload-button, .change_role_user .card form .choose-file input #file-upload-button, .change_password_user .card form .choose-file input #file-upload-button, .create_user .card form .choose-file input #file-upload-button {
   color: red;
 }
+
+.profile .form-group .label-item::before {
+  content: "*";
+  color: #ff4949;
+  margin-right: 4px;
+}

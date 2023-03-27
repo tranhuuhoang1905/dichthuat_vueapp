@@ -227,3 +227,12 @@ textarea {
         }
     }
 }
+.profile {
+    .form-group {
+        .label-item::before {
+        content: "*";
+        color: #ff4949;
+        margin-right: 4px;
+        }
+    }
+}

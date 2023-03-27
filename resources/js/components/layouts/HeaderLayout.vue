@@ -381,7 +381,7 @@
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
 
-                        <a class="dropdown-item" href="#"><i class="ri-user-line align-middle mr-1"></i> Profile</a>
+                        <router-link class="dropdown-item" :to="{name: 'profile'}"><i class="ri-user-line align-middle mr-1"></i> Profile</router-link>
                         <!-- <a class="dropdown-item" href="#"><i class="ri-wallet-2-line align-middle mr-1"></i> My
                             Wallet</a>
                         <a class="dropdown-item d-block" href="#"><span
