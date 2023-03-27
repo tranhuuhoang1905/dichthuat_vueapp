@@ -7,7 +7,7 @@
             <register />
         </div>
         <div v-else-if="isAdminRoute">
-            <LayoutWrapper />
+            <LayoutWrapper :authUser="authUser" />
             <RightSidebar />
         </div>
         <div class="" v-else>

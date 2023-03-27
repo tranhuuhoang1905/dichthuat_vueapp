@@ -59,13 +59,13 @@ export const routes = [
                         meta: { requiresAuth: true }
                     },
                     {
-                        name: 'import-word-from-excel',
+                        name: 'Import Word From Excel',
                         path: 'import-word-from-excel',
                         component: ImportWordFromExcel,
                         meta: { requiresAuth: true }
                     },
                     {
-                        name: 'translate-word-from-excel',
+                        name: 'Translate Word From Excel',
                         path: 'translate-word-from-excel',
                         component: TranslateWordFromExcel,
                         meta: { requiresAuth: true }
@@ -108,7 +108,7 @@ export const routes = [
                         meta: { requiresAuth: true }
                     },
                     {
-                        name: 'edit-language',
+                        name: 'Edit Language',
                         path: 'edit/:id',
                         component: EditLanguage,
                         meta: { requiresAuth: true }
@@ -124,7 +124,7 @@ export const routes = [
 
                     { name: 'All User', path: '', component: AllUser },
                     {
-                        name: 'create-new-user',
+                        name: 'Create New User',
                         path: 'create-new-user',
                         component: CreateNewUser,
                         meta: { requiresAuth: true }
@@ -151,13 +151,13 @@ export const routes = [
                 children: [
                     {
                         name: 'Profile User',
-                        path: 'profile-user/:id',
+                        path: 'profile-user',
                         component: Profile,
                         meta: { requiresAuth: true }
                     },
                     {
                         name: 'Change Password',
-                        path: 'change-pasword/:id',
+                        path: 'change-pasword',
                         component: ChangePasswordProfile,
                         meta: { requiresAuth: true }
                     }

@@ -80,6 +80,7 @@ export default {
       this.axios.post("/api/words").then((response) => {
         // this.words = response.data;
         this.table = $(this.$refs.myTable).DataTable({
+          responsive: true,
           data: response.data,
           columns: [
             { data: 'id' },

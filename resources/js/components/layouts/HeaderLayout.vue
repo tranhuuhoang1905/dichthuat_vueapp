@@ -381,7 +381,7 @@
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
 
-                        <router-link class="dropdown-item" :to="{ name: 'Profile User', params: { id: 1 } }"><i
+                        <router-link class="dropdown-item" :to="{ name: 'Profile User' }"><i
                                 class="ri-user-line align-middle mr-1"></i> Profile</router-link>
                         <!-- <a class="dropdown-item" href="#"><i class="ri-wallet-2-line align-middle mr-1"></i> My
                             Wallet</a>
@@ -391,7 +391,7 @@
                         <a class="dropdown-item" href="#"><i class="ri-lock-unlock-line align-middle mr-1"></i> Lock
                             screen</a> -->
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item text-danger" href="#"><i
+                        <a class="dropdown-item text-danger" href="#" @click="logoutSubmit"><i
                                 class="ri-shut-down-line align-middle mr-1 text-danger"></i> Logout</a>
                     </div>
                 </div>
@@ -406,3 +406,22 @@
         </div>
     </header>
 </template>
+
+<script>
+import { mapGetters, mapMutations, mapActions } from "vuex";
+
+export default {
+
+    methods: {
+        ...mapActions(["logout"]),
+        logoutSubmit() {
+            this.logout(this.loginData);
+        },
+        reloadPage() {
+            location.reload();
+        },
+
+    },
+
+};
+</script>

@@ -71,11 +71,6 @@ const actions = {
                     repassword: registerData.repassword,
                 })
                 .then(response => {
-                    // commit('mutateRegisterResponse', response.data);
-                    // sessionStorage.setItem(
-                    //     'registerResponse',
-                    //     JSON.stringify(response.data)
-                    // );
                     commit('mutateLoginResponse', response.data);
                     sessionStorage.setItem(
                         'loginResponse',
@@ -92,14 +87,27 @@ const actions = {
                                     'authUser',
                                     JSON.stringify(response.data)
                                 );
-                                // Router.push('/admin').then(() => {
-                                //     location.reload();
-                                // });
                                 window.location.replace('/admin');
                             }
                         });
                     }
                 });
+        });
+    },
+
+    storeUpdateUser({ commit, getters }) {
+        axios.get('/sanctum/csrf-cookie').then(() => {
+            axios.get('/api/user').then(response => {
+
+                if (response.status == 200) {
+                    commit('mutateAuthUser', response.data);
+                    sessionStorage.setItem(
+                        'authUser',
+                        JSON.stringify(response.data)
+                    );
+                    // Router.push({ name: "Profile User" });
+                }
+            });
         });
     }
 };

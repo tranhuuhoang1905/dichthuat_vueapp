@@ -29,7 +29,7 @@
                   <td>
                     <div class="btn-group" role="group">
                       <router-link :to="{
-                        name: 'edit-language',
+                        name: 'Edit Language',
                         params: { id: language.id },
                       }" class="btn btn-all-add-edit rounded-3 mx-3"><i class="fas fa-edit"></i></router-link>
                       <button class="btn btn-danger rounded-3" @click="deleteLanguage(language.id)">

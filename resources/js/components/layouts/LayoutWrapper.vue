@@ -20,12 +20,12 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box d-flex align-items-center justify-content-between">
-                                <h4 class="mb-0">Dashboard</h4>
+                                <h4 class="mb-0">{{ pageName }}</h4>
 
                                 <div class="page-title-right">
-                                    <ol class="breadcrumb">
+                                    <ol class="breadcrumb" v-if="crumbs && crumbs.length > 0">
                                         <li class="breadcrumb-item" v-for="(crumb, index) in crumbs" :key="index">
-                                            <router-link :to="crumb.link">{{ crumb.title }}</router-link>
+                                            <p>{{ crumb.title }}</p>
                                         </li>
                                     </ol>
                                 </div>
@@ -63,12 +63,25 @@ export default {
     computed: {
         crumbs() {
             const routes = this.$route.matched
-            return routes.map(route => ({
+            const crumbs = routes.map(route => ({
                 title: route.name,
                 link: route.path,
                 breadcrumb: route.breadcrumb
             }))
+            if (crumbs.length > 0 && crumbs[crumbs.length - 1].title === 'Admin Dashboard') {
+                crumbs.pop()
+            }
+            console.log(crumbs[crumbs.length - 1].title);
+            console.log(crumbs);
+            return crumbs
+        },
+        pageName() {
+            if (this.crumbs.length > 0) {
+                return this.crumbs[this.crumbs.length - 1].title
+            } else {
+                return "Dashboard"
+            }
         }
-    }
+    },
 }
 </script>

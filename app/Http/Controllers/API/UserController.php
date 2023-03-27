@@ -5,18 +5,19 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth; 
+use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
 use Illuminate\Support\Facades\Hash;
-
 // test export file excel
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\UsersExport;
 use App\Exports\DataExport;
 use Illuminate\Support\Collection;
 // test export file excel
-use Validator;
+
 
 class UserController extends Controller
 {
@@ -81,7 +82,7 @@ class UserController extends Controller
     }
 
     // update user
-    public function changePasswordUser($id, Request $request)
+    public function adminChangePasswordUser($id, Request $request)
     {
         $user = User::find($id);
         $password = $request->input('password');
@@ -93,25 +94,51 @@ class UserController extends Controller
         $user->save();
         return response()->json('The user successfully updated');
     }
+    // update user
+    public function updateUser( Request $request)
+    {
+        $user = $request->user();
+        $userUpdate = User::find($user->id);
+        $userUpdate->last_name = $request->input('last_name');
+        $userUpdate->first_name = $request->input('first_name');
+        $userUpdate->phone_number = $request->input('phone_number');
+        $userUpdate->address = $request->input('address');
+        $userUpdate->save();
+        return response()->json(['success'=>true,'message'=>"update success"]);
+    }
+
+    /**
+     * Xử lý yêu cầu đăng nhập.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function userChangePassword(Request $request)
+    {
+        $user = $request->user();
+        $userUpdate = User::find($user->id);
+        // return response()->json($user->password);
+        if (!Hash::check($request->input('password'), $user->password)) {
+            return response()->json('Password false');
+        }
+        $passwordNew = $request->input('password_new');
+        $repasswordNew = $request->input('repassword_new');
+        if($passwordNew !== $repasswordNew or !$passwordNew){
+            return response()->json('The user false to updated');
+        }
+        $user->password = Hash::make($passwordNew);
+        $user->save();
+        return response()->json('The user successfully updated');
+    }
+    
 
     // test export file excel
-    public function export()
-    {
-        // $users = new Collection([
-        //     ['name' => 'John Doe', 'email' => 'johndoe@example.com'],
-        //     ['name' => 'Jane Doe', 'email' => 'janedoe@example.com'],
-        // ]);
+    // public function export()
+    // {
+    //     $fileName = 'users.xlsx';
 
-        $fileName = 'users.xlsx';
-
-        // $excelFile = Excel::download(function ($excel) use ($users) {
-        //     $excel->sheet('Sheet1', function ($sheet) use ($users) {
-        //         $sheet->fromArray($users);
-        //     });
-        // }, $fileName, \Maatwebsite\Excel\Excel::XLSX);
-        return Excel::download(new UsersExport, $fileName);
-        // return $excelFile;
-    }
+    //     return Excel::download(new UsersExport, $fileName);
+    // }
 
     public function uploadExcel(Request $request)
     {

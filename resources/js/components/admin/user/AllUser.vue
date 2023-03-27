@@ -3,7 +3,7 @@
     <div class="row position-relative">
       <div class="col-12">
         <div class="card show border border-0">
-          <router-link :to="{ name: 'create-new-user' }" class="btn btn-all-add-edit my-3 mx-3 position-absolute">Create
+          <router-link :to="{ name: 'Create New User' }" class="btn btn-all-add-edit my-3 mx-3 position-absolute">Create
             new user</router-link>
           <div class="card-body">
             <h4 class="card-title text-center fs-4 my-3">User Manager</h4>

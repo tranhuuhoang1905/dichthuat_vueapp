@@ -9,56 +9,33 @@
               <form @submit.prevent="updateTranslate">
                 <div class="form-group">
                   <label>Translate:</label>
-                  <input
-                    type="text"
-                    placeholder="Enter new word"
-                    class="form-control"
-                    v-model="translateForm.translate"
-                    required
-                  />
+                  <input type="text" placeholder="Enter new word" class="form-control" v-model="translateForm.translate"
+                    required />
                 </div>
                 <div class="form-group">
                   <label>Description</label>
-                  <textarea
-                    placeholder="Enter description"
-                    class="form-control"
-                    v-model="translateForm.description"
-                    rows="4"
-                    required
-                  ></textarea>
+                  <textarea placeholder="Enter description" class="form-control" v-model="translateForm.description"
+                    rows="4" required></textarea>
                 </div>
 
                 <div class="form-group">
                   <label>Description in original language:</label>
-                  <textarea
-                    placeholder="Enter description in original language"
-                    class="form-control"
-                    v-model="translateForm.original_language_description"
-                    rows="4"
-                    required
-                  ></textarea>
+                  <textarea placeholder="Enter description in original language" class="form-control"
+                    v-model="translateForm.original_language_description" rows="4" required></textarea>
                 </div>
                 <div class="form-group">
                   <label>Language</label>
-                  <select
-                    class="form-select"
-                    aria-label="Default select example"
-                    v-model="translateForm.language_id"
-                    required
-                  >
-                    <option
-                      v-for="language in languages"
-                      :key="language.id"
-                      :value="`${language.id}`"
-                    >
+                  <select class="form-select" aria-label="Default select example" v-model="translateForm.language_id"
+                    required>
+                    <option v-for="language in languages" :key="language.id" :value="`${language.id}`">
                       {{ language.name }}
                     </option>
                   </select>
                 </div>
                 <div class="d-flex justify-content-center">
-                <button type="submit" class="btn btn-all-add-edit">
-                  Update Word
-                </button>
+                  <button type="submit" class="btn btn-all-add-edit">
+                    Update Word
+                  </button>
                 </div>
               </form>
             </div>
@@ -100,7 +77,7 @@ export default {
           this.translateForm
         )
         .then((response) => {
-          this.$router.push({ name: "words" });
+          this.$router.push({ name: "All Word" });
         });
     },
   },

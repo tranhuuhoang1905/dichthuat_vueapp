@@ -11,50 +11,28 @@
                   <div class=" col-md-12">
                     <div class="form-group">
                       <label>Email</label>
-                      <input
-                        type="email"
-                        placeholder="Enter description"
-                        class="form-control"
-                        v-model="userForm.email"
-                        required
-                        disabled
-                      />
+                      <input type="email" placeholder="Enter description" class="form-control" v-model="userForm.email"
+                        required disabled />
                     </div>
                     <div class="form-group">
                       <label>Username</label>
-                      <input
-                        type="text"
-                        placeholder="Enter description"
-                        class="form-control"
-                        v-model="userForm.name"
-                        required
-                        disabled
-                      />
+                      <input type="text" placeholder="Enter description" class="form-control" v-model="userForm.name"
+                        required disabled />
                     </div>
                     <div class="form-group">
                       <label>Password</label>
-                      <input
-                        type="password"
-                        placeholder="Enter description"
-                        class="form-control"
-                        v-model="userForm.password"
-                        required
-                      />
+                      <input type="password" placeholder="Enter description" class="form-control"
+                        v-model="userForm.password" required />
                     </div>
                     <div class="form-group">
                       <label>Repassword</label>
-                      <input
-                        type="password"
-                        placeholder="Enter description"
-                        class="form-control"
-                        v-model="userForm.repassword"
-                        required
-                      />
+                      <input type="password" placeholder="Enter description" class="form-control"
+                        v-model="userForm.repassword" required />
                     </div>
                   </div>
                 </div>
                 <div class="d-flex justify-content-center">
-                <button type="submit" class="btn btn-all-add-edit py-2 px-5">Change</button>
+                  <button type="submit" class="btn btn-all-add-edit py-2 px-5">Change</button>
                 </div>
               </form>
             </div>
@@ -94,7 +72,7 @@ export default {
       console.log(this.user);
       this.axios
         .post(
-          `/api/user/change-password-user/${this.$route.params.id}`,
+          `/api/user/admin-change-password-user/${this.$route.params.id}`,
           this.userForm
         )
         .then((response) => {

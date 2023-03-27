@@ -76,8 +76,9 @@ Route::group(['prefix' => 'user','middleware' => ['auth:sanctum']], function() {
     Route::post('create-new-user', [UserController::class, 'createNewUser']);
     Route::get('edit/{id}', [UserController::class, 'edit']);
     Route::post('change-role-user/{id}', [UserController::class, 'changeRoleUser']);
-    Route::post('change-password-user/{id}', [UserController::class, 'changePasswordUser']);
-    
+    Route::post('admin-change-password-user/{id}', [UserController::class, 'adminChangePasswordUser']);
+    Route::post('user-change-password', [UserController::class, 'userChangePassword']);
+    Route::post('update', [UserController::class, 'updateUser']);
 
     //test export fie excel
     

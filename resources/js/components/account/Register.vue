@@ -19,10 +19,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      // registerResponse: 'getRegisterResponse',
       loginResponse: "getLoginResponse",
-      // getUser: 'getUser',
-      // getAge: 'getAge',
     }),
   },
   validations: {
@@ -67,9 +64,7 @@ export default {
       <div class="container-fluid p-0">
         <div class="row no-gutters">
           <div class="col-lg-4">
-            <div
-              class="authentication-page-content d-flex align-items-center min-vh-100"
-            >
+            <div class="authentication-page-content d-flex align-items-center min-vh-100">
               <div class="w-100">
                 <div class="row justify-content-center">
                   <div class="col-lg-9">
@@ -77,83 +72,47 @@ export default {
                       <div class="text-center">
                         <div>
                           <a href="/" class="logo">
-                            <img
-                              src="/assets/images/logo-dark.png"
-                              height="20"
-                              alt="logo"
-                            />
+                            <img src="/assets/images/logo-dark.png" height="20" alt="logo" />
                           </a>
                         </div>
 
-                        <h4 class="font-size-18 mt-4">Register account</h4>
-                        <p class="text-muted">
-                          Get your free Nazox account now.
-                        </p>
+                      <h4 class="font-size-18 mt-4">Register account</h4>
+                      <p class="text-muted">
+                        Get your free Nazox account now.
+                      </p>
                       </div>
 
                       <div class="p-2 mt-5">
-                        <form
-                          class="form-horizontal"
-                          @submit.prevent="tryToRegisterIn"
-                        >
+                        <form class="form-horizontal" @submit.prevent="tryToRegisterIn">
                           <div class="form-group auth-form-group-custom mb-4">
-                            <i
-                              class="ri-user-2-line auti-custom-input-icon"
-                            ></i>
+                            <i class="ri-user-2-line auti-custom-input-icon"></i>
                             <label for="username">Username</label>
-                            <input
-                              v-model="registerData.username"
-                              type="text"
-                              class="form-control"
-                              id="username"
-                              placeholder="Enter username"
-                            />
+                            <input v-model="registerData.username" type="text" class="form-control" id="username"
+                              placeholder="Enter username" />
                           </div>
 
                           <div class="form-group auth-form-group-custom mb-4">
                             <i class="ri-mail-line auti-custom-input-icon"></i>
                             <label for="useremail">Email</label>
-                            <input
-                              v-model="registerData.email"
-                              type="email"
-                              class="form-control"
-                              id="useremail"
-                              placeholder="Enter email"
-                            />
+                            <input v-model="registerData.email" type="email" class="form-control" id="useremail"
+                              placeholder="Enter email" />
                           </div>
 
                           <div class="form-group auth-form-group-custom mb-4">
-                            <i
-                              class="ri-lock-2-line auti-custom-input-icon"
-                            ></i>
+                            <i class="ri-lock-2-line auti-custom-input-icon"></i>
                             <label for="userpassword">Password</label>
-                            <input
-                              v-model="registerData.password"
-                              type="password"
-                              class="form-control"
-                              id="userpassword"
-                              placeholder="Enter password"
-                            />
+                            <input v-model="registerData.password" type="password" class="form-control" id="userpassword"
+                              placeholder="Enter password" />
                           </div>
                           <div class="form-group auth-form-group-custom mb-4">
-                            <i
-                              class="ri-lock-2-line auti-custom-input-icon"
-                            ></i>
+                            <i class="ri-lock-2-line auti-custom-input-icon"></i>
                             <label for="userpassword">Repassword</label>
-                            <input
-                              v-model="registerData.repassword"
-                              type="password"
-                              class="form-control"
-                              id="userrepassword"
-                              placeholder="Enter repassword"
-                            />
+                            <input v-model="registerData.repassword" type="password" class="form-control"
+                              id="userrepassword" placeholder="Enter repassword" />
                           </div>
 
                           <div class="text-center">
-                            <button
-                              class="btn btn-primary w-md waves-effect waves-light"
-                              type="submit"
-                            >
+                            <button class="btn btn-primary w-md waves-effect waves-light" type="submit">
                               Register
                             </button>
                           </div>
@@ -172,10 +131,10 @@ export default {
                           Already have an account ?
                           <!-- tag="a" -->
                           <!-- <a
-                            href="/login"
-                            class="font-weight-medium text-primary"
-                            >Login</a
-                          > -->
+                              href="/login"
+                              class="font-weight-medium text-primary"
+                              >Login</a
+                            > -->
                           <router-link :to="{ name: 'login' }" class="font-weight-medium text-primary">Login</router-link>
                         </p>
                         <p>
