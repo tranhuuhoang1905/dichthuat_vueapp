@@ -3,18 +3,12 @@
     <div class="row position-relative">
       <div class="col-12">
         <div class="card show border border-0">
-          <router-link
-            :to="{ name: 'create-new-user' }"
-            class="btn btn-all-add-edit my-3 mx-3 position-absolute"
-            >Create new user</router-link
-          >
+          <router-link :to="{ name: 'create-new-user' }" class="btn btn-all-add-edit my-3 mx-3 position-absolute">Create
+            new user</router-link>
           <div class="card-body">
             <h4 class="card-title text-center fs-4 my-3">User Manager</h4>
 
-            <table
-              ref="myTable"
-              class="table table-bordered table-striped table-hover"
-            >
+            <table ref="myTable" class="table table-bordered table-striped table-hover">
               <thead>
                 <tr>
                   <th>STT</th>
@@ -34,24 +28,18 @@
                       {{ role.name }}
                     </p>
                   </td>
-                  <td >
+                  <td>
                     <div class="d-flex justify-content-evenly">
-                        <router-link
-                      :to="{
-                        name: 'change-role-user',
+                      <router-link :to="{
+                        name: 'Change Role User',
                         params: { id: user.id },
-                      }"
-                      class="btn btn-all-add-edit"
-                      >Change role
-                    </router-link>
-                    <router-link
-                      :to="{
-                        name: 'change-password-user',
+                      }" class="btn btn-all-add-edit">Change role
+                      </router-link>
+                      <router-link :to="{
+                        name: 'Change Password User',
                         params: { id: user.id },
-                      }"
-                      class="btn btn-all-add-edit"
-                      >Change password
-                    </router-link>
+                      }" class="btn btn-all-add-edit">Change password
+                      </router-link>
                     </div>
                   </td>
                 </tr>
@@ -154,10 +142,10 @@ export default {
               render: function (data, type, row) {
                 return (
                   '<div class="d-flex justify-content-evenly">' +
-                  "<router-link :to=\"{ name: 'change-role-user', params: { id: " +
+                  "<router-link :to=\"{ name: 'Change Role User', params: { id: " +
                   row.id +
                   ' } }" class="btn btn-all-add-edit">Change role</router-link>' +
-                  "<router-link :to=\"{ name: 'change-password-user', params: { id: " +
+                  "<router-link :to=\"{ name: 'Change Password User', params: { id: " +
                   row.id +
                   ' } }" class="btn btn-all-add-edit">Change password</router-link>' +
                   "</div>"

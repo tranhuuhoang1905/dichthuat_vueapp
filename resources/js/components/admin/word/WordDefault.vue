@@ -11,7 +11,8 @@
                                 <p>{{ word.word }}</p>
                             </div>
                             <p class="box_mean-language">Language: {{ word.language }}</p>
-                            <router-link :to="{ name: 'edit-word', params: { id: wordId } }" class="btn btn-all-add-edit"><i class="fas fa-edit"></i>
+                            <router-link :to="{ name: 'Edit Word', params: { id: wordId } }" class="btn btn-all-add-edit"><i
+                                    class="fas fa-edit"></i>
                             </router-link>
                         </div>
                     </div>
@@ -22,14 +23,15 @@
                 <div class="search-data shadow-lg border border-0 translate-body">
                     <div class="search_content" v-for="(translate, index) in translates " :key="index">
                         <hr v-if="index > 0">
-                        <div class="icon_dot">{{ index + 1 }})  &nbsp;<span class="box_mean-language">Language: {{ translate.language }}</span></div>
+                        <div class="icon_dot">{{ index + 1 }}) &nbsp;<span class="box_mean-language">Language: {{
+                            translate.language }}</span></div>
                         <div class="box_mean">
-                            
+
                             <p class="box_mean-translate">Translate: {{ translate.translate }}</p>
                             <p class="box_mean-description">Description: {{ translate.description }}</p>
                             <p class="box_mean-description">Description in original language: {{
                                 translate.original_language_description }}</p>
-                            <router-link :to="{ name: 'edit-translate', params: { id: translate.id } }"
+                            <router-link :to="{ name: 'Edit Translate', params: { id: translate.id } }"
                                 class="btn btn-all-add-edit"><i class="fas fa-edit"></i>
                             </router-link>
                         </div>

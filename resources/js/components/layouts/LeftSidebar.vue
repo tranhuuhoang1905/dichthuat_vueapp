@@ -11,7 +11,7 @@
                     <li class="menu-title">Menu</li>
 
                     <li>
-                        <router-link :to="{ name: 'admin' }" class="waves-effect">
+                        <router-link :to="{ name: 'Admin Dashboard' }" class="waves-effect">
                             <i class="ri-dashboard-line"></i><span
                                 class="badge badge-pill badge-success float-right">3</span>
                             <span>Dashboard</span>
@@ -20,7 +20,7 @@
                     </li>
 
                     <li>
-                        <router-link :to="{ name: 'user-manager' }" class=" waves-effect">
+                        <router-link :to="{ name: 'All User' }" class=" waves-effect">
                             <i class="ri-calendar-2-line"></i>
                             <span>User manager</span>
                         </router-link>
@@ -32,8 +32,8 @@
                             <span>Language</span>
                         </a>
                         <ul class="sub-menu" aria-expanded="false">
-                            <li><router-link :to="{ name: 'all-language' }">All Languages</router-link></li>
-                            <li><router-link :to="{ name: 'add-language' }">Add Languages</router-link></li>
+                            <li><router-link :to="{ name: 'All Language' }">All Languages</router-link></li>
+                            <li><router-link :to="{ name: 'Add Language' }">Add Languages</router-link></li>
                         </ul>
                     </li>
 
@@ -43,8 +43,8 @@
                             <span>Word</span>
                         </a>
                         <ul class="sub-menu" aria-expanded="false">
-                            <li><router-link :to="{ name: 'all-word' }">All Words</router-link></li>
-                            <li><router-link :to="{ name: 'add-word' }">Add Words</router-link></li>
+                            <li><router-link :to="{ name: 'All Word' }">All Words</router-link></li>
+                            <li><router-link :to="{ name: 'Add Word' }">Add Words</router-link></li>
                         </ul>
                     </li>
 

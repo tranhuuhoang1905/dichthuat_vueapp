@@ -27,10 +27,10 @@
                   <td>{{ word.updated_at }}</td>
                   <td>
                     <div class="btn-group" role="group">
-                      <router-link :to="{ name: 'word-default', params: { id: word.id } }"
+                      <router-link :to="{ name: 'Word Default', params: { id: word.id } }"
                         class="btn btn-all-add-edit">Default
                       </router-link>
-                      <!-- <router-link :to="{ name: 'edit-word', params: { id: word.id } }" class="btn btn-primary">Edit
+                      <!-- <router-link :to="{ name: 'Edit Word', params: { id: word.id } }" class="btn btn-primary">Edit
                             </router-link> -->
                       <!-- <button class="btn btn-danger" @click="deleteWord(word.id)">Delete</button> -->
                     </div>
@@ -100,6 +100,6 @@ export default {
         });
       });
     },
-  },
+  }
 };
 </script>

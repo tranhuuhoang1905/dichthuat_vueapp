@@ -22,4 +22,6 @@ const app = createApp(App);
 // app.use(Vuex);
 app.use(VueAxios, axios, BootstrapVue3);
 app.use(store);
-app.use(router).mount('#app');
+app.use(router)
+app.config.globalProperties.$router = router.value;
+app.mount('#app');

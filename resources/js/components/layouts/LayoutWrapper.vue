@@ -23,9 +23,10 @@
                                 <h4 class="mb-0">Dashboard</h4>
 
                                 <div class="page-title-right">
-                                    <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Nazox</a></li>
-                                        <li class="breadcrumb-item active">Dashboard</li>
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item" v-for="(crumb, index) in crumbs" :key="index">
+                                            <router-link :to="crumb.link">{{ crumb.title }}</router-link>
+                                        </li>
                                     </ol>
                                 </div>
 
@@ -58,5 +59,16 @@ export default {
         HeaderLayout,
         FooterLayout
     },
+
+    computed: {
+        crumbs() {
+            const routes = this.$route.matched
+            return routes.map(route => ({
+                title: route.name,
+                link: route.path,
+                breadcrumb: route.breadcrumb
+            }))
+        }
+    }
 }
 </script>
