@@ -192,40 +192,40 @@
                     </div>
                 </div>
 
-                <div class="dropdown d-none d-sm-inline-block">
+                <!-- <div class="dropdown d-none d-sm-inline-block">
                     <button type="button" class="btn header-item waves-effect" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false">
                         <img class="" src="/assets/images/flags/us.jpg" alt="Header Language" height="16">
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
 
-                        <!-- item-->
+                        
                         <a href="javascript:void(0);" class="dropdown-item notify-item">
                             <img src="/assets/images/flags/spain.jpg" alt="user-image" class="mr-1" height="12"> <span
                                 class="align-middle">Spanish</span>
                         </a>
 
-                        <!-- item-->
+                        
                         <a href="javascript:void(0);" class="dropdown-item notify-item">
                             <img src="/assets/images/flags/germany.jpg" alt="user-image" class="mr-1" height="12"> <span
                                 class="align-middle">German</span>
                         </a>
 
-                        <!-- item-->
+                        
                         <a href="javascript:void(0);" class="dropdown-item notify-item">
                             <img src="/assets/images/flags/italy.jpg" alt="user-image" class="mr-1" height="12"> <span
                                 class="align-middle">Italian</span>
                         </a>
 
-                        <!-- item-->
+                        
                         <a href="javascript:void(0);" class="dropdown-item notify-item">
                             <img src="/assets/images/flags/russia.jpg" alt="user-image" class="mr-1" height="12"> <span
                                 class="align-middle">Russian</span>
                         </a>
                     </div>
-                </div>
+                </div> -->
 
-                <div class="dropdown d-none d-lg-inline-block ml-1">
+                <!-- <div class="dropdown d-none d-lg-inline-block ml-1">
                     <button type="button" class="btn header-item noti-icon waves-effect" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                         <i class="ri-apps-2-line"></i>
@@ -275,7 +275,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="dropdown d-none d-lg-inline-block ml-1">
                     <button type="button" class="btn header-item noti-icon waves-effect" data-toggle="fullscreen">
@@ -380,26 +380,26 @@
                         <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <!-- item-->
+
                         <a class="dropdown-item" href="#"><i class="ri-user-line align-middle mr-1"></i> Profile</a>
-                        <a class="dropdown-item" href="#"><i class="ri-wallet-2-line align-middle mr-1"></i> My
+                        <!-- <a class="dropdown-item" href="#"><i class="ri-wallet-2-line align-middle mr-1"></i> My
                             Wallet</a>
                         <a class="dropdown-item d-block" href="#"><span
                                 class="badge badge-success float-right mt-1">11</span><i
                                 class="ri-settings-2-line align-middle mr-1"></i> Settings</a>
                         <a class="dropdown-item" href="#"><i class="ri-lock-unlock-line align-middle mr-1"></i> Lock
-                            screen</a>
+                            screen</a> -->
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item text-danger" href="#"><i
                                 class="ri-shut-down-line align-middle mr-1 text-danger"></i> Logout</a>
                     </div>
                 </div>
 
-                <div class="dropdown d-inline-block">
+                <!-- <div class="dropdown d-inline-block">
                     <button type="button" class="btn header-item noti-icon right-bar-toggle waves-effect">
                         <i class="ri-settings-2-line"></i>
                     </button>
-                </div>
+                </div> -->
 
             </div>
         </div>

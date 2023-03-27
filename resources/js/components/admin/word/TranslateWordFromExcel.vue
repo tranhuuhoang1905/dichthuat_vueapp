@@ -29,11 +29,20 @@
                   </select>
                   <!-- <input type="text" class="form-control" v-model="word.language_translate_id"> -->
                 </div>
-                <div class="choose-file"><input class="px-0 py-2" type="file" accept=".xlsx" ref="fileInput" required />
+                <div class="choose-file">
+                  <!-- <label> -->
+                  <input style="width: 10px; height: 10px;" class="px-0 py-2" type="file" accept=".xlsx, .xls"
+                    ref="fileInput" required @change="onFileChange" />
+                  <button class="btn-choose-file" @click.prevent="openFileDialog">Choose file</button>
+                  <span v-if="!fileSelected">No file chosen</span>
+                  <span v-else>{{ selectedFile }}</span>
+                  <!-- </label> -->
                 </div>
                 <div class="d-flex justify-content-center">
                   <button type="submit" class="btn-all-add-edit py-2 px-5 rounded border border-0">Upload</button>
                 </div>
+                <p style="color: red;">*: Provide an Excel file with the words you want to translate in column A. We'll
+                  send back a file with search results in column B (blank if the word isn't in our database).</p>
               </form>
             </div>
           </div>
@@ -51,6 +60,8 @@ export default {
       languages: [],
       word: {},
       WordsFromExcel: {},
+      fileSelected: false,
+      selectedFile: '',
     };
   },
   created() {
@@ -90,6 +101,20 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+    openFileDialog() {
+      this.$refs.fileInput.click();
+    },
+    onFileChange(event) {
+      const selectedFile = event.target.files[0];
+      if (selectedFile.size > 1000000) {
+        alert("The selected file must be under 1MB in size.");
+        this.selectedFile = "";
+        this.fileSelected = false;
+      } else {
+        this.selectedFile = selectedFile.name;
+        this.fileSelected = true;
+      }
     },
   },
 };
