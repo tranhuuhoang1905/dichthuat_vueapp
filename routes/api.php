@@ -31,19 +31,19 @@ Route::post('/register', [AuthController::class, 'register']);
 
 Route::get('/languages', [LanguagesController::class, 'index']);
 // Route::get('/languages', [LanguagesController::class, 'index'])->middleware('auth:sanctum');
-Route::group(['prefix' => 'language','middleware' => ['auth:sanctum', 'admin']], function () {
-    Route::post('add', [LanguagesController::class, 'add']);
-    Route::get('edit/{id}', [LanguagesController::class, 'edit']);
+Route::group(['prefix' => 'language','middleware' => ['auth:sanctum, role:admin,leader']], function () {
+    Route::post('add', [LanguagesController::class, 'add'])->middleware('role:admin');
+    Route::get('edit/{id}', [LanguagesController::class, 'edit'])->middleware('role:admin');
 
-    Route::post('update/{id}', [LanguagesController::class, 'update']);
+    Route::post('update/{id}', [LanguagesController::class, 'update'])->middleware('role:admin');
     //người có role:admin mới có quyền truy cập link api/posts/delete 
-    Route::delete('delete/{id}', [LanguagesController::class, 'delete']);
+    Route::delete('delete/{id}', [LanguagesController::class, 'delete'])->middleware('role:admin');
 });
 
-Route::post('/words', [WordsController::class, 'index'])->middleware('auth:sanctum');
+Route::post('/words', [WordsController::class, 'index'])->middleware('auth:sanctum,role:admin,leader');
 Route::get('word/top-search-words', [WordsController::class, 'getTopSearchWords']);
 // Route::group(['prefix' => 'word','middleware' => ['auth:sanctum', 'leader']], function () {
-Route::group(['prefix' => 'word'], function () {
+Route::group(['prefix' => 'word','middleware' => ['auth:sanctum, role:admin,leader']], function () {
     Route::post('add', [WordsController::class, 'add']);
     Route::get('edit/{id}', [WordsController::class, 'edit']);
     Route::get('alldata/{id}', [WordsController::class, 'alldata']);
@@ -51,7 +51,7 @@ Route::group(['prefix' => 'word'], function () {
     Route::post('update/{id}', [WordsController::class, 'update']);
     //người có role:admin mới có quyền truy cập link api/posts/delete 
     Route::delete('delete/{id}', [WordsController::class, 'delete']);
-    Route::post('/save-words-from-excel', [WordsController::class, 'importWordsFromExcel']);
+    Route::post('/save-words-from-excel', [WordsController::class, 'importWordsFromExcel'])->middleware('role:admin');
     Route::post('/translate-words-from-excel', [WordsController::class, 'translateWordsFromExcel']);
     
 });
@@ -71,25 +71,14 @@ Route::group(['prefix' => 'user','middleware' => ['auth:sanctum']], function() {
         
         return $user;
     });
-    Route::get('allusers', [UserController::class, 'allusers']);
-    Route::get('roles', [UserController::class, 'roles']);
-    Route::post('create-new-user', [UserController::class, 'createNewUser']);
-    Route::get('edit/{id}', [UserController::class, 'edit']);
-    Route::post('change-role-user/{id}', [UserController::class, 'changeRoleUser']);
-    Route::post('admin-change-password-user/{id}', [UserController::class, 'adminChangePasswordUser']);
-    Route::post('user-change-password', [UserController::class, 'userChangePassword']);
-    Route::post('update', [UserController::class, 'updateUser']);
-
-    //test export fie excel
-    
-    // Route::group(['prefix' => 'admin'], function(){
-    //     Route::get('/', [ProductController::class, 'index']);
-    //     Route::get('/products/delete', [ProductController::class, 'del']);
-        
-    //     Route::resource('products', ProductController::class)->only(['index', 'show', 'create', 'edit']);
-    //     Route::resource('roles', RoleController::class);
-    //     Route::resource('permissions', PermissionController::class);
-    // });
+    Route::get('allusers' , [UserController::class, 'allusers'])->middleware('role:admin');
+    Route::get('roles', [UserController::class, 'roles'])->middleware('role:admin,leader');
+    Route::post('create-new-user', [UserController::class, 'createNewUser'])->middleware('role:admin');
+    Route::get('edit/{id}', [UserController::class, 'edit'])->middleware('role:admin');
+    Route::post('change-role-user/{id}', [UserController::class, 'changeRoleUser'])->middleware('role:admin');
+    Route::post('admin-change-password-user/{id}', [UserController::class, 'adminChangePasswordUser'])->middleware('role:admin');
+    Route::post('user-change-password', [UserController::class, 'userChangePassword'])->middleware('role:admin');
+    Route::post('update', [UserController::class, 'updateUser'])->middleware('role:admin');
 });
 Route:: get('/export', [UserController::class, 'export']);
 Route::post('/upload', [UserController::class, 'uploadExcel']);

@@ -17,7 +17,7 @@
                         </router-link>
                     </li>
                     <li>
-                        <router-link :to="{ name: 'All User' }" class=" waves-effect">
+                        <router-link :to="{ name: 'All User' }" class=" waves-effect" v-if="userHasAdmin">
                             <i class="ri-calendar-2-line"></i>
                             <span>User manager</span>
                         </router-link>
@@ -29,7 +29,8 @@
                         </a>
                         <ul class="sub-menu" aria-expanded="false">
                             <li><router-link :to="{ name: 'All Language' }">All Languages</router-link></li>
-                            <li><router-link :to="{ name: 'Add Language' }">Add Languages</router-link></li>
+                            <li><router-link :to="{ name: 'Add Language' }" v-if="userHasAdmin">Add Languages</router-link>
+                            </li>
                         </ul>
                     </li>
                     <li>
@@ -44,7 +45,7 @@
                     </li>
                     <li class="menu-title">Pages</li>
                     <li>
-                        <router-link :to="{ name: 'Import Word From Excel' }" class=" waves-effect">
+                        <router-link :to="{ name: 'Import Word From Excel' }" class=" waves-effect" v-if="userHasAdmin">
                             <i class="ri-calendar-2-line"></i>
                             <span>Import file excel</span>
                         </router-link>
@@ -63,6 +64,7 @@
     <!-- Left Sidebar End -->
 </template>
 <script>
+import checkAccess from '@resources/js/middleware/access.js';
 export default {
     data() {
         return {
@@ -83,6 +85,11 @@ export default {
         const element = document.querySelector('.has-arrow');
         if (element instanceof Element) {
             element.setAttribute('aria-expanded', 'true');
+        }
+    },
+    computed: {
+        userHasAdmin() {
+            return checkAccess(['admin'])
         }
     }
 }

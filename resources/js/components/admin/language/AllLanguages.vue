@@ -6,10 +6,7 @@
           <div class="card-body">
             <h4 class="card-title text-center fs-4">All Languages</h4>
             <div class="table-responsive-lg">
-              <table
-                ref="myTable"
-                class="table table-bordered table-striped table-hover"
-              >
+              <table ref="myTable" class="table table-bordered table-striped table-hover">
                 <thead>
                   <tr>
                     <th>ID</th>
@@ -18,7 +15,7 @@
                     <th>Status</th>
                     <th>Created At</th>
                     <th>Updated At</th>
-                    <th>Actions</th>
+                    <th v-if="userHasAdmin">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -30,20 +27,13 @@
                     <td>{{ language.created_at }}</td>
                     <td>{{ language.updated_at }}</td>
 
-                    <td>
+                    <td v-if="userHasAdmin">
                       <div class="btn-group" role="group">
-                        <router-link
-                          :to="{
-                            name: 'edit-language',
-                            params: { id: language.id },
-                          }"
-                          class="btn btn-all-add-edit rounded-3 mx-3"
-                          ><i class="fas fa-edit"></i
-                        ></router-link>
-                        <button
-                          class="btn btn-danger rounded-3"
-                          @click="deleteLanguage(language.id)"
-                        >
+                        <router-link :to="{
+                          name: 'edit-language',
+                          params: { id: language.id },
+                        }" class="btn btn-all-add-edit rounded-3 mx-3"><i class="fas fa-edit"></i></router-link>
+                        <button class="btn btn-danger rounded-3" @click="deleteLanguage(language.id)">
                           <i class="fas fa-trash"></i>
                         </button>
                       </div>
@@ -65,24 +55,17 @@ import DataTable from "datatables.net-vue3";
 import DataTablesCore from "datatables.net";
 import $ from "jquery";
 DataTable.use(DataTablesCore);
+import checkAccess from '@resources/js/middleware/access.js';
 export default {
   data() {
     return {
       languages: [],
-      roles: [],
+      roles: []
     };
   },
   created() {
+    this.setColumns();
     this.fetchData();
-    // this.axios
-    //   .get("/api/languages")
-    //   .then((response) => {
-    //     this.languages = response.data;
-    //     console.log(response.data);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
   },
   methods: {
     deleteLanguage(id) {
@@ -102,34 +85,46 @@ export default {
           console.log(error);
         });
     },
+    setColumns() {
+      this.columns = [
+        { data: "id" },
+        { data: "name" },
+        { data: "description" },
+        { data: "state" },
+        { data: "created_at" },
+        { data: "updated_at" },
+      ];
+      if (this.userHasAdmin) {
+        this.columns.push(
+          {
+            data: "id",
+            render: function (data, type, row) {
+              return (
+                '<div class="btn-group" role="group">' +
+                '<a class="btn btn-all-add-edit" href="/admin/language/edit/' +
+                row.id +
+                '">edit</a>' +
+                "</div>"
+              );
+            },
+          },
+        );
+      }
+    },
     fetchData() {
       this.axios.get("/api/languages").then((response) => {
         // this.words = response.data;
         this.table = $(this.$refs.myTable).DataTable({
           data: response.data,
-          columns: [
-            { data: "id" },
-            { data: "name" },
-            { data: "description" },
-            { data: "state" },
-            { data: "created_at" },
-            { data: "updated_at" },
-            {
-              data: "id",
-              render: function (data, type, row) {
-                return (
-                  '<div class="btn-group" role="group">' +
-                  '<a class="btn btn-all-add-edit" href="/admin/language/edit/' +
-                  row.id +
-                  '">edit</a>' +
-                  "</div>"
-                );
-              },
-            },
-          ],
+          columns: this.columns
         });
       });
-    },
+    }
   },
+  computed: {
+    userHasAdmin() {
+      return checkAccess(['admin']);
+    }
+  }
 };
 </script>

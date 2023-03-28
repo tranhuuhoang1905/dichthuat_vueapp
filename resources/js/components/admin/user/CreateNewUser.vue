@@ -11,47 +11,23 @@
                   <div class="col-md-12">
                     <div class="form-group">
                       <label>Email</label>
-                      <input
-                        type="email"
-                        placeholder="Enter description"
-                        class="form-control"
-                        v-model="newUser.email"
-                        required
-                      />
+                      <input type="email" placeholder="Enter description" class="form-control" v-model="newUser.email"
+                        required />
                     </div>
                     <div class="form-group">
                       <label>Username</label>
-                      <input
-                        type="text"
-                        placeholder="Enter description"
-                        class="form-control"
-                        v-model="newUser.name"
-                        required
-                      />
+                      <input type="text" placeholder="Enter description" class="form-control" v-model="newUser.name"
+                        required />
                     </div>
                     <div class="form-group">
                       <label>Password</label>
-                      <input
-                        type="password"
-                        placeholder="Enter password"
-                        class="form-control"
-                        v-model="newUser.password"
-                        required
-                      />
+                      <input type="password" placeholder="Enter password" class="form-control" v-model="newUser.password"
+                        required />
                     </div>
                     <div class="form-group">
                       <label>Role</label>
-                      <select
-                        class="form-select"
-                        aria-label="Default select example"
-                        v-model="newUser.role"
-                        required
-                      >
-                        <option
-                          v-for="role in roles"
-                          :key="role.id"
-                          :value="`${role.id}`"
-                        >
+                      <select class="form-select" aria-label="Default select example" v-model="newUser.role" required>
+                        <option v-for="role in roles" :key="role.id" :value="`${role.id}`">
                           {{ role.name }}
                         </option>
                       </select>
@@ -101,7 +77,7 @@ export default {
         .post("/api/user/create-new-user", this.newUser)
         .then((response) => {
           console.log(response.data);
-          this.$router.push({ name: "user-manager" });
+          this.$router.push({ name: "User Manager" });
         })
         .catch((error) => console.log(error))
         .finally(() => (this.loading = false));

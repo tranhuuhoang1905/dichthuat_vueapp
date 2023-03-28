@@ -9,25 +9,12 @@
               <form @submit.prevent="updateLanguage">
                 <div class="form-group">
                   <label for="language-name">Language name</label>
-                  <input
-                    id="language-name"
-                    type="text"
-                    class="form-control"
-                    v-model="language.name"
-                    required
-                  />
+                  <input id="language-name" type="text" class="form-control" v-model="language.name" required />
                 </div>
                 <div class="form-group">
                   <label for="language-description">Description</label>
-                  <textarea
-                    id="language-description"
-                    rows="7"
-                    cols="70"
-                    type="text"
-                    class="form-control"
-                    v-model="language.description"
-                    required
-                  ></textarea>
+                  <textarea id="language-description" rows="7" cols="70" type="text" class="form-control"
+                    v-model="language.description" required></textarea>
                 </div>
                 <div class="d-flex justify-content-center">
                   <button type="submit" class="btn btn-all-add-edit">
@@ -61,7 +48,7 @@ export default {
       this.axios
         .post(`/api/language/update/${this.$route.params.id}`, this.language)
         .then(() => {
-          this.$router.push({ name: "languages" });
+          this.$router.push({ name: "All Language" });
         })
         .catch((error) => {
           console.log(error);

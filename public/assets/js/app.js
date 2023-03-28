@@ -23568,7 +23568,7 @@ __webpack_require__.r(__webpack_exports__);
       this.axios.post("/api/language/add", this.language).then(function (response) {
         // Nếu thành công, đưa người dùng đến trang danh sách các ngôn ngữ
         _this.$router.push({
-          name: "languages"
+          name: "All Language"
         });
       })["catch"](function (error) {
         // Nếu không thành công, hiển thị thông báo lỗi
@@ -23598,11 +23598,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var datatables_net__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! datatables.net */ "./node_modules/datatables.net/js/jquery.dataTables.mjs");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _resources_js_middleware_access_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @resources/js/middleware/access.js */ "./resources/js/middleware/access.js");
 
 
 
 
 datatables_net_vue3__WEBPACK_IMPORTED_MODULE_3__["default"].use(datatables_net__WEBPACK_IMPORTED_MODULE_1__["default"]);
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -23611,18 +23613,9 @@ datatables_net_vue3__WEBPACK_IMPORTED_MODULE_3__["default"].use(datatables_net__
     };
   },
   created: function created() {
+    this.setColumns();
     this.fetchData();
-    // this.axios
-    //   .get("/api/languages")
-    //   .then((response) => {
-    //     this.languages = response.data;
-    //     console.log(response.data);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
   },
-
   methods: {
     deleteLanguage: function deleteLanguage(id) {
       var _this = this;
@@ -23641,32 +23634,43 @@ datatables_net_vue3__WEBPACK_IMPORTED_MODULE_3__["default"].use(datatables_net__
         console.log(error);
       });
     },
+    setColumns: function setColumns() {
+      this.columns = [{
+        data: "id"
+      }, {
+        data: "name"
+      }, {
+        data: "description"
+      }, {
+        data: "state"
+      }, {
+        data: "created_at"
+      }, {
+        data: "updated_at"
+      }];
+      if (this.userHasAdmin) {
+        this.columns.push({
+          data: "id",
+          render: function render(data, type, row) {
+            return '<div class="btn-group" role="group">' + '<a class="btn btn-all-add-edit" href="/admin/language/edit/' + row.id + '">edit</a>' + "</div>";
+          }
+        });
+      }
+    },
     fetchData: function fetchData() {
       var _this2 = this;
       this.axios.get("/api/languages").then(function (response) {
         // this.words = response.data;
         _this2.table = jquery__WEBPACK_IMPORTED_MODULE_2___default()(_this2.$refs.myTable).DataTable({
           data: response.data,
-          columns: [{
-            data: "id"
-          }, {
-            data: "name"
-          }, {
-            data: "description"
-          }, {
-            data: "state"
-          }, {
-            data: "created_at"
-          }, {
-            data: "updated_at"
-          }, {
-            data: "id",
-            render: function render(data, type, row) {
-              return '<div class="btn-group" role="group">' + '<a class="btn btn-all-add-edit" href="/admin/language/edit/' + row.id + '">edit</a>' + "</div>";
-            }
-          }]
+          columns: _this2.columns
         });
       });
+    }
+  },
+  computed: {
+    userHasAdmin: function userHasAdmin() {
+      return (0,_resources_js_middleware_access_js__WEBPACK_IMPORTED_MODULE_4__["default"])(['admin']);
     }
   }
 });
@@ -23701,7 +23705,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
       this.axios.post("/api/language/update/".concat(this.$route.params.id), this.language).then(function () {
         _this2.$router.push({
-          name: "languages"
+          name: "All Language"
         });
       })["catch"](function (error) {
         console.log(error);
@@ -24050,7 +24054,7 @@ __webpack_require__.r(__webpack_exports__);
       console.log(this.user);
       this.axios.post("/api/user/admin-change-password-user/".concat(this.$route.params.id), this.userForm).then(function (response) {
         _this2.$router.push({
-          name: "user-manager"
+          name: "User Manager"
         });
       })["catch"](function (error) {
         return console.log(error);
@@ -24105,7 +24109,7 @@ __webpack_require__.r(__webpack_exports__);
       console.log(this.user);
       this.axios.post("/api/user/change-role-user/".concat(this.$route.params.id), this.userForm).then(function (response) {
         _this2.$router.push({
-          name: "user-manager"
+          name: "User Manager"
         });
       })["catch"](function (error) {
         return console.log(error);
@@ -24156,7 +24160,7 @@ __webpack_require__.r(__webpack_exports__);
       this.axios.post("/api/user/create-new-user", this.newUser).then(function (response) {
         console.log(response.data);
         _this2.$router.push({
-          name: "user-manager"
+          name: "User Manager"
         });
       })["catch"](function (error) {
         return console.log(error);
@@ -24219,7 +24223,7 @@ __webpack_require__.r(__webpack_exports__);
       this.axios.post("/api/word/add", this.word).then(function (response) {
         console.log(response.data);
         _this2.$router.push({
-          name: "words"
+          name: "All Word"
         });
       })["catch"](function (error) {
         return console.log(error);
@@ -24401,7 +24405,7 @@ __webpack_require__.r(__webpack_exports__);
         responseType: "blob"
       }).then(function (response) {
         _this2.$router.push({
-          name: "words"
+          name: "All Word"
         });
       })["catch"](function (error) {
         console.log(error);
@@ -24475,7 +24479,7 @@ __webpack_require__.r(__webpack_exports__);
           type: "application/vnd.ms-excel"
         });
         (0,file_saver__WEBPACK_IMPORTED_MODULE_0__.saveAs)(blob, "translatecallback.xlsx");
-        // this.$router.push({ name: 'words' });
+        // this.$router.push({ name: 'All Word' });
       })["catch"](function (error) {
         console.log(error);
       });
@@ -24761,8 +24765,6 @@ __webpack_require__.r(__webpack_exports__);
       if (crumbs.length > 0 && crumbs[crumbs.length - 1].title === 'Admin Dashboard') {
         crumbs.pop();
       }
-      console.log(crumbs[crumbs.length - 1].title);
-      console.log(crumbs);
       return crumbs;
     },
     pageName: function pageName() {
@@ -24788,6 +24790,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _resources_js_middleware_access_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @resources/js/middleware/access.js */ "./resources/js/middleware/access.js");
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -24808,6 +24812,11 @@ __webpack_require__.r(__webpack_exports__);
     var element = document.querySelector('.has-arrow');
     if (element instanceof Element) {
       element.setAttribute('aria-expanded', 'true');
+    }
+  },
+  computed: {
+    userHasAdmin: function userHasAdmin() {
+      return (0,_resources_js_middleware_access_js__WEBPACK_IMPORTED_MODULE_0__["default"])(['admin']);
     }
   }
 });
@@ -25034,7 +25043,7 @@ __webpack_require__.r(__webpack_exports__);
     searchAction: function searchAction() {
       var _this2 = this;
       this.axios.post("/api/translate/search", this.searchData).then(function (response) {
-        // this.$router.push({ name: 'languages' })
+        // this.$router.push({ name: 'All Language' })
 
         _this2.translates = response.data.translationWords;
         _this2.suggestedWords = response.data.suggestedWords;
@@ -25608,25 +25617,36 @@ var _hoisted_8 = {
   ref: "myTable",
   "class": "table table-bordered table-striped table-hover"
 };
-var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "ID"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Name"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Description"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Status"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Created At"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Updated At"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Actions")])], -1 /* HOISTED */);
-var _hoisted_10 = {
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "ID", -1 /* HOISTED */);
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Name", -1 /* HOISTED */);
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Description", -1 /* HOISTED */);
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Status", -1 /* HOISTED */);
+var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Created At", -1 /* HOISTED */);
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Updated At", -1 /* HOISTED */);
+var _hoisted_15 = {
+  key: 0
+};
+var _hoisted_16 = {
+  key: 0
+};
+var _hoisted_17 = {
   "class": "btn-group",
   role: "group"
 };
-var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
   "class": "fas fa-edit"
 }, null, -1 /* HOISTED */);
-var _hoisted_12 = ["onClick"];
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+var _hoisted_19 = ["onClick"];
+var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
   "class": "fas fa-trash"
 }, null, -1 /* HOISTED */);
-var _hoisted_14 = [_hoisted_13];
+var _hoisted_21 = [_hoisted_20];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.languages, function (language) {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [_hoisted_9, _hoisted_10, _hoisted_11, _hoisted_12, _hoisted_13, _hoisted_14, $options.userHasAdmin ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("th", _hoisted_15, "Actions")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.languages, function (language) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", {
       key: language.id
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(language.id), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(language.name), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(language.description), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(language.status), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(language.created_at), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(language.updated_at), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(language.id), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(language.name), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(language.description), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(language.status), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(language.created_at), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(language.updated_at), 1 /* TEXT */), $options.userHasAdmin ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
       to: {
         name: 'edit-language',
         params: {
@@ -25636,7 +25656,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       "class": "btn btn-all-add-edit rounded-3 mx-3"
     }, {
       "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-        return [_hoisted_11];
+        return [_hoisted_18];
       }),
       _: 2 /* DYNAMIC */
     }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["to"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
@@ -25644,7 +25664,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       onClick: function onClick($event) {
         return $options.deleteLanguage(language.id);
       }
-    }, _hoisted_14, 8 /* PROPS */, _hoisted_12)])])]);
+    }, _hoisted_21, 8 /* PROPS */, _hoisted_19)])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
   }), 128 /* KEYED_FRAGMENT */))])], 512 /* NEED_PATCH */)])])])])])]);
 }
 
@@ -26145,7 +26165,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
     to: {
-      name: 'create-new-user'
+      name: 'Create New User'
     },
     "class": "btn btn-all-add-edit my-3 mx-3 position-absolute"
   }, {
@@ -27530,7 +27550,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [_hoisted_6, _hoisted_7, _hoisted_8];
     }),
     _: 1 /* STABLE */
-  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [$options.userHasAdmin ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_router_link, {
+    key: 0,
     to: {
       name: 'All User'
     },
@@ -27540,7 +27561,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [_hoisted_9, _hoisted_10];
     }),
     _: 1 /* STABLE */
-  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
     to: {
       name: 'All Language'
     }
@@ -27549,7 +27570,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("All Languages")];
     }),
     _: 1 /* STABLE */
-  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [$options.userHasAdmin ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_router_link, {
+    key: 0,
     to: {
       name: 'Add Language'
     }
@@ -27558,7 +27580,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Add Languages")];
     }),
     _: 1 /* STABLE */
-  })])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [_hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [_hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
     to: {
       name: 'All Word'
     }
@@ -27576,7 +27598,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Add Words")];
     }),
     _: 1 /* STABLE */
-  })])])]), _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+  })])])]), _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [$options.userHasAdmin ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_router_link, {
+    key: 0,
     to: {
       name: 'Import Word From Excel'
     },
@@ -27586,7 +27609,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [_hoisted_16, _hoisted_17];
     }),
     _: 1 /* STABLE */
-  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
     to: {
       name: 'Translate Word From Excel'
     },
@@ -28461,6 +28484,40 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/middleware/access.js":
+/*!*******************************************!*\
+  !*** ./resources/js/middleware/access.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ checkAccess)
+/* harmony export */ });
+/* harmony import */ var _store_store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../store/store */ "./resources/js/store/store.js");
+
+function checkAccess(roles) {
+  if (roles.length === 0) {
+    return true;
+  }
+  var authUser = undefined;
+  if (_store_store__WEBPACK_IMPORTED_MODULE_0__.store.getters.getAuthUser.id !== undefined) {
+    authUser = _store_store__WEBPACK_IMPORTED_MODULE_0__.store.getters.getAuthUser;
+  } else {
+    authUser = JSON.parse(sessionStorage.getItem('authUser'));
+  }
+  if (!authUser || authUser.length === 0) {
+    return false;
+  }
+  var userRoles = authUser.roles;
+  return userRoles.some(function (role) {
+    return roles.includes(role.name);
+  });
+}
+
+/***/ }),
+
 /***/ "./resources/js/router/index.js":
 /*!**************************************!*\
   !*** ./resources/js/router/index.js ***!
@@ -28526,6 +28583,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+var ErrorPage = {
+  template: '<div>403 - Access denied</div>'
+};
 var routes = [{
   name: 'home',
   path: '/',
@@ -28534,8 +28594,10 @@ var routes = [{
   path: '/admin',
   name: 'Dashboard',
   component: _components_admin_AdminParent_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+  // meta: { requiresAuth: true },
   meta: {
-    requiresAuth: true
+    requiresAuth: true,
+    roles: ['admin', 'leader']
   },
   children: [{
     name: 'Admin Dashboard',
@@ -28564,7 +28626,8 @@ var routes = [{
       path: 'import-word-from-excel',
       component: _components_admin_word_ImportWordFromExcel_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        roles: ['admin']
       }
     }, {
       name: 'Translate Word From Excel',
@@ -28611,14 +28674,16 @@ var routes = [{
       path: 'add',
       component: _components_admin_language_AddLanguage_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        roles: ['admin']
       }
     }, {
       name: 'Edit Language',
       path: 'edit/:id',
       component: _components_admin_language_EditLanguage_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        roles: ['admin']
       }
     }]
   }, {
@@ -28626,32 +28691,41 @@ var routes = [{
     path: 'user-manager',
     component: _components_admin_user_UserParent_vue__WEBPACK_IMPORTED_MODULE_16__["default"],
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      roles: ['admin', 'leader']
     },
+    // chỉ cho phép admin truy cập
     children: [{
       name: 'All User',
       path: '',
-      component: _components_admin_user_AllUser_vue__WEBPACK_IMPORTED_MODULE_17__["default"]
+      component: _components_admin_user_AllUser_vue__WEBPACK_IMPORTED_MODULE_17__["default"],
+      meta: {
+        requiresAuth: true,
+        roles: ['admin', 'leader']
+      }
     }, {
       name: 'Create New User',
       path: 'create-new-user',
       component: _components_admin_user_CreateNewUser_vue__WEBPACK_IMPORTED_MODULE_18__["default"],
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        roles: ['admin']
       }
     }, {
       name: 'Change Role User',
       path: 'change-role-user/:id',
       component: _components_admin_user_ChangeRoleUser_vue__WEBPACK_IMPORTED_MODULE_19__["default"],
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        roles: ['admin']
       }
     }, {
       name: 'Change Password User',
       path: 'change-pasword-user/:id',
       component: _components_admin_user_ChangePasswordUser_vue__WEBPACK_IMPORTED_MODULE_20__["default"],
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        roles: ['admin']
       }
     }]
   }, {
@@ -28685,11 +28759,26 @@ var routes = [{
   path: '/login',
   name: 'login',
   component: _components_account_Login_vue__WEBPACK_IMPORTED_MODULE_24__["default"]
+}, {
+  path: '/error',
+  name: 'error',
+  component: ErrorPage
 }];
 var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_25__.createRouter)({
   history: (0,vue_router__WEBPACK_IMPORTED_MODULE_25__.createWebHistory)(),
   routes: routes
 });
+
+// router.beforeEach((to, from, next) => {
+//     const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
+//     const isAuthenticated = store.getters.getLoginResponse.authenticated || JSON.parse(sessionStorage.getItem('loginResponse'))?.authenticated
+
+//     if (requiresAuth && !isAuthenticated) {
+//         next('/login') // Redirect to login page if user is not authenticated
+//     } else {
+//         next() // Proceed to the requested page
+//     }
+// })
 
 router.beforeEach(function (to, from, next) {
   var _JSON$parse;
@@ -28697,13 +28786,39 @@ router.beforeEach(function (to, from, next) {
     return record.meta.requiresAuth;
   });
   var isAuthenticated = _store_store__WEBPACK_IMPORTED_MODULE_26__.store.getters.getLoginResponse.authenticated || ((_JSON$parse = JSON.parse(sessionStorage.getItem('loginResponse'))) === null || _JSON$parse === void 0 ? void 0 : _JSON$parse.authenticated);
-  if (requiresAuth && !isAuthenticated) {
-    next('/login'); // Redirect to login page if user is not authenticated
+  var roles = to.meta.roles;
+  var authUser = undefined;
+  if (_store_store__WEBPACK_IMPORTED_MODULE_26__.store.getters.getAuthUser.id !== undefined) {
+    authUser = _store_store__WEBPACK_IMPORTED_MODULE_26__.store.getters.getAuthUser;
+  }
+  authUser = JSON.parse(sessionStorage.getItem('authUser'));
+  if (requiresAuth) {
+    // kiểm tra xem người dùng đã đăng nhập hay chưa
+    if (!isAuthenticated) {
+      next('/login');
+    } else {
+      // kiểm tra vai trò của người dùng
+      if (roles && roles.length > 0) {
+        var userRoles = authUser.roles;
+        console.log("--------------");
+        console.log(authUser.roles);
+        var hasAccess = userRoles.some(function (role) {
+          return roles.includes(role.name);
+        });
+        if (hasAccess) {
+          next();
+        } else {
+          next('/error');
+          // alert("You do not have permission to access this page."); // hiển thị trang lỗi khi không có quyền truy cập
+        }
+      } else {
+        next();
+      }
+    }
   } else {
-    next(); // Proceed to the requested page
+    next();
   }
 });
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (router);
 
 /***/ }),

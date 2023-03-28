@@ -139,7 +139,7 @@ export default {
             this.axios
                 .post("/api/translate/search", this.searchData)
                 .then((response) => {
-                    // this.$router.push({ name: 'languages' })
+                    // this.$router.push({ name: 'All Language' })
 
                     this.translates = response.data.translationWords;
                     this.suggestedWords = response.data.suggestedWords;

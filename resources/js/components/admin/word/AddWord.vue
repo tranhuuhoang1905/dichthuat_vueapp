@@ -10,38 +10,17 @@
                 <div class="col-md-6 col-sm-12">
                   <div class="form-group">
                     <label>Word:</label>
-                    <input
-                      type="text"
-                      placeholder="Enter new word"
-                      class="form-control"
-                      v-model="word.word"
-                      required
-                    />
+                    <input type="text" placeholder="Enter new word" class="form-control" v-model="word.word" required />
                   </div>
                   <div class="form-group">
                     <label>Description</label>
-                    <textarea
-                      type="text"
-                      placeholder="Enter description"
-                      class="form-control"
-                      v-model="word.description"
-                      rows="4"
-                      required
-                    ></textarea>
+                    <textarea type="text" placeholder="Enter description" class="form-control" v-model="word.description"
+                      rows="4" required></textarea>
                   </div>
                   <div class="form-group">
                     <label>Language</label>
-                    <select
-                      class="form-select"
-                      aria-label="Default select example"
-                      v-model="word.language_id"
-                      required
-                    >
-                      <option
-                        v-for="language in languages"
-                        :key="language.id"
-                        :value="`${language.id}`"
-                      >
+                    <select class="form-select" aria-label="Default select example" v-model="word.language_id" required>
+                      <option v-for="language in languages" :key="language.id" :value="`${language.id}`">
                         {{ language.name }}
                       </option>
                     </select>
@@ -51,39 +30,20 @@
                 <div class="col-md-6 col-sm-12">
                   <div class="form-group">
                     <label>Translate</label>
-                    <input
-                      type="text"
-                      placeholder="Enter translated word"
-                      class="form-control"
-                      v-model="word.translate"
-                      required
-                    />
+                    <input type="text" placeholder="Enter translated word" class="form-control" v-model="word.translate"
+                      required />
                   </div>
                   <div class="form-group">
                     <label>Translate description</label>
-                    <textarea
-                      type="text"
-                      placeholder="Enter description"
-                      class="form-control"
-                      v-model="word.translate_description"
-                      rows="4"
-                      required
-                    ></textarea>
+                    <textarea type="text" placeholder="Enter description" class="form-control"
+                      v-model="word.translate_description" rows="4" required></textarea>
                   </div>
                   <div class="form-group">
                     <label>Language translate id</label>
-                    <select
-                      class="form-select"
-                      aria-label="Default select example"
-                      v-model="word.language_translate_id"
-                      required
-                    >
+                    <select class="form-select" aria-label="Default select example" v-model="word.language_translate_id"
+                      required>
                       <!-- <option :value="-1" selected>Open this select menu</option> -->
-                      <option
-                        v-for="language in languages"
-                        :key="language.id"
-                        :value="`${language.id}`"
-                      >
+                      <option v-for="language in languages" :key="language.id" :value="`${language.id}`">
                         {{ language.name }}
                       </option>
                     </select>
@@ -127,7 +87,7 @@ export default {
         .post("/api/word/add", this.word)
         .then((response) => {
           console.log(response.data);
-          this.$router.push({ name: "words" });
+          this.$router.push({ name: "All Word" });
         })
         .catch((error) => console.log(error))
         .finally(() => (this.loading = false));

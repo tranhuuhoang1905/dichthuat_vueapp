@@ -76,7 +76,7 @@ export default {
           this.userForm
         )
         .then((response) => {
-          this.$router.push({ name: "user-manager" });
+          this.$router.push({ name: "User Manager" });
         })
         .catch((error) => console.log(error))
         .finally(() => (this.loading = false));

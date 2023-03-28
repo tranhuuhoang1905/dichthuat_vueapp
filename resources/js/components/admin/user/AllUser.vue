@@ -3,18 +3,12 @@
     <div class="row position-relative">
       <div class="col-md-12">
         <div class="card show border border-0">
-          <router-link
-            :to="{ name: 'create-new-user' }"
-            class="btn btn-all-add-edit my-3 mx-3 position-absolute"
-            >Add user</router-link
-          >
+          <router-link :to="{ name: 'Create New User' }" class="btn btn-all-add-edit my-3 mx-3 position-absolute">Add
+            user</router-link>
           <div class="card-body">
             <h4 class="card-title text-md-center fs-4 my-3 text-right">User Manager</h4>
             <div class="table-responsive-lg">
-              <table
-                ref="myTable"
-                class="table table-bordered table-striped table-hover"
-              >
+              <table ref="myTable" class="table table-bordered table-striped table-hover">
                 <thead>
                   <tr>
                     <th>STT</th>
@@ -36,21 +30,15 @@
                     </td>
                     <td>
                       <div class="d-flex justify-content-evenly">
-                        <router-link
-                          :to="{
-                            name: 'Change Role User',
-                            params: { id: user.id },
-                          }"
-                          class="btn btn-all-add-edit"
-                          >Change role
+                        <router-link :to="{
+                          name: 'Change Role User',
+                          params: { id: user.id },
+                        }" class="btn btn-all-add-edit">Change role
                         </router-link>
-                        <router-link
-                          :to="{
-                            name: 'Change Password User',
-                            params: { id: user.id },
-                          }"
-                          class="btn btn-all-add-edit"
-                          >Change password
+                        <router-link :to="{
+                          name: 'Change Password User',
+                          params: { id: user.id },
+                        }" class="btn btn-all-add-edit">Change password
                         </router-link>
                       </div>
                     </td>

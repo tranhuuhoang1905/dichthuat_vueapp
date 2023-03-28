@@ -71,8 +71,6 @@ export default {
             if (crumbs.length > 0 && crumbs[crumbs.length - 1].title === 'Admin Dashboard') {
                 crumbs.pop()
             }
-            console.log(crumbs[crumbs.length - 1].title);
-            console.log(crumbs);
             return crumbs
         },
         pageName() {
