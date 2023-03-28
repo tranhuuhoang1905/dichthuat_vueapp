@@ -143,13 +143,9 @@ export default {
               render: function (data, type, row) {
                 return (
                   '<div class="d-flex justify-content-evenly">' +
-                  "<router-link :to=\"{ name: 'Change Role User', params: { id: " +
-                  row.id +
-                  ' } }" class="btn btn-all-add-edit">Change role</router-link>' +
-                  "<router-link :to=\"{ name: 'Change Password User', params: { id: " +
-                  row.id +
-                  ' } }" class="btn btn-all-add-edit">Change password</router-link>' +
-                  "</div>"
+                  '<a class="btn btn-all-add-edit" href="/admin/user-manager/change-role-user/' + row.id + '">Change Role</a>' +
+                  '<a class="btn btn-all-add-edit" href="/admin/user-manager/change-pasword-user/' + row.id + '">Change Password</a>' +
+                  '</div>'
                 );
               },
             },

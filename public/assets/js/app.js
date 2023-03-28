@@ -24005,7 +24005,7 @@ datatables_net_vue3__WEBPACK_IMPORTED_MODULE_3__["default"].use(datatables_net__
           {
             data: "id",
             render: function render(data, type, row) {
-              return '<div class="d-flex justify-content-evenly">' + "<router-link :to=\"{ name: 'Change Role User', params: { id: " + row.id + ' } }" class="btn btn-all-add-edit">Change role</router-link>' + "<router-link :to=\"{ name: 'Change Password User', params: { id: " + row.id + ' } }" class="btn btn-all-add-edit">Change password</router-link>' + "</div>";
+              return '<div class="d-flex justify-content-evenly">' + '<a class="btn btn-all-add-edit" href="/admin/user-manager/change-role-user/' + row.id + '">Change Role</a>' + '<a class="btn btn-all-add-edit" href="/admin/user-manager/change-pasword-user/' + row.id + '">Change Password</a>' + '</div>';
             }
           }]
         });
