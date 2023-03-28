@@ -1,11 +1,11 @@
 <template>
   <div class="navbar_home">
     <nav class="navbar navbar-expand-lg navbar-light bg-main shadow-sm">
-      <div class="collapse navbar-collapse d-flex justify-content-between">
-        <div class="text-center py-4 px-5">
+      <div class="collapse navbar-collapse d-flex justify-content-around">
+        <div class="text-center py-4 ps-1 ps-md-5">
           <span class="text-white">Laravel Home Example</span>
         </div>
-        <div class="navbar-nav px-5 align-items-center">
+        <div class="navbar-nav align-items-center flex-row pe-2 pe-md-5">
           <a href="/admin" class="navbar_menu nav-item nav-link py-4 text-white">Dashboard
                     <div class="border_link"></div>
                 </a>
