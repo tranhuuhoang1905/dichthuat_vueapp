@@ -23,6 +23,9 @@
         <!-- <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css"> -->
         <link href="{{ mix('assets/css/style.css') }}" type="text/css" rel="stylesheet"/>
         <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
+        <link href="{{ mix('assets/css/datatable.css') }}" type="text/css" rel="stylesheet"/>
+        <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.24/datatables.min.css"/> -->
+        <!-- <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script> -->
         <style>
         .bg-light {
             background-color: #eae9e9 !important;
