@@ -150,10 +150,10 @@ class WordsController extends Controller
     public function getTopSearchWords(Request $request)
     {
         $languageId = $request->input('language_id');
-        $words = TranslationWord::select('translation_word.word_id','words.id','words.word')
+        $words = TranslationWord::select('translation_word.word_id', 'words.id', 'words.word')
         ->join('words', 'words.id', '=', 'translation_word.word_id')
         ->where('translation_word.language_id', '=', $languageId)
-        ->groupBy('translation_word.word_id', 'words.id', 'words.word')
+        ->groupBy('translation_word.word_id', 'words.id', 'words.word', 'words.id')
         ->orderByDesc('words.number_search')
         ->take(10)
         ->get()
