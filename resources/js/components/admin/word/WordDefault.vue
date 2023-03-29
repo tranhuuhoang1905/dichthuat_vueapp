@@ -57,13 +57,13 @@ export default {
         this.axios
             .get(`/api/word/alldata/${this.$route.params.id}`)
             .then((response) => {
-                this.translates = response.data.translates;
-                console.log(response.data.translates);
-                console.log(this.translates);
-                this.languages = response.data.languages;
-                this.word = response.data.wordDefault;
-                this.wordId = this.word.id;
-                console.log(response.data);
+                if (response.data.status === 200) {
+                    this.translates = response.data.data.translates;
+                    this.languages = response.data.data.languages;
+                    this.word = response.data.data.wordDefault;
+                    this.wordId = this.word.id;
+                }
+
             });
     },
     methods: {

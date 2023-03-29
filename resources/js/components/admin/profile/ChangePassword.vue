@@ -68,9 +68,13 @@ export default {
       this.axios
         .post(`/api/user/user-change-password`, this.userForm)
         .then((response) => {
-          this.$router.push({ name: "Profile User" });
+          if (response.data.status === 200) {
+            alert(response.data.message);
+          }
         })
-        .catch((error) => console.log(error))
+        .catch((error) => {
+          alert(`Error ${error.response.status}: ${error.response.data.message}`);
+        })
         .finally(() => (this.loading = false));
     },
   }

@@ -20,7 +20,7 @@
                                 <div class="form-group">
                                     <label>Language</label>
                                     <select class="form-select" aria-label="Default select example"
-                                        v-model="wordForm.language_id" required>
+                                        v-model="wordForm.language_id" required disabled>
                                         <option v-for="(language) in languages" :key="language.id"
                                             :value="`${language.id}`">{{
                                                 language.name }}</option>
@@ -50,9 +50,14 @@ export default {
         this.axios
             .get(`/api/word/edit/${this.$route.params.id}`)
             .then((response) => {
-                this.wordForm = { 'word': response.data.word.word, 'description': response.data.word.description, 'language_id': response.data.word.language_id };
-                this.languages = response.data.languages;
-                // console.log(response.data);
+                if (response.data.status === 200) {
+                    this.wordForm = {
+                        'word': response.data.data.word.word,
+                        'description': response.data.data.word.description,
+                        'language_id': response.data.data.word.language_id
+                    };
+                    this.languages = response.data.data.languages;
+                }
             });
     },
     methods: {
@@ -60,8 +65,14 @@ export default {
             this.axios
                 .post(`/api/word/update/${this.$route.params.id}`, this.wordForm)
                 .then((response) => {
-                    this.$router.push({ name: 'All Word' });
-                });
+                    if (response.data.status === 200) {
+                        alert(response.data.message);
+                    }
+                })
+                .catch((error) => {
+                    alert(`Error ${error.response.status}: ${error.response.data.message}`);
+                })
+                .finally(() => (this.loading = false));
         }
     }
 }

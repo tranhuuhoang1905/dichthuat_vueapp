@@ -26,20 +26,27 @@ class UserController extends Controller
     {
         $users = User::with('roles')->get()
             ->toArray();
-        return response()->json($users);
+            $responseData = [    'status' => 200,'success'=>true,    'message' => 'success',    'data' => $users];
+        return response()->json($responseData);
     }
     // all roles
     public function roles()
     {
         $roles = Role::all()
             ->toArray();
-        return response()->json($roles);
+        $responseData = [    'status' => 200,'success'=>true,    'message' => 'success',    'data' => $roles];
+        return response()->json($responseData);
     }
     //     createNewUser
 
     public function createNewUser(Request $request)
     {
         $role = Role::where('id', $request->input('role'))->get()->first();
+        $oldUser = User::where('email', $request->input('email'))->get()->first();
+        if($oldUser){
+            $responseData = [    'status' => 200,'success'=>true,    'message' => 'This account already exists'];
+            return response()->json($responseData);
+        }
         if ($role){
             $user = User::create([
                 'name' => $request->input('name'),
@@ -47,9 +54,11 @@ class UserController extends Controller
                 'password' => Hash::make($request->input('password')),
             ]);
             $user->assignRole($role->name);
-            return response()->json('The user successfully created');
+            $responseData = [    'status' => 200,'success'=>true,    'message' => 'The user successfully created'];
+            return response()->json($responseData);
         }else{
-            return response()->json('Role not found');
+            $responseData = [    'success'=>true,    'message' => 'Role not found'];
+            return response()->json($responseData);
         }
     }
 
@@ -59,10 +68,15 @@ class UserController extends Controller
         $user  = User::where('id', $id)->get()->first();
         $user->load('roles');
         $roles = Role::all()->toArray();
-        return response()->json([
-            'user'=>$user,
-            'roles'=>$roles
-        ]);
+        $responseData = [
+            'status' => 200,
+            'message' => 'success',
+            'data'=>[
+                'user'=>$user,
+                'roles'=>$roles
+            ]
+        ];
+        return response()->json($responseData);
     }
 
     // update user
@@ -78,7 +92,8 @@ class UserController extends Controller
             }
         }
         $user->assignRole($role->name);
-        return response()->json('The user successfully updated');
+        $responseData = [    'status' => 200,'success'=>true,    'message' => 'The user successfully updated'];
+        return response()->json($responseData);
     }
 
     // update user
@@ -88,11 +103,13 @@ class UserController extends Controller
         $password = $request->input('password');
         $repassword = $request->input('repassword');
         if($password !== $repassword or !$password){
-            return response()->json('The user false to updated');
+            $responseData = ['success'=>true,    'message' => 'The user false to updated'];
+            return response()->json($responseData);
         }
         $user->password = Hash::make($password);
         $user->save();
-        return response()->json('The user successfully updated');
+        $responseData = [    'success'=>true,    'message' => 'The user successfully updated'];
+        return response()->json($responseData);
     }
     // update user
     public function updateUser( Request $request)
@@ -104,7 +121,8 @@ class UserController extends Controller
         $userUpdate->phone_number = $request->input('phone_number');
         $userUpdate->address = $request->input('address');
         $userUpdate->save();
-        return response()->json(['success'=>true,'message'=>"update success"]);
+        $responseData = [    'status' => 200 ,'success'=>true,    'message' => 'The user successfully updated'];
+        return response()->json($responseData);
     }
 
     /**
@@ -119,45 +137,20 @@ class UserController extends Controller
         $userUpdate = User::find($user->id);
         // return response()->json($user->password);
         if (!Hash::check($request->input('password'), $user->password)) {
-            return response()->json('Password false');
+            $responseData = [   'status' => 200,'success'=>true,     'message' => 'Password false'];
+            return response()->json($responseData);
+            
         }
         $passwordNew = $request->input('password_new');
         $repasswordNew = $request->input('repassword_new');
         if($passwordNew !== $repasswordNew or !$passwordNew){
-            return response()->json('The user false to updated');
+            $responseData = [   'status' => 200,'success'=>true,     'message' => 'The user false to updated'];
+            return response()->json($responseData);
         }
         $user->password = Hash::make($passwordNew);
         $user->save();
-        return response()->json('The user successfully updated');
+        $responseData = [   'status' => 200,'success'=>true,     'message' => 'The user successfully updated'];
+        return response()->json($responseData);
     }
-    
-
-    // test export file excel
-    // public function export()
-    // {
-    //     $fileName = 'users.xlsx';
-
-    //     return Excel::download(new UsersExport, $fileName);
-    // }
-
-    public function uploadExcel(Request $request)
-    {
-        $file = $request->file('file');
-        $data = Excel::toArray(new Excel(), $file);
-        $dataResponse = [];
-        foreach ($data[0] as $element){
-            $dataResponse[] = [$element[0],$element[1],$element[2]];
-        }
-        // $users = collect($dataResponse);
-        // $users = collect([
-        //     ['name' => 'John Doe', 'email' => 'johndoe@example.com'],
-        //     ['name' => 'Jane Doe', 'email' => 'janedoe@example.com']
-        // ]);
-        $export = new DataExport(collect($dataResponse));
-        $fileName = 'usersedit.xlsx';
-        return Excel::download($export, $fileName);
-        // return response()->json( ['data_input'=>$data,'data_output'=>$dataResponse]);
-    }
-
     
 }

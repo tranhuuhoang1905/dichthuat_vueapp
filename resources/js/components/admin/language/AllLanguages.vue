@@ -113,11 +113,13 @@ export default {
     },
     fetchData() {
       this.axios.get("/api/languages").then((response) => {
-        // this.words = response.data;
-        this.table = $(this.$refs.myTable).DataTable({
-          data: response.data,
-          columns: this.columns
-        });
+        console.log(response.data);
+        if (response.data.message === 'success') {
+          this.table = $(this.$refs.myTable).DataTable({
+            data: response.data.data,
+            columns: this.columns
+          });
+        }
       });
     }
   },

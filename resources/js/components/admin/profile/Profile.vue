@@ -102,15 +102,19 @@ export default {
   methods: {
     ...mapActions(["storeUpdateUser"]),
     updateUser() {
+      console.log(this.UserForm);
       this.axios
         .post(`/api/user/update`, this.UserForm)
         .then((response) => {
-          console.log('----------------0');
-          if (response.data.success == true) {
+          if (response.data.status === 200) {
             this.storeUpdateUser();
+            alert(response.data.message);
           }
-
-        });
+        })
+        .catch((error) => {
+          alert(`Error ${error.response.status}: ${error.response.data.message}`);
+        })
+        .finally(() => (this.loading = false));
     }
   }
 };

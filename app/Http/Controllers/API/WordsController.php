@@ -22,7 +22,15 @@ class WordsController extends Controller
     public function index()
     {
         $words = Words::all()->toArray();
-        return response()->json($words);
+        $responseData = [
+            'status' => 200,
+            'success'=>true,
+            'message' => 'The new word successfully added',
+            'data'=> [
+                'words'=>$words
+            ]
+        ];
+        return response()->json($responseData);
     }
  
     // add word
@@ -38,23 +46,34 @@ class WordsController extends Controller
         $words->saveWithTranslation($languageId, $languageTranslateId, $word, $translate, $description, $translateDescription);
         // lưu chéo ngược lại
         $words->saveWithTranslation($languageTranslateId, $languageId, $translate, $word, $translateDescription, $description);
-        return response()->json(['msg' =>'The new word successfully added']);
+        $responseData = [    'status' => 200,'success'=>true,    'message' => 'The new word successfully added',];
+        return response()->json($responseData);
     }
     // edit word
-    public function default($id)
-    {
-        $word = Words::find($id);
-        $TranslationWords = TranslationWord::join('languages', 'translation_word.language_id', '=', 'languages.id')
-            ->select('languages.name as language', 'translation_word.*')
-            ->where('translation_word.word_id', $id)
-            ->get()
-            ->toArray();
-        $dataRep = [
-            'word_info' =>$word,
-            'translates' => $TranslationWords 
-        ];
-        return response()->json($dataRep);
-    }
+    // public function default($id)
+    // {
+    //     $word = Words::find($id);
+    //     $TranslationWords = TranslationWord::join('languages', 'translation_word.language_id', '=', 'languages.id')
+    //         ->select('languages.name as language', 'translation_word.*')
+    //         ->where('translation_word.word_id', $id)
+    //         ->get()
+    //         ->toArray();
+    //     $dataRep = [
+    //         'word_info' =>$word,
+    //         'translates' => $TranslationWords 
+    //     ];
+    //     return response()->json($dataRep);
+    //     $responseData = [
+    //         'status' => 200,
+    //         'success'=>true,
+    //         'message' => 'The new word successfully added',
+    //         'data' =>[
+    //             'word_info' =>$word,
+    //             'translates' => $TranslationWords
+    //         ]
+    //     ];
+    //     return response()->json($responseData);
+    // }
 
     // edit word
     public function alldata($id)
@@ -64,7 +83,13 @@ class WordsController extends Controller
              ->where('words.id', $id)
              ->first();
         if(!$word){
-            return response()->json([]);
+            $responseData = [
+                'status' => 200,
+                'success'=>true,
+                'message' => 'success',
+                'data' => []
+            ];
+            return response()->json($responseData);
         }
         $Translates = TranslationWord::join('languages', 'translation_word.language_id', '=', 'languages.id')
             ->select('languages.name as language', 'translation_word.*')
@@ -76,12 +101,17 @@ class WordsController extends Controller
         //     'translates' => $TranslationWords 
         // ];
         $languages = Languages::all()->toArray();
-        return response()->json([
-            'languages'=>$languages,
-            'translates' => $Translates,
-            'wordDefault' => $word
-        ]);
-        return response()->json($dataRep);
+        $responseData = [
+            'status' => 200,
+            'success'=>true,
+            'message' => 'success',
+            'data' => [
+                'languages'=>$languages,
+                'translates' => $Translates,
+                'wordDefault' => $word
+            ]
+        ];
+        return response()->json($responseData);
     }
     
  
@@ -93,11 +123,17 @@ class WordsController extends Controller
              ->where('words.id', $id)
              ->first();
 
-             $languages = Languages::all()->toArray();
-        return response()->json([
-            'word'=>$word,
-            'languages'=>$languages
-        ]);
+        $languages = Languages::all()->toArray();
+        $responseData = [
+            'status' => 200,
+            'success'=>true,
+            'message' => 'success',
+            'data'=>[
+                'word'=>$word,
+                'languages'=>$languages
+            ]
+        ];
+        return response()->json($responseData);
     }
  
     // update language
@@ -105,8 +141,9 @@ class WordsController extends Controller
     {
         $word = Words::find($id);
         $word->update($request->all());
- 
-        return response()->json('The language successfully updated');
+        $responseData = [    'status' => 200,'success'=>true,    'message' => 'The word successfully updated'];
+        return response()->json($responseData);
+        
     }
  
     // get top search words
@@ -118,7 +155,8 @@ class WordsController extends Controller
         ->take(10)
         ->get()
         ->toArray();
-        return $words;
+        $responseData = [    'status' => 200,'success'=>true,    'message' => 'success',    'data' => $words];
+        return response()->json($responseData);
     }
 
     public function importWordsFromExcel(Request $request)
@@ -143,8 +181,8 @@ class WordsController extends Controller
                 $words->saveWithTranslation($languageTranslateId, $languageId, $translate, $word, $translateDescription, $description);
             }
         }
-        
-        return response()->json(["success"=>"success"]);
+        $responseData = ['status' => 200,'success'=>true, 'message' => 'The file word successfully imported'];
+        return response()->json($responseData);
     }
     public function translateWordsFromExcel(Request $request)
     {

@@ -43,13 +43,15 @@ export default {
       this.axios
         .post("/api/language/add", this.language)
         .then((response) => {
-          // Nếu thành công, đưa người dùng đến trang danh sách các ngôn ngữ
-          this.$router.push({ name: "All Language" });
+          if (response.data.status === 200) {
+            alert(`Add language ${this.language.name} success`);
+            this.language = {};
+          }
         })
         .catch((error) => {
           // Nếu không thành công, hiển thị thông báo lỗi
           console.log(error);
-          alert("Failed to add language");
+          alert(`Error ${error.response.status}: ${error.response.data.message}`);
         });
     },
   },

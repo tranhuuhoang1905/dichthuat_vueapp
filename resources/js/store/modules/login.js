@@ -27,15 +27,12 @@ const actions = {
                     );
                     if (getters.getLoginResponse.response_type == 'success') {
                         axios.get('/api/user').then(response => {
-                            console.log(response);
-                            if (response.status == 200) {
-                                commit('mutateAuthUser', response.data);
+                            if (response.data.status === 200) {
+                                commit('mutateAuthUser', response.data.data.user);
                                 sessionStorage.setItem(
                                     'authUser',
-                                    JSON.stringify(response.data)
+                                    JSON.stringify(response.data.data.user)
                                 );
-                                console.log(response.data.roles);
-                                console.log("----------check login authe");
                                 if (getters.getAuthUser.roles.some(role => role.name === "admin")) {
                                     // Chuyển hướng đến trang admin
                                     // Router.push('/admin').then(() => {
@@ -49,6 +46,8 @@ const actions = {
                                 // Router.push('/admin');
                             }
                         });
+                    } else {
+                        alert(getters.getLoginResponse.response_data[0]);
                     }
                 });
         });
@@ -80,12 +79,11 @@ const actions = {
                     console.log(getters.getLoginResponse.response_type);
                     if (getters.getLoginResponse.response_type == 'success') {
                         axios.get('/api/user').then(response => {
-                            console.log(response);
-                            if (response.status == 200) {
-                                commit('mutateAuthUser', response.data);
+                            if (response.data.status === 200) {
+                                commit('mutateAuthUser', response.data.data.user);
                                 sessionStorage.setItem(
                                     'authUser',
-                                    JSON.stringify(response.data)
+                                    JSON.stringify(response.data.data.user)
                                 );
                                 window.location.replace('/admin');
                             }
@@ -99,13 +97,12 @@ const actions = {
         axios.get('/sanctum/csrf-cookie').then(() => {
             axios.get('/api/user').then(response => {
 
-                if (response.status == 200) {
-                    commit('mutateAuthUser', response.data);
+                if (response.data.status === 200) {
+                    commit('mutateAuthUser', response.data.data.user);
                     sessionStorage.setItem(
                         'authUser',
-                        JSON.stringify(response.data)
+                        JSON.stringify(response.data.data.user)
                     );
-                    // Router.push({ name: "Profile User" });
                 }
             });
         });

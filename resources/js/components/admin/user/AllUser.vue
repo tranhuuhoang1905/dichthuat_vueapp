@@ -80,10 +80,6 @@ export default {
 
   created() {
     this.fetchData();
-    // this.axios.get("/api/user/allusers").then((response) => {
-    //   this.users = response.data;
-    //   console.log(response.data);
-    // });
   },
   methods: {
     // thêm mới người dùng
@@ -128,29 +124,30 @@ export default {
     },
     fetchData() {
       this.axios.get("/api/user/allusers").then((response) => {
-        // this.words = response.data;
-        this.table = $(this.$refs.myTable).DataTable({
-          data: response.data,
-          columns: [
-            { data: "id" },
-            { data: "name" },
-            { data: "email" },
-            { data: "roles" },
-            // { data: 'created_at' },
-            // { data: 'updated_at' },
-            {
-              data: "id",
-              render: function (data, type, row) {
-                return (
-                  '<div class="d-flex justify-content-evenly">' +
-                  '<a class="btn btn-all-add-edit" href="/admin/user-manager/change-role-user/' + row.id + '">Change Role</a>' +
-                  '<a class="btn btn-all-add-edit" href="/admin/user-manager/change-pasword-user/' + row.id + '">Change Password</a>' +
-                  '</div>'
-                );
+        if (response.data.message === 'success') {
+          this.table = $(this.$refs.myTable).DataTable({
+            data: response.data.data,
+            columns: [
+              { data: "id" },
+              { data: "name" },
+              { data: "email" },
+              { data: "roles" },
+              // { data: 'created_at' },
+              // { data: 'updated_at' },
+              {
+                data: "id",
+                render: function (data, type, row) {
+                  return (
+                    '<div class="d-flex justify-content-evenly">' +
+                    '<a class="btn btn-all-add-edit" href="/admin/user-manager/change-role-user/' + row.id + '">Change Role</a>' +
+                    '<a class="btn btn-all-add-edit" href="/admin/user-manager/change-pasword-user/' + row.id + '">Change Password</a>' +
+                    '</div>'
+                  );
+                },
               },
-            },
-          ],
-        });
+            ],
+          });
+        }
       });
     },
   },

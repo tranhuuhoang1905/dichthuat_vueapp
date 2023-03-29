@@ -127,12 +127,16 @@ export default {
     },
     created() {
         this.axios.get("/api/languages").then((response) => {
-            this.languages = response.data;
+            if (response.data.message === 'success') {
+                this.languages = response.data.data;
+            }
         });
         this.axios.get("/api/word/top-search-words").then((response) => {
-            this.topSearchWords = response.data;
+            if (response.data.message === 'success') {
+                this.topSearchWords = response.data.data;
+            }
+
         });
-        console.log(this.languages);
     },
     methods: {
         searchAction() {
@@ -140,15 +144,17 @@ export default {
                 .post("/api/translate/search", this.searchData)
                 .then((response) => {
                     // this.$router.push({ name: 'All Language' })
+                    if (response.data.status === 200) {
+                        this.translates = response.data.data.translationWords;
+                        this.suggestedWords = response.data.data.suggestedWords;
+                        this.keywordAction = this.searchData.keyword;
+                        if (response.data.data.translation_words.length > 0) {
+                            this.result = response.data.data.translation_words[0].translate;
+                        }
 
-                    this.translates = response.data.translationWords;
-                    this.suggestedWords = response.data.suggestedWords;
-                    this.keywordAction = this.searchData.keyword;
-                    if (response.data.translation_words.length > 0) {
-                        this.result = response.data.translation_words[0].translate;
+                        console.log(response.data);
                     }
 
-                    console.log(response.data);
                 })
                 .catch((error) => console.log(error))
                 .finally(() => (this.loading = false));

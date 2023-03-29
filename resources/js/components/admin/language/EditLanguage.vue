@@ -40,19 +40,24 @@ export default {
     this.axios
       .get(`/api/language/edit/${this.$route.params.id}`)
       .then((response) => {
-        this.language = response.data;
+        if (response.data.status === 200) {
+          this.language = response.data.data.language;
+        }
+
       });
   },
   methods: {
     updateLanguage() {
       this.axios
         .post(`/api/language/update/${this.$route.params.id}`, this.language)
-        .then(() => {
-          this.$router.push({ name: "All Language" });
+        .then((response) => {
+          if (response.data.status === 200) {
+            alert(response.data.message);
+          }
         })
         .catch((error) => {
           console.log(error);
-          alert("Failed to update language");
+          alert(`Error ${error.response.status}: ${error.response.data.message}`);
         });
     },
   },

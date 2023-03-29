@@ -16,7 +16,7 @@
                 </select>
               </div>
               <div class="form-group">
-                <label>Language translate id</label>
+                <label>Taget language</label>
                 <select class="form-select" aria-label="Default select example"
                   v-model="WordsFromExcel.language_translate_id" required>
                   <!-- <option :value="-1" selected>Open this select menu</option> -->
@@ -69,11 +69,14 @@ export default {
   },
   created() {
     this.axios.get("/api/languages").then((response) => {
-      this.languages = response.data;
-      if (response.data.length > 0) {
-        this.word.language_id = this.word.language_translate_id =
-          response.data[0].id;
+      if (response.data.message === 'success') {
+        this.languages = response.data.data;
+        if (response.data.data.length > 0) {
+          this.word.language_id = this.word.language_translate_id =
+            response.data.data[0].id;
+        }
       }
+
     });
     console.log(this.languages);
   },
@@ -95,10 +98,16 @@ export default {
           responseType: "blob",
         })
         .then((response) => {
-          const blob = new Blob([response.data], {
-            type: "application/vnd.ms-excel",
-          });
-          saveAs(blob, "translatecallback.xlsx");
+          if (response.status === 200) {
+            alert("File export successful");
+            const blob = new Blob([response.data], {
+              type: "application/vnd.ms-excel",
+            });
+            saveAs(blob, "translatecallback.xlsx");
+          } else {
+            alert("File export failed");
+          }
+
           // this.$router.push({ name: 'All Word' });
         })
         .catch((error) => {

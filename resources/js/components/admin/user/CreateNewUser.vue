@@ -66,8 +66,9 @@ export default {
 
   created() {
     this.axios.get("/api/user/roles").then((response) => {
-      this.roles = response.data;
-      console.log(response.data);
+      if (response.data.message === 'success') {
+        this.roles = response.data.data;
+      }
     });
   },
   methods: {
@@ -76,10 +77,13 @@ export default {
       this.axios
         .post("/api/user/create-new-user", this.newUser)
         .then((response) => {
-          console.log(response.data);
-          this.$router.push({ name: "User Manager" });
+          if (response.data.status === 200) {
+            alert(response.data.message);
+          }
         })
-        .catch((error) => console.log(error))
+        .catch((error) => {
+          alert(`Error ${error.response.status}: ${error.response.data.message}`);
+        })
         .finally(() => (this.loading = false));
     },
   },

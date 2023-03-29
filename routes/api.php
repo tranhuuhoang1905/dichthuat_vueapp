@@ -47,7 +47,7 @@ Route::group(['prefix' => 'word','middleware' => ['auth:sanctum, role:admin,lead
     Route::post('add', [WordsController::class, 'add']);
     Route::get('edit/{id}', [WordsController::class, 'edit']);
     Route::get('alldata/{id}', [WordsController::class, 'alldata']);
-    Route::get('default/{id}', [WordsController::class, 'default']);
+    // Route::get('default/{id}', [WordsController::class, 'default']);
     Route::post('update/{id}', [WordsController::class, 'update']);
     //người có role:admin mới có quyền truy cập link api/posts/delete 
     Route::delete('delete/{id}', [WordsController::class, 'delete']);
@@ -69,7 +69,14 @@ Route::group(['prefix' => 'user','middleware' => ['auth:sanctum']], function() {
         $user = $request->user();
         $user->load('roles'); // load roles của user
         
-        return $user;
+        // return $user;
+        $responseData = [
+            'status' => 200,
+            'success'=>true,
+            'message' => 'success',
+            'data'=>['user'=>$user]
+        ];
+        return response()->json($responseData);
     });
     Route::get('allusers' , [UserController::class, 'allusers'])->middleware('role:admin');
     Route::get('roles', [UserController::class, 'roles'])->middleware('role:admin,leader');
@@ -80,5 +87,3 @@ Route::group(['prefix' => 'user','middleware' => ['auth:sanctum']], function() {
     Route::post('user-change-password', [UserController::class, 'userChangePassword'])->middleware('role:admin');
     Route::post('update', [UserController::class, 'updateUser'])->middleware('role:admin');
 });
-Route:: get('/export', [UserController::class, 'export']);
-Route::post('/upload', [UserController::class, 'uploadExcel']);

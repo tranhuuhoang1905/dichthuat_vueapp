@@ -69,27 +69,40 @@ export default {
       languages: [],
       word: {},
       WordsFromExcel: {},
+      message: ''
+
     };
   },
   created() {
     this.axios.get("/api/languages").then((response) => {
-      this.languages = response.data;
-      if (response.data.length > 0) {
-        this.word.language_id = this.word.language_translate_id =
-          response.data[0].id;
+      if (response.data.message === 'success') {
+        this.languages = response.data.data;
+        if (response.data.data.length > 0) {
+          this.word.language_id = this.word.language_translate_id =
+            response.data.data[0].id;
+        }
       }
     });
-    console.log(this.languages);
   },
   methods: {
     addWord() {
       this.axios
         .post("/api/word/add", this.word)
         .then((response) => {
-          console.log(response.data);
-          this.$router.push({ name: "All Word" });
+          if (response.data.status === 200) {
+            alert(response.data.message);
+            this.word = {};
+            if (this.languages.length > 0) {
+              this.word.language_id = this.word.language_translate_id =
+                this.languages[0].id;
+            }
+            // this.$router.push({ name: "All Word"});
+          }
+
         })
-        .catch((error) => console.log(error))
+        .catch((error) => {
+          alert(`Error ${error.response.status}: ${error.response.data.message}`);
+        })
         .finally(() => (this.loading = false));
     },
   },

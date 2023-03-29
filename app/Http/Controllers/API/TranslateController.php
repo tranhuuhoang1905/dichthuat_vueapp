@@ -25,7 +25,13 @@ class TranslateController extends Controller
             
         }
         $suggestedWords = $mTranslationWord->searchSuggestedWords($languageId, $word);
-        return response()->json(['suggestedWords' =>$suggestedWords,'translationWords' =>$translationWords]);
+        $responseData = [
+            'status' => 200,
+            'success'=>true,
+            'message' => 'success',
+            'data' =>['suggestedWords' =>$suggestedWords,'translationWords' =>$translationWords]
+        ];
+        return response()->json($responseData);
     }
  // edit word
     public function edit($id)
@@ -36,10 +42,16 @@ class TranslateController extends Controller
             ->get()
             ->first();
              $languages = Languages::all()->toArray();
-        return response()->json([
-            'translate'=>$translationWord,
-            'languages'=>$languages
-        ]);
+        $responseData = [
+            'status' => 200,
+            'success'=>true,
+            'message' => 'success',
+            'data'=>[
+                'translate'=>$translationWord,
+                'languages'=>$languages
+            ]
+        ];
+        return response()->json($responseData);
     }
     
     // update language
@@ -47,6 +59,7 @@ class TranslateController extends Controller
     {
         $translationWord = TranslationWord::find($id);
         $translationWord->update($request->all());
-        return response()->json('The language successfully updated');
+        $responseData = [    'status' => 200,'success'=>true,    'message' => 'The translate successfully updated'];
+        return response()->json($responseData);
     }  
 }

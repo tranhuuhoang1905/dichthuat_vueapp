@@ -58,27 +58,33 @@ export default {
     this.axios
       .get(`/api/translate/edit/${this.$route.params.id}`)
       .then((response) => {
-        this.translateForm = {
-          translate: response.data.translate.translate,
-          description: response.data.translate.description,
-          original_language_description:
-            response.data.translate.original_language_description,
-          language_id: response.data.translate.language_id,
-        };
-        this.languages = response.data.languages;
-        console.log(response.data);
+        if (response.data.status === 200) {
+          this.translateForm = {
+            translate: response.data.data.translate.translate,
+            description: response.data.data.translate.description,
+            original_language_description:
+              response.data.data.translate.original_language_description,
+            language_id: response.data.data.translate.language_id,
+          };
+          this.languages = response.data.data.languages;
+          console.log(response.data);
+        }
+
       });
   },
   methods: {
     updateTranslate() {
       this.axios
-        .post(
-          `/api/translate/update/${this.$route.params.id}`,
-          this.translateForm
-        )
+        .post(`/api/translate/update/${this.$route.params.id}`, this.translateForm)
         .then((response) => {
-          this.$router.push({ name: "All Word" });
-        });
+          if (response.data.status === 200) {
+            alert(response.data.message);
+          }
+        })
+        .catch((error) => {
+          alert(`Error ${error.response.status}: ${error.response.data.message}`);
+        })
+        .finally(() => (this.loading = false));
     },
   },
 };

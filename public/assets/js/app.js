@@ -23566,14 +23566,14 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
       // Gọi API để thêm ngôn ngữ mới
       this.axios.post("/api/language/add", this.language).then(function (response) {
-        // Nếu thành công, đưa người dùng đến trang danh sách các ngôn ngữ
-        _this.$router.push({
-          name: "All Language"
-        });
+        if (response.data.status === 200) {
+          alert("Add language ".concat(_this.language.name, " success"));
+          _this.language = {};
+        }
       })["catch"](function (error) {
         // Nếu không thành công, hiển thị thông báo lỗi
         console.log(error);
-        alert("Failed to add language");
+        alert("Error ".concat(error.response.status, ": ").concat(error.response.data.message));
       });
     }
   }
@@ -23660,11 +23660,13 @@ datatables_net_vue3__WEBPACK_IMPORTED_MODULE_3__["default"].use(datatables_net__
     fetchData: function fetchData() {
       var _this2 = this;
       this.axios.get("/api/languages").then(function (response) {
-        // this.words = response.data;
-        _this2.table = jquery__WEBPACK_IMPORTED_MODULE_2___default()(_this2.$refs.myTable).DataTable({
-          data: response.data,
-          columns: _this2.columns
-        });
+        console.log(response.data);
+        if (response.data.message === 'success') {
+          _this2.table = jquery__WEBPACK_IMPORTED_MODULE_2___default()(_this2.$refs.myTable).DataTable({
+            data: response.data.data,
+            columns: _this2.columns
+          });
+        }
       });
     }
   },
@@ -23697,19 +23699,20 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
     this.axios.get("/api/language/edit/".concat(this.$route.params.id)).then(function (response) {
-      _this.language = response.data;
+      if (response.data.status === 200) {
+        _this.language = response.data.data.language;
+      }
     });
   },
   methods: {
     updateLanguage: function updateLanguage() {
-      var _this2 = this;
-      this.axios.post("/api/language/update/".concat(this.$route.params.id), this.language).then(function () {
-        _this2.$router.push({
-          name: "All Language"
-        });
+      this.axios.post("/api/language/update/".concat(this.$route.params.id), this.language).then(function (response) {
+        if (response.data.status === 200) {
+          alert(response.data.message);
+        }
       })["catch"](function (error) {
         console.log(error);
-        alert("Failed to update language");
+        alert("Error ".concat(error.response.status, ": ").concat(error.response.data.message));
       });
     }
   }
@@ -23755,11 +23758,11 @@ __webpack_require__.r(__webpack_exports__);
       this.userForm.email = "admin@gmail.com";
       console.log(this.userForm);
       this.axios.post("/api/user/user-change-password", this.userForm).then(function (response) {
-        _this.$router.push({
-          name: "Profile User"
-        });
+        if (response.data.status === 200) {
+          alert(response.data.message);
+        }
       })["catch"](function (error) {
-        return console.log(error);
+        alert("Error ".concat(error.response.status, ": ").concat(error.response.data.message));
       })["finally"](function () {
         return _this.loading = false;
       });
@@ -23870,11 +23873,16 @@ function _toPrimitive(input, hint) {
   methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)(["storeUpdateUser"])), {}, {
     updateUser: function updateUser() {
       var _this = this;
+      console.log(this.UserForm);
       this.axios.post("/api/user/update", this.UserForm).then(function (response) {
-        console.log('----------------0');
-        if (response.data.success == true) {
+        if (response.data.status === 200) {
           _this.storeUpdateUser();
+          alert(response.data.message);
         }
+      })["catch"](function (error) {
+        alert("Error ".concat(error.response.status, ": ").concat(error.response.data.message));
+      })["finally"](function () {
+        return _this.loading = false;
       });
     }
   })
@@ -23942,12 +23950,7 @@ datatables_net_vue3__WEBPACK_IMPORTED_MODULE_3__["default"].use(datatables_net__
   },
   created: function created() {
     this.fetchData();
-    // this.axios.get("/api/user/allusers").then((response) => {
-    //   this.users = response.data;
-    //   console.log(response.data);
-    // });
   },
-
   methods: {
     // thêm mới người dùng
     addUser: function addUser() {
@@ -23988,27 +23991,28 @@ datatables_net_vue3__WEBPACK_IMPORTED_MODULE_3__["default"].use(datatables_net__
     fetchData: function fetchData() {
       var _this = this;
       this.axios.get("/api/user/allusers").then(function (response) {
-        // this.words = response.data;
-        _this.table = jquery__WEBPACK_IMPORTED_MODULE_2___default()(_this.$refs.myTable).DataTable({
-          data: response.data,
-          columns: [{
-            data: "id"
-          }, {
-            data: "name"
-          }, {
-            data: "email"
-          }, {
-            data: "roles"
-          },
-          // { data: 'created_at' },
-          // { data: 'updated_at' },
-          {
-            data: "id",
-            render: function render(data, type, row) {
-              return '<div class="d-flex justify-content-evenly">' + '<a class="btn btn-all-add-edit" href="/admin/user-manager/change-role-user/' + row.id + '">Change Role</a>' + '<a class="btn btn-all-add-edit" href="/admin/user-manager/change-pasword-user/' + row.id + '">Change Password</a>' + '</div>';
-            }
-          }]
-        });
+        if (response.data.message === 'success') {
+          _this.table = jquery__WEBPACK_IMPORTED_MODULE_2___default()(_this.$refs.myTable).DataTable({
+            data: response.data.data,
+            columns: [{
+              data: "id"
+            }, {
+              data: "name"
+            }, {
+              data: "email"
+            }, {
+              data: "roles"
+            },
+            // { data: 'created_at' },
+            // { data: 'updated_at' },
+            {
+              data: "id",
+              render: function render(data, type, row) {
+                return '<div class="d-flex justify-content-evenly">' + '<a class="btn btn-all-add-edit" href="/admin/user-manager/change-role-user/' + row.id + '">Change Role</a>' + '<a class="btn btn-all-add-edit" href="/admin/user-manager/change-pasword-user/' + row.id + '">Change Password</a>' + '</div>';
+              }
+            }]
+          });
+        }
       });
     }
   }
@@ -24042,10 +24046,12 @@ __webpack_require__.r(__webpack_exports__);
     //         console.log(response.data);
     //     });
     this.axios.get("/api/user/edit/".concat(this.$route.params.id)).then(function (response) {
-      _this.userForm = {
-        name: response.data.user.name,
-        email: response.data.user.email
-      };
+      if (response.data.status === 200) {
+        _this.userForm = {
+          name: response.data.data.user.name,
+          email: response.data.data.user.email
+        };
+      }
     });
   },
   methods: {
@@ -24053,11 +24059,11 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
       console.log(this.user);
       this.axios.post("/api/user/admin-change-password-user/".concat(this.$route.params.id), this.userForm).then(function (response) {
-        _this2.$router.push({
-          name: "User Manager"
-        });
+        if (response.data.status === 200) {
+          alert(response.data.message);
+        }
       })["catch"](function (error) {
-        return console.log(error);
+        alert("Error ".concat(error.response.status, ": ").concat(error.response.data.message));
       })["finally"](function () {
         return _this2.loading = false;
       });
@@ -24094,13 +24100,15 @@ __webpack_require__.r(__webpack_exports__);
     //         console.log(response.data);
     //     });
     this.axios.get("/api/user/edit/".concat(this.$route.params.id)).then(function (response) {
-      _this.userForm = {
-        name: response.data.user.name,
-        email: response.data.user.email,
-        // xử lý lại nếu role không tồn tại thì trả về null
-        role: response.data.user.roles[0].id
-      };
-      _this.roles = response.data.roles;
+      if (response.data.status === 200) {
+        _this.userForm = {
+          name: response.data.data.user.name,
+          email: response.data.data.user.email,
+          // xử lý lại nếu role không tồn tại thì trả về null
+          role: response.data.data.user.roles[0].id
+        };
+        _this.roles = response.data.data.roles;
+      }
     });
   },
   methods: {
@@ -24108,11 +24116,11 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
       console.log(this.user);
       this.axios.post("/api/user/change-role-user/".concat(this.$route.params.id), this.userForm).then(function (response) {
-        _this2.$router.push({
-          name: "User Manager"
-        });
+        if (response.data.status === 200) {
+          alert(response.data.message);
+        }
       })["catch"](function (error) {
-        return console.log(error);
+        alert("Error ".concat(error.response.status, ": ").concat(error.response.data.message));
       })["finally"](function () {
         return _this2.loading = false;
       });
@@ -24149,8 +24157,9 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
     this.axios.get("/api/user/roles").then(function (response) {
-      _this.roles = response.data;
-      console.log(response.data);
+      if (response.data.message === 'success') {
+        _this.roles = response.data.data;
+      }
     });
   },
   methods: {
@@ -24158,12 +24167,11 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
       console.log(this.newUser);
       this.axios.post("/api/user/create-new-user", this.newUser).then(function (response) {
-        console.log(response.data);
-        _this2.$router.push({
-          name: "User Manager"
-        });
+        if (response.data.status === 200) {
+          alert(response.data.message);
+        }
       })["catch"](function (error) {
-        return console.log(error);
+        alert("Error ".concat(error.response.status, ": ").concat(error.response.data.message));
       })["finally"](function () {
         return _this2.loading = false;
       });
@@ -24204,29 +24212,35 @@ __webpack_require__.r(__webpack_exports__);
     return {
       languages: [],
       word: {},
-      WordsFromExcel: {}
+      WordsFromExcel: {},
+      message: ''
     };
   },
   created: function created() {
     var _this = this;
     this.axios.get("/api/languages").then(function (response) {
-      _this.languages = response.data;
-      if (response.data.length > 0) {
-        _this.word.language_id = _this.word.language_translate_id = response.data[0].id;
+      if (response.data.message === 'success') {
+        _this.languages = response.data.data;
+        if (response.data.data.length > 0) {
+          _this.word.language_id = _this.word.language_translate_id = response.data.data[0].id;
+        }
       }
     });
-    console.log(this.languages);
   },
   methods: {
     addWord: function addWord() {
       var _this2 = this;
       this.axios.post("/api/word/add", this.word).then(function (response) {
-        console.log(response.data);
-        _this2.$router.push({
-          name: "All Word"
-        });
+        if (response.data.status === 200) {
+          alert(response.data.message);
+          _this2.word = {};
+          if (_this2.languages.length > 0) {
+            _this2.word.language_id = _this2.word.language_translate_id = _this2.languages[0].id;
+          }
+          // this.$router.push({ name: "All Word"});
+        }
       })["catch"](function (error) {
-        return console.log(error);
+        alert("Error ".concat(error.response.status, ": ").concat(error.response.data.message));
       })["finally"](function () {
         return _this2.loading = false;
       });
@@ -24264,6 +24278,11 @@ datatables_net_vue3__WEBPACK_IMPORTED_MODULE_3__["default"].use(datatables_net__
       words: []
     };
   },
+  mounted: function mounted() {
+    this.message = this.$route.params.get_message;
+    console.log(this.$route);
+    console.log(this.message);
+  },
   created: function created() {
     this.fetchData();
   },
@@ -24287,28 +24306,30 @@ datatables_net_vue3__WEBPACK_IMPORTED_MODULE_3__["default"].use(datatables_net__
       var _this2 = this;
       this.axios.post("/api/words").then(function (response) {
         // this.words = response.data;
-        _this2.table = jquery__WEBPACK_IMPORTED_MODULE_2___default()(_this2.$refs.myTable).DataTable({
-          responsive: true,
-          data: response.data,
-          columns: [{
-            data: 'id'
-          }, {
-            data: 'word'
-          }, {
-            data: 'description'
-          }, {
-            data: 'status'
-          }, {
-            data: 'created_at'
-          }, {
-            data: 'updated_at'
-          }, {
-            data: 'id',
-            render: function render(data, type, row) {
-              return '<div class="btn-group" role="group">' + '<a class="btn btn-all-add-edit" href="/admin/word/default/' + row.id + '">Default</a>' + '</div>';
-            }
-          }]
-        });
+        if (response.data.status === 200) {
+          _this2.table = jquery__WEBPACK_IMPORTED_MODULE_2___default()(_this2.$refs.myTable).DataTable({
+            responsive: true,
+            data: response.data.data.words,
+            columns: [{
+              data: 'id'
+            }, {
+              data: 'word'
+            }, {
+              data: 'description'
+            }, {
+              data: 'status'
+            }, {
+              data: 'created_at'
+            }, {
+              data: 'updated_at'
+            }, {
+              data: 'id',
+              render: function render(data, type, row) {
+                return '<div class="btn-group" role="group">' + '<a class="btn btn-all-add-edit" href="/admin/word/default/' + row.id + '">Default</a>' + '</div>';
+              }
+            }]
+          });
+        }
       });
     }
   }
@@ -24337,23 +24358,27 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
     this.axios.get("/api/word/edit/".concat(this.$route.params.id)).then(function (response) {
-      _this.wordForm = {
-        'word': response.data.word.word,
-        'description': response.data.word.description,
-        'language_id': response.data.word.language_id
-      };
-      _this.languages = response.data.languages;
-      // console.log(response.data);
+      if (response.data.status === 200) {
+        _this.wordForm = {
+          'word': response.data.data.word.word,
+          'description': response.data.data.word.description,
+          'language_id': response.data.data.word.language_id
+        };
+        _this.languages = response.data.data.languages;
+      }
     });
   },
-
   methods: {
     updateWord: function updateWord() {
       var _this2 = this;
       this.axios.post("/api/word/update/".concat(this.$route.params.id), this.wordForm).then(function (response) {
-        _this2.$router.push({
-          name: 'All Word'
-        });
+        if (response.data.status === 200) {
+          alert(response.data.message);
+        }
+      })["catch"](function (error) {
+        alert("Error ".concat(error.response.status, ": ").concat(error.response.data.message));
+      })["finally"](function () {
+        return _this2.loading = false;
       });
     }
   }
@@ -24385,9 +24410,11 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
     this.axios.get("/api/languages").then(function (response) {
-      _this.languages = response.data;
-      if (response.data.length > 0) {
-        _this.word.language_id = _this.word.language_translate_id = response.data[0].id;
+      if (response.data.message === 'success') {
+        _this.languages = response.data.data;
+        if (response.data.data.length > 0) {
+          _this.word.language_id = _this.word.language_translate_id = response.data.data[0].id;
+        }
       }
     });
     console.log(this.languages);
@@ -24401,14 +24428,19 @@ __webpack_require__.r(__webpack_exports__);
       formData.append("file", file);
       formData.append("language_id", this.WordsFromExcel.language_id);
       formData.append("language_translate_id", this.WordsFromExcel.language_translate_id);
-      axios.post("/api/word/save-words-from-excel", formData, {
+      this.axios.post("/api/word/save-words-from-excel", formData, {
         responseType: "blob"
       }).then(function (response) {
-        _this2.$router.push({
-          name: "All Word"
-        });
+        console.log(response);
+        if (response.status === 200) {
+          alert("File import successful");
+        } else {
+          alert("File import failed ");
+        }
       })["catch"](function (error) {
-        console.log(error);
+        alert("Error ".concat(error.response.status, ": ").concat(error.response.statusText));
+      })["finally"](function () {
+        return _this2.loading = false;
       });
     },
     openFileDialog: function openFileDialog() {
@@ -24457,9 +24489,11 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
     this.axios.get("/api/languages").then(function (response) {
-      _this.languages = response.data;
-      if (response.data.length > 0) {
-        _this.word.language_id = _this.word.language_translate_id = response.data[0].id;
+      if (response.data.message === 'success') {
+        _this.languages = response.data.data;
+        if (response.data.data.length > 0) {
+          _this.word.language_id = _this.word.language_translate_id = response.data.data[0].id;
+        }
       }
     });
     console.log(this.languages);
@@ -24475,10 +24509,16 @@ __webpack_require__.r(__webpack_exports__);
       axios.post("/api/word/translate-words-from-excel", formData, {
         responseType: "blob"
       }).then(function (response) {
-        var blob = new Blob([response.data], {
-          type: "application/vnd.ms-excel"
-        });
-        (0,file_saver__WEBPACK_IMPORTED_MODULE_0__.saveAs)(blob, "translatecallback.xlsx");
+        if (response.status === 200) {
+          alert("File export successful");
+          var blob = new Blob([response.data], {
+            type: "application/vnd.ms-excel"
+          });
+          (0,file_saver__WEBPACK_IMPORTED_MODULE_0__.saveAs)(blob, "translatecallback.xlsx");
+        } else {
+          alert("File export failed");
+        }
+
         // this.$router.push({ name: 'All Word' });
       })["catch"](function (error) {
         console.log(error);
@@ -24528,13 +24568,12 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
     this.axios.get("/api/word/alldata/".concat(this.$route.params.id)).then(function (response) {
-      _this.translates = response.data.translates;
-      console.log(response.data.translates);
-      console.log(_this.translates);
-      _this.languages = response.data.languages;
-      _this.word = response.data.wordDefault;
-      _this.wordId = _this.word.id;
-      console.log(response.data);
+      if (response.data.status === 200) {
+        _this.translates = response.data.data.translates;
+        _this.languages = response.data.data.languages;
+        _this.word = response.data.data.wordDefault;
+        _this.wordId = _this.word.id;
+      }
     });
   },
   methods: {}
@@ -24967,23 +25006,29 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
     this.axios.get("/api/translate/edit/".concat(this.$route.params.id)).then(function (response) {
-      _this.translateForm = {
-        translate: response.data.translate.translate,
-        description: response.data.translate.description,
-        original_language_description: response.data.translate.original_language_description,
-        language_id: response.data.translate.language_id
-      };
-      _this.languages = response.data.languages;
-      console.log(response.data);
+      if (response.data.status === 200) {
+        _this.translateForm = {
+          translate: response.data.data.translate.translate,
+          description: response.data.data.translate.description,
+          original_language_description: response.data.data.translate.original_language_description,
+          language_id: response.data.data.translate.language_id
+        };
+        _this.languages = response.data.data.languages;
+        console.log(response.data);
+      }
     });
   },
   methods: {
     updateTranslate: function updateTranslate() {
       var _this2 = this;
       this.axios.post("/api/translate/update/".concat(this.$route.params.id), this.translateForm).then(function (response) {
-        _this2.$router.push({
-          name: "All Word"
-        });
+        if (response.data.status === 200) {
+          alert(response.data.message);
+        }
+      })["catch"](function (error) {
+        alert("Error ".concat(error.response.status, ": ").concat(error.response.data.message));
+      })["finally"](function () {
+        return _this2.loading = false;
       });
     }
   }
@@ -25032,26 +25077,30 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
     this.axios.get("/api/languages").then(function (response) {
-      _this.languages = response.data;
+      if (response.data.message === 'success') {
+        _this.languages = response.data.data;
+      }
     });
     this.axios.get("/api/word/top-search-words").then(function (response) {
-      _this.topSearchWords = response.data;
+      if (response.data.message === 'success') {
+        _this.topSearchWords = response.data.data;
+      }
     });
-    console.log(this.languages);
   },
   methods: {
     searchAction: function searchAction() {
       var _this2 = this;
       this.axios.post("/api/translate/search", this.searchData).then(function (response) {
         // this.$router.push({ name: 'All Language' })
-
-        _this2.translates = response.data.translationWords;
-        _this2.suggestedWords = response.data.suggestedWords;
-        _this2.keywordAction = _this2.searchData.keyword;
-        if (response.data.translation_words.length > 0) {
-          _this2.result = response.data.translation_words[0].translate;
+        if (response.data.status === 200) {
+          _this2.translates = response.data.data.translationWords;
+          _this2.suggestedWords = response.data.data.suggestedWords;
+          _this2.keywordAction = _this2.searchData.keyword;
+          if (response.data.data.translation_words.length > 0) {
+            _this2.result = response.data.data.translation_words[0].translate;
+          }
+          console.log(response.data);
         }
-        console.log(response.data);
       })["catch"](function (error) {
         return console.log(error);
       })["finally"](function () {
@@ -26840,7 +26889,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
       return $data.wordForm.language_id = $event;
     }),
-    required: ""
+    required: "",
+    disabled: ""
   }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.languages, function (language) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
       key: language.id,
@@ -26890,7 +26940,7 @@ var _hoisted_9 = ["value"];
 var _hoisted_10 = {
   "class": "form-group"
 };
-var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "Language translate id", -1 /* HOISTED */);
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "Taget language", -1 /* HOISTED */);
 var _hoisted_12 = ["value"];
 var _hoisted_13 = {
   "class": "choose-file"
@@ -26996,7 +27046,7 @@ var _hoisted_9 = ["value"];
 var _hoisted_10 = {
   "class": "form-group"
 };
-var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "Language translate id", -1 /* HOISTED */);
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "Taget language", -1 /* HOISTED */);
 var _hoisted_12 = ["value"];
 var _hoisted_13 = {
   "class": "choose-file"
@@ -28613,6 +28663,11 @@ var routes = [{
       component: _components_admin_word_AllWords_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
       meta: {
         requiresAuth: true
+      },
+      props: function props(route) {
+        return {
+          message: route.params.test
+        };
       }
     }, {
       name: 'Add Word',
@@ -28862,12 +28917,9 @@ var actions = {
         sessionStorage.setItem('loginResponse', JSON.stringify(response.data));
         if (getters.getLoginResponse.response_type == 'success') {
           axios.get('/api/user').then(function (response) {
-            console.log(response);
-            if (response.status == 200) {
-              commit('mutateAuthUser', response.data);
-              sessionStorage.setItem('authUser', JSON.stringify(response.data));
-              console.log(response.data.roles);
-              console.log("----------check login authe");
+            if (response.data.status === 200) {
+              commit('mutateAuthUser', response.data.data.user);
+              sessionStorage.setItem('authUser', JSON.stringify(response.data.data.user));
               if (getters.getAuthUser.roles.some(function (role) {
                 return role.name === "admin";
               })) {
@@ -28883,11 +28935,12 @@ var actions = {
               // Router.push('/admin');
             }
           });
+        } else {
+          alert(getters.getLoginResponse.response_data[0]);
         }
       });
     });
   },
-
   logout: function logout() {
     axios.get('/api/logout').then(function () {
       sessionStorage.removeItem('loginResponse');
@@ -28911,10 +28964,9 @@ var actions = {
         console.log(getters.getLoginResponse.response_type);
         if (getters.getLoginResponse.response_type == 'success') {
           axios.get('/api/user').then(function (response) {
-            console.log(response);
-            if (response.status == 200) {
-              commit('mutateAuthUser', response.data);
-              sessionStorage.setItem('authUser', JSON.stringify(response.data));
+            if (response.data.status === 200) {
+              commit('mutateAuthUser', response.data.data.user);
+              sessionStorage.setItem('authUser', JSON.stringify(response.data.data.user));
               window.location.replace('/admin');
             }
           });
@@ -28927,16 +28979,14 @@ var actions = {
       getters = _ref3.getters;
     axios.get('/sanctum/csrf-cookie').then(function () {
       axios.get('/api/user').then(function (response) {
-        if (response.status == 200) {
-          commit('mutateAuthUser', response.data);
-          sessionStorage.setItem('authUser', JSON.stringify(response.data));
-          // Router.push({ name: "Profile User" });
+        if (response.data.status === 200) {
+          commit('mutateAuthUser', response.data.data.user);
+          sessionStorage.setItem('authUser', JSON.stringify(response.data.data.user));
         }
       });
     });
   }
 };
-
 var mutations = {
   mutateLoginResponse: function mutateLoginResponse(state, payload) {
     return state.loginResponse = payload;

@@ -60,13 +60,16 @@ export default {
     this.axios
       .get(`/api/user/edit/${this.$route.params.id}`)
       .then((response) => {
-        this.userForm = {
-          name: response.data.user.name,
-          email: response.data.user.email,
-          // xử lý lại nếu role không tồn tại thì trả về null
-          role: response.data.user.roles[0].id,
-        };
-        this.roles = response.data.roles;
+        if (response.data.status === 200) {
+          this.userForm = {
+            name: response.data.data.user.name,
+            email: response.data.data.user.email,
+            // xử lý lại nếu role không tồn tại thì trả về null
+            role: response.data.data.user.roles[0].id,
+          };
+          this.roles = response.data.data.roles;
+        }
+
       });
   },
   methods: {
@@ -78,9 +81,13 @@ export default {
           this.userForm
         )
         .then((response) => {
-          this.$router.push({ name: "User Manager" });
+          if (response.data.status === 200) {
+            alert(response.data.message);
+          }
         })
-        .catch((error) => console.log(error))
+        .catch((error) => {
+          alert(`Error ${error.response.status}: ${error.response.data.message}`);
+        })
         .finally(() => (this.loading = false));
     },
   },

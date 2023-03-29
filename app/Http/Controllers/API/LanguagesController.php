@@ -13,8 +13,8 @@ class LanguagesController extends Controller
     {
 
         $languages = Languages::all()->toArray();
-        return response()->json($languages);
-        // return array_reverse($languages);
+        $responseData = [    'status' => 200,'success'=>true,    'message' => 'success',    'data' => $languages];
+        return response()->json($responseData);
     }
  
     // add language
@@ -25,14 +25,18 @@ class LanguagesController extends Controller
             'description' => $request->input('description')
         ]);
         $language->save();
-        return response()->json('The language successfully added');
+        $responseData = [    'status' => 200,'success'=>true,    'message' => 'The language successfully added'];
+        return response()->json($responseData);
     }
- 
+
     // edit language
     public function edit($id)
     {
         $language = Languages::find($id);
-        return response()->json($language);
+        $responseData = [    'status' => 200,'success'=>true,    'message' => 'success',
+            'data'=>['language'=>$language]
+    ];
+        return response()->json($responseData);
     }
  
     // update language
@@ -40,8 +44,8 @@ class LanguagesController extends Controller
     {
         $language = Languages::find($id);
         $language->update($request->all());
- 
-        return response()->json('The language successfully updated');
+        $responseData = [    'status' => 200,'success'=>true,    'message' => 'The language successfully updated'];
+        return response()->json($responseData);
     }
  
     // delete language
@@ -49,7 +53,6 @@ class LanguagesController extends Controller
     {
         $language = Languages::find($id);
         $language->delete();
- 
         return response()->json('The language successfully deleted');
     }
 }

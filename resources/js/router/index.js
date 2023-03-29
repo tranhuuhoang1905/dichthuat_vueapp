@@ -54,7 +54,8 @@ export const routes = [
                         name: 'All Word',
                         path: 'all',
                         component: AllWords,
-                        meta: { requiresAuth: true }
+                        meta: { requiresAuth: true },
+                        props: (route) => ({ message: route.params.test }),
                     },
                     {
                         name: 'Add Word',
