@@ -153,11 +153,11 @@ class WordsController extends Controller
         $words = TranslationWord::select('translation_word.word_id','words.id','words.word')
         ->join('words', 'words.id', '=', 'translation_word.word_id')
         ->where('translation_word.language_id', '=', $languageId)
-        ->groupBy('translation_word.word_id')
+        ->groupBy('translation_word.word_id', 'words.id', 'words.word')
         ->orderByDesc('words.number_search')
         ->take(10)
         ->get()
-        ->toArray();
+        ->toArray(); 
         $responseData = [    'status' => 200,'success'=>$languageId,    'message' => 'success',    'data' => $words];
         return response()->json($responseData);
     }
