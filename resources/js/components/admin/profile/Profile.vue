@@ -3,16 +3,23 @@
     <div class="row">
       <div class="col-md-4">
         <div class="card show border border-0">
-          <div class="card-body">
-            <h4 class="card-title text-center fs-4">Profile</h4>
-            <div class="form-group">
+          <div class="card-body p-0">
+            <div class="row col-md-12 m-0 p-0 overflow-hidden background-avatar">
+              <img src="../../../../assets/images/background-avatar.png" alt="" class="p-0 rounded-top">
+            </div>
+            <div class="avatar row col-md-12 m-0 p-0 d-flex justify-content-center position-absolute">
+              <img src="../../../../assets/images/avatar.png" alt="">
+              <h6 class="text-center py-2">{{ authUser.name }}</h6>
+            </div>
+            <div class="description-profile">
+              <div class="form-group px-5">
               <i class="fas fa-user text-secondary mx-3"></i>
               <router-link :to="{ name: 'Profile User' }" class="text-secondary">Profile</router-link>
             </div>
-            <div class="form-group">
+            <div class="form-group px-5 pb-3">
               <i class="fas fa-lock text-secondary mx-3"></i>
-              <router-link :to="{ name: 'Change Password' }" class="text-secondary">Đổi mật
-                khẩu</router-link>
+              <router-link :to="{ name: 'Change Password' }" class="text-secondary">Change Password</router-link>
+            </div>
             </div>
           </div>
         </div>
@@ -21,7 +28,7 @@
       <div class="col-md-8">
         <div class="card show border border-0">
           <div class="card-body">
-            <h4 class="card-title text-center fs-4">Chỉnh sửa thông tin</h4>
+            <h4 class="card-title text-center fs-4">Change Profile</h4>
             <div class="col-md-12">
               <form @submit.prevent="updateUser">
                 <div class="row">
@@ -57,7 +64,7 @@
                   </div>
                 </div>
                 <div class="d-flex justify-content-center">
-                  <button type="submit" class="btn btn-all-add-edit py-2 px-4">Lưu</button>
+                  <button type="submit" class="btn btn-all-add-edit py-2 px-4">Save</button>
                 </div>
               </form>
             </div>
