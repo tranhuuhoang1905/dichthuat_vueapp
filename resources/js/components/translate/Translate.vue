@@ -1,12 +1,14 @@
 <template>
     <div class="translate">
-        <!-- <h3 class="text-center">Search</h3> -->
         <div class="mt-3">
             <form class="mb-4" @submit.prevent="searchAction">
                 <div class="translate-body">
                     <div class="custom-search">
                         <input @input="onInputChange" class="search-input input" id="search-input"
                             v-model="searchData.keyword" placeholder="Search..." />
+                            <div @click.prevent="onClear" class="btn-clear-input">
+                                <i class="fas fa-times"></i>
+                        </div>
                         <div @click.prevent="showKeyboard = !showKeyboard" class="btn-keyboard">
                             <i class="fas fa-keyboard"></i>
                         </div>
@@ -109,6 +111,7 @@ export default {
     mounted() { },
     data() {
         return {
+
             showKeyboard: false,
             input: "",
             languages: [],
@@ -163,6 +166,9 @@ export default {
             this.searchData.keyword = $searchKeyword;
             console.log(this.searchData);
             this.searchAction();
+        },
+        onClear(){
+            this.searchData.keyword = "";
         },
         onChange(input) {
             this.searchData.keyword = input;

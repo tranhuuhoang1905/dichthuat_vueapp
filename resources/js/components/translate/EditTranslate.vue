@@ -15,13 +15,13 @@
                 <div class="form-group">
                   <label>Description</label>
                   <textarea placeholder="Enter description" class="form-control" v-model="translateForm.description"
-                    rows="4" required></textarea>
+                    rows="4" cols="70" required></textarea>
                 </div>
 
                 <div class="form-group">
                   <label>Description in original language:</label>
                   <textarea placeholder="Enter description in original language" class="form-control"
-                    v-model="translateForm.original_language_description" rows="4" required></textarea>
+                    v-model="translateForm.original_language_description" rows="4" cols="70" required></textarea>
                 </div>
                 <div class="form-group">
                   <label>Language</label>

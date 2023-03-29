@@ -23,11 +23,11 @@
         </div>
       </div>
       <div class="d-flex pe-0 pe-lg-3">
-        <div class="d-flex align-items-center" v-if="checkNavigation()">
-          <a href="/admin/dashboard"
+        <div class="d-flex align-items-center" v-if="checkNavigation">
+          <router-link :to="{name:'Dashboard'}"
             class="btn-all-add-edit d-flex align-items-center rounded navbar_menu nav-item nav-link py-2 px-3 text-white">
             Dashboard
-          </a>
+          </router-link>
         </div>
         <div class="dropdown d-none d-lg-inline-block ml-1">
           <button type="button" class="btn header-item noti-icon waves-effect" data-toggle="fullscreen">
@@ -134,7 +134,7 @@
           </div>
         </div>
 
-        <div class="dropdown d-inline-block user-dropdown" v-if="checkNavigation()">
+        <div class="dropdown d-inline-block user-dropdown" v-if="checkNavigation">
           <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
             <img class="rounded-circle header-profile-user" src="/assets/images/users/avatar-2.jpg" alt="Header Avatar" />
@@ -179,6 +179,9 @@ export default {
     reloadPage() {
       location.reload();
     },
+    
+  },
+  computed: {
     checkNavigation() {
       const loginResponse =
         JSON.parse(sessionStorage.getItem("loginResponse")) ?? {};
@@ -192,8 +195,6 @@ export default {
       }
       this.navigationDisabled = false;
     },
-  },
-  computed: {
   },
   mounted() {
     console.log(this.loginResponse);
