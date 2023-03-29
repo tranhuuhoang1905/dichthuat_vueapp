@@ -44,7 +44,7 @@ export const routes = [
         // meta: { requiresAuth: true },
         meta: { requiresAuth: true, roles: ['admin', 'leader'] },
         children: [
-            { name: 'Admin Dashboard', path: '', component: Dashboard },
+            { name: 'Admin Dashboard', path: 'dashboard', component: Dashboard },
             {
                 path: 'word',
                 name: 'Word',

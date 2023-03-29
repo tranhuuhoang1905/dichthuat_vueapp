@@ -10,48 +10,65 @@
                 <ul class="metismenu list-unstyled" id="side-menu">
                     <li class="menu-title">Menu</li>
                     <li>
-                        <router-link :to="{ name: 'Admin Dashboard' }" class="waves-effect">
+                        <router-link :to="{ name: 'Admin Dashboard' }" class="waves-effect" exact active-class="active">
                             <i class="ri-dashboard-line"></i><span
                                 class="badge badge-pill badge-success float-right">3</span>
                             <span>Dashboard</span>
                         </router-link>
                     </li>
                     <li>
-                        <router-link :to="{ name: 'All User' }" class=" waves-effect" v-if="userHasAdmin">
+                        <router-link :to="{ name: 'All User' }" class=" waves-effect" v-if="userHasAdmin" exact tag="li"
+                            active-class="active">
                             <i class="ri-calendar-2-line"></i>
                             <span>User manager</span>
                         </router-link>
                     </li>
-                    <li>
-                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+                    <li :class="{ 'mm-active': $route.name === 'All Language' || $route.name === 'Add Language' }">
+                        <a href="javascript: void(0);"
+                            :class="{ 'mm-active': $route.name === 'All Language' || $route.name === 'Add Language' }"
+                            class="has-arrow waves-effect">
                             <i class="ri-store-2-line"></i>
                             <span>Language</span>
                         </a>
                         <ul class="sub-menu" aria-expanded="false">
-                            <li><router-link :to="{ name: 'All Language' }">All Languages</router-link></li>
-                            <li><router-link :to="{ name: 'Add Language' }" v-if="userHasAdmin">Add Languages</router-link>
+                            <li>
+                                <router-link :to="{ name: 'All Language' }" exact tag="li" exact-active-class="active">All
+                                    Languages</router-link>
+                            </li>
+                            <li v-if="userHasAdmin">
+                                <router-link :to="{ name: 'Add Language' }" exact tag="li" exact-active-class="active">Add
+                                    Languages</router-link>
                             </li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+                    <li :class="{ 'mm-active': $route.name === 'All Word' || $route.name === 'Add Word' }">
+                        <a href="javascript: void(0);" class="has-arrow waves-effect"
+                            :class="{ 'mm-active': $route.name === 'All Word' || $route.name === 'Add Word' }">
                             <i class="ri-mail-send-line"></i>
                             <span>Word</span>
                         </a>
                         <ul class="sub-menu" aria-expanded="false">
-                            <li><router-link :to="{ name: 'All Word' }">All Words</router-link></li>
-                            <li><router-link :to="{ name: 'Add Word' }">Add Words</router-link></li>
+                            <li>
+                                <router-link :to="{ name: 'All Word' }" exact tag="a" exact-active-class="active">All
+                                    Words</router-link>
+                            </li>
+                            <li>
+                                <router-link v-if="userHasAdmin" :to="{ name: 'Add Word' }" exact tag="a"
+                                    exact-active-class="active">Add Words</router-link>
+                            </li>
                         </ul>
                     </li>
                     <li class="menu-title">Pages</li>
                     <li>
-                        <router-link :to="{ name: 'Import Word From Excel' }" class=" waves-effect" v-if="userHasAdmin">
+                        <router-link :to="{ name: 'Import Word From Excel' }" class=" waves-effect" v-if="userHasAdmin"
+                            exact tag="li" active-class="active">
                             <i class="ri-calendar-2-line"></i>
                             <span>Import file excel</span>
                         </router-link>
                     </li>
                     <li>
-                        <router-link :to="{ name: 'Translate Word From Excel' }" class=" waves-effect">
+                        <router-link :to="{ name: 'Translate Word From Excel' }" class=" waves-effect" exact tag="li"
+                            active-class="active">
                             <i class="ri-calendar-2-line"></i>
                             <span>Translate file excel</span>
                         </router-link>
@@ -90,7 +107,7 @@ export default {
     computed: {
         userHasAdmin() {
             return checkAccess(['admin'])
-        }
+        },
     }
 }
 </script>
