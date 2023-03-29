@@ -163,7 +163,6 @@
 </template>
 
 <script>
-import { store } from "../../../store/store";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 export default {
   data() {
@@ -185,15 +184,11 @@ export default {
     checkNavigation() {
       const loginResponse =
         JSON.parse(sessionStorage.getItem("loginResponse")) ?? {};
+       const authUser = JSON.parse(sessionStorage.getItem('authUser')) ?? {};
+       const loginRoles = authUser.roles[0].name;
       return (
-        this.$store.getters.getLoginResponse.authenticated ||
-        loginResponse.authenticated ||
-        false
+        loginResponse.authenticated && loginRoles === 'admin'
       );
-      if (loginResponse) {
-        this.navigationDisabled = true;
-      }
-      this.navigationDisabled = false;
     },
   },
   mounted() {

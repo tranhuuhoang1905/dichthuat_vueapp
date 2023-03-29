@@ -24607,8 +24607,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _store_store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../store/store */ "./resources/js/store/store.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
 function _typeof(obj) {
   "@babel/helpers - typeof";
 
@@ -24668,14 +24667,13 @@ function _toPrimitive(input, hint) {
   return (hint === "string" ? String : Number)(input);
 }
 
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       navigationDisabled: false
     };
   },
-  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)(["logout"])), {}, {
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)(["logout"])), {}, {
     logoutSubmit: function logoutSubmit() {
       this.logout(this.loginData);
     },
@@ -24685,13 +24683,11 @@ function _toPrimitive(input, hint) {
   }),
   computed: {
     checkNavigation: function checkNavigation() {
-      var _JSON$parse;
+      var _JSON$parse, _JSON$parse2;
       var loginResponse = (_JSON$parse = JSON.parse(sessionStorage.getItem("loginResponse"))) !== null && _JSON$parse !== void 0 ? _JSON$parse : {};
-      return this.$store.getters.getLoginResponse.authenticated || loginResponse.authenticated || false;
-      if (loginResponse) {
-        this.navigationDisabled = true;
-      }
-      this.navigationDisabled = false;
+      var authUser = (_JSON$parse2 = JSON.parse(sessionStorage.getItem('authUser'))) !== null && _JSON$parse2 !== void 0 ? _JSON$parse2 : {};
+      var loginRoles = authUser.roles[0].name;
+      return loginResponse.authenticated && loginRoles === 'admin';
     }
   },
   mounted: function mounted() {
