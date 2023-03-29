@@ -142,6 +142,14 @@ textarea {
   right: 120px;
   top: 5px;
 }
+.translate .btn-clear-input i {
+  cursor: pointer;
+  color: rgba(9, 30, 66, 0.9490196078);
+  font-size: 25px;
+  position: absolute;
+  right: 180px;
+  top: 10px;
+}
 .translate .result:hover {
   border: 1px solid #53b5fc;
   transition: all 0.4ms;

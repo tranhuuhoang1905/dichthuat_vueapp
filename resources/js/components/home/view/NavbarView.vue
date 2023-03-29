@@ -23,8 +23,8 @@
         </div>
       </div>
       <div class="d-flex pe-0 pe-lg-3">
-        <div class="d-flex align-items-center" v-if="checkNavigation()">
-          <a href="/admin/dashboard"
+        <div class="d-flex align-items-center" v-if="checkNavigation">
+          <a href="/admin/dashboard" v-if="isGotoAdmin"
             class="btn-all-add-edit d-flex align-items-center rounded navbar_menu nav-item nav-link py-2 px-3 text-white">
             Dashboard
           </a>
@@ -134,7 +134,7 @@
           </div>
         </div>
 
-        <div class="dropdown d-inline-block user-dropdown" v-if="checkNavigation()">
+        <div class="dropdown d-inline-block user-dropdown" v-if="checkNavigation">
           <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
             <img class="rounded-circle header-profile-user" src="/assets/images/users/avatar-2.jpg" alt="Header Avatar" />
@@ -165,7 +165,6 @@
 </template>
 
 <script>
-import { store } from "../../../store/store";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 export default {
   data() {
@@ -181,22 +180,21 @@ export default {
     reloadPage() {
       location.reload();
     },
-    checkNavigation() {
-      const loginResponse =
-        JSON.parse(sessionStorage.getItem("loginResponse")) ?? {};
-      return (
-        this.$store.getters.getLoginResponse.authenticated ||
-        loginResponse.authenticated ||
-        false
-      );
-      if (loginResponse) {
-        this.navigationDisabled = true;
-      }
-      this.navigationDisabled = false;
-    },
+
   },
   computed: {
+    checkNavigation() {
+      const loginResponse = JSON.parse(sessionStorage.getItem('loginResponse')) ?? {};
+      return this.$store.getters.getLoginResponse.authenticated || loginResponse.authenticated || false;
+    },
+    isGotoAdmin() {
+      const authUser = JSON.parse(sessionStorage.getItem('authUser')) ?? {};
+      const loginRoles = authUser.roles[0].name;
+      return loginRoles === "admin" || loginRoles === "leader";
+    },
+
   },
+
   mounted() {
     console.log(this.loginResponse);
   },
