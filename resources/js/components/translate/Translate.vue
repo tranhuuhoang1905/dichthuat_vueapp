@@ -16,7 +16,7 @@
                     </div>
                 </div>
                 <viewkeyboard v-if="showKeyboard" @onChange="onChange" @onKeyPress="onKeyPress" :input="input" />
-                <div class="btn-group translate-body" role="group" aria-label="Basic radio toggle button group">
+                <div class="btn-group translate-body col-12" role="group" aria-label="Basic radio toggle button group">
                     <div class="language shadow-sm bg-white rounded" v-for="(language, index) in languages"
                         :key="language.id">
                         <input type="radio" class="btn-check" v-model="searchData.language_id" :id="`btn-radio${index + 1}`"
