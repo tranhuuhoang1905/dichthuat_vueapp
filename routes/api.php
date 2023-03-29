@@ -41,7 +41,7 @@ Route::group(['prefix' => 'language','middleware' => ['auth:sanctum, role:admin,
 });
 
 Route::post('/words', [WordsController::class, 'index'])->middleware('auth:sanctum,role:admin,leader');
-Route::get('word/top-search-words', [WordsController::class, 'getTopSearchWords']);
+Route::post('word/top-search-words', [WordsController::class, 'getTopSearchWords']);
 // Route::group(['prefix' => 'word','middleware' => ['auth:sanctum', 'leader']], function () {
 Route::group(['prefix' => 'word','middleware' => ['auth:sanctum, role:admin,leader']], function () {
     Route::post('add', [WordsController::class, 'add']);

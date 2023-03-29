@@ -147,15 +147,18 @@ class WordsController extends Controller
     }
  
     // get top search words
-    public function getTopSearchWords()
+    public function getTopSearchWords(Request $request)
     {
-        $words = Words::select('id','word')
-        ->orderByDesc('number_search')
-        ->orderByDesc('id')
+        $languageId = $request->input('language_id');
+        $words = TranslationWord::select('translation_word.word_id','words.id','words.word')
+        ->join('words', 'words.id', '=', 'translation_word.word_id')
+        ->where('translation_word.language_id', '=', $languageId)
+        ->groupBy('translation_word.word_id')
+        ->orderByDesc('words.number_search')
         ->take(10)
         ->get()
         ->toArray();
-        $responseData = [    'status' => 200,'success'=>true,    'message' => 'success',    'data' => $words];
+        $responseData = [    'status' => 200,'success'=>$languageId,    'message' => 'success',    'data' => $words];
         return response()->json($responseData);
     }
 

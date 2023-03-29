@@ -142,7 +142,9 @@
             <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
           </button>
           <div class="dropdown-menu dropdown-menu-right">
-            <a href="#" class="dropdown-item"><i class="ri-user-line align-middle mr-1"></i> Profile</a>
+            <!-- <a href="#" class="dropdown-item"><i class="ri-user-line align-middle mr-1"></i> Profile</a> -->
+            <router-link :to="{ name: 'Home Profile User' }" class="dropdown-item"><i
+                class="ri-user-line align-middle mr-1"></i> Profile</router-link>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item text-danger" href="#" @click="logoutSubmit"><i
                 class="ri-shut-down-line align-middle mr-1 text-danger"></i>

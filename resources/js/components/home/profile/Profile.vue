@@ -1,0 +1,123 @@
+<template>
+  <div class="profile">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card show border border-0">
+          <div class="card-body">
+            <h4 class="card-title text-center fs-4">Profile</h4>
+            <div class="form-group">
+              <i class="fas fa-user text-secondary mx-3"></i>
+              <router-link :to="{ name: 'Home Profile User' }" class="text-secondary">Profile</router-link>
+            </div>
+            <div class="form-group">
+              <i class="fas fa-lock text-secondary mx-3"></i>
+              <router-link :to="{ name: 'Home Change Password' }" class="text-secondary">Đổi mật
+                khẩu</router-link>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-8">
+        <div class="card show border border-0">
+          <div class="card-body">
+            <h4 class="card-title text-center fs-4">Chỉnh sửa thông tin</h4>
+            <div class="col-md-12">
+              <form @submit.prevent="updateUser">
+                <div class="row">
+                  <div class="col-md-6 col-sm-12">
+                    <div class="form-group">
+                      <label>UserName</label>
+                      <input type="text" placeholder="username" class="form-control" disabled v-model="UserForm.name" />
+                    </div>
+                    <div class="form-group">
+                      <label>FirstName</label>
+                      <input type="text" placeholder="First Name" class="form-control" v-model="UserForm.first_name" />
+                    </div>
+                    <div class="form-group">
+                      <label>Phone Number</label>
+                      <input type="text" placeholder="Phone Number" class="form-control"
+                        v-model="UserForm.phone_number" />
+                    </div>
+                  </div>
+
+                  <div class="col-md-6 col-sm-12">
+                    <div class="form-group">
+                      <label>Email</label>
+                      <input type="email" placeholder="Email" class="form-control" disabled v-model="UserForm.email" />
+                    </div>
+                    <div class="form-group">
+                      <label>LastName</label>
+                      <input type="text" placeholder="Last Name" class="form-control" v-model="UserForm.last_name" />
+                    </div>
+                    <div class="form-group">
+                      <label>Address</label>
+                      <input type="text" placeholder="Address" class="form-control" v-model="UserForm.address" />
+                    </div>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-center">
+                  <button type="submit" class="btn btn-all-add-edit py-2 px-4">Lưu</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+
+import { mapGetters, mapMutations, mapActions } from "vuex";
+export default {
+  data() {
+    return {
+      // UserForm: {},
+      languages: []
+    }
+  },
+  computed: {
+    authUser() {
+      if (this.$store.getters.getAuthUser.id !== undefined) {
+        return this.$store.getters.getAuthUser;
+      }
+      return JSON.parse(sessionStorage.getItem('authUser'));
+    },
+    UserForm() {
+      return {
+        name: this.authUser.name,
+        email: this.authUser.email,
+        first_name: this.authUser.first_name,
+        last_name: this.authUser.last_name,
+        phone_number: this.authUser.phone_number,
+        address: this.authUser.address,
+      }
+    },
+    ...mapGetters({
+      loginResponse: "getLoginResponse",
+    }),
+  },
+  methods: {
+    ...mapActions(["storeUpdateUser"]),
+    updateUser() {
+      console.log(this.UserForm);
+      this.axios
+        .post(`/api/user/update`, this.UserForm)
+        .then((response) => {
+          if (response.data.status === 200) {
+            this.storeUpdateUser();
+            alert(response.data.message);
+          }
+        })
+        .catch((error) => {
+          alert(`Error ${error.response.status}: ${error.response.data.message}`);
+        })
+        .finally(() => (this.loading = false));
+    }
+  }
+};
+</script>
+
+<style></style>

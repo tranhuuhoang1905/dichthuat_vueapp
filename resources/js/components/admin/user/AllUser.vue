@@ -131,7 +131,14 @@ export default {
               { data: "id" },
               { data: "name" },
               { data: "email" },
-              { data: "roles" },
+              {
+                data: "roles",
+                render: function (data, type, row) {
+                  return (
+                    row.roles[0].name ?? ""
+                  );
+                },
+              },
               // { data: 'created_at' },
               // { data: 'updated_at' },
               {

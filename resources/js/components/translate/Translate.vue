@@ -131,12 +131,8 @@ export default {
                 this.languages = response.data.data;
             }
         });
-        this.axios.get("/api/word/top-search-words").then((response) => {
-            if (response.data.message === 'success') {
-                this.topSearchWords = response.data.data;
-            }
+        this.topSearch();
 
-        });
     },
     methods: {
         searchAction() {
@@ -174,12 +170,21 @@ export default {
         onInputChange(input) {
             this.input = input.target.value;
         },
+        topSearch() {
+            this.axios.post("/api/word/top-search-words", this.searchData).then((response) => {
+                if (response.data.message === 'success') {
+                    this.topSearchWords = response.data.data;
+                }
+
+            });
+        }
+
     },
     // code test keyboard
     watch: {
-        // input(input) {
-        //     this.keyboard.setInput(input);
-        // }
+        'searchData.language_id': function (newValue, oldValue) {
+            this.topSearch();
+        }
     },
 };
 </script>

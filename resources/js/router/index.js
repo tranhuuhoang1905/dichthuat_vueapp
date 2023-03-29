@@ -19,6 +19,9 @@ import EditWord from '../components/admin/word/EditWord.vue';
 import WordDefault from '../components/admin/word/WordDefault.vue';
 
 import Translate from '../components/translate/Translate.vue';
+import ProfileUser from '../components/home/profile/Profile.vue';
+import ChangePasswordProfileUser from '../components/home/profile/ChangePassword.vue';
+
 import EditTranslate from '../components/translate/EditTranslate.vue';
 
 import UserParent from '../components/admin/user/UserParent.vue';
@@ -37,6 +40,27 @@ const ErrorPage = {
 };
 export const routes = [
     { name: 'home', path: '/', component: Translate },
+    {
+        name: 'Home Profile',
+        path: '/profile',
+        component: ProfileParent,
+        meta: { requiresAuth: true },
+        children: [
+            {
+                name: 'Home Profile User',
+                path: 'profile-user',
+                component: ProfileUser,
+                meta: { requiresAuth: true }
+            },
+            {
+                name: 'Home Change Password',
+                path: 'change-pasword',
+                component: ChangePasswordProfileUser,
+                meta: { requiresAuth: true }
+            }
+        ]
+    },
+
     {
         path: '/admin',
         name: 'Dashboard',

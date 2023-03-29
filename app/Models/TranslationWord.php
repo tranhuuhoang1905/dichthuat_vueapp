@@ -44,14 +44,22 @@ class TranslationWord extends Model
 
     public function searchSuggestedWords($languageId, $word)
     {
-        return DB::table('translation_word')
+        $wordChilds = explode(" ",$word);
+
+        $results = DB::table('translation_word')
             ->join('words', 'translation_word.word_id', '=', 'words.id')
             ->where('translation_word.language_id', '=', $languageId)
-            ->where('words.word', 'like', '%' . $word . '%')
-            ->where('words.word', '!=' , $word)
+            ->where('words.word', '!=', $word)
+            ->where(function ($query) use ($wordChilds) {
+                // $query->orWhere('words.word', 'like' , $word);
+                foreach ($wordChilds as $wordChild) {
+                    $query->orWhere('words.word', 'like' , '%' . $wordChild . '%');
+                }
+            })
             ->select(DB::raw('MAX(translation_word.id) AS translation_word_id'), 'words.id', 'words.word', DB::raw("SUBSTRING_INDEX(GROUP_CONCAT(translation_word.translate SEPARATOR ' '), ' ', 1) as translate"))
-            ->groupBy('words.id', 'words.word') // thêm cột words.word vào danh sách GROUP BY
+            ->groupBy('words.id', 'words.word')
             ->get()
             ->toArray();
+        return $results;
     }
 }
