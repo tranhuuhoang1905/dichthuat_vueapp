@@ -43,18 +43,6 @@ textarea {
       .navbar_menu {
         margin-right: 30px;
         position: relative;
-        &:hover .border_link {
-          display: block;
-        }
-        .border_link {
-          width: 100%;
-          position: absolute;
-          height: 4px;
-          background: white !important;
-          bottom: 0;
-          left: 0;
-          display: none;
-        }
       }
     }
     .bg-main {

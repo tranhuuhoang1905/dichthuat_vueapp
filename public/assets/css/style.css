@@ -40,18 +40,6 @@ textarea {
   margin-right: 30px;
   position: relative;
 }
-.navbar_home .navbar .navbar_menu:hover .border_link {
-  display: block;
-}
-.navbar_home .navbar .navbar_menu .border_link {
-  width: 100%;
-  position: absolute;
-  height: 4px;
-  background: white !important;
-  bottom: 0;
-  left: 0;
-  display: none;
-}
 .navbar_home .bg-main {
   background-color: rgba(9, 30, 66, 0.9490196078);
 }
