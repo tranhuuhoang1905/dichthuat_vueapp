@@ -197,14 +197,14 @@ export default {
 </script>
   
 <style lang="scss">
-// @media only screen and (max-width: 767px) {
-//     .arrange-order-2 {
-//         order: 2;
-//     }
+@media only screen and (max-width: 767px) {
+    .arrange-order-2 {
+        order: 2;
+    }
 
-//     .arrange-order-1 {
-//         order: 1;
-//     }
+    .arrange-order-1 {
+        order: 1;
+    }
 
-// }
+}
 </style>
