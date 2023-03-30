@@ -6,8 +6,8 @@
                     <div class="custom-search">
                         <input @input="onInputChange" class="search-input input" id="search-input"
                             v-model="searchData.keyword" placeholder="Search..." />
-                            <div @click.prevent="onClear" class="btn-clear-input">
-                                <i class="fas fa-times"></i>
+                        <div @click.prevent="onClear" class="btn-clear-input">
+                            <i class="fas fa-times"></i>
                         </div>
                         <div @click.prevent="showKeyboard = !showKeyboard" class="btn-keyboard">
                             <i class="fas fa-keyboard"></i>
@@ -28,7 +28,7 @@
                 </div>
             </form>
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-3 arrange-order-2">
                     <div class="translate-left-sidebar">
                         <div v-if="translates.length > 0">
                             <h6>Result</h6>
@@ -70,7 +70,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-9 arrange-order-1">
                     <h6>Word details</h6>
                     <div class="search_data translate-body">
                         <div class="title">
@@ -129,6 +129,7 @@ export default {
         };
     },
     created() {
+
         this.axios.get("/api/languages").then((response) => {
             if (response.data.message === 'success') {
                 this.languages = response.data.data;
@@ -163,7 +164,7 @@ export default {
             console.log(this.searchData);
             this.searchAction();
         },
-        onClear(){
+        onClear() {
             this.searchData.keyword = "";
         },
         onChange(input) {
@@ -195,4 +196,15 @@ export default {
 };
 </script>
   
-<style lang="scss"></style>
+<style lang="scss">
+// @media only screen and (max-width: 767px) {
+//     .arrange-order-2 {
+//         order: 2;
+//     }
+
+//     .arrange-order-1 {
+//         order: 1;
+//     }
+
+// }
+</style>

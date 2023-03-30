@@ -411,7 +411,12 @@
 import { mapGetters, mapMutations, mapActions } from "vuex";
 
 export default {
-
+    created() {
+        const body = document.querySelector('body');
+        if (body.getAttribute('data-sidebar') === 'light') {
+            body.setAttribute('data-sidebar', 'dark');
+        }
+    },
     methods: {
         ...mapActions(["logout"]),
         logoutSubmit() {

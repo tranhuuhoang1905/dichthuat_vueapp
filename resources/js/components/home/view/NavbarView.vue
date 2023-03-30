@@ -172,6 +172,12 @@ export default {
       navigationDisabled: false,
     };
   },
+  created() {
+    const body = document.querySelector('body');
+    if (body.getAttribute('data-sidebar') === 'dark') {
+      body.setAttribute('data-sidebar', 'light');
+    }
+  },
   methods: {
     ...mapActions(["logout"]),
     logoutSubmit() {
