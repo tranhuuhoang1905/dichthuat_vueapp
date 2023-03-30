@@ -9,6 +9,9 @@ body .btn-all-add-edit:hover {
   background: #4b5a83;
   color: #fff;
 }
+body .text-login-register {
+  color: #5664d2;
+}
 
 textarea {
   overflow: hidden;
@@ -123,7 +126,6 @@ textarea {
   margin-right: 10px;
   background: #252b3b;
   color: #fff;
-  width: 150px;
   font-size: 1rem;
 }
 .translate .language .btn-check {
@@ -266,4 +268,10 @@ textarea {
 }
 .profile .description-profile {
   padding-top: 100px;
+}
+
+@media screen and (max-width: 768px) {
+  .btn-clear-input i {
+    right: 130px !important;
+  }
 }

@@ -10,6 +10,9 @@ body {
             color: #fff;
         }
     }
+    .text-login-register{
+        color: #5664d2;
+    }
 }
 
 textarea {
@@ -152,7 +155,6 @@ textarea {
         margin-right: 10px;
         background: #252b3b;
         color: #fff;
-        width: 150px;
         font-size: 1rem;
 
         .btn-check {
@@ -284,5 +286,10 @@ textarea {
 
     .description-profile {
         padding-top: 100px;
+    }
+}
+@media screen and (max-width: 768px){
+    .btn-clear-input i {
+        right: 130px !important;
     }
 }
