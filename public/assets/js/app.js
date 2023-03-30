@@ -24366,6 +24366,9 @@ datatables_net_vue3__WEBPACK_IMPORTED_MODULE_3__["default"].use(datatables_net__
                 return '<div class="btn-group" role="group">' + '<a class="btn btn-all-add-edit" href="/admin/word/default/' + row.id + '">Default</a>' + '</div>';
               }
             }],
+            // lengthMenu: [[5, 10, 15, 20, -1], [5, 10, 15, 20, "All"]], // set number of records per page
+            pagingType: "simple",
+            // display only a few page buttons
             scrollX: true
           });
         }

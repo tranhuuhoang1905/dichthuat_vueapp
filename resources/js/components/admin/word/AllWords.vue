@@ -118,7 +118,9 @@ export default {
                 }
               }
             ],
-            scrollX:true,
+            // lengthMenu: [[5, 10, 15, 20, -1], [5, 10, 15, 20, "All"]], // set number of records per page
+            pagingType: "simple", // display only a few page buttons
+            scrollX: true,
           });
         }
       });
