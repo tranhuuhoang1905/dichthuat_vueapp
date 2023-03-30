@@ -108,7 +108,7 @@ class UserController extends Controller
         }
         $user->password = Hash::make($password);
         $user->save();
-        $responseData = [    'success'=>true,    'message' => 'The user successfully updated'];
+        $responseData = ['status' => 200,'success'=>true,    'message' => 'The user successfully updated'];
         return response()->json($responseData);
     }
     // update user
