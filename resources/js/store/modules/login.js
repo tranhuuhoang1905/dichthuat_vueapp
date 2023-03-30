@@ -38,7 +38,7 @@ const actions = {
                                     // Router.push('/admin').then(() => {
                                     //     location.reload();
                                     // });
-                                    window.location.replace('/admin');
+                                    window.location.replace('/admin/dashboard');
                                 } else {
                                     // Chuyển hướng đến trang chính
                                     Router.push('/');
@@ -85,7 +85,7 @@ const actions = {
                                     'authUser',
                                     JSON.stringify(response.data.data.user)
                                 );
-                                window.location.replace('/admin');
+                                window.location.replace('/admin/dashboard');
                             }
                         });
                     }

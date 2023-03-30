@@ -15,34 +15,49 @@
   padding: 6px 12px;
   line-height: 1.42857143;
   border-radius: 4px;
-  color: #337ab7;
   background-color: #fff;
   margin-left: -1px;
 }
-
 .dataTables_paginate .paginate_button.active {
   z-index: 3;
   color: #fff;
   background-color: #337ab7;
   border-color: #337ab7;
 }
-
 .dataTables_paginate .paginate_button.disabled {
   cursor: default;
   color: #777;
   background-color: #fff;
   border-color: #ddd;
 }
+.dataTables_paginate select {
+  padding: 2px;
+  border-radius: 5px;
+}
+.dataTables_paginate .previous {
+  margin-right: 5px;
+}
+.dataTables_paginate .current {
+  border: none;
+  background: #252b3b !important;
+  color: #fff;
+}
+.dataTables_paginate .current:hover {
+  background: #4b5a83;
+  color: #fff;
+}
+.dataTables_paginate .next {
+  border-radius: 5px;
+  margin-left: 5px;
+}
 
 /* Thanh search */
 .dataTables_filter {
   margin-bottom: 10px;
 }
-
 .dataTables_filter label {
   font-weight: normal;
 }
-
 .dataTables_filter input[type=search] {
   width: 100%;
   height: 35px;
@@ -57,7 +72,6 @@
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
-
 .dataTables_filter input[type=search]:focus {
   border-color: #66afe9;
   outline: 0;

@@ -29687,7 +29687,7 @@ var actions = {
                 // Router.push('/admin').then(() => {
                 //     location.reload();
                 // });
-                window.location.replace('/admin');
+                window.location.replace('/admin/dashboard');
               } else {
                 // Chuyển hướng đến trang chính
                 _router__WEBPACK_IMPORTED_MODULE_0__["default"].push('/');
@@ -29727,7 +29727,7 @@ var actions = {
             if (response.data.status === 200) {
               commit('mutateAuthUser', response.data.data.user);
               sessionStorage.setItem('authUser', JSON.stringify(response.data.data.user));
-              window.location.replace('/admin');
+              window.location.replace('/admin/dashboard');
             }
           });
         }

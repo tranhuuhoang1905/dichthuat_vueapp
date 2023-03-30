@@ -173,36 +173,38 @@ textarea {
   color: rgba(9, 30, 66, 0.9490196078);
 }
 
-.user_manager .row select, .all_word .row select, .all_languages .row select {
-  padding: 2px;
-  border-radius: 5px;
-}
-.user_manager .row .previous, .all_word .row .previous, .all_languages .row .previous {
-  margin-right: 5px;
-}
-.user_manager .row .current, .all_word .row .current, .all_languages .row .current {
-  border-radius: 20px;
-  border: none;
-  background: #252b3b !important;
-  color: #fff;
-}
-.user_manager .row .current:hover, .all_word .row .current:hover, .all_languages .row .current:hover {
-  background: #4b5a83;
-  color: #fff;
-}
-.user_manager .row .next, .all_word .row .next, .all_languages .row .next {
-  border-radius: 5px;
-  margin-left: 5px;
-}
-
-.add_language .card, .edit_translate .card, .edit_language .card, .edit_word .card, .import_word_from_excel .card, .translate_word_from_excel .card, .change_role_user .card, .change_password_user .card, .create_user .card {
+.add_language .card,
+.edit_translate .card,
+.edit_language .card,
+.edit_word .card,
+.import_word_from_excel .card,
+.translate_word_from_excel .card,
+.change_role_user .card,
+.change_password_user .card,
+.create_user .card {
   width: initial;
 }
-.add_language .card form .choose-file, .edit_translate .card form .choose-file, .edit_language .card form .choose-file, .edit_word .card form .choose-file, .import_word_from_excel .card form .choose-file, .translate_word_from_excel .card form .choose-file, .change_role_user .card form .choose-file, .change_password_user .card form .choose-file, .create_user .card form .choose-file {
+.add_language .card form .choose-file,
+.edit_translate .card form .choose-file,
+.edit_language .card form .choose-file,
+.edit_word .card form .choose-file,
+.import_word_from_excel .card form .choose-file,
+.translate_word_from_excel .card form .choose-file,
+.change_role_user .card form .choose-file,
+.change_password_user .card form .choose-file,
+.create_user .card form .choose-file {
   position: relative;
   width: 100% !important;
 }
-.add_language .card form .choose-file input[type=file], .edit_translate .card form .choose-file input[type=file], .edit_language .card form .choose-file input[type=file], .edit_word .card form .choose-file input[type=file], .import_word_from_excel .card form .choose-file input[type=file], .translate_word_from_excel .card form .choose-file input[type=file], .change_role_user .card form .choose-file input[type=file], .change_password_user .card form .choose-file input[type=file], .create_user .card form .choose-file input[type=file] {
+.add_language .card form .choose-file input[type=file],
+.edit_translate .card form .choose-file input[type=file],
+.edit_language .card form .choose-file input[type=file],
+.edit_word .card form .choose-file input[type=file],
+.import_word_from_excel .card form .choose-file input[type=file],
+.translate_word_from_excel .card form .choose-file input[type=file],
+.change_role_user .card form .choose-file input[type=file],
+.change_password_user .card form .choose-file input[type=file],
+.create_user .card form .choose-file input[type=file] {
   position: absolute;
   top: 0;
   left: 0;
@@ -211,16 +213,40 @@ textarea {
   height: 10px;
   cursor: pointer;
 }
-.add_language .card form .choose-file .btn-choose-file, .edit_translate .card form .choose-file .btn-choose-file, .edit_language .card form .choose-file .btn-choose-file, .edit_word .card form .choose-file .btn-choose-file, .import_word_from_excel .card form .choose-file .btn-choose-file, .translate_word_from_excel .card form .choose-file .btn-choose-file, .change_role_user .card form .choose-file .btn-choose-file, .change_password_user .card form .choose-file .btn-choose-file, .create_user .card form .choose-file .btn-choose-file {
+.add_language .card form .choose-file .btn-choose-file,
+.edit_translate .card form .choose-file .btn-choose-file,
+.edit_language .card form .choose-file .btn-choose-file,
+.edit_word .card form .choose-file .btn-choose-file,
+.import_word_from_excel .card form .choose-file .btn-choose-file,
+.translate_word_from_excel .card form .choose-file .btn-choose-file,
+.change_role_user .card form .choose-file .btn-choose-file,
+.change_password_user .card form .choose-file .btn-choose-file,
+.create_user .card form .choose-file .btn-choose-file {
   position: relative;
   z-index: 1;
 }
-.add_language .card form .choose-file span, .edit_translate .card form .choose-file span, .edit_language .card form .choose-file span, .edit_word .card form .choose-file span, .import_word_from_excel .card form .choose-file span, .translate_word_from_excel .card form .choose-file span, .change_role_user .card form .choose-file span, .change_password_user .card form .choose-file span, .create_user .card form .choose-file span {
+.add_language .card form .choose-file span,
+.edit_translate .card form .choose-file span,
+.edit_language .card form .choose-file span,
+.edit_word .card form .choose-file span,
+.import_word_from_excel .card form .choose-file span,
+.translate_word_from_excel .card form .choose-file span,
+.change_role_user .card form .choose-file span,
+.change_password_user .card form .choose-file span,
+.create_user .card form .choose-file span {
   position: relative;
   z-index: 0;
   padding-left: 5px;
 }
-.add_language .card form p, .edit_translate .card form p, .edit_language .card form p, .edit_word .card form p, .import_word_from_excel .card form p, .translate_word_from_excel .card form p, .change_role_user .card form p, .change_password_user .card form p, .create_user .card form p {
+.add_language .card form p,
+.edit_translate .card form p,
+.edit_language .card form p,
+.edit_word .card form p,
+.import_word_from_excel .card form p,
+.translate_word_from_excel .card form p,
+.change_role_user .card form p,
+.change_password_user .card form p,
+.create_user .card form p {
   color: red;
 }
 
