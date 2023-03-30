@@ -8,7 +8,7 @@
           <div class="card-body">
             <h4 class="card-title text-md-center fs-4 my-3 text-right">User Manager</h4>
             <div class="table-responsive-lg">
-              <table ref="myTable" class="table table-bordered table-striped table-hover">
+              <table ref="myTable" class="table table-bordered table-striped table-hover display nowrap">
                 <thead>
                   <tr>
                     <th>STT</th>
@@ -169,6 +169,7 @@ export default {
                 },
               },
             ],
+            scrollX:true,
           });
         }
       });

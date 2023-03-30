@@ -76,13 +76,13 @@ export default {
                           </a>
                         </div>
 
-                      <h4 class="font-size-18 mt-4">Register account</h4>
+                      <h4 class="font-size-18 mt-5 mt-md-3">Register account</h4>
                       <p class="text-muted">
                         Get your free Nazox account now.
                       </p>
                       </div>
 
-                      <div class="p-2 mt-5">
+                      <div class="p-2 mt-5 mt-md-3">
                         <form class="form-horizontal" @submit.prevent="tryToRegisterIn">
                           <div class="form-group auth-form-group-custom mb-4">
                             <i class="ri-user-2-line auti-custom-input-icon"></i>
@@ -112,30 +112,17 @@ export default {
                           </div>
 
                           <div class="text-center">
-                            <button class="btn btn-primary w-md waves-effect waves-light" type="submit">
+                            <button class="btn btn-all-add-edit w-md waves-effect waves-light" type="submit">
                               Register
                             </button>
-                          </div>
-
-                          <div class="mt-4 text-center">
-                            <p class="mb-0">
-                              By registering you agree to the Nazox
-                              <a href="#" class="text-primary">Terms of Use</a>
-                            </p>
                           </div>
                         </form>
                       </div>
 
-                      <div class="mt-5 text-center">
+                      <div class="mt-2 text-center">
                         <p>
                           Already have an account ?
-                          <!-- tag="a" -->
-                          <!-- <a
-                              href="/login"
-                              class="font-weight-medium text-primary"
-                              >Login</a
-                            > -->
-                          <router-link :to="{ name: 'login' }" class="font-weight-medium text-primary">Login</router-link>
+                          <router-link :to="{ name: 'login' }" class="font-weight-medium text-login-register">Login</router-link>
                         </p>
                         <p>
                           © 2020 Nazox. Crafted with

@@ -9,7 +9,7 @@
                         <div @click.prevent="onClear" class="btn-clear-input">
                             <i class="fas fa-times"></i>
                         </div>
-                        <div @click.prevent="showKeyboard = !showKeyboard" class="btn-keyboard">
+                        <div @click.prevent="showKeyboard = !showKeyboard" class="btn-keyboard d-none d-md-block">
                             <i class="fas fa-keyboard"></i>
                         </div>
                         <div class="right-custom-search">

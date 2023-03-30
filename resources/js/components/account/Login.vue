@@ -99,8 +99,8 @@ export default {
 
                         <h4 class="font-size-18 mt-4">Welcome Back !</h4>
                         <p class="text-muted">Sign in to continue to Nazox.</p>
-                        <p>NewName: {{ $store.getters['myModule/getAge'] }}</p>
-                        <p>UserName: {{ $store.getters['myModule/getUser'] }}</p>
+                        <!-- <p>NewName: {{ $store.getters['myModule/getAge'] }}</p>
+                        <p>UserName: {{ $store.getters['myModule/getUser'] }}</p> -->
                       </div>
 
                       <b-alert variant="danger" class="mt-3"> </b-alert>
@@ -160,30 +160,30 @@ export default {
                           </div>
 
                           <div class="custom-control custom-checkbox">
+                            <input
+                              type="checkbox"
+                              class="custom-control-input"
+                              id="customControlInline"
+                            />
                             <label
                               class="custom-control-label"
                               for="customControlInline"
                             >
-                              <input
-                                type="checkbox"
-                                class="custom-control-input"
-                                id="customControlInline"
-                              />
                               Remember me
                             </label>
                           </div>
 
                           <div class="mt-4 text-center">
                             <button
-                              class="btn btn-primary w-md waves-effect waves-light"
+                              class="btn btn-all-add-edit w-md waves-effect waves-light"
                               type="submit"
                             >
                               Log In
                             </button>
                           </div>
 
-                          <div class="mt-4 text-center">
-                            <!-- tag="a" -->
+                          <!-- <div class="mt-4 text-center">
+                            tag="a"
                             <router-link
                               to="/forgot-password"
                               class="text-muted"
@@ -191,7 +191,7 @@ export default {
                               <i class="mdi mdi-lock mr-1"></i> Forgot your
                               password?
                             </router-link>
-                          </div>
+                          </div> -->
                         </form>
                       </div>
 
@@ -200,7 +200,7 @@ export default {
                           Don't have an account ?
                           <!-- tag="a" -->
                           <!-- <a href="/register" class="font-weight-medium text-primary">Đăng ký</a> -->
-                          <router-link :to="{ name: 'register' }" class="font-weight-medium text-primary">Đăng Ký</router-link>
+                          <router-link :to="{ name: 'register' }" class="font-weight-medium text-login-register">Register</router-link>
                         </p>
                         <p>
                           © 2020 Nazox. Crafted with

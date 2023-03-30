@@ -35,7 +35,7 @@
 <body data-sidebar="dark">
 <div id="app">
 </div>
-
+<!-- <script src="cdn.datatables.net/scroller/2.1.1/js/dataTables.scroller.min.js"></script> -->
 <script src="{{ mix('assets/js/app.js') }}" type="text/javascript"></script>
 <!-- JAVASCRIPT -->
 <script src="{{ asset('assets/libs/jquery/jquery.min.js') }}"></script>
@@ -50,6 +50,9 @@
 <!-- jquery.vectormap map -->
 <script src="{{ asset('assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js') }}"></script>
 <script src="{{ asset('assets/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-us-merc-en.js') }}"></script>
+
+<!-- scroll datatable -->
+<script src="{{ asset('assets/libs/datatables.net-responsive/js/scroll.datatables.responsive.js') }}"></script>
 <script src="{{ asset('assets/js/app2.js') }}"></script>
 </body>
 </html>

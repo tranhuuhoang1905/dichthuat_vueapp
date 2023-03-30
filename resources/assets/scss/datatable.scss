@@ -96,3 +96,24 @@
         box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
     }
 }
+
+.dataTables_wrapper {
+    width: 100%;
+    margin: 0 auto;
+
+    .dataTables_scrollHeadInner {
+        width: 100% !important;
+        // margin: 0px !important;
+
+        table {
+            width: 100% !important;
+            // margin: 0px !important;
+        }
+    }
+
+    .dataTables_scrollBody {
+        table {
+            width: 100% !important;
+        }
+    }
+}
