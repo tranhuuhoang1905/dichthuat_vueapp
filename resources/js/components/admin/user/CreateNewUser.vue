@@ -78,11 +78,15 @@ export default {
         .post("/api/user/create-new-user", this.newUser)
         .then((response) => {
           if (response.data.status === 200) {
+            if (response.data.success === true) {
+              this.newUser = {};
+            }
             alert(response.data.message);
           }
         })
         .catch((error) => {
           alert(`Error ${error.response.status}: ${error.response.data.message}`);
+
         })
         .finally(() => (this.loading = false));
     },

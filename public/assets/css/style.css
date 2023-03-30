@@ -44,6 +44,9 @@ textarea {
   background-color: rgba(9, 30, 66, 0.9490196078);
 }
 
+.translate {
+  padding-bottom: 20px;
+}
 .translate .translate-body {
   margin: 10px 0;
 }
@@ -88,7 +91,7 @@ textarea {
 .translate .search_data {
   background-color: #fff;
   border-radius: 9px;
-  padding: 40px;
+  padding: 30px;
 }
 .translate .search_data .title {
   color: #e13a33;
@@ -97,7 +100,6 @@ textarea {
   min-height: 40px;
 }
 .translate .search_data .search_content {
-  margin-top: 12px;
   position: relative;
   background-color: #fff;
 }
@@ -266,4 +268,56 @@ textarea {
 }
 .profile .description-profile {
   padding-top: 100px;
+}
+
+.word_default .word-default-data {
+  background-color: #fff;
+  border: 1px solid #959595;
+  border-radius: 9px;
+  padding: 40px;
+  min-height: 20px;
+  margin: 10px 0;
+  font-size: 21.8px;
+}
+.word_default .word-default-data .title {
+  color: #e13a33;
+  font-size: 1.5rem;
+  font-weight: 500;
+  min-height: 40px;
+}
+.word_default .title {
+  color: #e13a33;
+  font-size: 1.5rem;
+  font-weight: 500;
+  min-height: 40px;
+}
+.word_default .word-content {
+  position: relative;
+  background-color: #fff;
+}
+.word_default .word-content .icon-dot {
+  position: absolute;
+  top: 3px;
+  color: #707070;
+  font-size: 0.9rem;
+}
+.word_default .word-content .bonx_mean .bonx_mea-language,
+.word_default .word-content .bonx_mea-description,
+.word_default .word-content .bonx_mea-translate {
+  color: #363636;
+}
+.word_default .word-content .language {
+  margin-right: 10px;
+}
+.word_default .word-content .language label {
+  color: #000;
+  width: 150px;
+}
+.word_default .word-content .box_mean_router {
+  min-height: 40px;
+  position: relative;
+}
+.word_default .word-content .box_mean_router .word-botton {
+  right: 0;
+  position: absolute;
 }

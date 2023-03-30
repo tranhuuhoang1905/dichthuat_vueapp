@@ -80,6 +80,10 @@ export default {
         .then((response) => {
           if (response.data.status === 200) {
             alert(response.data.message);
+            if (response.data.success === true) {
+              this.userForm.password = null;
+              this.userForm.repassword = null;
+            }
           }
         })
         .catch((error) => {

@@ -91,8 +91,20 @@ export default {
         { data: "name" },
         { data: "description" },
         { data: "state" },
-        { data: "created_at" },
-        { data: "updated_at" },
+        {
+          data: "created_at",
+          render: function (data, type, row) {
+            const date = new Date(data);
+            return date.toLocaleDateString();
+          },
+        },
+        {
+          data: "updated_at",
+          render: function (data, type, row) {
+            const date = new Date(data);
+            return date.toLocaleDateString();
+          },
+        },
       ];
       if (this.userHasAdmin) {
         this.columns.push(

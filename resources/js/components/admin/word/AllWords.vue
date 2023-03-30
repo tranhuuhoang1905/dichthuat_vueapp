@@ -95,8 +95,20 @@ export default {
               { data: 'word' },
               { data: 'description' },
               { data: 'status' },
-              { data: 'created_at' },
-              { data: 'updated_at' },
+              {
+                data: "created_at",
+                render: function (data, type, row) {
+                  const date = new Date(data);
+                  return date.toLocaleDateString();
+                },
+              },
+              {
+                data: "updated_at",
+                render: function (data, type, row) {
+                  const date = new Date(data);
+                  return date.toLocaleDateString();
+                },
+              },
               {
                 data: 'id',
                 render: function (data, type, row) {

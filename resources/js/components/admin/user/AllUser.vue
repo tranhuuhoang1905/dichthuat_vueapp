@@ -12,9 +12,11 @@
                 <thead>
                   <tr>
                     <th>STT</th>
-                    <th>Tên</th>
-                    <th>Email đăng nhập</th>
-                    <th>Chức vụ</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Created At</th>
+                    <th>Updated At</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
@@ -42,6 +44,8 @@
                         </router-link>
                       </div>
                     </td>
+                    <td>{{ word.created_at }}</td>
+                    <td>{{ word.updated_at }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -139,8 +143,20 @@ export default {
                   );
                 },
               },
-              // { data: 'created_at' },
-              // { data: 'updated_at' },
+              {
+                data: "created_at",
+                render: function (data, type, row) {
+                  const date = new Date(data);
+                  return date.toLocaleDateString();
+                },
+              },
+              {
+                data: "updated_at",
+                render: function (data, type, row) {
+                  const date = new Date(data);
+                  return date.toLocaleDateString();
+                },
+              },
               {
                 data: "id",
                 render: function (data, type, row) {

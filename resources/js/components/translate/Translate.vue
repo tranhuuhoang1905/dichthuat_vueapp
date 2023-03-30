@@ -19,8 +19,7 @@
                 </div>
                 <viewkeyboard v-if="showKeyboard" @onChange="onChange" @onKeyPress="onKeyPress" :input="input" />
                 <div class="btn-group translate-body col-12" role="group" aria-label="Basic radio toggle button group">
-                    <div class="language shadow-sm rounded" v-for="(language, index) in languages"
-                        :key="language.id">
+                    <div class="language shadow-sm rounded" v-for="(language, index) in languages" :key="language.id">
                         <input type="radio" class="btn-check" v-model="searchData.language_id" :id="`btn-radio${index + 1}`"
                             :value="`${language.id}`" name="language_id" autocomplete="off" />
                         <label class="btn" :for="`btn-radio${index + 1}`">{{ language.name }}</label>
@@ -45,7 +44,7 @@
                         <div v-if="suggestedWords.length > 0" class="suggested-words">
                             <h6>Suggested words</h6>
                             <div @click="searchSuggestedWords(suggestedWord.word)" class="result search_data translate-body"
-                                v-for="(suggestedWord, index) in suggestedWords" :key="index">
+                                v-for="(suggestedWord, index) in displayedItems" :key="index">
                                 <div class="search_content">
                                     <div class="">
                                         <p class="title">{{ suggestedWord.word }}</p>
@@ -54,6 +53,9 @@
                                         </p>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="showmore">
+                                <a v-if="showCount < suggestedWords.length" @click="showMore()">Show more</a>
                             </div>
                         </div>
                         <div v-if="suggestedWords.length == 0 && translates.length == 0">
@@ -121,6 +123,7 @@ export default {
             },
             translates: [],
             suggestedWords: [],
+            showCount: 3,
             keywordAction: "",
             result: "",
             topSearchWords: [],
@@ -161,7 +164,6 @@ export default {
         },
         searchSuggestedWords($searchKeyword) {
             this.searchData.keyword = $searchKeyword;
-            console.log(this.searchData);
             this.searchAction();
         },
         onClear() {
@@ -184,19 +186,34 @@ export default {
                 }
 
             });
-        }
-
+        },
+        showMore() {
+            this.showCount += 3;
+        },
     },
     // code test keyboard
     watch: {
         'searchData.language_id': function (newValue, oldValue) {
             this.topSearch();
+            this.searchAction();
         }
+    },
+    computed: {
+        displayedItems() {
+            return this.suggestedWords.slice(0, this.showCount);
+        },
     },
 };
 </script>
   
 <style lang="scss">
+.showmore {
+    text-align: right;
+    margin-right: 5px;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
 @media only screen and (max-width: 767px) {
     .arrange-order-2 {
         order: 2;
@@ -205,6 +222,5 @@ export default {
     .arrange-order-1 {
         order: 1;
     }
-
 }
 </style>
