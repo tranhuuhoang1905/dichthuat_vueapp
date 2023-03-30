@@ -82,12 +82,6 @@
   width: 100%;
   margin: 0 auto;
 }
-.dataTables_wrapper .dataTables_scrollHeadInner {
-  width: 100% !important;
-}
-.dataTables_wrapper .dataTables_scrollHeadInner table {
-  width: 100% !important;
-}
 .dataTables_wrapper .dataTables_scrollBody table {
   width: 100% !important;
 }
