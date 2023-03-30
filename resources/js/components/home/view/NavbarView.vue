@@ -3,8 +3,8 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm justify-content-between">
       <div class="d-flex">
         <!-- LOGO -->
-        <div class="navbar-brand-box">
-          <router-link to="/" class="logo logo-dark">
+        <div class="navbar-brand-box bg-white">
+          <router-link to="/" class="logo logo-dark d-block">
             <span class="logo-sm">
               <img src="/assets/images/logo-sm-dark.png" alt="" height="22" />
             </span>
@@ -12,14 +12,14 @@
               <img src="/assets/images/logo-dark.png" alt="" height="20" />
             </span>
           </router-link>
-          <router-link to="/" class="logo logo-light">
+          <!-- <router-link to="/" class="logo logo-light">
             <span class="logo-sm">
               <img src="/assets/images/logo-sm-light.png" alt="" height="22" />
             </span>
             <span class="logo-lg">
               <img src="/assets/images/logo-light.png" alt="" height="20" />
             </span>
-          </router-link>
+          </router-link> -->
         </div>
       </div>
       <div class="d-flex pe-0 pe-lg-3">
