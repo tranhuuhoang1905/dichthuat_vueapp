@@ -23664,7 +23664,8 @@ datatables_net_vue3__WEBPACK_IMPORTED_MODULE_3__["default"].use(datatables_net__
         if (response.data.message === 'success') {
           _this2.table = jquery__WEBPACK_IMPORTED_MODULE_2___default()(_this2.$refs.myTable).DataTable({
             data: response.data.data,
-            columns: _this2.columns
+            columns: _this2.columns,
+            scrollX: true
           });
         }
       });
@@ -24014,7 +24015,8 @@ datatables_net_vue3__WEBPACK_IMPORTED_MODULE_3__["default"].use(datatables_net__
               render: function render(data, type, row) {
                 return '<div class="d-flex justify-content-evenly">' + '<a class="btn btn-all-add-edit" href="/admin/user-manager/change-role-user/' + row.id + '">Change Role</a>' + '<a class="btn btn-all-add-edit" href="/admin/user-manager/change-pasword-user/' + row.id + '">Change Password</a>' + '</div>';
               }
-            }]
+            }],
+            scrollX: true
           });
         }
       });
@@ -24331,7 +24333,8 @@ datatables_net_vue3__WEBPACK_IMPORTED_MODULE_3__["default"].use(datatables_net__
               render: function render(data, type, row) {
                 return '<div class="btn-group" role="group">' + '<a class="btn btn-all-add-edit" href="/admin/word/default/' + row.id + '">Default</a>' + '</div>';
               }
-            }]
+            }],
+            scrollX: true
           });
         }
       });
@@ -25834,7 +25837,7 @@ var _hoisted_7 = {
 };
 var _hoisted_8 = {
   ref: "myTable",
-  "class": "table table-bordered table-striped table-hover"
+  "class": "table table-bordered table-striped table-hover display nowrap"
 };
 var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "ID", -1 /* HOISTED */);
 var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Name", -1 /* HOISTED */);
@@ -26412,7 +26415,7 @@ var _hoisted_7 = {
 };
 var _hoisted_8 = {
   ref: "myTable",
-  "class": "table table-bordered table-striped table-hover"
+  "class": "table table-bordered table-striped table-hover display nowrap"
 };
 var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "STT"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Tên"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Email đăng nhập"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Chức vụ"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Actions")])], -1 /* HOISTED */);
 var _hoisted_10 = {
@@ -26979,11 +26982,11 @@ var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
   "class": "card-title text-center fs-4"
 }, "All Words", -1 /* HOISTED */);
 var _hoisted_7 = {
-  "class": "table-responsive-lg"
+  "class": ""
 };
 var _hoisted_8 = {
   ref: "myTable",
-  "class": "table table-bordered table-striped table-hover"
+  "class": "table table-bordered table-striped table-hover display nowrap"
 };
 var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "ID"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Name"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Description"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "status"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Created At"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Updated At"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Actions")])], -1 /* HOISTED */);
 var _hoisted_10 = {
