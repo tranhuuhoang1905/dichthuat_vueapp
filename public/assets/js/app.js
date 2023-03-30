@@ -24308,11 +24308,7 @@ datatables_net_vue3__WEBPACK_IMPORTED_MODULE_3__["default"].use(datatables_net__
       words: []
     };
   },
-  mounted: function mounted() {
-    this.message = this.$route.params.get_message;
-    console.log(this.$route);
-    console.log(this.message);
-  },
+  mounted: function mounted() {},
   created: function created() {
     this.fetchData();
   },
@@ -24337,6 +24333,9 @@ datatables_net_vue3__WEBPACK_IMPORTED_MODULE_3__["default"].use(datatables_net__
       this.axios.post("/api/words").then(function (response) {
         // this.words = response.data;
         if (response.data.status === 200) {
+          var isSmallScreen = window.innerWidth < 760;
+          var pagingType = isSmallScreen ? "simple" : "simple_numbers";
+          console.log(pagingType);
           _this2.table = jquery__WEBPACK_IMPORTED_MODULE_2___default()(_this2.$refs.myTable).DataTable({
             responsive: true,
             data: response.data.data.words,
@@ -24367,7 +24366,7 @@ datatables_net_vue3__WEBPACK_IMPORTED_MODULE_3__["default"].use(datatables_net__
               }
             }],
             // lengthMenu: [[5, 10, 15, 20, -1], [5, 10, 15, 20, "All"]], // set number of records per page
-            pagingType: "simple",
+            pagingType: pagingType,
             // display only a few page buttons
             scrollX: true
           });

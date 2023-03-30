@@ -61,9 +61,7 @@ export default {
     };
   },
   mounted() {
-    this.message = this.$route.params.get_message;
-    console.log(this.$route);
-    console.log(this.message);
+
   },
   created() {
     this.fetchData();
@@ -87,6 +85,9 @@ export default {
       this.axios.post("/api/words").then((response) => {
         // this.words = response.data;
         if (response.data.status === 200) {
+          const isSmallScreen = window.innerWidth < 760;
+          const pagingType = isSmallScreen ? "simple" : "simple_numbers";
+          console.log(pagingType);
           this.table = $(this.$refs.myTable).DataTable({
             responsive: true,
             data: response.data.data.words,
@@ -119,7 +120,7 @@ export default {
               }
             ],
             // lengthMenu: [[5, 10, 15, 20, -1], [5, 10, 15, 20, "All"]], // set number of records per page
-            pagingType: "simple", // display only a few page buttons
+            pagingType: pagingType, // display only a few page buttons
             scrollX: true,
           });
         }

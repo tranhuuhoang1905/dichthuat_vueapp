@@ -10,6 +10,10 @@ body {
             color: #fff;
         }
     }
+
+    .text-login-register {
+        color: #5664d2;
+    }
 }
 
 textarea {
@@ -354,5 +358,11 @@ textarea {
                 position: absolute;
             }
         }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .btn-clear-input i {
+        right: 130px !important;
     }
 }
