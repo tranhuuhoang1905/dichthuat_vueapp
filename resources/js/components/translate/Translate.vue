@@ -79,7 +79,7 @@
                             <p>{{ keywordAction }}</p>
                         </div>
                         <div class="text-danger">
-                            {{ translates.length === 0 ? "Không tìm thấy kết quả nào" : "" }}
+                            {{ translates.length === 0 ? "No results found" : "" }}
                         </div>
                         <div class="search_content" v-for="(translate, index) in translates" :key="index">
                             <hr />
