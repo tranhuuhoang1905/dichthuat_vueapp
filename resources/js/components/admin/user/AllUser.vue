@@ -3,12 +3,20 @@
     <div class="row position-relative">
       <div class="col-md-12">
         <div class="card show border border-0">
-          <router-link :to="{ name: 'Create New User' }" class="btn btn-all-add-edit my-3 mx-3 position-absolute">Add
-            user</router-link>
+          <router-link
+            :to="{ name: 'Create New User' }"
+            class="btn btn-all-add-edit my-3 mx-3 position-absolute"
+            >Add user</router-link
+          >
           <div class="card-body">
-            <h4 class="card-title text-md-center fs-4 my-3 text-right">User Manager</h4>
+            <h4 class="card-title text-md-center fs-4 my-3 text-right">
+              User Manager
+            </h4>
             <div class="table-responsive-lg">
-              <table ref="myTable" class="table table-bordered table-striped table-hover display nowrap">
+              <table
+                ref="myTable"
+                class="table table-bordered table-striped table-hover display nowrap"
+              >
                 <thead>
                   <tr>
                     <th>STT</th>
@@ -32,15 +40,21 @@
                     </td>
                     <td>
                       <div class="d-flex justify-content-evenly">
-                        <router-link :to="{
-                          name: 'Change Role User',
-                          params: { id: user.id },
-                        }" class="btn btn-all-add-edit">Change role
+                        <router-link
+                          :to="{
+                            name: 'Change Role User',
+                            params: { id: user.id },
+                          }"
+                          class="btn btn-all-add-edit"
+                          >Change role
                         </router-link>
-                        <router-link :to="{
-                          name: 'Change Password User',
-                          params: { id: user.id },
-                        }" class="btn btn-all-add-edit">Change password
+                        <router-link
+                          :to="{
+                            name: 'Change Password User',
+                            params: { id: user.id },
+                          }"
+                          class="btn btn-all-add-edit"
+                          >Change password
                         </router-link>
                       </div>
                     </td>
@@ -62,6 +76,8 @@ import { exit } from "process";
 import DataTable from "datatables.net-vue3";
 import DataTablesCore from "datatables.net";
 import $ from "jquery";
+import { createApp, h } from "vue";
+import router from '@resources/js/router/index';
 DataTable.use(DataTablesCore);
 import { saveAs } from "file-saver";
 export default {
@@ -124,7 +140,7 @@ export default {
     },
     fetchData() {
       this.axios.get("/api/user/allusers").then((response) => {
-        if (response.data.message === 'success') {
+        if (response.data.message === "success") {
           this.table = $(this.$refs.myTable).DataTable({
             data: response.data.data,
             columns: [
@@ -134,9 +150,7 @@ export default {
               {
                 data: "roles",
                 render: function (data, type, row) {
-                  return (
-                    row.roles[0].name ?? ""
-                  );
+                  return row.roles[0].name ?? "";
                 },
               },
               {
@@ -155,13 +169,53 @@ export default {
               },
               {
                 data: "id",
-                render: function (data, type, row) {
-                  return (
-                    '<div class="d-flex justify-content-evenly">' +
-                    '<a class="btn btn-all-add-edit" href="/admin/user-manager/change-role-user/' + row.id + '">Change Role</a>' +
-                    '<a class="btn btn-all-add-edit" href="/admin/user-manager/change-pasword-user/' + row.id + '">Change Password</a>' +
-                    '</div>'
-                  );
+                createdCell: function (
+                  cell,
+                  cellData,
+                  rowData,
+                  rowIndex,
+                  colIndex
+                ) {
+                  const app = createApp({
+                    render() {
+                      return [
+                        h(
+                          "a",
+                          {
+                            to: `/admin/user-manager/change-role-user/${rowData.id}`,
+                            class: "btn btn-all-add-edit",
+                            onClick: () => {
+                              router.push({
+                                name: "Change Role User",
+                                params: { id: rowData.id },
+                              });
+                            },
+                          },
+                          "Change Role"
+                        ),
+                        h(
+                          "a",
+                          {
+                            to: `/admin/user-manager/change-pasword-user/${rowData.id}`,
+                            class: "btn btn-all-add-edit",
+                            onClick: () => {
+                              router.push({
+                                name: "Change Password User",
+                                params: { id: rowData.id },
+                              });
+                            },
+                          },
+                          "Change Password"
+                        ),
+                      ];
+                    },
+                    data() {
+                      return {
+                        rowData: rowData,
+                      };
+                    },
+                  });
+                  app.mount(cell);
                 },
               },
             ],

@@ -107,7 +107,14 @@
         }
     }
 }
-
+.user_manager{
+    tbody {
+        td:nth-child(7) {
+            display: flex;
+            justify-content: space-evenly;
+        }
+    }
+}
 .all_languages,
 .all_word {
     tbody {

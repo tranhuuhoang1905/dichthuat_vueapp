@@ -6,7 +6,10 @@
           <div class="card-body">
             <h4 class="card-title text-center fs-4">All Words</h4>
             <div class="">
-              <table ref="myTable" class="table table-bordered table-striped table-hover display nowrap">
+              <table
+                ref="myTable"
+                class="table table-bordered table-striped table-hover display nowrap"
+              >
                 <thead>
                   <tr>
                     <th>ID</th>
@@ -28,8 +31,13 @@
                     <td>{{ word.updated_at }}</td>
                     <td>
                       <div class="btn-group" role="group">
-                        <router-link :to="{ name: 'Word Default', params: { id: word.id } }"
-                          class="btn btn-all-add-edit">Default
+                        <router-link
+                          :to="{
+                            name: 'Word Default',
+                            params: { id: word.id },
+                          }"
+                          class="btn btn-all-add-edit"
+                          >Default
                         </router-link>
                         <!-- <router-link :to="{ name: 'Edit Word', params: { id: word.id } }" class="btn btn-primary">Edit
                             </router-link> -->
@@ -49,10 +57,11 @@
  
 <script>
 import { exit } from "process";
-import DataTable from 'datatables.net-vue3';
-import DataTablesCore from 'datatables.net';
-import $ from 'jquery';
-
+import DataTable from "datatables.net-vue3";
+import DataTablesCore from "datatables.net";
+import $ from "jquery";
+import { createApp, h } from "vue";
+import router from '@resources/js/router/index';
 DataTable.use(DataTablesCore);
 export default {
   data() {
@@ -60,9 +69,7 @@ export default {
       words: [],
     };
   },
-  mounted() {
-
-  },
+  mounted() {},
   created() {
     this.fetchData();
   },
@@ -92,10 +99,10 @@ export default {
             responsive: true,
             data: response.data.data.words,
             columns: [
-              { data: 'id' },
-              { data: 'word' },
-              { data: 'description' },
-              { data: 'status' },
+              { data: "id" },
+              { data: "word" },
+              { data: "description" },
+              { data: "status" },
               {
                 data: "created_at",
                 render: function (data, type, row) {
@@ -111,13 +118,40 @@ export default {
                 },
               },
               {
-                data: 'id',
-                render: function (data, type, row) {
-                  return '<div class="btn-group" role="group">' +
-                    '<a class="btn btn-all-add-edit" href="/admin/word/default/' + row.id + '">Default</a>' +
-                    '</div>';
-                }
-              }
+                data: "id",
+                createdCell: function (
+                  cell,
+                  cellData,
+                  rowData,
+                  rowIndex,
+                  colIndex
+                ) {
+                  const app = createApp({
+                    render() {
+                      return h(
+                        "a",
+                        {
+                          to: `/admin/word/default/${rowData.id}`,
+                          class: "btn btn-all-add-edit",
+                          onClick: () => {
+                            router.push({
+                              name: "Word Default",
+                              params: { id: rowData.id },
+                            });
+                          },
+                        },
+                        "Default"
+                      );
+                    },
+                    data() {
+                      return {
+                        rowData: rowData,
+                      };
+                    },
+                  });
+                  app.mount(cell);
+                },
+              },
             ],
             // lengthMenu: [[5, 10, 15, 20, -1], [5, 10, 15, 20, "All"]], // set number of records per page
             pagingType: pagingType, // display only a few page buttons
@@ -126,6 +160,6 @@ export default {
         }
       });
     },
-  }
+  },
 };
 </script>

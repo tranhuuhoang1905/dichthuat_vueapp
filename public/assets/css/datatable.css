@@ -86,6 +86,11 @@
   width: 100% !important;
 }
 
+.user_manager tbody td:nth-child(7) {
+  display: flex;
+  justify-content: space-evenly;
+}
+
 .all_languages tbody td:nth-child(7),
 .all_word tbody td:nth-child(7) {
   display: flex;
