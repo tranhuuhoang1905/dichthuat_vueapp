@@ -23599,12 +23599,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _resources_js_middleware_access_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @resources/js/middleware/access.js */ "./resources/js/middleware/access.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _resources_js_router_index__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @resources/js/router/index */ "./resources/js/router/index.js");
 
 
 
 
 datatables_net_vue3__WEBPACK_IMPORTED_MODULE_3__["default"].use(datatables_net__WEBPACK_IMPORTED_MODULE_1__["default"]);
 
+
+ // import router từ file router.js
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -23659,8 +23663,29 @@ datatables_net_vue3__WEBPACK_IMPORTED_MODULE_3__["default"].use(datatables_net__
       if (this.userHasAdmin) {
         this.columns.push({
           data: "id",
-          render: function render(data, type, row) {
-            return '<div class="btn-group" role="group">' + '<a class="btn btn-all-add-edit" href="/admin/language/edit/' + row.id + '">edit</a>' + "</div>";
+          createdCell: function createdCell(cell, cellData, rowData, rowIndex, colIndex) {
+            var app = (0,vue__WEBPACK_IMPORTED_MODULE_5__.createApp)({
+              render: function render() {
+                return (0,vue__WEBPACK_IMPORTED_MODULE_5__.h)('a', {
+                  to: "/admin/language/edit/".concat(rowData.id),
+                  "class": 'btn btn-all-add-edit',
+                  onClick: function onClick() {
+                    _resources_js_router_index__WEBPACK_IMPORTED_MODULE_6__["default"].push({
+                      name: 'Edit Language',
+                      params: {
+                        id: rowData.id
+                      }
+                    });
+                  }
+                }, 'edit');
+              },
+              data: function data() {
+                return {
+                  rowData: rowData
+                };
+              }
+            });
+            app.mount(cell);
           }
         });
       }
@@ -23942,11 +23967,7 @@ datatables_net_vue3__WEBPACK_IMPORTED_MODULE_3__["default"].use(datatables_net__
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      users: [
-        // { id: 1, name: 'John Doe', email: 'johndoe@gmail.com', role: 'Quản lý' },
-        // { id: 2, name: 'Jane Smith', email: 'janesmith@yahoo.com', role: 'Nhân viên' },
-        // { id: 3, name: 'Peter Parker', email: 'peterparker@hotmail.com', role: 'Nhân viên kinh doanh' }
-      ],
+      users: [],
       showUserForm: false,
       // biến đánh dấu hiển thị form thêm mới người dùng
       newUser: {

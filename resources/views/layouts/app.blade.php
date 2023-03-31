@@ -52,7 +52,7 @@
 <script src="{{ asset('assets/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-us-merc-en.js') }}"></script>
 
 <!-- scroll datatable -->
-<script src="{{ asset('assets/libs/datatables.net-responsive/js/scroll.datatables.responsive.js') }}"></script>
+<!-- <script src="{{ asset('assets/libs/datatables.net-responsive/js/scroll.datatables.responsive.js') }}"></script> -->
 <script src="{{ asset('assets/js/app2.js') }}"></script>
 </body>
 </html>

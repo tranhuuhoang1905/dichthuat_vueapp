@@ -67,11 +67,7 @@ import { saveAs } from "file-saver";
 export default {
   data() {
     return {
-      users: [
-        // { id: 1, name: 'John Doe', email: 'johndoe@gmail.com', role: 'Quản lý' },
-        // { id: 2, name: 'Jane Smith', email: 'janesmith@yahoo.com', role: 'Nhân viên' },
-        // { id: 3, name: 'Peter Parker', email: 'peterparker@hotmail.com', role: 'Nhân viên kinh doanh' }
-      ],
+      users: [],
       showUserForm: false, // biến đánh dấu hiển thị form thêm mới người dùng
       newUser: {
         // đối tượng người dùng mới
@@ -169,7 +165,7 @@ export default {
                 },
               },
             ],
-            scrollX:true,
+            scrollX: true,
           });
         }
       });

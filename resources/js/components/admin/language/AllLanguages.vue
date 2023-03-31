@@ -6,7 +6,7 @@
           <div class="card-body">
             <h4 class="card-title text-center fs-4 mb-3">All Languages</h4>
             <div class="">
-              <table ref="myTable" class="table table-bordered table-striped table-hover display nowrap" >
+              <table ref="myTable" class="table table-bordered table-striped table-hover display nowrap">
                 <thead>
                   <tr>
                     <th>ID</th>
@@ -56,6 +56,8 @@ import DataTablesCore from "datatables.net";
 import $ from "jquery";
 DataTable.use(DataTablesCore);
 import checkAccess from '@resources/js/middleware/access.js';
+import { createApp, h } from 'vue';
+import router from '@resources/js/router/index'; // import router từ file router.js
 export default {
   data() {
     return {
@@ -106,23 +108,32 @@ export default {
           },
         },
       ];
-      
+
       if (this.userHasAdmin) {
-        this.columns.push(
-          {
-            data: "id",
-            render: function (data, type, row) {
-              return (
-                '<div class="btn-group" role="group">' +
-                '<a class="btn btn-all-add-edit" href="/admin/language/edit/' +
-                row.id +
-                '">edit</a>' +
-                "</div>"
-              );
-            },
-          },
-        );
+        this.columns.push({
+          data: "id",
+          createdCell: function (cell, cellData, rowData, rowIndex, colIndex) {
+            const app = createApp({
+              render() {
+                return h('a', {
+                  to: `/admin/language/edit/${rowData.id}`,
+                  class: 'btn btn-all-add-edit',
+                  onClick: () => {
+                    router.push({ name: 'Edit Language', params: { id: rowData.id } });
+                  }
+                }, 'edit')
+              },
+              data() {
+                return {
+                  rowData: rowData
+                }
+              }
+            })
+            app.mount(cell);
+          }
+        });
       }
+
     },
     fetchData() {
       this.axios.get("/api/languages").then((response) => {
@@ -131,7 +142,7 @@ export default {
           this.table = $(this.$refs.myTable).DataTable({
             data: response.data.data,
             columns: this.columns,
-            scrollX:true,
+            scrollX: true,
           });
         }
       });
