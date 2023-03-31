@@ -85,3 +85,8 @@
 .dataTables_wrapper .dataTables_scrollBody table {
   width: 100% !important;
 }
+
+.all_languages tbody td:nth-child(7), .all_word tbody td:nth-child(7) {
+  display: flex;
+  justify-content: center;
+}
