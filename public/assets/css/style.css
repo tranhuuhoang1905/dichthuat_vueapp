@@ -326,7 +326,7 @@ textarea {
 }
 
 .profile-card-body {
-  min-height: 350px !important;
+  min-height: 400px !important;
 }
 
 @media screen and (max-width: 768px) {
