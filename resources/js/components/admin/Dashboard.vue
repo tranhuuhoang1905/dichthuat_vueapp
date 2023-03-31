@@ -32,8 +32,4 @@ export default {
         </div>
     </div>
 </template>
-<style>
-.custom-dashboard {
-    min-height: 400px;
-}
-</style>
+<style></style>
