@@ -11,8 +11,8 @@
                     <li class="menu-title">Menu</li>
                     <li>
                         <router-link :to="{ name: 'Admin Dashboard' }" class="waves-effect" exact active-class="active">
-                            <i class="ri-dashboard-line"></i><span
-                                class="badge badge-pill badge-success float-right">3</span>
+                            <i class="ri-dashboard-line"></i>
+                            <!-- <span class="badge badge-pill badge-success float-right">3</span> -->
                             <span>Dashboard</span>
                         </router-link>
                     </li>
