@@ -25758,9 +25758,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  "class": "dashboard"
+  "class": "row"
 };
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"row\"><div class=\"col-12\"><div class=\"card show border border-0 custom-dashboard\"><div class=\"card-body\"><h4 class=\"card-title text-center fs-4\">Dashboard</h4><div class=\"row\"><div class=\"col-md-4\"><div class=\"card\"><div class=\"card-body\"><div class=\"media\"><div class=\"media-body overflow-hidden\"><p class=\"text-truncate font-size-14 mb-2\">Number of Searchs</p><h4 class=\"mb-0\">1452</h4></div><div class=\"text-primary\"><i class=\"ri-stack-line font-size-24\"></i></div></div></div><div class=\"card-body border-top py-3\"><div class=\"text-truncate\"><span class=\"badge badge-soft-success font-size-11\"><i class=\"mdi mdi-menu-up\"></i> 2.4% </span><span class=\"text-muted ml-2\">From previous period</span></div></div></div></div><div class=\"col-md-4\"><div class=\"card\"><div class=\"card-body\"><div class=\"media\"><div class=\"media-body overflow-hidden\"><p class=\"text-truncate font-size-14 mb-2\">Total Words</p><h4 class=\"mb-0\"> 38452</h4></div><div class=\"text-primary\"><i class=\"ri-store-2-line font-size-24\"></i></div></div></div><div class=\"card-body border-top py-3\"><div class=\"text-truncate\"><span class=\"badge badge-soft-success font-size-11\"><i class=\"mdi mdi-menu-up\"></i> 2.4% </span><span class=\"text-muted ml-2\">From previous period</span></div></div></div></div><div class=\"col-md-4\"><div class=\"card\"><div class=\"card-body\"><div class=\"media\"><div class=\"media-body overflow-hidden\"><p class=\"text-truncate font-size-14 mb-2\">Language Support</p><h4 class=\"mb-0\">4</h4></div><div class=\"text-primary\"><i class=\"ri-briefcase-4-line font-size-24\"></i></div></div></div><div class=\"card-body border-top py-3\"><div class=\"text-truncate\"><span class=\"badge badge-soft-success font-size-11\"><i class=\"mdi mdi-menu-up\"></i> 2.4% </span><span class=\"text-muted ml-2\">From previous period</span></div></div></div></div></div></div></div></div></div>", 1);
+var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"col-md-4\"><div class=\"card\"><div class=\"card-body\"><div class=\"media\"><div class=\"media-body overflow-hidden\"><p class=\"text-truncate font-size-14 mb-2\">Number of Searchs</p><h4 class=\"mb-0\">1452</h4></div><div class=\"text-primary\"><i class=\"ri-stack-line font-size-24\"></i></div></div></div><div class=\"card-body border-top py-3\"><div class=\"text-truncate\"><span class=\"badge badge-soft-success font-size-11\"><i class=\"mdi mdi-menu-up\"></i> 2.4% </span><span class=\"text-muted ml-2\">From previous period</span></div></div></div></div>", 1);
 var _hoisted_3 = [_hoisted_2];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, _hoisted_3);
@@ -26082,7 +26082,7 @@ var _hoisted_3 = {
   "class": "col-md-4"
 };
 var _hoisted_4 = {
-  "class": "card show border border-0"
+  "class": "card show border border-0 profile-card-body"
 };
 var _hoisted_5 = {
   "class": "card-body p-0"
@@ -26119,7 +26119,7 @@ var _hoisted_13 = {
   "class": "col-md-8"
 };
 var _hoisted_14 = {
-  "class": "card show border border-0"
+  "class": "card show border border-0 profile-card-body"
 };
 var _hoisted_15 = {
   "class": "card-body"
@@ -26240,7 +26240,7 @@ var _hoisted_3 = {
   "class": "col-md-4"
 };
 var _hoisted_4 = {
-  "class": "card show border border-0"
+  "class": "card show border border-0 profile-card-body"
 };
 var _hoisted_5 = {
   "class": "card-body p-0"
@@ -26281,7 +26281,7 @@ var _hoisted_15 = {
   "class": "col-md-8"
 };
 var _hoisted_16 = {
-  "class": "card show border border-0"
+  "class": "card show border border-0 profile-card-body"
 };
 var _hoisted_17 = {
   "class": "card-body"
@@ -27545,7 +27545,7 @@ var _hoisted_3 = {
   "class": "col-md-4"
 };
 var _hoisted_4 = {
-  "class": "card show border border-0"
+  "class": "card show border border-0 profile-card-body"
 };
 var _hoisted_5 = {
   "class": "card-body p-0"
@@ -27582,7 +27582,7 @@ var _hoisted_13 = {
   "class": "col-md-8"
 };
 var _hoisted_14 = {
-  "class": "card show border border-0"
+  "class": "card show border border-0 profile-card-body"
 };
 var _hoisted_15 = {
   "class": "card-body"
@@ -27703,7 +27703,7 @@ var _hoisted_3 = {
   "class": "col-md-4"
 };
 var _hoisted_4 = {
-  "class": "card show border border-0"
+  "class": "card show border border-0 profile-card-body"
 };
 var _hoisted_5 = {
   "class": "card-body p-0"
@@ -27744,7 +27744,7 @@ var _hoisted_15 = {
   "class": "col-md-8"
 };
 var _hoisted_16 = {
-  "class": "card show border border-0"
+  "class": "card show border border-0 profile-card-body"
 };
 var _hoisted_17 = {
   "class": "card-body"
@@ -28201,7 +28201,10 @@ var _hoisted_6 = {
   "class": "col-12"
 };
 var _hoisted_7 = {
-  "class": "page-title-box d-flex align-items-center justify-content-between"
+  "class": "page-title-box d-flex align-items-center justify-content-between",
+  style: {
+    "padding-bottom": "0px"
+  }
 };
 var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", {
   "class": "mb-0 d-none d-md-block"
@@ -28213,6 +28216,11 @@ var _hoisted_10 = {
   key: 0,
   "class": "breadcrumb"
 };
+var _hoisted_11 = {
+  style: {
+    "margin-bottom": "0px"
+  }
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_HeaderLayout = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("HeaderLayout");
   var _component_LeftSidebar = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("LeftSidebar");
@@ -28222,7 +28230,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("li", {
       "class": "breadcrumb-item",
       key: index
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(crumb.title), 1 /* TEXT */)]);
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(crumb.title), 1 /* TEXT */)]);
   }), 128 /* KEYED_FRAGMENT */))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" end page title "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_view)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" container-fluid ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End Page-content "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_FooterLayout)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" end main content")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" END layout-wrapper ")], 2112 /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */);
 }
 

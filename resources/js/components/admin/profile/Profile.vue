@@ -2,7 +2,7 @@
   <div class="profile">
     <div class="row">
       <div class="col-md-4">
-        <div class="card show border border-0">
+        <div class="card show border border-0 profile-card-body">
           <div class="card-body p-0">
             <div class="row col-md-12 m-0 p-0 overflow-hidden background-avatar">
               <img src="../../../../assets/images/background-avatar.png" alt="" class="p-0 rounded-top">
@@ -13,21 +13,21 @@
             </div>
             <div class="description-profile">
               <div class="form-group px-5">
-              <i class="fas fa-user text-secondary mx-3"></i>
-              <router-link :to="{ name: 'Profile User' }" class="text-secondary">Profile</router-link>
-            </div>
-            <div class="form-group px-5 pb-3">
-              <i class="fas fa-lock text-secondary mx-3"></i>
-              <router-link :to="{ name: 'Change Password' }" class="text-secondary">Change Password</router-link>
-            </div>
+                <i class="fas fa-user text-secondary mx-3"></i>
+                <router-link :to="{ name: 'Profile User' }" class="text-secondary">Profile</router-link>
+              </div>
+              <div class="form-group px-5 pb-3">
+                <i class="fas fa-lock text-secondary mx-3"></i>
+                <router-link :to="{ name: 'Change Password' }" class="text-secondary">Change Password</router-link>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
       <div class="col-md-8">
-        <div class="card show border border-0">
-          <div class="card-body">
+        <div class="card show border border-0 profile-card-body">
+          <div class="card-body ">
             <h4 class="card-title text-center fs-4">Change Profile</h4>
             <div class="col-md-12">
               <form @submit.prevent="updateUser">

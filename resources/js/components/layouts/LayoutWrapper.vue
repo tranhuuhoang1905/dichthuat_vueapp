@@ -19,14 +19,15 @@
                     <!-- start page title -->
                     <div class="row">
                         <div class="col-12">
-                            <div class="page-title-box d-flex align-items-center justify-content-between">
+                            <div class="page-title-box d-flex align-items-center justify-content-between"
+                                style="padding-bottom: 0px;">
                                 <h4 class="mb-0 d-none d-md-block">
                                     <!-- {{ pageName }} -->
                                 </h4>
                                 <div class="page-title-right">
                                     <ol class="breadcrumb" v-if="crumbs && crumbs.length > 0">
                                         <li class="breadcrumb-item" v-for="(crumb, index) in crumbs" :key="index">
-                                            <p>{{ crumb.title }}</p>
+                                            <p style="margin-bottom: 0px;">{{ crumb.title }}</p>
                                         </li>
                                     </ol>
                                 </div>
