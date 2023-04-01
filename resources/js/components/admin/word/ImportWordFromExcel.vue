@@ -121,8 +121,6 @@ export default {
               showConfirmButton: false,
             });
           }
-
-
           setTimeout(() => {
             swalLoading.close();
           }, 1500);
@@ -147,7 +145,11 @@ export default {
     onFileChange(event) {
       const selectedFile = event.target.files[0];
       if (selectedFile.size > 1000000) {
-        alert("The selected file must be under 1MB in size.");
+        this.$swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "The selected file must be under 1MB in size.",
+        });
         this.selectedFile = "";
         this.fileSelected = false;
       } else {

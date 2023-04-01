@@ -11,19 +11,35 @@
               <form @submit.prevent="translateWordsFromExcel">
                 <div class="form-group">
                   <label>Language</label>
-                  <select class="form-select" aria-label="Default select example" v-model="WordsFromExcel.language_id"
-                    required>
-                    <option v-for="language in languages" :key="language.id" :value="`${language.id}`">
+                  <select
+                    class="form-select"
+                    aria-label="Default select example"
+                    v-model="WordsFromExcel.language_id"
+                    required
+                  >
+                    <option
+                      v-for="language in languages"
+                      :key="language.id"
+                      :value="`${language.id}`"
+                    >
                       {{ language.name }}
                     </option>
                   </select>
                 </div>
                 <div class="form-group">
                   <label>Language translate id</label>
-                  <select class="form-select" aria-label="Default select example"
-                    v-model="WordsFromExcel.language_translate_id" required>
+                  <select
+                    class="form-select"
+                    aria-label="Default select example"
+                    v-model="WordsFromExcel.language_translate_id"
+                    required
+                  >
                     <!-- <option :value="-1" selected>Open this select menu</option> -->
-                    <option v-for="language in languages" :key="language.id" :value="`${language.id}`">
+                    <option
+                      v-for="language in languages"
+                      :key="language.id"
+                      :value="`${language.id}`"
+                    >
                       {{ language.name }}
                     </option>
                   </select>
@@ -31,9 +47,18 @@
                 </div>
                 <div class="choose-file">
                   <!-- <label> -->
-                  <input class="px-0 py-2" type="file" accept=".xlsx, .xls" ref="fileInput" required
-                    @change="onFileChange" />
-                  <button class="btn-choose-file" @click.prevent="openFileDialog">
+                  <input
+                    class="px-0 py-2"
+                    type="file"
+                    accept=".xlsx, .xls"
+                    ref="fileInput"
+                    required
+                    @change="onFileChange"
+                  />
+                  <button
+                    class="btn-choose-file"
+                    @click.prevent="openFileDialog"
+                  >
                     Choose file
                   </button>
                   <span v-if="!fileSelected">No file chosen</span>
@@ -41,7 +66,10 @@
                   <!-- </label> -->
                 </div>
                 <div class="d-flex justify-content-center">
-                  <button type="submit" class="btn-all-add-edit py-2 px-5 rounded border border-0 my-3">
+                  <button
+                    type="submit"
+                    class="btn-all-add-edit py-2 px-5 rounded border border-0 my-3"
+                  >
                     Upload
                   </button>
                 </div>
@@ -73,18 +101,25 @@ export default {
   },
   created() {
     this.axios.get("/api/languages").then((response) => {
-      if (response.data.message === 'success') {
+      if (response.data.message === "success") {
         this.languages = response.data.data;
         if (response.data.data.length > 0) {
           this.word.language_id = this.word.language_translate_id =
             response.data.data[0].id;
         }
       }
-
     });
   },
   methods: {
     translateWordsFromExcel() {
+      const swalLoading = this.$swal.fire({
+        title: "Loading",
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        didOpen: () => {
+          this.$swal.showLoading();
+        },
+      });
       const fileInput = this.$refs.fileInput;
       const file = fileInput.files[0];
 
@@ -102,20 +137,40 @@ export default {
         })
         .then((response) => {
           if (response.status === 200) {
-            alert("File export successful");
+            swalLoading.update({
+              title: "File import successful",
+              icon: "success",
+              showConfirmButton: false,
+            });
+            // alert("File export successful");
             const blob = new Blob([response.data], {
               type: "application/vnd.ms-excel",
             });
             saveAs(blob, "translatecallback.xlsx");
           } else {
-            alert("File export failed");
+            swalLoading.update({
+              title: "File import false",
+              icon: "error",
+              showConfirmButton: false,
+            });
+            // alert("File export failed");
           }
-
+          setTimeout(() => {
+            swalLoading.close();
+          }, 1500);
           // this.$router.push({ name: 'All Word' });
         })
         .catch((error) => {
-          console.log(error);
-        });
+          swalLoading.update({
+            title: `Error ${error.response.status}`,
+            icon: "error",
+            showConfirmButton: false,
+          });
+          setTimeout(() => {
+            swalLoading.close();
+          }, 1500);
+        })
+        .finally();
     },
     openFileDialog() {
       this.$refs.fileInput.click();
@@ -123,7 +178,11 @@ export default {
     onFileChange(event) {
       const selectedFile = event.target.files[0];
       if (selectedFile.size > 1000000) {
-        alert("The selected file must be under 1MB in size.");
+        this.$swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "The selected file must be under 1MB in size.",
+        });
         this.selectedFile = "";
         this.fileSelected = false;
       } else {
