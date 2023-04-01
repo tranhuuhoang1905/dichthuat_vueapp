@@ -48,7 +48,6 @@ export default {
     },
   },
   mounted() {
-    console.log(this.loginResponse);
   },
 };
 </script>
@@ -76,10 +75,10 @@ export default {
                           </a>
                         </div>
 
-                      <h4 class="font-size-18 mt-5 mt-md-3">Register account</h4>
-                      <p class="text-muted">
-                        Get your free Nazox account now.
-                      </p>
+                        <h4 class="font-size-18 mt-5 mt-md-3">Register account</h4>
+                        <p class="text-muted">
+                          Get your free Nazox account now.
+                        </p>
                       </div>
 
                       <div class="p-2 mt-5 mt-md-3">
@@ -122,7 +121,8 @@ export default {
                       <div class="mt-2 text-center">
                         <p>
                           Already have an account ?
-                          <router-link :to="{ name: 'login' }" class="font-weight-medium text-login-register">Login</router-link>
+                          <router-link :to="{ name: 'login' }"
+                            class="font-weight-medium text-login-register">Login</router-link>
                         </p>
                         <p>
                           © 2020 Nazox. Crafted with

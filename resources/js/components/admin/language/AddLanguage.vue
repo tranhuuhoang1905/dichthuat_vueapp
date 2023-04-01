@@ -10,12 +10,12 @@
                 <div class="form-group">
                   <label for="language-name">Language name</label>
                   <input id="language-name" type="text" placeholder="Enter language name" class="form-control"
-                    v-model="language.name" />
+                    v-model="language.name" required />
                 </div>
                 <div class="form-group">
                   <label for="language-description">Description</label>
                   <textarea id="language-description" type="text" placeholder="Enter description" class="form-control"
-                    cols="70" rows="7" v-model="language.description"></textarea>
+                    cols="70" rows="7" v-model="language.description" required></textarea>
                 </div>
                 <div class="d-flex justify-content-center">
                   <button type="submit" class="btn btn-all-add-edit">
@@ -31,6 +31,7 @@
   </div>
 </template>
 <script>
+
 export default {
   data() {
     return {
@@ -44,14 +45,26 @@ export default {
         .post("/api/language/add", this.language)
         .then((response) => {
           if (response.data.status === 200) {
-            alert(`Add language ${this.language.name} success`);
+            this.$swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: `Add language ${this.language.name} success`,
+              showConfirmButton: false,
+              timer: 1500
+            })
             this.language = {};
           }
         })
         .catch((error) => {
           // Nếu không thành công, hiển thị thông báo lỗi
           console.log(error);
-          alert(`Error ${error.response.status}: ${error.response.data.message}`);
+          // alert(`Error ${error.response.status}: ${error.response.data.message}`);
+          this.$swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `Error ${error.response.status}: ${error.response.data.message}`,
+            // footer: '<a href="">Why do I have this issue?</a>'
+          })
         });
     },
   },

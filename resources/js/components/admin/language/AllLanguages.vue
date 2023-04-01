@@ -137,7 +137,6 @@ export default {
     },
     fetchData() {
       this.axios.get("/api/languages").then((response) => {
-        console.log(response.data);
         if (response.data.message === 'success') {
           this.table = $(this.$refs.myTable).DataTable({
             data: response.data.data,

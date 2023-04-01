@@ -51,12 +51,6 @@ export default {
   },
 
   created() {
-    // this.axios
-    //     .get('/api/user/roles')
-    //     .then((response) => {
-    //         this.roles = response.data;
-    //         console.log(response.data);
-    //     });
     this.axios
       .get(`/api/user/edit/${this.$route.params.id}`)
       .then((response) => {

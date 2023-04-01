@@ -70,7 +70,6 @@ export default {
   methods: {
     updatePasswordUser() {
       this.userForm.email = "admin@gmail.com";
-      console.log(this.userForm);
       this.axios
         .post(`/api/user/user-change-password`, this.userForm)
         .then((response) => {

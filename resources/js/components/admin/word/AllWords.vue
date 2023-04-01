@@ -6,10 +6,7 @@
           <div class="card-body">
             <h4 class="card-title text-center fs-4">All Words</h4>
             <div class="">
-              <table
-                ref="myTable"
-                class="table table-bordered table-striped table-hover display nowrap"
-              >
+              <table ref="myTable" class="table table-bordered table-striped table-hover display nowrap">
                 <thead>
                   <tr>
                     <th>ID</th>
@@ -31,13 +28,10 @@
                     <td>{{ word.updated_at }}</td>
                     <td>
                       <div class="btn-group" role="group">
-                        <router-link
-                          :to="{
-                            name: 'Word Default',
-                            params: { id: word.id },
-                          }"
-                          class="btn btn-all-add-edit"
-                          >Default
+                        <router-link :to="{
+                          name: 'Word Default',
+                          params: { id: word.id },
+                        }" class="btn btn-all-add-edit">Default
                         </router-link>
                         <!-- <router-link :to="{ name: 'Edit Word', params: { id: word.id } }" class="btn btn-primary">Edit
                             </router-link> -->
@@ -69,7 +63,7 @@ export default {
       words: [],
     };
   },
-  mounted() {},
+  mounted() { },
   created() {
     this.fetchData();
   },
@@ -94,7 +88,6 @@ export default {
         if (response.data.status === 200) {
           const isSmallScreen = window.innerWidth < 760;
           const pagingType = isSmallScreen ? "simple" : "simple_numbers";
-          console.log(pagingType);
           this.table = $(this.$refs.myTable).DataTable({
             responsive: true,
             data: response.data.data.words,

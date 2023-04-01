@@ -39,15 +39,6 @@ export default {
     password: { required },
   },
   methods: {
-    // Try to log the user in with the username
-    // and password they provided.
-    // tryToLogIn() {
-    //     this.submitted = true;
-    //     // stop here if form is invalid
-    //     // this.$v.$touch();
-    //     // console.log(this.email,this.password)
-    //     // console.log(this)
-    // },
     ...mapActions(["login"]),
 
     loginSubmit() {
@@ -64,7 +55,6 @@ export default {
     },
   },
   mounted() {
-    console.log(this.loginResponse);
   },
 };
 </script>
@@ -79,119 +69,76 @@ export default {
       <div class="container-fluid p-0">
         <div class="row no-gutters">
           <div class="col-lg-4">
-            <div
-              class="authentication-page-content d-flex align-items-center min-vh-100"
-            >
-              <div class="w-100">
-                <div class="row justify-content-center">
-                  <div class="col-lg-9">
-                    <div>
-                      <div class="text-center">
-                        <div>
-                          <a href="/" class="logo">
-                            <img
-                              src="/assets/images/logo-dark.png"
-                              height="20"
-                              alt="logo"
-                            />
-                          </a>
+            <div class="authentication-page-content d-flex align-items-center min-vh-100">
+            <div class="w-100">
+              <div class="row justify-content-center">
+                <div class="col-lg-9">
+                  <div>
+                    <div class="text-center">
+                      <div>
+                        <a href="/" class="logo">
+                          <img src="/assets/images/logo-dark.png" height="20" alt="logo" />
+                        </a>
                         </div>
 
                         <h4 class="font-size-18 mt-4">Welcome Back !</h4>
                         <p class="text-muted">Sign in to continue to Nazox.</p>
                         <!-- <p>NewName: {{ $store.getters['myModule/getAge'] }}</p>
-                        <p>UserName: {{ $store.getters['myModule/getUser'] }}</p> -->
+                            <p>UserName: {{ $store.getters['myModule/getUser'] }}</p> -->
                       </div>
 
                       <b-alert variant="danger" class="mt-3"> </b-alert>
 
                       <div class="p-2 mt-5">
-                        <form
-                          class="form-horizontal"
-                          @submit.prevent="loginSubmit"
-                        >
+                        <form class="form-horizontal" @submit.prevent="loginSubmit">
                           <div class="form-group auth-form-group-custom mb-4">
                             <i class="ri-mail-line auti-custom-input-icon"></i>
                             <label for="email">Email</label>
-                            <input
-                              type="email"
-                              v-model="loginData.email"
-                              class="form-control"
-                              id="email"
-                              placeholder="Enter email"
-                              :class="{
+                            <input type="email" v-model="loginData.email" class="form-control" id="email"
+                              placeholder="Enter email" :class="{
                                 'is-invalid': submitted && $v.email.$error,
-                              }"
-                            />
-                            <div
-                              v-if="submitted && $v.email.$error"
-                              class="invalid-feedback"
-                            >
-                              <span v-if="!$v.email.required"
-                                >Email is required.</span
-                              >
-                              <span v-if="!$v.email.email"
-                                >Please enter valid email.</span
-                              >
+                              }" />
+                            <div v-if="submitted && $v.email.$error" class="invalid-feedback">
+                              <span v-if="!$v.email.required">Email is required.</span>
+                              <span v-if="!$v.email.email">Please enter valid email.</span>
                             </div>
                           </div>
 
                           <div class="form-group auth-form-group-custom mb-4">
-                            <i
-                              class="ri-lock-2-line auti-custom-input-icon"
-                            ></i>
+                            <i class="ri-lock-2-line auti-custom-input-icon"></i>
                             <label for="userpassword">Password</label>
-                            <input
-                              v-model="loginData.password"
-                              type="password"
-                              class="form-control"
-                              id="userpassword"
-                              placeholder="Enter password"
-                              :class="{
+                            <input v-model="loginData.password" type="password" class="form-control" id="userpassword"
+                              placeholder="Enter password" :class="{
                                 'is-invalid': submitted && $v.password.$error,
-                              }"
-                            />
-                            <div
-                              v-if="submitted && !$v.password.required"
-                              class="invalid-feedback"
-                            >
+                              }" />
+                            <div v-if="submitted && !$v.password.required" class="invalid-feedback">
                               Password is required.
                             </div>
                           </div>
 
                           <div class="custom-control custom-checkbox">
-                            <input
-                              type="checkbox"
-                              class="custom-control-input"
-                              id="customControlInline"
-                            />
-                            <label
-                              class="custom-control-label"
-                              for="customControlInline"
-                            >
+                            <input type="checkbox" class="custom-control-input" id="customControlInline" />
+                            <label class="custom-control-label" for="customControlInline">
                               Remember me
                             </label>
                           </div>
 
                           <div class="mt-4 text-center">
-                            <button
-                              class="btn btn-all-add-edit w-md waves-effect waves-light"
-                              type="submit"
-                            >
+                            <button class="btn btn-all-add-edit w-md waves-effect waves-light" type="submit">
                               Log In
                             </button>
                           </div>
 
                           <!-- <div class="mt-4 text-center">
-                            tag="a"
-                            <router-link
-                              to="/forgot-password"
-                              class="text-muted"
-                            >
-                              <i class="mdi mdi-lock mr-1"></i> Forgot your
-                              password?
-                            </router-link>
-                          </div> -->
+                                tag="a"
+                                <router-link
+                                  to="/forgot-password"
+                                  class="text-muted"
+                                >
+                                  <i class="mdi mdi-lock mr-1"></i> Forgot your
+                                  password?
+                                </router-link>
+                              </div> -->
                         </form>
                       </div>
 
@@ -200,7 +147,8 @@ export default {
                           Don't have an account ?
                           <!-- tag="a" -->
                           <!-- <a href="/register" class="font-weight-medium text-primary">Đăng ký</a> -->
-                          <router-link :to="{ name: 'register' }" class="font-weight-medium text-login-register">Register</router-link>
+                          <router-link :to="{ name: 'register' }"
+                            class="font-weight-medium text-login-register">Register</router-link>
                         </p>
                         <p>
                           © 2020 Nazox. Crafted with

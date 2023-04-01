@@ -67,7 +67,6 @@ export default {
             language_id: response.data.data.translate.language_id,
           };
           this.languages = response.data.data.languages;
-          console.log(response.data);
         }
 
       });

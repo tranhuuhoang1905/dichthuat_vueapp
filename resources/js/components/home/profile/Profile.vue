@@ -109,7 +109,6 @@ export default {
   methods: {
     ...mapActions(["storeUpdateUser"]),
     updateUser() {
-      console.log(this.UserForm);
       this.axios
         .post(`/api/user/update`, this.UserForm)
         .then((response) => {

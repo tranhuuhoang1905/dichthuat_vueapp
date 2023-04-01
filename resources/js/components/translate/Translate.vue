@@ -154,8 +154,6 @@ export default {
                         if (response.data.data.translation_words.length > 0) {
                             this.result = response.data.data.translation_words[0].translate;
                         }
-
-                        console.log(response.data);
                     }
 
                 })
@@ -174,7 +172,6 @@ export default {
         },
         onKeyPress(button) {
             // eslint-disable-next-line
-            console.log("button", button);
         },
         onInputChange(input) {
             this.input = input.target.value;
