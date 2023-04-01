@@ -9,7 +9,7 @@
             </div>
             <div class="avatar row col-md-12 m-0 p-0 d-flex justify-content-center position-absolute">
               <img src="../../../../assets/images/avatar.png" alt="">
-              <h6 class="text-center py-2">{{ authUser.name }}</h6>
+              <!-- <h6 class="text-center py-2">{{ authUser.name }}</h6> -->
             </div>
             <div class="description-profile">
               <div class="form-group px-5">
@@ -114,11 +114,23 @@ export default {
         .then((response) => {
           if (response.data.status === 200) {
             this.storeUpdateUser();
-            alert(response.data.message);
+            this.$swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: `Update Profile Success`,
+              showConfirmButton: false,
+              timer: 1000
+            })
+            // alert(response.data.message);
           }
         })
         .catch((error) => {
-          alert(`Error ${error.response.status}: ${error.response.data.message}`);
+          this.$swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `Error ${error.response.status}: ${error.response.data.message}`,
+          })
+          // alert(`Error ${error.response.status}: ${error.response.data.message}`);
         })
         .finally(() => (this.loading = false));
     }

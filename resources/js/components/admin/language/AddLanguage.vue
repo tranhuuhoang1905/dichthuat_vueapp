@@ -50,7 +50,7 @@ export default {
               icon: 'success',
               title: `Add language ${this.language.name} success`,
               showConfirmButton: false,
-              timer: 1500
+              timer: 1000
             })
             this.language = {};
           }

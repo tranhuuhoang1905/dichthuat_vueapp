@@ -90,7 +90,14 @@ export default {
         .post("/api/word/add", this.word)
         .then((response) => {
           if (response.data.status === 200) {
-            alert(response.data.message);
+            this.$swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: `Add Word ${this.word.word} success`,
+              showConfirmButton: false,
+              timer: 1000
+            })
+            // alert(response.data.message);
             this.word = {};
             if (this.languages.length > 0) {
               this.word.language_id = this.word.language_translate_id =
@@ -101,7 +108,13 @@ export default {
 
         })
         .catch((error) => {
-          alert(`Error ${error.response.status}: ${error.response.data.message}`);
+          this.$swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `Error ${error.response.status}: ${error.response.data.message}`,
+            // footer: '<a href="">Why do I have this issue?</a>'
+          })
+          // alert(`Error ${error.response.status}: ${error.response.data.message}`);
         })
         .finally(() => (this.loading = false));
     },

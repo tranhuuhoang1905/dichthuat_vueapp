@@ -72,15 +72,27 @@ export default {
         )
         .then((response) => {
           if (response.data.status === 200) {
-            alert(response.data.message);
-            if (response.data.success === true) {
-              this.userForm.password = null;
-              this.userForm.repassword = null;
-            }
+            // alert(response.data.message);
+            this.$swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: `Change password ${this.userForm.name} success`,
+              showConfirmButton: false,
+              timer: 1000,
+            });
+            this.userForm.password = null;
+            this.userForm.repassword = null;
+            // if (response.data.success === true) {
+            // }
           }
         })
         .catch((error) => {
-          alert(`Error ${error.response.status}: ${error.response.data.message}`);
+          this.$swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: `Error ${error.response.status}: ${error.response.data.message}`,
+          });
+          // alert(`Error ${error.response.status}: ${error.response.data.message}`);
         })
         .finally(() => (this.loading = false));
     },

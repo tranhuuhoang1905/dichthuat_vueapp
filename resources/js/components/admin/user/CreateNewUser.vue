@@ -78,14 +78,28 @@ export default {
         .post("/api/user/create-new-user", this.newUser)
         .then((response) => {
           if (response.data.status === 200) {
-            if (response.data.success === true) {
-              this.newUser = {};
-            }
-            alert(response.data.message);
+            // if (response.data.success === true) {
+              
+            // }
+            this.$swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: `Add new user ${this.newUser.name} success`,
+              showConfirmButton: false,
+              timer: 1000
+            })
+            this.newUser = {};
+            // alert(response.data.message);
           }
         })
         .catch((error) => {
-          alert(`Error ${error.response.status}: ${error.response.data.message}`);
+          this.$swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `Error ${error.response.status}: ${error.response.data.message}`,
+            // footer: '<a href="">Why do I have this issue?</a>'
+          })
+          // alert(`Error ${error.response.status}: ${error.response.data.message}`);
 
         })
         .finally(() => (this.loading = false));

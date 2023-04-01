@@ -34,7 +34,7 @@
                 </div>
                 <div class="d-flex justify-content-center">
                   <button type="submit" class="btn btn-all-add-edit">
-                    Update Word
+                    Update Translate
                   </button>
                 </div>
               </form>
@@ -77,11 +77,23 @@ export default {
         .post(`/api/translate/update/${this.$route.params.id}`, this.translateForm)
         .then((response) => {
           if (response.data.status === 200) {
-            alert(response.data.message);
+            this.$swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: `Update Translate ${this.translateForm.translate} Success`,
+              showConfirmButton: false,
+              timer: 1000,
+            });
+            // alert(response.data.message);
           }
         })
         .catch((error) => {
-          alert(`Error ${error.response.status}: ${error.response.data.message}`);
+          this.$swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: `Error ${error.response.status}: ${error.response.data.message}`,
+          });
+          // alert(`Error ${error.response.status}: ${error.response.data.message}`);
         })
         .finally(() => (this.loading = false));
     },

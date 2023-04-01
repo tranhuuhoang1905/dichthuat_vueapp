@@ -52,11 +52,21 @@ export default {
         .post(`/api/language/update/${this.$route.params.id}`, this.language)
         .then((response) => {
           if (response.data.status === 200) {
-            alert(response.data.message);
+            this.$swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: `Update language ${this.language.name} success`,
+              showConfirmButton: false,
+              timer: 1000
+            })
           }
         })
         .catch((error) => {
-          alert(`Error ${error.response.status}: ${error.response.data.message}`);
+          this.$swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `Error ${error.response.status}: ${error.response.data.message}`,
+          })
         });
     },
   },
