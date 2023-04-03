@@ -9,13 +9,14 @@ import BootstrapVue3 from 'bootstrap-vue-3';
 import 'bootstrap/scss/bootstrap.scss';
 import 'bootstrap-vue-3/dist/bootstrap-vue-3.css';
 import router from './router/index';
+import config from './config';
 import VueAxios from 'vue-axios';
 import axios from 'axios';
 import { store } from './store/store';
-
 import Swal from 'sweetalert2';
 
 app.config.globalProperties.$swal = Swal;
+app.config.globalProperties.$config = config;
 // app.use(Vuex);
 app.use(VueAxios, axios, BootstrapVue3);
 app.use(store);

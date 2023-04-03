@@ -74,6 +74,7 @@ export default {
     };
   },
   created() {
+    console.log(this.$config.notificationTimer);
     this.axios.get("/api/languages").then((response) => {
       if (response.data.message === 'success') {
         this.languages = response.data.data;
@@ -95,7 +96,7 @@ export default {
               icon: 'success',
               title: `Add Word ${this.word.word} success`,
               showConfirmButton: false,
-              timer: 1000
+              timer: this.$config.notificationTimer ?? 1000
             })
             // alert(response.data.message);
             this.word = {};
@@ -119,5 +120,6 @@ export default {
         .finally(() => (this.loading = false));
     },
   },
+  components: {},
 };
 </script>

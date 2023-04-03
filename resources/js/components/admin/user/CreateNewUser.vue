@@ -79,14 +79,14 @@ export default {
         .then((response) => {
           if (response.data.status === 200) {
             // if (response.data.success === true) {
-              
+
             // }
             this.$swal.fire({
               position: 'top-end',
               icon: 'success',
               title: `Add new user ${this.newUser.name} success`,
               showConfirmButton: false,
-              timer: 1000
+              timer: this.$config.notificationTimer ?? 1000
             })
             this.newUser = {};
             // alert(response.data.message);

@@ -119,7 +119,7 @@ export default {
               icon: 'success',
               title: `Update Profile Success`,
               showConfirmButton: false,
-              timer: 1000
+              timer: this.$config.notificationTimer ?? 1000
             })
             // alert(response.data.message);
           }

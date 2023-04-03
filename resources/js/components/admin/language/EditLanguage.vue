@@ -57,7 +57,7 @@ export default {
               icon: 'success',
               title: `Update language ${this.language.name} success`,
               showConfirmButton: false,
-              timer: 1000
+              timer: this.$config.notificationTimer ?? 1000
             })
           }
         })

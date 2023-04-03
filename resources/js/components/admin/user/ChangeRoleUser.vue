@@ -81,7 +81,7 @@ export default {
               icon: "success",
               title: `Change role ${this.userForm.name} Success`,
               showConfirmButton: false,
-              timer: 1000,
+              timer: this.$config.notificationTimer ?? 1000,
             });
             // alert(response.data.message);
           }

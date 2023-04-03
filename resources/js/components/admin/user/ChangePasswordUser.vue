@@ -78,7 +78,7 @@ export default {
               icon: "success",
               title: `Change password ${this.userForm.name} success`,
               showConfirmButton: false,
-              timer: 1000,
+              timer: this.$config.notificationTimer ?? 1000,
             });
             this.userForm.password = null;
             this.userForm.repassword = null;
