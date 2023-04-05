@@ -38,7 +38,10 @@ class TranslationWord extends Model
             ->join('languages', 'translation_word.language_id', '=', 'languages.id')
             ->select('languages.name as language', 'translation_word.*')
             ->where('words.word', $word)
-            ->where('translation_word.language_id', $languageId)
+            ->where('words.status', '>',0)
+            ->when($languageId != 0, function ($query) use ($languageId) {
+                return $query->where('translation_word.language_id', $languageId);
+            })
             ->get()
             ->toArray();
     }
@@ -49,10 +52,12 @@ class TranslationWord extends Model
 
         $results = DB::table('translation_word')
             ->join('words', 'translation_word.word_id', '=', 'words.id')
-            ->where('translation_word.language_id', '=', $languageId)
+            ->when($languageId !== 0, function ($query) use ($languageId) {
+                return $query->where('translation_word.language_id', '=', $languageId);
+            })
             ->where('words.word', '!=', $word)
+            ->where('words.status', '>', 0)
             ->where(function ($query) use ($wordChilds) {
-                // $query->orWhere('words.word', 'like' , $word);
                 foreach ($wordChilds as $wordChild) {
                     $query->orWhere('words.word', 'like' , '%' . $wordChild . '%');
                 }
@@ -62,5 +67,20 @@ class TranslationWord extends Model
             ->get()
             ->toArray();
         return $results;
+    }
+
+    public function TopSearch($languageId)
+    {
+        return  TranslationWord::select('translation_word.word_id', 'words.id', 'words.word')
+        ->join('words', 'words.id', '=', 'translation_word.word_id')
+        ->when($languageId !== 0, function ($query) use ($languageId) {
+            $query->where('translation_word.language_id', '=', $languageId);
+        })
+        ->where('words.status', '>', 0)
+        ->groupBy('translation_word.word_id', 'words.id', 'words.word', 'words.id')
+        ->orderByDesc('words.number_search')
+        ->take(10)
+        ->get()
+        ->toArray();
     }
 }

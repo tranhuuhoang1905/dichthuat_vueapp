@@ -101,7 +101,9 @@ export default {
         {
           data: "id",
           createdCell: function (cell, cellData, rowData, rowIndex, colIndex) {
+            // const self = this;
             // const table = $(self.$refs.myTable);
+            // console.log(table);
             let isRollbacked = rowData.status === 0;
             const app = createApp({
               render() {

@@ -33,6 +33,16 @@ class TranslateController extends Controller
         ];
         return response()->json($responseData);
     }
+
+    // get top search words
+    public function getTopSearchWords(Request $request)
+    {
+        $languageId = $request->input('language_id');
+        $mTranslationWord = new TranslationWord();
+        $words = $mTranslationWord->TopSearch($languageId);
+        $responseData = [    'status' => 200,'success'=>$languageId,    'message' => 'success',    'data' => $words];
+        return response()->json($responseData);
+    }
  // edit word
     public function edit($id)
     {

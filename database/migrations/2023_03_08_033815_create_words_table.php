@@ -18,7 +18,7 @@ class CreateWordsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->text('description');
-            $table->boolean('state')->default(1);
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
         Schema::create('words', function (Blueprint $table) {

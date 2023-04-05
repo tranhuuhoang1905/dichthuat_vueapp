@@ -36,6 +36,7 @@ Route::get('/languages', [LanguagesController::class, 'index']);
 // Route::get('/languages', [LanguagesController::class, 'index'])->middleware('auth:sanctum');
 Route::group(['prefix' => 'language','middleware' => ['auth:sanctum, role:admin,leader']], function () {
     Route::post('add', [LanguagesController::class, 'add'])->middleware('role:admin');
+    Route::get('all-language', [LanguagesController::class, 'allLanguage']);
     Route::get('edit/{id}', [LanguagesController::class, 'edit'])->middleware('role:admin');
 
     Route::post('update/{id}', [LanguagesController::class, 'update'])->middleware('role:admin');
@@ -44,9 +45,10 @@ Route::group(['prefix' => 'language','middleware' => ['auth:sanctum, role:admin,
 });
 
 Route::post('/words', [WordsController::class, 'index'])->middleware('auth:sanctum,role:admin,leader');
-Route::post('word/top-search-words', [WordsController::class, 'getTopSearchWords']);
+
 // Route::group(['prefix' => 'word','middleware' => ['auth:sanctum', 'leader']], function () {
 Route::group(['prefix' => 'word','middleware' => ['auth:sanctum, role:admin,leader']], function () {
+    Route::post('all-word', [WordsController::class, 'allWord']);
     Route::post('add', [WordsController::class, 'add']);
     Route::get('edit/{id}', [WordsController::class, 'edit']);
     Route::get('alldata/{id}', [WordsController::class, 'alldata']);
@@ -61,9 +63,9 @@ Route::group(['prefix' => 'word','middleware' => ['auth:sanctum, role:admin,lead
 
 Route::group(['prefix' => 'translate'], function () {
     Route::post('/search', [TranslateController::class, 'search']);
+    Route::post('/top-search-words', [TranslateController::class, 'getTopSearchWords']);
     Route::get('edit/{id}', [TranslateController::class, 'edit']);
     Route::post('update/{id}', [TranslateController::class, 'update']);
-    
 });
 Route::group(['prefix' => 'user','middleware' => ['auth:sanctum']], function() {
     // Route::get('/logout', [LanguagesController::class, 'index']);

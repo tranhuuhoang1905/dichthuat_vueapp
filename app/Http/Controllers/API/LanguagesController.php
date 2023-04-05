@@ -12,6 +12,15 @@ class LanguagesController extends Controller
     public function index(Request $request)
     {
 
+        $languages = Languages::all()->where('status', '>', 0)->toArray();
+        $responseData = [    'status' => 200,'success'=>true,    'message' => 'success',    'data' => $languages];
+        return response()->json($responseData);
+    }
+
+    // all languages có các hàng bị ẩn
+    public function allLanguage(Request $request)
+    {
+
         $languages = Languages::all()->toArray();
         $responseData = [    'status' => 200,'success'=>true,    'message' => 'success',    'data' => $languages];
         return response()->json($responseData);

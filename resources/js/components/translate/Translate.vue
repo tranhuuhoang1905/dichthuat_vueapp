@@ -24,6 +24,11 @@
                             :value="`${language.id}`" name="language_id" autocomplete="off" />
                         <label class="btn" :for="`btn-radio${index + 1}`">{{ language.name }}</label>
                     </div>
+                    <div class="language shadow-sm rounded">
+                        <input type="radio" class="btn-check" v-model="searchData.language_id" :id="`btn-radio${index + 1}`"
+                            :value="0" name="language_id" autocomplete="off" />
+                        <label class="btn" :for="`btn-radio${index + 1}`">All Language</label>
+                    </div>
                 </div>
             </form>
             <div class="row">
@@ -113,13 +118,13 @@ export default {
     mounted() { },
     data() {
         return {
-
+            index: 0,
             showKeyboard: false,
             input: "",
             languages: [],
             searchData: {
-                keyword: "con mèo",
-                language_id: 3,
+                keyword: "",
+                language_id: 0,
             },
             translates: [],
             suggestedWords: [],
@@ -143,22 +148,29 @@ export default {
     },
     methods: {
         searchAction() {
-            this.axios
-                .post("/api/translate/search", this.searchData)
-                .then((response) => {
-                    // this.$router.push({ name: 'All Language' })
-                    if (response.data.status === 200) {
-                        this.translates = response.data.data.translationWords;
-                        this.suggestedWords = response.data.data.suggestedWords;
-                        this.keywordAction = this.searchData.keyword;
-                        if (response.data.data.translation_words.length > 0) {
-                            this.result = response.data.data.translation_words[0].translate;
+            if (this.searchData.keyword !== "") {
+                this.axios
+                    .post("/api/translate/search", this.searchData)
+                    .then((response) => {
+                        // this.$router.push({ name: 'All Language' })
+                        if (response.data.status === 200) {
+                            this.translates = response.data.data.translationWords;
+                            this.suggestedWords = response.data.data.suggestedWords;
+                            this.keywordAction = this.searchData.keyword;
+                            if (response.data.data.translation_words.length > 0) {
+                                this.result = response.data.data.translation_words[0].translate;
+                            }
                         }
-                    }
 
-                })
-                .catch((error) => console.log(error))
-                .finally(() => (this.loading = false));
+                    })
+                    .catch((error) => { })
+                    .finally(() => (this.loading = false));
+            } else {
+                this.translates = [];
+                this.suggestedWords = [];
+                this.keywordAction = "";
+            }
+
         },
         searchSuggestedWords($searchKeyword) {
             this.searchData.keyword = $searchKeyword;
@@ -177,7 +189,7 @@ export default {
             this.input = input.target.value;
         },
         topSearch() {
-            this.axios.post("/api/word/top-search-words", this.searchData).then((response) => {
+            this.axios.post("/api/translate/top-search-words", this.searchData).then((response) => {
                 if (response.data.message === 'success') {
                     this.topSearchWords = response.data.data;
                 }
@@ -193,6 +205,14 @@ export default {
         'searchData.language_id': function (newValue, oldValue) {
             this.topSearch();
             this.searchAction();
+        },
+        'searchData.keyword': function (newValue, oldValue) {
+            console.log("check keywword", newValue);
+            if (newValue === "") {
+                console.log("check keywword", newValue);
+                this.topSearch();
+                this.searchAction();
+            }
         }
     },
     computed: {

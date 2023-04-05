@@ -87,7 +87,32 @@ export default {
           console.log(error);
         });
     },
+    actionEditStatus(rowData) {
+      let dataReponsive = {};
+      dataReponsive.status = rowData.status == 1 ? 0 : 1;
+      this.axios
+        .post(`/api/language/update/${rowData.id}`, dataReponsive)
+        .then((response) => {
+          if (response.data.status === 200) {
+            this.$swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: `Update language ${rowData.name} success`,
+              showConfirmButton: false,
+              timer: this.$config.notificationTimer ?? 1000
+            })
+          }
+        })
+        .catch((error) => {
+          this.$swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `Error ${error.response.status}: ${error.response.data.message}`,
+          })
+        });
+    },
     setColumns() {
+      const self = this;
       this.columns = [
         { data: "id" },
         { data: "name" },
@@ -95,10 +120,18 @@ export default {
         {
           data: "status",
           render: function (data, type, row) {
-
+            console.log("check row.status", row);
             const checked = row.status == 0 ? "checked" : "";
-            return `<input type="checkbox" id="${row.status}" ${checked}/><label for="${row.status}">Toggle</label>`
+            return `<input type="checkbox" id="${row.id}" ${checked}/><label for="${row.id}">Toggle</label>`
           },
+          createdCell: function (cell, cellData, rowData, rowIndex, colIndex) {
+            console.log("check rowData", rowData);
+            const checkbox = cell.querySelector('input[type="checkbox"]');
+            checkbox.addEventListener('click', function () {
+              self.actionEditStatus(rowData);
+            }.bind(this));
+          },
+
         },
         {
           data: "created_at",
@@ -143,7 +176,7 @@ export default {
 
     },
     fetchData() {
-      this.axios.get("/api/languages").then((response) => {
+      this.axios.get("/api/language/all-language").then((response) => {
         if (response.data.message === 'success') {
           this.table = $(this.$refs.myTable).DataTable({
             data: response.data.data,

@@ -19,8 +19,23 @@ use Validator;
 
 class WordsController extends Controller
 {
-    // all languages
+    // all words không hiện từ bị ẩn
     public function index()
+    {
+        $words = Words::all()->where('status', '>', 0)->toArray();
+        $responseData = [
+            'status' => 200,
+            'success'=>true,
+            'message' => 'The new word successfully added',
+            'data'=> [
+                'words'=>$words
+            ]
+        ];
+        return response()->json($responseData);
+    }
+    
+    // all words có các từ bị ẩn
+    public function allWord()
     {
         $words = Words::all()->toArray();
         $responseData = [
@@ -33,7 +48,6 @@ class WordsController extends Controller
         ];
         return response()->json($responseData);
     }
- 
     // add word
     public function add(Request $request)
     {
@@ -147,21 +161,7 @@ class WordsController extends Controller
         
     }
  
-    // get top search words
-    public function getTopSearchWords(Request $request)
-    {
-        $languageId = $request->input('language_id');
-        $words = TranslationWord::select('translation_word.word_id', 'words.id', 'words.word')
-        ->join('words', 'words.id', '=', 'translation_word.word_id')
-        ->where('translation_word.language_id', '=', $languageId)
-        ->groupBy('translation_word.word_id', 'words.id', 'words.word', 'words.id')
-        ->orderByDesc('words.number_search')
-        ->take(10)
-        ->get()
-        ->toArray(); 
-        $responseData = [    'status' => 200,'success'=>$languageId,    'message' => 'success',    'data' => $words];
-        return response()->json($responseData);
-    }
+    
 
     public function importWordsFromExcel(Request $request)
     {

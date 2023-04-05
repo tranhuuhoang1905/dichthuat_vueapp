@@ -11,6 +11,10 @@
                   <div class="form-group">
                     <label>Word:</label>
                     <input type="text" placeholder="Enter new word" class="form-control" v-model="word.word" required />
+                    <ul>
+                      <li>search 1</li>
+                      <li>search 2</li>
+                    </ul>
                   </div>
                   <div class="form-group">
                     <label>Description</label>
