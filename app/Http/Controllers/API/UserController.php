@@ -47,11 +47,12 @@ class UserController extends Controller
             $responseData = [    'status' => 200,'success'=>true,    'message' => 'This account already exists'];
             return response()->json($responseData);
         }
-        if ($role){
+        if ($role){            
             $user = User::create([
                 'name' => $request->input('name'),
                 'email' => $request->input('email'),
-                'password' => Hash::make($request->input('password')),
+                'password' => Hash::make(""),
+                'first_login'=> 1
             ]);
             $user->assignRole($role->name);
             $responseData = [    'status' => 200,'success'=>true,    'message' => 'The user successfully created'];
@@ -103,7 +104,7 @@ class UserController extends Controller
         $password = $request->input('password');
         $repassword = $request->input('repassword');
         if($password !== $repassword or !$password){
-            $responseData = ['success'=>true,    'message' => 'The user false to updated'];
+            $responseData = ['status' => 200,'success'=>true,    'message' => 'The user false to updated'];
             return response()->json($responseData);
         }
         $user->password = Hash::make($password);

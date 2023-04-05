@@ -8,7 +8,7 @@ export default function checkAccess(roles) {
     if (store.getters.getAuthUser.id !== undefined) {
         authUser = store.getters.getAuthUser;
     } else {
-        authUser = JSON.parse(sessionStorage.getItem('authUser'));
+        authUser = JSON.parse(localStorage.getItem('authUser'));
     }
     if (!authUser || authUser.length === 0) {
         return false;

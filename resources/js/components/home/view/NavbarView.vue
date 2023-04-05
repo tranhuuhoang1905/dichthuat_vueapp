@@ -155,9 +155,9 @@
           <router-link :to="{ name: 'login' }"
             class="btn-all-add-edit d-flex align-items-center rounded py-2 px-3 me-3 text-white">Login
           </router-link>
-          <router-link :to="{ name: 'register' }"
+          <!-- <router-link :to="{ name: 'register' }"
             class="btn-all-add-edit d-flex align-items-center rounded py-2 px-2 text-white">Register
-          </router-link>
+          </router-link> -->
         </div>
       </div>
     </nav>
@@ -190,11 +190,11 @@ export default {
   },
   computed: {
     checkNavigation() {
-      const loginResponse = JSON.parse(sessionStorage.getItem('loginResponse')) ?? {};
+      const loginResponse = JSON.parse(localStorage.getItem('loginResponse')) ?? {};
       return this.$store.getters.getLoginResponse.authenticated || loginResponse.authenticated || false;
     },
     isGotoAdmin() {
-      const authUser = JSON.parse(sessionStorage.getItem('authUser')) ?? {};
+      const authUser = JSON.parse(localStorage.getItem('authUser')) ?? {};
       const loginRoles = authUser.roles[0].name;
       return loginRoles === "admin" || loginRoles === "leader";
     },

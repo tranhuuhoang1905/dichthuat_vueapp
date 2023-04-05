@@ -1,4 +1,6 @@
 import Router from '../../router';
+import Swal from 'sweetalert2';
+import Config from '../../config';
 
 const state = {
     loginResponse: {},
@@ -21,7 +23,7 @@ const actions = {
                 })
                 .then(response => {
                     commit('mutateLoginResponse', response.data);
-                    sessionStorage.setItem(
+                    localStorage.setItem(
                         'loginResponse',
                         JSON.stringify(response.data)
                     );
@@ -29,7 +31,7 @@ const actions = {
                         axios.get('/api/user').then(response => {
                             if (response.data.status === 200) {
                                 commit('mutateAuthUser', response.data.data.user);
-                                sessionStorage.setItem(
+                                localStorage.setItem(
                                     'authUser',
                                     JSON.stringify(response.data.data.user)
                                 );
@@ -47,7 +49,64 @@ const actions = {
                             }
                         });
                     } else {
-                        alert(getters.getLoginResponse.response_data[0]);
+                        // alert(getters.getLoginResponse.response_data[0]);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: `Error ${getters.getLoginResponse.response_data[0]}`,
+                            showConfirmButton: false,
+                            timer: Config.notificationTimer ?? 1000
+                        })
+                    }
+                });
+        });
+    },
+    firstLogin({ commit, getters }, loginData) {
+        axios.get('/sanctum/csrf-cookie').then(() => {
+            axios
+                .post('/api/first-login', {
+                    email: loginData.email,
+                    password: loginData.password,
+                    repassword: loginData.repassword,
+                    is_first_login: loginData.is_first_login
+                })
+                .then(response => {
+                    commit('mutateLoginResponse', response.data);
+                    localStorage.setItem(
+                        'loginResponse',
+                        JSON.stringify(response.data)
+                    );
+                    if (getters.getLoginResponse.response_type == 'success') {
+                        axios.get('/api/user').then(response => {
+                            if (response.data.status === 200) {
+                                commit('mutateAuthUser', response.data.data.user);
+                                localStorage.setItem(
+                                    'authUser',
+                                    JSON.stringify(response.data.data.user)
+                                );
+                                if (getters.getAuthUser.roles.some(role => role.name === "admin")) {
+                                    // Chuyển hướng đến trang admin
+                                    // Router.push('/admin').then(() => {
+                                    //     location.reload();
+                                    // });
+                                    window.location.replace('/admin/dashboard');
+                                } else {
+                                    // Chuyển hướng đến trang chính
+                                    Router.push('/');
+                                }
+                                // Router.push('/admin');
+                            }
+                        });
+                    } else {
+                        console.log("check --------------", getters.getLoginResponse.response_data);
+                        // alert(getters.getLoginResponse.response_data[0]);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: `Error ${getters.getLoginResponse.response_data[0]}`,
+                            showConfirmButton: false,
+                            timer: Config.notificationTimer ?? 1000
+                        })
                     }
                 });
         });
@@ -55,8 +114,8 @@ const actions = {
 
     logout() {
         axios.get('/api/logout').then(() => {
-            sessionStorage.removeItem('loginResponse');
-            sessionStorage.removeItem('authUser');
+            localStorage.removeItem('loginResponse');
+            localStorage.removeItem('authUser');
             Router.push('/login');
         });
     },
@@ -71,7 +130,7 @@ const actions = {
                 })
                 .then(response => {
                     commit('mutateLoginResponse', response.data);
-                    sessionStorage.setItem(
+                    localStorage.setItem(
                         'loginResponse',
                         JSON.stringify(response.data)
                     );
@@ -81,7 +140,7 @@ const actions = {
                         axios.get('/api/user').then(response => {
                             if (response.data.status === 200) {
                                 commit('mutateAuthUser', response.data.data.user);
-                                sessionStorage.setItem(
+                                localStorage.setItem(
                                     'authUser',
                                     JSON.stringify(response.data.data.user)
                                 );
@@ -99,7 +158,7 @@ const actions = {
 
                 if (response.data.status === 200) {
                     commit('mutateAuthUser', response.data.data.user);
-                    sessionStorage.setItem(
+                    localStorage.setItem(
                         'authUser',
                         JSON.stringify(response.data.data.user)
                     );

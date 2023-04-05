@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Languages;
 use App\Models\Words;
 use App\Models\TranslationWord;
+use App\Models\LogImport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 // export file excel
@@ -43,9 +44,9 @@ class WordsController extends Controller
         $description = $request->input('description');
         $translateDescription = $request->input('translate_description');
         $words = new Words();
-        $words->saveWithTranslation($languageId, $languageTranslateId, $word, $translate, $description, $translateDescription);
+        $words->saveWithTranslation($languageId, $languageTranslateId, $word, $translate, $description, $translateDescription,0);
         // lưu chéo ngược lại
-        $words->saveWithTranslation($languageTranslateId, $languageId, $translate, $word, $translateDescription, $description);
+        $words->saveWithTranslation($languageTranslateId, $languageId, $translate, $word, $translateDescription, $description,0);
         $responseData = [    'status' => 200,'success'=>true,    'message' => 'The new word successfully added',];
         return response()->json($responseData);
     }
@@ -165,12 +166,23 @@ class WordsController extends Controller
     public function importWordsFromExcel(Request $request)
     {
         $file = $request->file('file');
+        $fileName = $file->getClientOriginalName();
         if (!$file->isValid() || $file->getClientOriginalExtension() != 'xlsx' && $file->getClientOriginalExtension() != 'xls') {
             return 'Tệp không phải là tệp Excel';
         }
-        $data = Excel::toArray(new Excel(), $file);
+        $user = $request->user();
+        
         $languageId = $request->input('language_id');
         $languageTranslateId = $request->input('language_translate_id');
+        
+        $data = Excel::toArray(new Excel(), $file);
+        $logImport = new LogImport([
+            'user_id' => $user->id,
+            'language_id' => $languageId,
+            'language_translate_id' => $languageTranslateId,
+            'file_name'=>$fileName
+        ]);
+        $logImport->save();
         foreach ($data[0] as $key => $element){
             // if ($key > 0 && !empty($element[0]) && !empty($element[1]) && !empty($element[2]) && !empty($element[3])) {
             if ($key > 0 && !empty($element[0]) && !empty($element[1]) ) {
@@ -179,9 +191,9 @@ class WordsController extends Controller
                 $description = $element[2] ?? $element[3] ?? "";
                 $translateDescription = $element[3] ?? $element[2] ?? "";
                 $words = new Words();
-                $words->saveWithTranslation($languageId, $languageTranslateId, $word, $translate, $description, $translateDescription);
+                $words->saveWithTranslation($languageId, $languageTranslateId, $word, $translate, $description, $translateDescription,$logImport->id);
                 // lưu chéo ngược lại
-                $words->saveWithTranslation($languageTranslateId, $languageId, $translate, $word, $translateDescription, $description);
+                $words->saveWithTranslation($languageTranslateId, $languageId, $translate, $word, $translateDescription, $description,$logImport->id);
             }
         }
         $responseData = ['status' => 200,'success'=>true, 'message' => 'The file word successfully imported'];

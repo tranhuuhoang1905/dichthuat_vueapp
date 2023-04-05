@@ -32,6 +32,14 @@ textarea {
   height: 17px;
   width: 30px !important;
 }
+.login_register .login-challenge-email {
+  padding-left: 35px;
+  display: initial;
+  border-radius: 25px;
+  text-align: center;
+  padding-right: 35px;
+  font-weight: 600;
+}
 
 .navbar_home .navbar {
   padding: 0;

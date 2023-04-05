@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Register from '../components/account/Register.vue';
+import LoginIdentifier from '../components/account/LoginIdentifier.vue';
+import LoginChallengeComponent from '../components/account/LoginChallengeComponent.vue';
 
 import AdminParent from '../components/admin/AdminParent.vue';
 import Dashboard from '../components/admin/Dashboard.vue';
@@ -32,9 +34,13 @@ import ChangePasswordUser from '../components/admin/user/ChangePasswordUser.vue'
 
 
 import ProfileParent from '../components/admin/profile/ProfileParent.vue';
-import Profile from '../components/admin/profile/Profile.vue'
-import ChangePasswordProfile from '../components/admin/profile/ChangePassword.vue'
-import Login from '../components/account/Login.vue';
+import Profile from '../components/admin/profile/Profile.vue';
+import ChangePasswordProfile from '../components/admin/profile/ChangePassword.vue';
+
+
+import LogImportExcelParent from '../components/admin/logImport/LogImportExcelParent.vue';
+import LogImportExcel from '../components/admin/logImport/LogImport.vue'
+
 const ErrorPage = {
     template: '<div>403 - Access denied</div>'
 };
@@ -197,18 +203,42 @@ export const routes = [
                         meta: { requiresAuth: true }
                     }
                 ]
-            }
+            },
+            {
+                name: 'Log Import File Excel',
+                path: 'log-import-excel',
+                component: LogImportExcelParent,
+                children: [
+                    {
+                        name: 'All Log',
+                        path: 'all',
+                        component: LogImportExcel,
+                        meta: { requiresAuth: true },
+                        props: (route) => ({ message: route.params.test }),
+                    },]
+            },
         ]
     },
-    {
-        path: '/register',
-        name: 'register',
-        component: Register
-    },
+    // {
+    //     path: '/register',
+    //     name: 'register',
+    //     component: Register
+    // },
     {
         path: '/login',
         name: 'login',
-        component: Login
+        component: LoginIdentifier
+    },
+    {
+        path: "/login-challenge/:email/:is_first_login",
+        name: "Login Challenge",
+        component: LoginChallengeComponent
+    },
+
+    {
+        path: "/login-challenge/:email/:is_first_login",
+        name: "Login Challenge",
+        component: LoginChallengeComponent
     },
     {
         path: '/error',
@@ -224,7 +254,7 @@ const router = createRouter({
 import { store } from '../store/store';
 // router.beforeEach((to, from, next) => {
 //     const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
-//     const isAuthenticated = store.getters.getLoginResponse.authenticated || JSON.parse(sessionStorage.getItem('loginResponse'))?.authenticated
+//     const isAuthenticated = store.getters.getLoginResponse.authenticated || JSON.parse(localStorage.getItem('loginResponse'))?.authenticated
 
 //     if (requiresAuth && !isAuthenticated) {
 //         next('/login') // Redirect to login page if user is not authenticated
@@ -235,13 +265,13 @@ import { store } from '../store/store';
 
 router.beforeEach((to, from, next) => {
     const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
-    const isAuthenticated = store.getters.getLoginResponse.authenticated || JSON.parse(sessionStorage.getItem('loginResponse'))?.authenticated
+    const isAuthenticated = store.getters.getLoginResponse.authenticated || JSON.parse(localStorage.getItem('loginResponse'))?.authenticated
     const roles = to.meta.roles
     let authUser = undefined
     if (store.getters.getAuthUser.id !== undefined) {
         authUser = store.getters.getAuthUser;
     }
-    authUser = JSON.parse(sessionStorage.getItem('authUser'))
+    authUser = JSON.parse(localStorage.getItem('authUser'))
     if (requiresAuth) {
         // kiểm tra xem người dùng đã đăng nhập hay chưa
         if (!isAuthenticated) {

@@ -23,9 +23,9 @@ class Words extends Model
         'status',
         'synonym',
     ];
-    public function saveWithTranslation($languageId, $languageTranslateId, $word, $translate, $description, $translateDescription)
+    public function saveWithTranslation($languageId, $languageTranslateId, $word, $translate, $description, $translateDescription,$logImportId)
     {
-        DB::transaction(function () use ($languageId, $languageTranslateId, $word, $translate, $description, $translateDescription) {
+        DB::transaction(function () use ($languageId, $languageTranslateId, $word, $translate, $description, $translateDescription,$logImportId) {
             $word = self::updateOrCreate(
                 ['word' => $word, 'language_id' => $languageId]
             );
@@ -43,7 +43,8 @@ class Words extends Model
                     'language_id' => $languageTranslateId,
                     'description' => $translateDescription,
                     'original_language_description' => $description,
-                    'translate' => $translate
+                    'translate' => $translate,
+                    'log_import_id' =>$logImportId
                 ]);
                 $translationWord->save();
             }

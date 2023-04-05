@@ -67,6 +67,12 @@
                         </router-link>
                     </li>
                     <li>
+                        <router-link :to="{ name: 'All Log' }" class=" waves-effect" exact tag="li" active-class="active">
+                            <i class="ri-calendar-2-line"></i>
+                            <span>Log Import file excel</span>
+                        </router-link>
+                    </li>
+                    <li>
                         <router-link :to="{ name: 'Translate Word From Excel' }" class=" waves-effect" exact tag="li"
                             active-class="active">
                             <i class="ri-calendar-2-line"></i>

@@ -90,7 +90,7 @@ export default {
       if (this.$store.getters.getAuthUser.id !== undefined) {
         return this.$store.getters.getAuthUser;
       }
-      return JSON.parse(sessionStorage.getItem('authUser'));
+      return JSON.parse(localStorage.getItem('authUser'));
     },
     UserForm() {
       return {

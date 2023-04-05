@@ -91,7 +91,108 @@
   justify-content: space-evenly;
 }
 
+.all_languages tbody input[type=checkbox],
+.all_word tbody input[type=checkbox] {
+  height: 0;
+  width: 0;
+  visibility: hidden;
+}
+
+.all_languages tbody label,
+.all_word tbody label {
+  cursor: pointer;
+  text-indent: -9999px;
+  width: 60px;
+  height: 25px;
+  background: #508023;
+  border-radius: 100px;
+  position: relative;
+  margin-bottom: 0;
+  margin-right: 0 !important;
+}
+
+.all_languages tbody label:after,
+.all_word tbody label:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 25px;
+  height: 25px;
+  background: #fff;
+  border: 1px solid grey;
+  border-radius: 90px;
+  transition: 0.3s;
+}
+
+.all_languages tbody input:checked + label,
+.all_word tbody input:checked + label {
+  background: grey;
+}
+
+.all_languages tbody input:checked + label:after,
+.all_word tbody input:checked + label:after {
+  right: 100%;
+  transform: translateX(100%);
+}
+
+.all_languages tbody label:active:after,
+.all_word tbody label:active:after {
+  width: 30px;
+}
+
+.all_languages tbody input[type=checkbox],
+.log_import tbody input[type=checkbox],
+.all_word tbody input[type=checkbox] {
+  height: 0;
+  width: 0;
+  visibility: hidden;
+}
+.all_languages tbody label,
+.log_import tbody label,
+.all_word tbody label {
+  cursor: pointer;
+  text-indent: -9999px;
+  width: 60px;
+  height: 25px;
+  background: #508023;
+  border-radius: 100px;
+  position: relative;
+  margin-bottom: 0;
+  margin-right: 0 !important;
+}
+.all_languages tbody label:after,
+.log_import tbody label:after,
+.all_word tbody label:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 25px;
+  height: 25px;
+  background: #fff;
+  border: 1px solid grey;
+  border-radius: 90px;
+  transition: 0.3s;
+}
+.all_languages tbody input:checked + label,
+.log_import tbody input:checked + label,
+.all_word tbody input:checked + label {
+  background: grey;
+}
+.all_languages tbody input:checked + label:after,
+.log_import tbody input:checked + label:after,
+.all_word tbody input:checked + label:after {
+  right: 100%;
+  transform: translateX(100%);
+}
+.all_languages tbody label:active:after,
+.log_import tbody label:active:after,
+.all_word tbody label:active:after {
+  width: 30px;
+}
 .all_languages tbody td:nth-child(7),
+.log_import tbody td:nth-child(7),
 .all_word tbody td:nth-child(7) {
   display: flex;
   justify-content: center;

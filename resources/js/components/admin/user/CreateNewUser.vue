@@ -19,11 +19,11 @@
                       <input type="text" placeholder="Enter description" class="form-control" v-model="newUser.name"
                         required />
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                       <label>Password</label>
                       <input type="password" placeholder="Enter password" class="form-control" v-model="newUser.password"
                         required />
-                    </div>
+                    </div> -->
                     <div class="form-group">
                       <label>Role</label>
                       <select class="form-select" aria-label="Default select example" v-model="newUser.role" required>

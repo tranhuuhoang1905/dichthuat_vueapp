@@ -23,6 +23,7 @@ class TranslationWord extends Model
         'slug',
         'status',
         'comments',
+        'log_import_id'
     ];
     public function getTranslationsByWordId($wordId)
     {

@@ -7,6 +7,7 @@ use App\Http\Controllers\API\LanguagesController;
 use App\Http\Controllers\API\WordsController;
 use App\Http\Controllers\API\TranslateController;
 use App\Http\Controllers\API\UserController;
+use App\Http\Controllers\API\LogImportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,7 +26,9 @@ use App\Http\Controllers\API\UserController;
 // Route::group(['middleware' => ['guest']], function () {
 //     Route::post('login', 'App\Http\Controllers\API\AuthController@login');
 // });
+Route::post('/check-login', [AuthController::class, 'checkLogin']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/first-login', [AuthController::class, 'firstLogin']);
 Route::post('/register', [AuthController::class, 'register']);
 
 
@@ -86,4 +89,10 @@ Route::group(['prefix' => 'user','middleware' => ['auth:sanctum']], function() {
     Route::post('admin-change-password-user/{id}', [UserController::class, 'adminChangePasswordUser'])->middleware('role:admin');
     Route::post('user-change-password', [UserController::class, 'userChangePassword'])->middleware('role:admin');
     Route::post('update', [UserController::class, 'updateUser'])->middleware('role:admin');
+});
+
+// Route::get('/log-import', [LogImportController::class, 'index'])->middleware('auth:sanctum,role:admin,leader');
+Route::group(['prefix' => 'log-import','middleware' => ['auth:sanctum']], function() {
+    Route::get('/' , [LogImportController::class, 'index'])->middleware('role:admin,leader');
+    Route::post('rollback/{id}' , [LogImportController::class, 'rollback'])->middleware('role:admin,leader');
 });
