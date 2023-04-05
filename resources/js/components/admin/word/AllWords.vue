@@ -95,7 +95,14 @@ export default {
               { data: "id" },
               { data: "word" },
               { data: "description" },
-              { data: "status" },
+              {
+                data: "status",
+                render: function (data, type, row) {
+
+                  const checked = row.status == 0 ? "checked" : "";
+                  return `<input type="checkbox" id="${row.status}" ${checked}/><label for="${row.status}">Toggle</label>`
+                },
+              },
               {
                 data: "created_at",
                 render: function (data, type, row) {

@@ -93,10 +93,11 @@ export default {
         { data: "name" },
         { data: "description" },
         {
-          data: "id",
+          data: "status",
           render: function (data, type, row) {
-            const date = new Date(data);
-            return `<input type="checkbox" id="${row.id}" /><label for="${row.id}">Toggle</label>`
+
+            const checked = row.status == 0 ? "checked" : "";
+            return `<input type="checkbox" id="${row.status}" ${checked}/><label for="${row.status}">Toggle</label>`
           },
         },
         {
