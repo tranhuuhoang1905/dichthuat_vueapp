@@ -6,18 +6,18 @@
                 <div class="navbar-brand-box">
                     <router-link to="/" class="logo logo-dark">
                         <span class="logo-sm">
-                            <img src="/assets/images/logo-sm-dark.png" alt="" height="22">
+                            <img src="../../../assets/images/logo.png" alt="" height="22">
                         </span>
                         <span class="logo-lg">
-                            <img src="/assets/images/logo-dark.png" alt="" height="20">
+                            <img src="../../../assets/images/logo.png" alt="" height="30">
                         </span>
                     </router-link>
                     <router-link to="/" class="logo logo-light">
                         <span class="logo-sm">
-                            <img src="/assets/images/logo-sm-light.png" alt="" height="22">
+                            <img src="../../../assets/images/logo.png" alt="" height="22">
                         </span>
                         <span class="logo-lg">
-                            <img src="/assets/images/logo-light.png" alt="" height="20">
+                            <img src="../../../assets/images/logo.png" alt="" height="30">
                         </span>
                     </router-link>
                 </div>

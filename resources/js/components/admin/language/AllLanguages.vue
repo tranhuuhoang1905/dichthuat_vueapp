@@ -92,7 +92,12 @@ export default {
         { data: "id" },
         { data: "name" },
         { data: "description" },
-        { data: "state" },
+        { data: "id", 
+            render: function (data, type, row) {
+            const date = new Date(data);
+            return `<input type="checkbox" id="${row.id}" /><label for="${row.id}">Toggle</label>`
+          },
+        },
         {
           data: "created_at",
           render: function (data, type, row) {

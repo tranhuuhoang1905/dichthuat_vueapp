@@ -77,12 +77,12 @@ export default {
                     <div class="text-center">
                       <div>
                         <a href="/" class="logo">
-                          <img src="/assets/images/logo-dark.png" height="20" alt="logo" />
+                          <img src="../../../assets/images/logo.png" height="50" alt="logo" />
                         </a>
                         </div>
 
-                        <h4 class="font-size-18 mt-4">Welcome Back !</h4>
-                        <p class="text-muted">Sign in to continue to Nazox.</p>
+                        <h4 class="font-size-18 mt-2">Welcome Back !</h4>
+                        <!-- <p class="text-muted">Sign in to continue to Nazox.</p> -->
                         <!-- <p>NewName: {{ $store.getters['myModule/getAge'] }}</p>
                             <p>UserName: {{ $store.getters['myModule/getUser'] }}</p> -->
                       </div>
@@ -142,11 +142,9 @@ export default {
                         </form>
                       </div>
 
-                      <div class="mt-5 text-center">
+                      <!-- <div class="mt-5 text-center">
                         <p>
                           Don't have an account ?
-                          <!-- tag="a" -->
-                          <!-- <a href="/register" class="font-weight-medium text-primary">Đăng ký</a> -->
                           <router-link :to="{ name: 'register' }"
                             class="font-weight-medium text-login-register">Register</router-link>
                         </p>
@@ -155,7 +153,7 @@ export default {
                           <i class="mdi mdi-heart text-danger"></i> by
                           Themesdesign
                         </p>
-                      </div>
+                      </div> -->
                     </div>
                   </div>
                 </div>
