@@ -25,19 +25,21 @@ class Words extends Model
     ];
     public function saveWithTranslation($languageId, $languageTranslateId, $word, $translate, $description, $translateDescription,$logImportId)
     {
-        DB::transaction(function () use ($languageId, $languageTranslateId, $word, $translate, $description, $translateDescription,$logImportId) {
+        $check = 1;
+        // DB::transaction(function () use ($languageId, $languageTranslateId, $word, $translate, $description, $translateDescription,$logImportId) {
             $word = self::updateOrCreate(
                 ['word' => $word, 'language_id' => $languageId]
             );
 
             $wordId = $word->id;
-
+            $check =2;
             $translationWord = TranslationWord::where('word_id', $wordId)
                 ->where('language_id', $languageTranslateId)
                 ->where('translate', $translate)
                 ->first();
-
+            $check =$translationWord;
             if (!$translationWord) {
+                $check =4;
                 $translationWord = new TranslationWord([
                     'word_id' => $wordId,
                     'language_id' => $languageTranslateId,
@@ -48,6 +50,8 @@ class Words extends Model
                 ]);
                 $translationWord->save();
             }
-        });
+            
+        // });
+        return $check;
     }
 }

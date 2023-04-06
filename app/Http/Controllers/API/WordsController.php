@@ -51,17 +51,18 @@ class WordsController extends Controller
     // add word
     public function add(Request $request)
     {
-        $languageId = $request->input('language_id');
+        // $languageId = $request->input('language_id');
+        $languageId = 1;
         $languageTranslateId = $request->input('language_translate_id');
         $word = $request->input('word');
         $translate = $request->input('translate');
         $description = $request->input('description');
         $translateDescription = $request->input('translate_description');
         $words = new Words();
-        $words->saveWithTranslation($languageId, $languageTranslateId, $word, $translate, $description, $translateDescription,0);
-        // lưu chéo ngược lại
-        $words->saveWithTranslation($languageTranslateId, $languageId, $translate, $word, $translateDescription, $description,0);
-        $responseData = [    'status' => 200,'success'=>true,    'message' => 'The new word successfully added',];
+        $check = $words->saveWithTranslation($languageId, $languageTranslateId, $word, $translate, $description, $translateDescription,0);
+        // lưu phiên bảng tiếng việt
+        $words->saveWithTranslation($languageId, $languageId, $word, $word, $description, $description,0);
+        $responseData = [    'status' => 200,'success'=>true,    'message' => 'The new word successfully added',"data"=>$check];
         return response()->json($responseData);
     }
     public function suggestions(Request $request)

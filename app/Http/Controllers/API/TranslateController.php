@@ -24,12 +24,16 @@ class TranslateController extends Controller
             ->increment('number_search');
             
         }
+        
+        $translationWordsTest = $mTranslationWord->searchTest($languageId, $word);
         $suggestedWords = $mTranslationWord->searchSuggestedWords($languageId, $word);
         $responseData = [
             'status' => 200,
             'success'=>true,
             'message' => 'success',
-            'data' =>['suggestedWords' =>$suggestedWords,'translationWords' =>$translationWords]
+            'data' =>['suggestedWords' =>$suggestedWords,'translationWords' =>$translationWordsTest,
+                'test1'=>$translationWordsTest    
+            ]
         ];
         return response()->json($responseData);
     }

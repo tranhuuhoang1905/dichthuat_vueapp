@@ -83,4 +83,50 @@ class TranslationWord extends Model
         ->get()
         ->toArray();
     }
+
+    public function searchTest($languageId, $word)
+    {
+        $translationWordsTest = [];
+        if (true){
+            // tìm tất cả các từ bằng ngôn ngữ tiếng việt có word = $word 
+            $translationWordsTest = DB::table('translation_word')
+            ->select('translation_word.id', 'translation_word.language_id', 'translation_word.description', 'languages.name as language', 'translation_word.*')
+            ->join('words', 'translation_word.word_id', '=', 'words.id')
+            ->join('languages', 'translation_word.language_id', '=', 'languages.id')
+            ->where('words.word', $word)
+            ->when($languageId !== 0, function ($query) use ($languageId) {
+                $query->where('translation_word.language_id', '=', $languageId);
+            })
+            ->get()->toArray();
+            if(count($translationWordsTest) == 0 ){
+                // Tìm tất cả các từ trong bảng "translation_word" có "translate" bằng $word và "language_id" khác $languageId,
+                // sau lấy tất cả các hàng có cột "word_id" trong danh sách tìm được để lưu vào mảng $translationWordsTest
+                $translationWordsTest = DB::table('translation_word')
+                ->whereIn('word_id', function($query) use ($word, $languageId) {
+                    $query->select('word_id')
+                        ->from('translation_word')
+                        ->where('translate', $word)
+                        ->when($languageId !== 0, function ($query) use ($languageId) {
+                            $query->where('translation_word.language_id', '!=', $languageId);
+                        })
+                        ->distinct();
+                })
+                ->leftJoin('languages', 'languages.id', '=', 'translation_word.language_id')
+                ->select(DB::raw('MIN(translation_word.word_id) AS word_id'), DB::raw('MIN(translation_word.language_id) AS language_id'), DB::raw('MIN(translation_word.translate) AS translate'), DB::raw('MIN(translation_word.description) AS description'), DB::raw('MIN(languages.name) AS language'))
+                ->when($languageId !== 0, function ($query) use ($languageId) {
+                    $query->where('translation_word.language_id', '=', $languageId);
+                })
+                ->groupBy('translation_word.translate')
+                ->get()
+                ->toArray();
+
+
+            
+
+            }
+        }
+        
+        
+        return $translationWordsTest;
+    }
 }

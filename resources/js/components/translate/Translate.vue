@@ -25,9 +25,9 @@
                         <label class="btn" :for="`btn-radio${index + 1}`">{{ language.name }}</label>
                     </div>
                     <div class="language shadow-sm rounded">
-                        <input type="radio" class="btn-check" v-model="searchData.language_id" :id="`btn-radio${index + 1}`"
-                            :value="0" name="language_id" autocomplete="off" />
-                        <label class="btn" :for="`btn-radio${index + 1}`">All Language</label>
+                        <input type="radio" class="btn-check" v-model="searchData.language_id" :id="`btn-radio0`" :value="0"
+                            name="language_id" autocomplete="off" />
+                        <label class="btn" :for="`btn-radio0`">All Language</label>
                     </div>
                 </div>
             </form>
