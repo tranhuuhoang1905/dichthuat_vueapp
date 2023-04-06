@@ -15,6 +15,8 @@ import EditLanguage from '../components/admin/language/EditLanguage.vue';
 import WordParent from '../components/admin/word/WordParent.vue';
 import AllWords from '../components/admin/word/AllWords.vue';
 import AddWord from '../components/admin/word/AddWord.vue';
+
+import Example from '../components/admin/word/Example.vue';
 import ImportWordFromExcel from '../components/admin/word/ImportWordFromExcel.vue';
 import TranslateWordFromExcel from '../components/admin/word/TranslateWordFromExcel.vue';
 import EditWord from '../components/admin/word/EditWord.vue';
@@ -93,6 +95,13 @@ export const routes = [
                         component: AddWord,
                         meta: { requiresAuth: true }
                     },
+                    {
+                        name: 'Example',
+                        path: 'example',
+                        component: Example,
+                        meta: { requiresAuth: true }
+                    },
+
                     {
                         name: 'Import Word From Excel',
                         path: 'import-word-from-excel',

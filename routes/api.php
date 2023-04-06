@@ -58,6 +58,7 @@ Route::group(['prefix' => 'word','middleware' => ['auth:sanctum, role:admin,lead
     Route::delete('delete/{id}', [WordsController::class, 'delete']);
     Route::post('/save-words-from-excel', [WordsController::class, 'importWordsFromExcel'])->middleware('role:admin');
     Route::post('/translate-words-from-excel', [WordsController::class, 'translateWordsFromExcel']);
+    Route::post('suggestions', [WordsController::class, 'suggestions']);
     
 });
 

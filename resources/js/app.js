@@ -3,8 +3,10 @@ require('./bootstrap');
 import { createApp } from 'vue';
 // import Vuex from 'vuex';
 import App from './App.vue';
+import SimpleTypeahead from 'vue3-simple-typeahead';
+import 'vue3-simple-typeahead/dist/vue3-simple-typeahead.css'; //Optional default CSS
 const app = createApp(App);
-
+app.use(SimpleTypeahead);
 import BootstrapVue3 from 'bootstrap-vue-3';
 import 'bootstrap/scss/bootstrap.scss';
 import 'bootstrap-vue-3/dist/bootstrap-vue-3.css';

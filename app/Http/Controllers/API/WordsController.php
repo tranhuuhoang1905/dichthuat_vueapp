@@ -64,31 +64,29 @@ class WordsController extends Controller
         $responseData = [    'status' => 200,'success'=>true,    'message' => 'The new word successfully added',];
         return response()->json($responseData);
     }
-    // edit word
-    // public function default($id)
-    // {
-    //     $word = Words::find($id);
-    //     $TranslationWords = TranslationWord::join('languages', 'translation_word.language_id', '=', 'languages.id')
-    //         ->select('languages.name as language', 'translation_word.*')
-    //         ->where('translation_word.word_id', $id)
-    //         ->get()
-    //         ->toArray();
-    //     $dataRep = [
-    //         'word_info' =>$word,
-    //         'translates' => $TranslationWords 
-    //     ];
-    //     return response()->json($dataRep);
-    //     $responseData = [
-    //         'status' => 200,
-    //         'success'=>true,
-    //         'message' => 'The new word successfully added',
-    //         'data' =>[
-    //             'word_info' =>$word,
-    //             'translates' => $TranslationWords
-    //         ]
-    //     ];
-    //     return response()->json($responseData);
-    // }
+    public function suggestions(Request $request)
+    {
+        $languageId = 1;
+        $keyword = $request->input('keyword');
+        $words = DB::table('words')
+            ->select('id', 'word') // Chỉ định các cột cần lấy
+            ->where('word', 'like', '%'.$keyword.'%')
+            ->where('language_id', $languageId)
+            ->orderByRaw('LENGTH(word)')
+            ->take(20)
+            ->get(); // Thực hiện truy vấn và lấy tất cả các dòng kết quả
+
+        // Chuyển đổi kết quả thành mảng
+        $wordsArray = $words->toArray();
+        $responseData = [
+            'status' => 200,
+            'success'=>true,
+            'message' => 'The new word successfully added',
+            'data'=>['words'=>$wordsArray]
+        ];
+        return response()->json($responseData);
+    }
+    
 
     // edit word
     public function alldata($id)
