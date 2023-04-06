@@ -63,7 +63,7 @@ export default {
       <div class="text-center">
         <div>
           <a href="/" class="logo">
-            <img src="/assets/images/logo-dark.png" height="20" alt="logo" />
+            <img src="../../../assets/images/logo.png" height="50" alt="logo" />
           </a>
         </div>
 
@@ -152,9 +152,9 @@ export default {
             <router-link :to="{ name: 'register' }" class="font-weight-medium text-login-register">Register</router-link>
           </p> -->
         <p>
-          © 2020 Nazox. Crafted with
+          © 2023 Crafted with
           <i class="mdi mdi-heart text-danger"></i> by
-          Themesdesign
+          GOSUTECH
         </p>
       </div>
     </div>

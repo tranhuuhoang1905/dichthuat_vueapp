@@ -10,20 +10,22 @@
                 <div class="col-md-6 col-sm-12">
                   <div class="form-group">
                     <label>Word:</label>
-                    <input type="text" placeholder="Enter new word" class="form-control" v-model="word.word" required />
-                    <ul>
-                      <li>search 1</li>
-                      <li>search 2</li>
-                    </ul>
+                    <!-- <input type="text" placeholder="Enter new word" class="form-control" v-model="word.word" required /> -->
+                    <vue3-simple-typeahead class="border border-1 p-0 ps-3" id="typeahead_id" placeholder="Start writing..." :items="suggestions" :minInputLength="3"
+                    :itemProjection="itemProjectionFunction" @selectItem="selectItemEventHandler" @onInput="onInputEventHandler"
+                    v-model="FormData.word">
+                    <template #list-item-text="slot" :class="{ 'hidden': true }"><span
+                        v-html="slot.boldMatchText(slot.itemProjection(slot.item))"></span></template>
+                  </vue3-simple-typeahead>
                   </div>
                   <div class="form-group">
                     <label>Description</label>
-                    <textarea type="text" placeholder="Enter description" class="form-control" v-model="word.description"
+                    <textarea type="text" placeholder="Enter description" class="form-control" v-model="FormData.description"
                       rows="4" required></textarea>
                   </div>
                   <div class="form-group">
                     <label>Language</label>
-                    <select class="form-select" aria-label="Default select example" v-model="word.language_id" required>
+                    <select class="form-select" aria-label="Default select example" v-model="FormData.language_id" required>
                       <option v-for="language in languages" :key="language.id" :value="`${language.id}`">
                         {{ language.name }}
                       </option>
@@ -34,17 +36,17 @@
                 <div class="col-md-6 col-sm-12">
                   <div class="form-group">
                     <label>Translate</label>
-                    <input type="text" placeholder="Enter translated word" class="form-control" v-model="word.translate"
+                    <input type="text" placeholder="Enter translated word" class="form-control" v-model="FormData.translate"
                       required />
                   </div>
                   <div class="form-group">
                     <label>Translate description</label>
                     <textarea type="text" placeholder="Enter description" class="form-control"
-                      v-model="word.translate_description" rows="4" required></textarea>
+                      v-model="FormData.translate_description" rows="4" required></textarea>
                   </div>
                   <div class="form-group">
                     <label>Language translate id</label>
-                    <select class="form-select" aria-label="Default select example" v-model="word.language_translate_id"
+                    <select class="form-select" aria-label="Default select example" v-model="FormData.language_translate_id"
                       required>
                       <!-- <option :value="-1" selected>Open this select menu</option> -->
                       <option v-for="language in languages" :key="language.id" :value="`${language.id}`">
@@ -65,16 +67,19 @@
     </div>
   </div>
 </template>
- 
 <script>
+import axios from 'axios';
 export default {
   data() {
     return {
       languages: [],
       word: {},
       WordsFromExcel: {},
-      message: ''
-
+      message: '',
+      userInput: '',
+      suggestedKeywords: [],
+      FormData: {},
+      itemProjectionFunction: item => item.word.toUpperCase()
     };
   },
   created() {
@@ -83,29 +88,37 @@ export default {
       if (response.data.message === 'success') {
         this.languages = response.data.data;
         if (response.data.data.length > 0) {
-          this.word.language_id = this.word.language_translate_id =
+          this.FormData.language_id = this.FormData.language_translate_id =
             response.data.data[0].id;
         }
       }
     });
   },
+  computed: {
+    suggestions() {
+      console.log("Check xử lý suggestions", this.userInput);
+      return this.suggestedKeywords.filter(keyword =>
+        keyword.word.toLowerCase().startsWith(this.userInput.toLowerCase())
+      );
+    }
+  },
   methods: {
     addWord() {
       this.axios
-        .post("/api/word/add", this.word)
+        .post("/api/word/add", this.FormData)
         .then((response) => {
           if (response.data.status === 200) {
             this.$swal.fire({
               position: 'top-end',
               icon: 'success',
-              title: `Add Word ${this.word.word} success`,
+              title: `Add Word ${this.FormData.word} success`,
               showConfirmButton: false,
               timer: this.$config.notificationTimer ?? 1000
             })
             // alert(response.data.message);
-            this.word = {};
+            this.FormData = {};
             if (this.languages.length > 0) {
-              this.word.language_id = this.word.language_translate_id =
+              this.FormData.language_id = this.FormData.language_translate_id =
                 this.languages[0].id;
             }
             // this.$router.push({ name: "All Word"});
@@ -122,6 +135,36 @@ export default {
           // alert(`Error ${error.response.status}: ${error.response.data.message}`);
         })
         .finally(() => (this.loading = false));
+    },
+    getWord(keyword) {
+      return new Promise((resolve, reject) => {
+        axios.post("/api/word/suggestions", { keyword: keyword })
+          .then(response => {
+            if (response.data.status === 200) {
+              this.suggestedKeywords = response.data.data.words;
+            }
+            resolve();
+          })
+          .catch(error => {
+            console.error(error);
+            reject(error);
+          });
+      });
+    },
+    selectItemEventHandler(item) {
+      this.FormData.id = item.id;
+      this.FormData.word = item.word;
+    },
+    onInput(value) {
+      this.userInput = value
+    },
+    onInputEventHandler(value) {
+      if (value.input !== this.FormData.word) {
+        this.FormData.word = value.input;
+      }
+      if (value.input.length >= 3) {
+        this.getWord(value.input);
+      }
     },
   },
   components: {},
