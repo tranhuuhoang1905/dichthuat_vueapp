@@ -13,7 +13,6 @@
                     <th>File Name</th>
                     <th>Language</th>
                     <th>Language Translate</th>
-                    <th>Status</th>
                     <th>Created At</th>
                     <th>Updated At</th>
                     <th>Backup</th>
@@ -25,7 +24,6 @@
                     <td>{{ log.file_name }}</td>
                     <td>{{ log.language_id }}</td>
                     <td>{{ log.language_translate_id }}</td>
-                    <td>{{ log.status }}</td>
                     <td>{{ log.created_at }}</td>
                     <td>{{ log.updated_at }}</td>
 
@@ -76,14 +74,6 @@ export default {
         { data: "file_name" },
         { data: "language_id" },
         { data: "language_translate_id" },
-        {
-          data: "status",
-          render: function (data, type, row) {
-
-            const checked = row.status == 0 ? "checked" : "";
-            return `<input type="checkbox" id="${row.status}" ${checked}/><label for="${row.status}">Toggle</label>`
-          },
-        },
         {
           data: "created_at",
           render: function (data, type, row) {

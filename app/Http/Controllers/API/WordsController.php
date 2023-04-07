@@ -69,7 +69,7 @@ class WordsController extends Controller
         $languageId = 1;
         $keyword = $request->input('keyword');
         $words = DB::table('words')
-            ->select('id', 'word') // Chỉ định các cột cần lấy
+            ->select('id', 'word','description') // Chỉ định các cột cần lấy
             ->where('word', 'like', '%'.$keyword.'%')
             ->where('language_id', $languageId)
             ->orderByRaw('LENGTH(word)')
