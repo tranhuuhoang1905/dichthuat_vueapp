@@ -7,39 +7,6 @@
             <h4 class="card-title text-center fs-4">All Words</h4>
             <div class="">
               <table ref="myTable" class="table table-bordered table-striped table-hover display nowrap">
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>status</th>
-                    <th>Created At</th>
-                    <th>Updated At</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="word in words" :key="word.id">
-                    <td>{{ word.id }}</td>
-                    <td>{{ word.word }}</td>
-                    <td>{{ word.description }}</td>
-                    <td>{{ word.status }}</td>
-                    <td>{{ word.created_at }}</td>
-                    <td>{{ word.updated_at }}</td>
-                    <td>
-                      <div class="btn-group" role="group">
-                        <router-link :to="{
-                          name: 'Word Default',
-                          params: { id: word.id },
-                        }" class="btn btn-all-add-edit">Default
-                        </router-link>
-                        <!-- <router-link :to="{ name: 'Edit Word', params: { id: word.id } }" class="btn btn-primary">Edit
-                            </router-link> -->
-                        <!-- <button class="btn btn-danger" @click="deleteWord(word.id)">Delete</button> -->
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
               </table>
             </div>
           </div>
@@ -47,6 +14,35 @@
       </div>
     </div>
   </div>
+
+  <!-- The Modal -->
+  <div class="modal" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Modal Heading</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          Modal body..
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <button style="display: none;" ref="myModalBtn" type="button" class="btn btn-primary" data-toggle="modal"
+    data-target="#myModal">
+    Open modal
+  </button>
 </template>
  
 <script>
@@ -61,48 +57,32 @@ export default {
   data() {
     return {
       words: [],
+      words_test: [],
+      languages: [],
     };
   },
   mounted() { },
   created() {
-    this.setColumns()
     this.fetchData();
   },
   methods: {
-    deleteWord(id) {
-      this.axios
-        .delete(`/api/word/delete/${id}`, {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + localStorage.getItem("token"),
-          },
-        })
-        .then((response) => {
-          let i = this.words.map((item) => item.id).indexOf(id); // find index of your object
-          this.words.splice(i, 1);
-        });
-    },
     fetchData() {
       this.axios.post("/api/word/all-word").then((response) => {
         // this.words = response.data;
-        if (response.data.status === 200) {
+        if (response.data.status === 200 && response.data.success == true) {
+          this.languages = response.data.data.languages;
+
           const isSmallScreen = window.innerWidth < 760;
           const pagingType = isSmallScreen ? "simple" : "simple_numbers";
+          this.setColumns();
           this.table = $(this.$refs.myTable).DataTable({
             responsive: true,
-            data: response.data.data.words,
+            data: response.data.data.words_test,
             columns: this.columns,
             // lengthMenu: [[5, 10, 15, 20, -1], [5, 10, 15, 20, "All"]], // set number of records per page
             pagingType: pagingType, // display only a few page buttons
             scrollX: true,
           });
-          const parsedArray = JSON.parse(`[${response.data.data.words_test[0].data}]`);
-
-          console.log("check esponse.data.data.words_test[0]", response.data.data.words_test[0].data)
-
-          console.log(parsedArray);
-          // console.log("json parse data", translationsArray);
         }
       });
     },
@@ -110,7 +90,7 @@ export default {
       let dataReponsive = {};
       dataReponsive.status = rowData.status == 1 ? 0 : 1;
       this.axios
-        .post(`/api/word/update/${rowData.id}`, dataReponsive)
+        .post(`/api/word/update/${rowData.word_id}`, dataReponsive)
         .then((response) => {
           if (response.data.status === 200) {
             this.$swal.fire({
@@ -131,60 +111,107 @@ export default {
         })
         .finally(() => (this.loading = false));
     },
+
     setColumns() {
       const self = this;
+      // Tạo động 3 hàng ngôn ngữ
+      const languageColumns = this.languages.map(language => {
+        return {
+          data: "word_id",
+          title: language.name,
+          createdCell: function (cell, cellData, rowData, rowIndex, colIndex) {
+            const app = createApp({
+              render() {
+                const dataLanguage = JSON.parse(`[${rowData.data}]`);
+                if (dataLanguage.find(lang => lang.language_id === language.id)) {
+                  const translate = dataLanguage.find(lang => lang.language_id === language.id).translate;
+                  return h(
+                    "button",
+                    {
+                      to: `/admin/word/default/${rowData.word_id}`,
+                      class: "",
+                      onClick: () => {
+                        // router.push({
+                        //   name: "Word Default",
+                        //   params: { id: rowData.word_id },
+                        // });
+                        self.$refs.myModalBtn.click();
+                      },
+                    },
+                    translate
+                  );
+                } else {
+                  return h(
+                    "a",
+                    {
+                      to: `/admin/word/default/${rowData.word_id}`,
+                      class: "btn btn-all-add-edit",
+                      onClick: () => {
+                        router.push({
+                          name: "Word Default",
+                          params: { id: rowData.word_id },
+                        });
+                      },
+                    },
+                    "abc"
+                  );
+                }
+
+              },
+              data() {
+                return {
+                  rowData: rowData,
+                };
+              },
+            });
+            app.mount(cell);
+          },
+          // render: function (data, type, row) {
+          //   const dataLanguage = JSON.parse(`[${row.data}]`);
+          //   if (dataLanguage.find(lang => lang.language_id === language.id)) {
+          //     const translate = dataLanguage.find(lang => lang.language_id === language.id).translate;
+          //     return translate;
+          //   } else {
+          //     return 'abc';
+          //   }
+
+          // }
+        };
+      });
+
+      // Gán động 3 hàng ngôn ngữ vào biến columns
       this.columns = [
-        { data: "id" },
-        { data: "word" },
-        { data: "description" },
+        { data: "word_id", title: "Word ID" },
         {
           data: "status",
+          title: "Status",
           render: function (data, type, row) {
             const checked = row.status == 0 ? "checked" : "";
-            return `<input type="checkbox" id="${row.id}" ${checked}/><label for="${row.id}">Toggle</label>`
+            return `<input type="checkbox" id="${row.word_id}" ${checked}/><label for="${row.word_id}">Toggle</label>`;
           },
           createdCell: function (cell, cellData, rowData, rowIndex, colIndex) {
-            // console.log("check rowData", rowData);
             const checkbox = cell.querySelector('input[type="checkbox"]');
             checkbox.addEventListener('click', function () {
               self.actionEditStatus(rowData);
             }.bind(this));
           },
         },
+        ...languageColumns, // Động 3 hàng ngôn ngữ vào đây
         {
-          data: "created_at",
-          render: function (data, type, row) {
-            const date = new Date(data);
-            return date.toLocaleDateString();
-          },
-        },
-        {
-          data: "updated_at",
-          render: function (data, type, row) {
-            const date = new Date(data);
-            return date.toLocaleDateString();
-          },
-        },
-        {
-          data: "id",
-          createdCell: function (
-            cell,
-            cellData,
-            rowData,
-            rowIndex,
-            colIndex
-          ) {
+          data: "word_id",
+          title: "action",
+          createdCell: function (cell, cellData, rowData, rowIndex, colIndex) {
             const app = createApp({
               render() {
                 return h(
                   "a",
                   {
-                    to: `/admin/word/default/${rowData.id}`,
+                    to: `/admin/word/default/${rowData.word_id}`,
                     class: "btn btn-all-add-edit",
                     onClick: () => {
                       router.push({
                         name: "Word Default",
-                        params: { id: rowData.id },
+                        params: { id: rowData.word_id },
                       });
                     },
                   },
@@ -201,7 +228,9 @@ export default {
           },
         },
       ];
+
     },
   },
+
 };
 </script>
