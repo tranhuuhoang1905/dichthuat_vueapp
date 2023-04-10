@@ -114,7 +114,7 @@ export default {
 
     setColumns() {
       const self = this;
-      // Tạo động 3 hàng ngôn ngữ
+      // T?o d?ng 3 h�ng ng�n ng?
       const languageColumns = this.languages.map(language => {
         return {
           data: "word_id",
@@ -179,7 +179,7 @@ export default {
         };
       });
 
-      // Gán động 3 hàng ngôn ngữ vào biến columns
+      // G�n d?ng 3 h�ng ng�n ng? v�o bi?n columns
       this.columns = [
         { data: "word_id", title: "Word ID" },
         {
@@ -196,7 +196,7 @@ export default {
             }.bind(this));
           },
         },
-        ...languageColumns, // Động 3 hàng ngôn ngữ vào đây
+        ...languageColumns, // �?ng 3 h�ng ng�n ng? v�o d�y
         {
           data: "word_id",
           title: "action",
