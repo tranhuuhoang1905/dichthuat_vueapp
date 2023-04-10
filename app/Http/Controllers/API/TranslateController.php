@@ -19,20 +19,13 @@ class TranslateController extends Controller
         $word = $request->input('keyword');
         $mTranslationWord = new TranslationWord();
         $translationWords = $mTranslationWord->searchTranslationWords($languageId, $word);
-        if($translationWords){
-            Words::where('id', $translationWords[0]['word_id'])
-            ->increment('number_search');
-            
-        }
-        
-        $translationWordsTest = $mTranslationWord->searchTest($languageId, $word);
         $suggestedWords = $mTranslationWord->searchSuggestedWords($languageId, $word);
         $responseData = [
             'status' => 200,
             'success'=>true,
             'message' => 'success',
-            'data' =>['suggestedWords' =>$suggestedWords,'translationWords' =>$translationWordsTest,
-                'test1'=>$translationWordsTest    
+            'data' =>['suggestedWords' =>$suggestedWords,'translationWords' =>$translationWords,
+                'test1'=>$translationWords    
             ]
         ];
         return response()->json($responseData);

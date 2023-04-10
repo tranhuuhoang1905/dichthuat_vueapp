@@ -97,6 +97,12 @@ export default {
             pagingType: pagingType, // display only a few page buttons
             scrollX: true,
           });
+          const parsedArray = JSON.parse(`[${response.data.data.words_test[0].data}]`);
+
+          console.log("check esponse.data.data.words_test[0]", response.data.data.words_test[0].data)
+
+          console.log(parsedArray);
+          // console.log("json parse data", translationsArray);
         }
       });
     },
@@ -138,7 +144,6 @@ export default {
             return `<input type="checkbox" id="${row.id}" ${checked}/><label for="${row.id}">Toggle</label>`
           },
           createdCell: function (cell, cellData, rowData, rowIndex, colIndex) {
-            console.log("check rowData", rowData);
             const checkbox = cell.querySelector('input[type="checkbox"]');
             checkbox.addEventListener('click', function () {
               self.actionEditStatus(rowData);

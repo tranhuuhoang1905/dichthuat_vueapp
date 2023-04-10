@@ -37,13 +37,23 @@ class WordsController extends Controller
     // all words có các từ bị ẩn
     public function allWord()
     {
+        $wordsTest = DB::table('words')
+            ->select('words.id as words_id', 
+                    DB::raw('GROUP_CONCAT(CONCAT("{\"language_id\":", translation_word.language_id, ",\"translate\":\"", translation_word.translate, "\"}") SEPARATOR ",") as data'))
+            ->join('translation_word', 'words.id', '=', 'translation_word.word_id')
+            ->groupBy('words.id')
+            
+            ->distinct('words.id', 'translation_word.language_id')
+            ->limit(5)
+            ->get();
         $words = Words::all()->toArray();
         $responseData = [
             'status' => 200,
             'success'=>true,
             'message' => 'The new word successfully added',
             'data'=> [
-                'words'=>$words
+                'words'=>$words,
+                'words_test'=>$wordsTest
             ]
         ];
         return response()->json($responseData);
@@ -190,9 +200,13 @@ class WordsController extends Controller
                 $description = $element[2] ?? $element[3] ?? "";
                 $translateDescription = $element[3] ?? $element[2] ?? "";
                 $words = new Words();
+                // $words->saveWithTranslation($languageId, $languageTranslateId, $word, $translate, $description, $translateDescription,$logImport->id);
+                // // lưu chéo ngược lại
+                // $words->saveWithTranslation($languageTranslateId, $languageId, $translate, $word, $translateDescription, $description,$logImport->id);
+
                 $words->saveWithTranslation($languageId, $languageTranslateId, $word, $translate, $description, $translateDescription,$logImport->id);
-                // lưu chéo ngược lại
-                $words->saveWithTranslation($languageTranslateId, $languageId, $translate, $word, $translateDescription, $description,$logImport->id);
+                // lưu phiên bảng tiếng việt
+                $words->saveWithTranslation($languageId, $languageId, $word, $word, $description, $description,$logImport->id);
             }
         }
         $responseData = ['status' => 200,'success'=>true, 'message' => 'The file word successfully imported'];
