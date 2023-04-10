@@ -14,35 +14,6 @@
       </div>
     </div>
   </div>
-
-  <!-- The Modal -->
-  <div class="modal" id="myModal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <h4 class="modal-title">Modal Heading</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-
-        <!-- Modal body -->
-        <div class="modal-body">
-          Modal body..
-        </div>
-
-        <!-- Modal footer -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-        </div>
-
-      </div>
-    </div>
-  </div>
-  <button style="display: none;" ref="myModalBtn" type="button" class="btn btn-primary" data-toggle="modal"
-    data-target="#myModal">
-    Open modal
-  </button>
 </template>
  
 <script>
@@ -114,7 +85,7 @@ export default {
 
     setColumns() {
       const self = this;
-      // T?o d?ng 3 hàng ngôn ng?
+      // T?o d?ng 3 hï¿½ng ngï¿½n ng?
       const languageColumns = this.languages.map(language => {
         return {
           data: "word_id",
@@ -131,11 +102,11 @@ export default {
                       to: `/admin/word/default/${rowData.word_id}`,
                       class: "",
                       onClick: () => {
-                        // router.push({
-                        //   name: "Word Default",
-                        //   params: { id: rowData.word_id },
-                        // });
-                        self.$refs.myModalBtn.click();
+                        router.push({
+                          name: "Word Default",
+                          params: { id: rowData.word_id },
+                        });
+                        // self.$refs.myModalBtn.click();
                       },
                     },
                     translate
@@ -179,7 +150,7 @@ export default {
         };
       });
 
-      // Gán d?ng 3 hàng ngôn ng? vào bi?n columns
+      // Gï¿½n d?ng 3 hï¿½ng ngï¿½n ng? vï¿½o bi?n columns
       this.columns = [
         { data: "word_id", title: "Word ID" },
         {
@@ -196,7 +167,7 @@ export default {
             }.bind(this));
           },
         },
-        ...languageColumns, // Ð?ng 3 hàng ngôn ng? vào dây
+        ...languageColumns, // ï¿½?ng 3 hï¿½ng ngï¿½n ng? vï¿½o dï¿½y
         {
           data: "word_id",
           title: "action",
