@@ -65,13 +65,18 @@
         </div>
       </div>
     </div>
+    <div class="row">
+      <word-default-vue v-if="wordDefault"/>
+    </div>
   </div>
 </template>
 <script>
 import axios from 'axios';
+import WordDefaultVue from './WordDefault.vue'
 export default {
   data() {
     return {
+      wordDefault:false,
       languages: [],
       word: {},
       WordsFromExcel: {},
@@ -79,7 +84,7 @@ export default {
       userInput: '',
       suggestedKeywords: [],
       FormData: {},
-      itemProjectionFunction: item => item.word.toUpperCase()
+      itemProjectionFunction: item => item.word.toLowerCase()
     };
   },
   created() {
@@ -96,7 +101,6 @@ export default {
   },
   computed: {
     suggestions() {
-      console.log("Check xử lý suggestions", this.userInput);
       return this.suggestedKeywords.filter(keyword =>
         keyword.word.toLowerCase().startsWith(this.userInput.toLowerCase())
       );
@@ -104,6 +108,7 @@ export default {
   },
   methods: {
     addWord() {
+      
       this.axios
         .post("/api/word/add", this.FormData)
         .then((response) => {
@@ -141,7 +146,7 @@ export default {
         axios.post("/api/word/suggestions", { keyword: keyword })
           .then(response => {
             if (response.data.status === 200) {
-              this.suggestedKeywords = response.data.data.words;
+              this.suggestedKeywords = response.data.data.words
             }
             resolve();
           })
@@ -154,6 +159,8 @@ export default {
     selectItemEventHandler(item) {
       this.FormData.id = item.id;
       this.FormData.word = item.word;
+      this.FormData.description = item.description;
+      this.wordDefault = true;
     },
     onInput(value) {
       this.userInput = value
@@ -167,6 +174,6 @@ export default {
       }
     },
   },
-  components: {},
+  components: {WordDefaultVue},
 };
 </script>
