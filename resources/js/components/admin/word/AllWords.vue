@@ -99,9 +99,9 @@ export default {
           });
           const parsedArray = JSON.parse(`[${response.data.data.words_test[0].data}]`);
 
-          console.log("check esponse.data.data.words_test[0]", response.data.data.words_test[0].data)
+          // console.log("check esponse.data.data.words_test[0]", response.data.data.words_test[0].data)
 
-          console.log(parsedArray);
+          // console.log(parsedArray);
           // console.log("json parse data", translationsArray);
         }
       });
