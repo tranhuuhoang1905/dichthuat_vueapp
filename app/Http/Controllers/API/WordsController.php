@@ -41,9 +41,8 @@ class WordsController extends Controller
             ->select('words.id as word_id', 'words.status as status',
                     DB::raw('GROUP_CONCAT(CONCAT("{\"language_id\":", translation_word.language_id, ",\"translate\":\"", translation_word.translate, "\"}") SEPARATOR ",") as data'))
             ->join('translation_word', 'words.id', '=', 'translation_word.word_id')
-            ->groupBy('words.id')
-            
-            ->distinct('words.id', 'translation_word.language_id')
+            ->groupBy('words.id', 'words.status') // Bao gồm tất cả các cột trong GROUP BY
+            ->distinct('words.id', 'words.status', 'translation_word.language_id') // Bao gồm tất cả các cột trong DISTINCT
             ->limit(15)
             ->get();
         $words = Words::all()->toArray();
