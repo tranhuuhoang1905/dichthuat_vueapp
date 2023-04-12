@@ -6,8 +6,114 @@
           <div class="card-body">
             <h4 class="card-title text-center fs-4">All Words</h4>
             <div class="">
-              <table ref="myTable" class="table table-bordered table-striped table-hover display nowrap">
-              </table>
+              <table
+                ref="myTable"
+                class="table table-bordered table-striped table-hover display nowrap"
+              ></table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <button 
+      ref="myModalBtn"
+      type="button"
+      class="btn btn-primary d-none"
+      data-toggle="modal"
+      data-target="#exampleModal"
+    >
+      Launch demo modal
+    </button>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog row p-5" role="document">
+        <div class="modal-content col-md-12">
+          <div class="row">
+            <div class="word_default p-4">
+              <h3 class="text-center">Word Default</h3>
+              <div class="row">
+                <div class="col-md-4">
+                  <h4>Word</h4>
+                  <div class="word-default-data shadow-lg border border-0">
+                    <div class="word-content">
+                      <div class="box_mean">
+                        <div class="title">
+                          <p>
+                            <!-- {{ wordDefault.word }} -->
+                             Xin Chào</p>
+                        </div>
+                        <span
+                          class="box_mean-language d-flex align-items-center"
+                        >
+                          Language:
+                          <input
+                            type="text"
+                            value="Tieng viet"
+                          />
+                        </span>
+                        <!-- Tiếng việt {{ wordDefault.language }} -->
+                        <div class="box_mean_router pt-2">
+                          <!-- <router-link
+                            :to="{ name: 'Edit Word',
+                            //  params: { id: wordId } 
+                             }"
+                            class="btn btn-all-add-edit word-botton"
+                            ><i class="fas fa-edit"></i> Edit
+                          </router-link> -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-8">
+                  <h4>Translate</h4>
+                  <div class="shadow-lg border border-0 word-default-data">
+                    <div class="word-content">
+                      <!-- <hr v-if="index > 0" /> -->
+                      <div class="icon_dot">
+                        {{ index + 1 }}) &nbsp;<span class="box_mean-language"
+                          >Language:
+                          <!-- {{ translate.language }} -->
+                        </span>
+                      </div>
+                      <div class="box_mean">
+                        <p class="box_mean-translate">
+                          Translate:
+                          <!-- {{ translate.translate }} -->
+                        </p>
+                        <p class="box_mean-description">
+                          Description:
+                          <!-- {{ translate.description }} -->
+                        </p>
+                        <p class="box_mean-description">
+                          Description in original language:
+                          <!-- {{ translate.original_language_description }} -->
+                        </p>
+                        <div class="box_mean_router">
+                          <!-- <router-link
+                            :to="{
+                              name: 'Edit Translate',
+                              // params: { id: translate.id },
+                            }"
+                            class="btn btn-all-add-edit word-botton"
+                            ><i class="fas fa-edit"></i> Edit
+                          </router-link> -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -22,7 +128,7 @@ import DataTable from "datatables.net-vue3";
 import DataTablesCore from "datatables.net";
 import $ from "jquery";
 import { createApp, h } from "vue";
-import router from '@resources/js/router/index';
+import router from "@resources/js/router/index";
 DataTable.use(DataTablesCore);
 export default {
   data() {
@@ -32,7 +138,7 @@ export default {
       languages: [],
     };
   },
-  mounted() { },
+  mounted() {},
   created() {
     this.fetchData();
   },
@@ -86,37 +192,54 @@ export default {
     setColumns() {
       const self = this;
       // T?o d?ng 3 h�ng ng�n ng?
-      const languageColumns = this.languages.map(language => {
+      const languageColumns = this.languages.map((language) => {
         return {
           data: "word_id",
           title: language.name,
           createdCell: function (cell, cellData, rowData, rowIndex, colIndex) {
             const app = createApp({
               render() {
+                console.log("langage colomns", rowData.data);
                 const dataLanguage = JSON.parse(`[${rowData.data}]`);
-                if (dataLanguage.find(lang => lang.language_id === language.id)) {
-                  const translate = dataLanguage.find(lang => lang.language_id === language.id).translate;
-                  return h(
-                    "button",
-                    {
-                      to: `/admin/word/default/${rowData.word_id}`,
-                      class: "",
-                      onClick: () => {
-                        router.push({
-                          name: "Word Default",
-                          params: { id: rowData.word_id },
-                        });
-                        // self.$refs.myModalBtn.click();
+                if (
+                  dataLanguage.find((lang) => lang.language_id === language.id)
+                ) {
+                  const translate = dataLanguage.find(
+                    (lang) => lang.language_id === language.id
+                  ).translate;
+                  return [
+                    h(
+                      "a",
+                      {
+                        to: `/admin/word/default/${rowData.word_id}`,
+                        class: "",
+                        onClick: () => {
+                          router.push({
+                            name: "Word Default",
+                            params: { id: rowData.word_id },
+                          });
+                          // self.$refs.myModalBtn.click();
+                        },
                       },
-                    },
-                    translate
-                  );
+                      translate
+                    ),
+                    h(
+                      "button",
+                      {
+                        class: "btn btn-all-add-edit",
+                        onClick: () => {
+                          self.$refs.myModalBtn.click();
+                        },
+                      },
+                      "edit"
+                    ),
+                  ];
                 } else {
                   return h(
                     "a",
                     {
                       to: `/admin/word/default/${rowData.word_id}`,
-                      class: "btn btn-all-add-edit",
+                      class: "",
                       onClick: () => {
                         router.push({
                           name: "Word Default",
@@ -127,7 +250,6 @@ export default {
                     "abc"
                   );
                 }
-
               },
               data() {
                 return {
@@ -162,9 +284,12 @@ export default {
           },
           createdCell: function (cell, cellData, rowData, rowIndex, colIndex) {
             const checkbox = cell.querySelector('input[type="checkbox"]');
-            checkbox.addEventListener('click', function () {
-              self.actionEditStatus(rowData);
-            }.bind(this));
+            checkbox.addEventListener(
+              "click",
+              function () {
+                self.actionEditStatus(rowData);
+              }.bind(this)
+            );
           },
         },
         ...languageColumns, // �?ng 3 h�ng ng�n ng? v�o d�y
@@ -199,9 +324,12 @@ export default {
           },
         },
       ];
-
     },
   },
-
 };
 </script>
+<style>
+.modal {
+  --bs-modal-width: none !important;
+}
+</style>
