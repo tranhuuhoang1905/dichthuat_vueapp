@@ -153,5 +153,81 @@ class UserController extends Controller
         $responseData = [   'status' => 200,'success'=>true,     'message' => 'The user successfully updated'];
         return response()->json($responseData);
     }
-    
+    /**
+     * Get all roles.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function allRoles(Request $request)
+    {
+        $rolesWithPermissions = Role::with('permissions')->get();
+        $responseData = [
+            'status' => 200,
+            'success'=>true,
+            'message' => 'success',
+            'data'=>["roles"=>$rolesWithPermissions]
+        ];
+        return response()->json($responseData);
+    }
+
+    /**
+     * add roles.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function addRole(Request $request)
+    {
+        $role = Role::create([
+            'name' => $request->input('name'), // Thiết lập tên cho role
+            'description' => $request->input('description'), // Thiết lập mô tả cho role
+            // Các thuộc tính khác của role
+        ]);
+        $responseData = [
+            'status' => 200,
+            'success'=>true,
+            'message' => 'The role successfully added'
+        ];
+        return response()->json($responseData);
+    }
+
+    /**
+     * Get all permissions.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function allPermissions(Request $request)
+    {
+        $permissions = Permission::get();
+        $responseData = [
+            'status' => 200,
+            'success'=>true,
+            'message' => 'success',
+            'data'=>["permissions"=>$permissions]
+        ];
+        return response()->json($responseData);
+    }
+
+    /**
+     * add roles.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function addPermission(Request $request)
+    {
+        $permission = Permission::create([
+            'name' => $request->input('name'), // Thiết lập tên cho role
+            'description' => $request->input('description'), // Thiết lập mô tả cho role
+            // Các thuộc tính khác của role
+        ]);
+        $responseData = [
+            'status' => 200,
+            'success'=>true,
+            'message' => 'The permission successfully added'
+        ];
+        return response()->json($responseData);
+    }
 }

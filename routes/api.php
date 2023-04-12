@@ -59,7 +59,6 @@ Route::group(['prefix' => 'word','middleware' => ['auth:sanctum, role:admin,lead
     Route::post('/save-words-from-excel', [WordsController::class, 'importWordsFromExcel'])->middleware('role:admin');
     Route::post('/translate-words-from-excel', [WordsController::class, 'translateWordsFromExcel']);
     Route::post('suggestions', [WordsController::class, 'suggestions']);
-    
 });
 
 Route::group(['prefix' => 'translate'], function () {
@@ -73,7 +72,7 @@ Route::group(['prefix' => 'user','middleware' => ['auth:sanctum']], function() {
 
     Route::get('/', function (Request $request) {
         $user = $request->user();
-        $user->load('roles'); // load roles của user
+        $user->load('roles.permissions'); // load roles của user
         
         // return $user;
         $responseData = [
@@ -98,4 +97,24 @@ Route::group(['prefix' => 'user','middleware' => ['auth:sanctum']], function() {
 Route::group(['prefix' => 'log-import','middleware' => ['auth:sanctum']], function() {
     Route::get('/' , [LogImportController::class, 'index'])->middleware('role:admin,leader');
     Route::post('rollback/{id}' , [LogImportController::class, 'rollback'])->middleware('role:admin,leader');
+});
+
+Route::group(['prefix' => 'role','middleware' => ['auth:sanctum, role:admin,leader']], function () {
+    Route::get('all', [UserController::class, 'allRoles']);
+    Route::post('add', [UserController::class, 'addRole'])->middleware('role:admin');
+    // Route::get('edit/{id}', [LanguagesController::class, 'edit'])->middleware('role:admin');
+
+    // Route::post('update/{id}', [LanguagesController::class, 'update'])->middleware('role:admin');
+    // //người có role:admin mới có quyền truy cập link api/posts/delete 
+    // Route::delete('delete/{id}', [LanguagesController::class, 'delete'])->middleware('role:admin');
+});
+
+Route::group(['prefix' => 'permission','middleware' => ['auth:sanctum, role:admin,leader']], function () {
+    Route::get('all', [UserController::class, 'allPermissions']);
+    Route::post('add', [UserController::class, 'addPermission'])->middleware('role:admin');
+    // Route::get('edit/{id}', [LanguagesController::class, 'edit'])->middleware('role:admin');
+
+    // Route::post('update/{id}', [LanguagesController::class, 'update'])->middleware('role:admin');
+    // //người có role:admin mới có quyền truy cập link api/posts/delete 
+    // Route::delete('delete/{id}', [LanguagesController::class, 'delete'])->middleware('role:admin');
 });

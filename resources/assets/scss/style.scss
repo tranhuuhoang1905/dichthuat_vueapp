@@ -372,6 +372,17 @@ textarea {
     }
 }
 
+.ul-permission {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    min-width: 300px;
+
+    li {
+        margin-right: 5px;
+    }
+}
+
 .profile-card-body {
     min-height: 400px !important;
 }

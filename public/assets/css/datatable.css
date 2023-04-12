@@ -197,3 +197,8 @@
   display: flex;
   justify-content: center;
 }
+.all_languages tbody td,
+.log_import tbody td,
+.all_word tbody td {
+  max-width: 500px;
+}

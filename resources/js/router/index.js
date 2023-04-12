@@ -12,6 +12,14 @@ import AllLanguages from '../components/admin/language/AllLanguages.vue';
 import AddLanguage from '../components/admin/language/AddLanguage.vue';
 import EditLanguage from '../components/admin/language/EditLanguage.vue';
 
+import RoleParent from '../components/admin/role/RoleParent.vue';
+import AllRoles from '../components/admin/role/AllRoles.vue';
+import AddRole from '../components/admin/role/AddRole.vue';
+
+import PermissionParent from '../components/admin/permission/PermissionParent.vue';
+import AllPermissions from '../components/admin/permission/AllPermissions.vue';
+import AddPermission from '../components/admin/permission/AddPermission.vue';
+
 import WordParent from '../components/admin/word/WordParent.vue';
 import AllWords from '../components/admin/word/AllWords.vue';
 import AddWord from '../components/admin/word/AddWord.vue';
@@ -68,12 +76,10 @@ export const routes = [
             }
         ]
     },
-
     {
         path: '/admin',
         name: 'Dashboard',
         component: AdminParent,
-        // meta: { requiresAuth: true },
         meta: { requiresAuth: true, roles: ['admin', 'leader'] },
         children: [
             { name: 'Admin Dashboard', path: 'dashboard', component: Dashboard },
@@ -159,6 +165,56 @@ export const routes = [
                         component: EditLanguage,
                         meta: { requiresAuth: true, roles: ['admin'] }
                     }
+                ]
+            },
+            {
+                path: 'role',
+                name: 'Role',
+                component: RoleParent,
+                children: [
+                    {
+                        name: 'All Roles',
+                        path: 'all',
+                        component: AllRoles,
+                        meta: { requiresAuth: true }
+                    },
+                    {
+                        name: 'Add Role',
+                        path: 'add',
+                        component: AddRole,
+                        meta: { requiresAuth: true, roles: ['admin'] }
+                    },
+                    // {
+                    //     name: 'Edit Language',
+                    //     path: 'edit/:id',
+                    //     component: EditLanguage,
+                    //     meta: { requiresAuth: true, roles: ['admin'] }
+                    // }
+                ]
+            },
+            {
+                path: 'permission',
+                name: 'Permission',
+                component: PermissionParent,
+                children: [
+                    {
+                        name: 'All Permissions',
+                        path: 'all',
+                        component: AllPermissions,
+                        meta: { requiresAuth: true }
+                    },
+                    {
+                        name: 'Add Pemission',
+                        path: 'add',
+                        component: AddPermission,
+                        meta: { requiresAuth: true, roles: ['admin'] }
+                    },
+                    // {
+                    //     name: 'Edit Language',
+                    //     path: 'edit/:id',
+                    //     component: EditLanguage,
+                    //     meta: { requiresAuth: true, roles: ['admin'] }
+                    // }
                 ]
             },
             {
@@ -261,17 +317,6 @@ const router = createRouter({
     routes
 })
 import { store } from '../store/store';
-// router.beforeEach((to, from, next) => {
-//     const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
-//     const isAuthenticated = store.getters.getLoginResponse.authenticated || JSON.parse(localStorage.getItem('loginResponse'))?.authenticated
-
-//     if (requiresAuth && !isAuthenticated) {
-//         next('/login') // Redirect to login page if user is not authenticated
-//     } else {
-//         next() // Proceed to the requested page
-//     }
-// })
-
 router.beforeEach((to, from, next) => {
     const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
     const isAuthenticated = store.getters.getLoginResponse.authenticated || JSON.parse(localStorage.getItem('loginResponse'))?.authenticated

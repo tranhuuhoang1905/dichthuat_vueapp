@@ -43,7 +43,7 @@ class WordsController extends Controller
             ->join('translation_word', 'words.id', '=', 'translation_word.word_id')
             ->groupBy('words.id', 'words.status') // Bao gồm tất cả các cột trong GROUP BY
             ->distinct('words.id', 'words.status', 'translation_word.language_id') // Bao gồm tất cả các cột trong DISTINCT
-            ->limit(15)
+            ->limit(10)
             ->get();
         $words = Words::all()->toArray();
         $languages = Languages::all()->where('status', '>', 0)->toArray();

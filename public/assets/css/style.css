@@ -334,6 +334,16 @@ textarea {
   position: absolute;
 }
 
+.ul-permission {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  min-width: 300px;
+}
+.ul-permission li {
+  margin-right: 5px;
+}
+
 .profile-card-body {
   min-height: 400px !important;
 }

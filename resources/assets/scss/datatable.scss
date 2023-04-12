@@ -219,5 +219,9 @@
             display: flex;
             justify-content: center;
         }
+
+        td {
+            max-width: 500px;
+        }
     }
 }
