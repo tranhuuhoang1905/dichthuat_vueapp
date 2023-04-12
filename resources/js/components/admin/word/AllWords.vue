@@ -17,7 +17,7 @@
     </div>
   </div>
   <div class="row">
-    <button 
+    <button
       ref="myModalBtn"
       type="button"
       class="btn btn-primary d-none"
@@ -49,18 +49,14 @@
                       <div class="box_mean">
                         <div class="title">
                           <p>
-                            <!-- {{ wordDefault.word }} -->
-                             Xin Chào</p>
+                            Xin Chao
+                            <!-- {{ languages.translate }} -->
+                          </p>
                         </div>
-                        <span
-                          class="box_mean-language d-flex align-items-center"
-                        >
-                          Language:
-                          <input
-                            type="text"
-                            value="Tieng viet"
-                          />
-                        </span>
+                        <p class="box_mean-language">
+                          Language: Tiếng việt
+                          {{ languages.name }}
+                        </p>
                         <!-- Tiếng việt {{ wordDefault.language }} -->
                         <div class="box_mean_router pt-2">
                           <!-- <router-link
@@ -78,39 +74,173 @@
                 <div class="col-md-8">
                   <h4>Translate</h4>
                   <div class="shadow-lg border border-0 word-default-data">
-                    <div class="word-content">
-                      <!-- <hr v-if="index > 0" /> -->
+                    <div
+                      class="word-content"
+                      v-for="(translate, index) in languages"
+                      :key="index"
+                    >
+                      <hr v-if="index > 0" />
                       <div class="icon_dot">
-                        {{ index + 1 }}) &nbsp;<span class="box_mean-language"
-                          >Language:
+                        {{ index + 1 }}) &nbsp;
+                        <div class="form-group box_mean-language">
+                          <label>Language:</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            v-model="translate.name"
+                            disabled
+                          />
                           <!-- {{ translate.language }} -->
-                        </span>
+                        </div>
                       </div>
                       <div class="box_mean">
-                        <p class="box_mean-translate">
-                          Translate:
-                          <!-- {{ translate.translate }} -->
-                        </p>
-                        <p class="box_mean-description">
-                          Description:
-                          <!-- {{ translate.description }} -->
-                        </p>
-                        <p class="box_mean-description">
-                          Description in original language:
-                          <!-- {{ translate.original_language_description }} -->
-                        </p>
+                        <div class="form-group box_mean-translate">
+                          <label>Translate:</label>
+                          <input type="text" class="form-control" />
+                        </div>
+                        <!-- {{ dataLanguage.translate }} -->
+                        <div class="form-group box_mean-description">
+                          <label>Description:</label>
+                          <input type="text" class="form-control" />
+                        </div>
+                        <!-- {{ translate.description }} -->
+                        <div class="form-group box_mean-description">
+                          <label> Description in original language:</label>
+                          <input type="text" class="form-control" />
+                        </div>
+                        <!-- {{ translate.original_language_description }} -->
                         <div class="box_mean_router">
-                          <!-- <router-link
-                            :to="{
-                              name: 'Edit Translate',
-                              // params: { id: translate.id },
-                            }"
-                            class="btn btn-all-add-edit word-botton"
-                            ><i class="fas fa-edit"></i> Edit
-                          </router-link> -->
+                          <button class="btn btn-all-add-edit word-botton">
+                             Save
+                          </button>
                         </div>
                       </div>
                     </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <button
+      ref="myModalBtnAdd"
+      type="button"
+      class="btn btn-primary d-none"
+      data-toggle="modal"
+      data-target="#ModalAdd"
+    >
+      Launch demo modal
+    </button>
+    <div
+      class="modal fade"
+      id="ModalAdd"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog row p-5" role="document">
+        <div class="modal-content col-md-12">
+          <div class="add_word">
+            <div class="row">
+              <div class="card show border border-0">
+                <div class="card-body">
+                  <h4 class="card-title text-center fs-4">Add Word</h4>
+                  <div class="col-md-12">
+                    <form @submit.prevent="addWord">
+                      <div class="row">
+                        <div class="col-md-6 col-sm-12">
+                          <div class="form-group">
+                            <label>Word:</label>
+                            <input
+                              type="text"
+                              placeholder="Enter translated word"
+                              class="form-control"
+                              v-model="languages.translate"
+                              required
+                            />
+                          </div>
+                          <div class="form-group">
+                            <label>Description</label>
+                            <textarea
+                              type="text"
+                              placeholder="Enter description"
+                              class="form-control"
+                              v-model="languages.description"
+                              rows="4"
+                              required
+                            ></textarea>
+                          </div>
+                          <div class="form-group">
+                            <label>Language</label>
+                            <select
+                              class="form-select"
+                              aria-label="Default select example"
+                              v-model="languages.language_id"
+                              required
+                            >
+                              <option
+                                v-for="language in languages"
+                                :key="language.id"
+                                :value="`${language.id}`"
+                              >
+                                {{ language.name }}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-12">
+                          <div class="form-group">
+                            <label>Translate</label>
+                            <input
+                              type="text"
+                              placeholder="Enter translated word"
+                              class="form-control"
+                              v-model="languages.translate_description"
+                              required
+                            />
+                          </div>
+                          <div class="form-group">
+                            <label>Translate description</label>
+                            <textarea
+                              type="text"
+                              placeholder="Enter description"
+                              class="form-control"
+                              v-model="languages.translate_description"
+                              rows="4"
+                              required
+                            ></textarea>
+                          </div>
+                          <div class="form-group">
+                            <label>Language translate id</label>
+                            <select
+                              class="form-select"
+                              aria-label="Default select example"
+                              v-model="languages.language_translate_id"
+                              required
+                            >
+                              <option
+                                v-for="language in languages"
+                                :key="language.id"
+                                :value="`${language.id}`"
+                              >
+                                {{ language.name }}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="d-flex justify-content-center">
+                        <button type="submit" class="btn btn-all-add-edit">
+                          Add Word
+                        </button>
+                      </div>
+                    </form>
                   </div>
                 </div>
               </div>
@@ -138,7 +268,9 @@ export default {
       languages: [],
     };
   },
-  mounted() {},
+  mounted() {
+    
+  },
   created() {
     this.fetchData();
   },
@@ -148,7 +280,6 @@ export default {
         // this.words = response.data;
         if (response.data.status === 200 && response.data.success == true) {
           this.languages = response.data.data.languages;
-
           const isSmallScreen = window.innerWidth < 760;
           const pagingType = isSmallScreen ? "simple" : "simple_numbers";
           this.setColumns();
@@ -192,6 +323,7 @@ export default {
     setColumns() {
       const self = this;
       // T?o d?ng 3 h�ng ng�n ng?
+
       const languageColumns = this.languages.map((language) => {
         return {
           data: "word_id",
@@ -199,8 +331,10 @@ export default {
           createdCell: function (cell, cellData, rowData, rowIndex, colIndex) {
             const app = createApp({
               render() {
-                console.log("langage colomns", rowData.data);
+                // console.log("langage colomns", rowData.data);
                 const dataLanguage = JSON.parse(`[${rowData.data}]`);
+                // console.log(dataLanguage);
+
                 if (
                   dataLanguage.find((lang) => lang.language_id === language.id)
                 ) {
@@ -209,15 +343,10 @@ export default {
                   ).translate;
                   return [
                     h(
-                      "a",
+                      "span",
                       {
-                        to: `/admin/word/default/${rowData.word_id}`,
                         class: "",
                         onClick: () => {
-                          router.push({
-                            name: "Word Default",
-                            params: { id: rowData.word_id },
-                          });
                           // self.$refs.myModalBtn.click();
                         },
                       },
@@ -236,23 +365,20 @@ export default {
                   ];
                 } else {
                   return h(
-                    "a",
+                    "button",
                     {
-                      to: `/admin/word/default/${rowData.word_id}`,
-                      class: "",
+                      class: "btn btn-all-add-edit",
                       onClick: () => {
-                        router.push({
-                          name: "Word Default",
-                          params: { id: rowData.word_id },
-                        });
+                        self.$refs.myModalBtnAdd.click();
                       },
                     },
-                    "abc"
+                    "add"
                   );
                 }
               },
               data() {
                 return {
+                  
                   rowData: rowData,
                 };
               },
@@ -328,7 +454,7 @@ export default {
   },
 };
 </script>
-<style>
+<style lang="scss">
 .modal {
   --bs-modal-width: none !important;
 }
