@@ -225,3 +225,12 @@
         }
     }
 }
+.all_word{
+    tbody {
+         td:nth-child(3), td:nth-child(5){
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    }
+}

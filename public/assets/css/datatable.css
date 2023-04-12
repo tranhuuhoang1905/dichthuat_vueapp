@@ -202,3 +202,9 @@
 .all_word tbody td {
   max-width: 500px;
 }
+
+.all_word tbody td:nth-child(3), .all_word tbody td:nth-child(5) {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
