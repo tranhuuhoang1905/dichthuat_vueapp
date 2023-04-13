@@ -69,4 +69,24 @@ class TranslateController extends Controller
         $responseData = [    'status' => 200,'success'=>true,    'message' => 'The translate successfully updated'];
         return response()->json($responseData);
     }  
+
+    public function getTranslateWithLanguage(Request $request)
+    {
+        $languageId = $request->input('language_id');
+        $wordId = $request->input('word_id');
+        $translations = TranslationWord::select('id','language_id', 'word_id','description','original_language_description') // Chỉ định các cột cần lấy
+            ->where('word_id',$wordId)
+            ->where('language_id', $languageId)
+            ->get(); // Thực hiện truy vấn và lấy tất cả các dòng kết quả
+
+        // Chuyển đổi kết quả thành mảng
+        $translations = $translations->toArray();
+        $responseData = [
+            'status' => 200,
+            'success'=>true,
+            'message' => 'success',
+            'data'=>['translations'=>$translations]
+        ];
+        return response()->json($responseData);
+    }
 }

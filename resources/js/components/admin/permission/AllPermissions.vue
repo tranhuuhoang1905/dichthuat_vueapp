@@ -14,6 +14,47 @@
       </div>
     </div>
   </div>
+  <div class="row">
+    <button ref="myModalBtn" type="button" class="btn btn-primary d-none" data-toggle="modal" data-target="#exampleModal">
+      Launch demo modal
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog row p-5" role="document">
+        <div class="modal-content col-md-12">
+          <div class="row">
+            <div class="word_default p-4">
+              <h3 class="text-center">Word Default</h3>
+              <div class="row ">
+                <div class="col-md-12 d-flex flex-column align-items-center">
+                  <form @submit.prevent="updatePermission">
+                    <div class="form-group">
+                      <label for="permission-name">Permission name</label>
+                      <input id="permission-name" type="text" placeholder="Enter permission name" class="form-control"
+                        v-model="permissionForm.name" required />
+                    </div>
+                    <div class="form-group">
+                      <label for="permission-description">Description</label>
+                      <textarea id="permission-description" type="text" placeholder="Enter description"
+                        class="form-control" cols="70" rows="4" v-model="permissionForm.description"></textarea>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                      <button type="submit" class="btn btn-all-add-edit">
+                        Add Role
+                      </button>
+                    </div>
+                  </form>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -28,19 +69,62 @@ import router from '@resources/js/router/index'; // import router từ file rout
 export default {
   data() {
     return {
-      permissions: []
+      permissions: [],
+      permissionForm: [],
+      DataTableData: []
     };
   },
   created() {
     this.fetchData();
   },
   methods: {
+    actionEditStatus(rowData) {
+      let dataReponsive = {};
+      this.axios
+        .post(`/api/permission/update-status/${rowData.id}`)
+        .then((response) => {
+          if (response.data.status === 200) {
+            this.$swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: response.data.message,
+              showConfirmButton: false,
+              timer: this.$config.notificationTimer ?? 1000,
+            });
+          }
+        })
+        .catch((error) => {
+          this.$swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: `Error ${error.response.status}: ${error.response.data.message}`,
+          });
+        })
+        .finally(() => (this.loading = false));
+    },
     setColumns() {
       const self = this;
       this.columns = [
         { data: "id", title: "ID" },
         { data: "name", title: "Permission" },
         { data: "description", title: "Description" },
+        {
+          data: "status",
+          title: "Status",
+          render: function (data, type, row) {
+            const checked = row.status == 0 ? "checked" : "";
+            return `<input type="checkbox" id="${row.id}" ${checked}/><label for="${row.id}">Toggle</label>`;
+          },
+          createdCell: function (cell, cellData, rowData, rowIndex, colIndex) {
+            const checkbox = cell.querySelector('input[type="checkbox"]');
+            checkbox.addEventListener(
+              "click",
+              function () {
+                self.actionEditStatus(rowData);
+              }.bind(this)
+            );
+          },
+        },
         {
           data: "id", title: "Action",
           createdCell: function (cell, cellData, rowData, rowIndex, colIndex) {
@@ -50,6 +134,8 @@ export default {
                   to: `/admin/permission/edit/${rowData.id}`,
                   class: 'btn btn-all-add-edit',
                   onClick: () => {
+                    self.permissionForm = { name: rowData.name, description: rowData.description, id: rowData.id };
+                    self.$refs.myModalBtn.click();
                     // router.push({ name: 'Edit Permission', params: { id: rowData.id } });
                   }
                 }, 'edit')
@@ -70,13 +156,68 @@ export default {
         if (response.data.success === true && response.data.status == 200) {
           console.log("check response.data", response.data);
           this.setColumns();
+
+          this.DataTableData = response.data.data.permissions
           this.table = $(this.$refs.myTable).DataTable({
-            data: response.data.data.permissions,
+            data: this.DataTableData,
             columns: this.columns,
             scrollX: true,
           });
         }
       });
+    },
+
+    updatePermission() {
+      console.log("check role: ", this.permissionForm);
+      this.axios
+        .post(`/api/permission/update/${this.permissionForm.id}`, this.permissionForm)
+        .then((response) => {
+          if (response.data.status === 200 && response.data.success == true) {
+
+            this.updateRowData(this.permissionForm.id, response.data.data.permission_update);
+            this.$swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: `Add role ${this.permissionForm.name} success`,
+              showConfirmButton: false,
+              timer: this.$config.notificationTimer ?? 1000
+            })
+          } else {
+            this.$swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: `Error ${error.response.status}: ${error.response.data.message}`,
+              // footer: '<a href="">Why do I have this issue?</a>'
+            })
+          }
+        })
+        .catch((error) => {
+          // Nếu không thành công, hiển thị thông báo lỗi
+          console.log(error);
+          // alert(`Error ${error.response.status}: ${error.response.data.message}`);
+          this.$swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `Error ${error.response.status}: ${error.response.data.message}`,
+            // footer: '<a href="">Why do I have this issue?</a>'
+          })
+        });
+    },
+    updateRowData(id, newRole) {
+      let elementToUpdate = this.DataTableData.find(item => item.id === id);
+      if (elementToUpdate) {
+        elementToUpdate.permissions = newRole.permissions;
+        elementToUpdate.name = newRole.name;
+        elementToUpdate.description = newRole.description;
+      };
+
+      $(this.$refs.myTable).DataTable().destroy();
+      this.table = $(this.$refs.myTable).DataTable({
+        data: this.DataTableData,
+        columns: this.columns,
+        scrollX: true,
+      });
+
     }
   },
   computed: {

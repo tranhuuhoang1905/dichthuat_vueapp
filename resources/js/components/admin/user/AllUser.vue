@@ -3,66 +3,67 @@
     <div class="row position-relative">
       <div class="col-md-12">
         <div class="card show border border-0">
-          <router-link
-            :to="{ name: 'Create New User' }"
-            class="btn btn-all-add-edit my-3 mx-3 position-absolute"
-            >Add user</router-link
-          >
+          <router-link :to="{ name: 'Create New User' }" class="btn btn-all-add-edit my-3 mx-3 position-absolute">Add
+            user</router-link>
           <div class="card-body">
             <h4 class="card-title text-md-center fs-4 my-3 text-right">
               User Manager
             </h4>
             <div class="table-responsive-lg">
-              <table
-                ref="myTable"
-                class="table table-bordered table-striped table-hover display nowrap"
-              >
-                <thead>
-                  <tr>
-                    <th>STT</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Role</th>
-                    <th>Created At</th>
-                    <th>Updated At</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="(user, index) in users" :key="user.id">
-                    <td>{{ index + 1 }}</td>
-                    <td>{{ user.name }}</td>
-                    <td>{{ user.email }}</td>
-                    <td>
-                      <p v-for="role in user.roles" :key="role.id">
-                        {{ role.name }}
-                      </p>
-                    </td>
-                    <td>
-                      <div class="d-flex justify-content-evenly">
-                        <router-link
-                          :to="{
-                            name: 'Change Role User',
-                            params: { id: user.id },
-                          }"
-                          class="btn btn-all-add-edit"
-                          >Change role
-                        </router-link>
-                        <router-link
-                          :to="{
-                            name: 'Change Password User',
-                            params: { id: user.id },
-                          }"
-                          class="btn btn-all-add-edit"
-                          >Change password
-                        </router-link>
-                      </div>
-                    </td>
-                    <td>{{ word.created_at }}</td>
-                    <td>{{ word.updated_at }}</td>
-                  </tr>
-                </tbody>
+              <table ref="myTable" class="table table-bordered table-striped table-hover display nowrap">
+
               </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <button ref="myModalBtn" type="button" class="btn btn-primary d-none" data-toggle="modal" data-target="#exampleModal">
+      Launch demo modal
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog row p-5" role="document">
+        <div class="modal-content col-md-12">
+          <div class="row">
+            <div class="word_default p-4">
+              <h3 class="text-center">Word Default</h3>
+              <div class="row ">
+                <div class="col-md-12 d-flex flex-column align-items-center">
+                  <form @submit.prevent="updateUser">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label>Email</label>
+                          <input type="email" placeholder="Enter description" class="form-control"
+                            v-model="userForm.email" disabled required />
+                        </div>
+                        <div class="form-group">
+                          <label>Username</label>
+                          <input type="text" placeholder="Enter description" class="form-control" v-model="userForm.name"
+                            required disabled />
+                        </div>
+                        <div class="form-check" v-for="(role, index) in roles" :key="index">
+                          <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" value=""
+                              :checked="isRolesChecked(userRoles, role.id)"
+                              @click="handleCheckboxClick(role.id, $event.target.checked)">{{
+                                role.name }}
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                      <button type="submit" class="btn btn-all-add-edit py-2 px-5">Change</button>
+                    </div>
+                  </form>
+                </div>
+
+              </div>
             </div>
           </div>
         </div>
@@ -91,6 +92,10 @@ export default {
         email: "",
         role: "",
       },
+      userForm: [],
+      userRoles: [],
+      roles: [],
+      DataTableData: []
     };
   },
 
@@ -109,121 +114,170 @@ export default {
       };
       this.showUserForm = false;
     },
-    // sửa thông tin người dùng
-    editUser(user) {
-      // thực hiện các xử lý để sửa thông tin người dùng
-    },
-    // xóa người dùng
-    deleteUser(user) {
-      // thực hiện các xử lý để xóa người dùng khỏi danh sách
-    },
-
-    //test import file excel
-    handleFileUpload() {
-      const fileInput = this.$refs.fileInput;
-      const file = fileInput.files[0];
-      const formData = new FormData();
-      formData.append("file", file);
-      axios
-        .post("/api/upload", formData, {
-          responseType: "blob",
-        })
+    updateUser() {
+      console.log("check userForm:", this.userForm);
+      this.axios
+        .post(
+          `/api/user/change-role-user/${this.userForm.id}`,
+          this.userForm
+        )
         .then((response) => {
-          const blob = new Blob([response.data], {
-            type: "application/vnd.ms-excel",
-          });
-          saveAs(blob, "usersedit.xlsx");
+          if (response.data.status === 200) {
+            this.updateRowData(this.userForm.id, response.data.data.user_update);
+            this.$swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: `Change role ${this.userForm.name} Success`,
+              showConfirmButton: false,
+              timer: this.$config.notificationTimer ?? 1000,
+            });
+
+            // alert(response.data.message);
+          }
         })
         .catch((error) => {
-          console.log(error);
-        });
+          this.$swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: `Error ${error.response.status}: ${error.response.data.message}`,
+          });
+          // alert(`Error ${error.response.status}: ${error.response.data.message}`);
+        })
+        .finally(() => (this.loading = false));
+    },
+    setColumns() {
+      const self = this;
+      this.columns = [
+        { data: "id", title: "ID" },
+        { data: "name", title: "Name" },
+        { data: "email", title: "Email" },
+
+        {
+          data: "id", title: "Roles",
+          class: "columns-list",
+          createdCell: function (cell, cellData, rowData, rowIndex, colIndex) {
+            const app = createApp({
+              render() {
+                return h('ul', { class: 'ul-list' }, rowData.roles.map(role => {
+                  return h('li', {}, [
+                    h('p', {
+                      class: 'btn btn-all-add-edit',
+                    }, role.name)
+                  ]);
+                }));
+              },
+              data() {
+                return {
+                  rowData: rowData
+                }
+              }
+            })
+            app.mount(cell);
+          }
+        },
+        {
+          data: "id", title: "Action",
+          createdCell: function (
+            cell,
+            cellData,
+            rowData,
+            rowIndex,
+            colIndex
+          ) {
+            const app = createApp({
+              render() {
+                return [
+                  h(
+                    "a",
+                    {
+                      to: `/admin/user-manager/change-role-user/${rowData.id}`,
+                      class: "btn btn-all-add-edit",
+                      onClick: () => {
+                        // router.push({
+                        //   name: "Change Role User",
+                        //   params: { id: rowData.id },
+                        // });
+                        self.userForm = { name: rowData.name, email: rowData.email, id: rowData.id };
+                        self.userRoles = rowData.roles;
+                        self.$refs.myModalBtn.click();
+                      },
+                    },
+                    "Change Role"
+                  ),
+                  h(
+                    "a",
+                    {
+                      to: `/admin/user-manager/change-pasword-user/${rowData.id}`,
+                      class: "btn btn-all-add-edit",
+                      onClick: () => {
+                        router.push({
+                          name: "Change Password User",
+                          params: { id: rowData.id },
+                        });
+                      },
+                    },
+                    "Change Password"
+                  ),
+                ];
+              },
+              data() {
+                return {
+                  rowData: rowData,
+                };
+              },
+            });
+            app.mount(cell);
+          },
+        },
+      ];
     },
     fetchData() {
       this.axios.get("/api/user/allusers").then((response) => {
-        if (response.data.message === "success") {
+        if (response.data.message === "success" && response.data.status == 200) {
+
+
+          this.DataTableData = response.data.data.users;
+          this.roles = response.data.data.roles;
+          this.setColumns();
           this.table = $(this.$refs.myTable).DataTable({
-            data: response.data.data,
-            columns: [
-              { data: "id" },
-              { data: "name" },
-              { data: "email" },
-              {
-                data: "roles",
-                render: function (data, type, row) {
-                  return row.roles[0].name ?? "";
-                },
-              },
-              {
-                data: "created_at",
-                render: function (data, type, row) {
-                  const date = new Date(data);
-                  return date.toLocaleDateString();
-                },
-              },
-              {
-                data: "updated_at",
-                render: function (data, type, row) {
-                  const date = new Date(data);
-                  return date.toLocaleDateString();
-                },
-              },
-              {
-                data: "id",
-                createdCell: function (
-                  cell,
-                  cellData,
-                  rowData,
-                  rowIndex,
-                  colIndex
-                ) {
-                  const app = createApp({
-                    render() {
-                      return [
-                        h(
-                          "a",
-                          {
-                            to: `/admin/user-manager/change-role-user/${rowData.id}`,
-                            class: "btn btn-all-add-edit",
-                            onClick: () => {
-                              router.push({
-                                name: "Change Role User",
-                                params: { id: rowData.id },
-                              });
-                            },
-                          },
-                          "Change Role"
-                        ),
-                        h(
-                          "a",
-                          {
-                            to: `/admin/user-manager/change-pasword-user/${rowData.id}`,
-                            class: "btn btn-all-add-edit",
-                            onClick: () => {
-                              router.push({
-                                name: "Change Password User",
-                                params: { id: rowData.id },
-                              });
-                            },
-                          },
-                          "Change Password"
-                        ),
-                      ];
-                    },
-                    data() {
-                      return {
-                        rowData: rowData,
-                      };
-                    },
-                  });
-                  app.mount(cell);
-                },
-              },
-            ],
+            data: this.DataTableData,
+            columns: this.columns,
             scrollX: true,
           });
         }
       });
     },
+    isRolesChecked(roles, roleId) {
+      // return true;
+      this.userForm['role_' + roleId] = false;
+      if (Array.isArray(roles)) {
+        const isCheck = roles.some(role => role.id === roleId)
+        if (isCheck) {
+          this.userForm['role_' + roleId] = true;
+        }
+        return isCheck;
+      } else {
+        return false;
+      }
+      // return true;
+
+    },
+    handleCheckboxClick(roleId, checked) {
+      this.userForm['role_' + roleId] = checked;
+    },
+    updateRowData(id, newUser) {
+      let elementToUpdate = this.DataTableData.find(item => item.id === id);
+      if (elementToUpdate) {
+        elementToUpdate.roles = newUser.roles;
+      };
+
+      $(this.$refs.myTable).DataTable().destroy();
+      this.table = $(this.$refs.myTable).DataTable({
+        data: this.DataTableData,
+        columns: this.columns,
+        scrollX: true,
+      });
+    }
   },
 };
 </script>

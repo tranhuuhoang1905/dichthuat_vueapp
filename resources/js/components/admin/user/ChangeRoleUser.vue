@@ -59,7 +59,7 @@ export default {
             name: response.data.data.user.name,
             email: response.data.data.user.email,
             // xử lý lại nếu role không tồn tại thì trả về null
-            role: response.data.data.user.roles[0].id,
+            role: response.data.data.user.roles[0]?.id ?? null,
           };
           this.roles = response.data.data.roles;
         }
@@ -68,7 +68,6 @@ export default {
   },
   methods: {
     updateUser() {
-      console.log(this.user);
       this.axios
         .post(
           `/api/user/change-role-user/${this.$route.params.id}`,

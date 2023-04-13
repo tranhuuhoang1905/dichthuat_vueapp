@@ -24,9 +24,17 @@ class UserController extends Controller
     // all languages
     public function allusers()
     {
-        $users = User::with('roles')->get()
-            ->toArray();
-            $responseData = [    'status' => 200,'success'=>true,    'message' => 'success',    'data' => $users];
+        $users = User::with(['roles' => function ($query) {
+            $query->where('status', 1);
+        }])->get()->toArray();
+        
+        $roles = Role::where('status', 1)->get()->toArray();
+        $responseData = [
+            'status' => 200,
+            'success'=>true,
+            'message' => 'success',
+            'data' => ['users'=>$users,'roles'=>$roles]
+        ];
         return response()->json($responseData);
     }
     // all roles
@@ -68,7 +76,7 @@ class UserController extends Controller
     {
         $user  = User::where('id', $id)->get()->first();
         $user->load('roles');
-        $roles = Role::all()->toArray();
+        $roles = Role::where('status', 1)->get();
         $responseData = [
             'status' => 200,
             'message' => 'success',
@@ -84,17 +92,33 @@ class UserController extends Controller
     public function changeRoleUser($id, Request $request)
     {
         $user = User::find($id);
-        $user->load('roles');
-        $role = Role::where('id', $request->input('role'))->get()->first();
-        // $User->assignRole($role->name);
-        if($user->roles){
-            foreach ($user->roles as $roleUser) {
-                $user->removeRole($roleUser->name);
+        if($user){
+            $user->load('roles');
+            $roles = Role::where('status', 1)->get();
+            foreach ($roles as $role) {
+                if ($request->has('role_'. $role->id) && $request->input('role_'. $role->id) == true){
+                    
+                    $user->assignRole($role->name);
+                }else{
+                    $user->removeRole($role->name);
+                }
             }
-        }
-        $user->assignRole($role->name);
-        $responseData = [    'status' => 200,'success'=>true,    'message' => 'The user successfully updated'];
+            $responseData = [
+                'status' => 200,
+                'success'=>true,
+                'message' => 'The user successfully updated',
+                'data'=>['user_update'=>$user]
+            ];
+            return response()->json($responseData);
+        }else{
+            $responseData = [
+                'status' => 200,
+                'success'=>true,
+                'message' => 'The user not found'
+            ];
         return response()->json($responseData);
+        }
+        
     }
 
     // update user
@@ -161,12 +185,16 @@ class UserController extends Controller
      */
     public function allRoles(Request $request)
     {
-        $rolesWithPermissions = Role::with('permissions')->get();
+        // $rolesWithPermissions = Role::with('permissions')->get();
+        $rolesWithPermissions = Role::with(['permissions' => function($query) {
+            $query->where('status', 1);
+        }])->get();
+        $permissions = Permission::where('status', 1)->get();
         $responseData = [
             'status' => 200,
             'success'=>true,
             'message' => 'success',
-            'data'=>["roles"=>$rolesWithPermissions]
+            'data'=>["roles"=>$rolesWithPermissions,"permissions"=>$permissions]
         ];
         return response()->json($responseData);
     }
@@ -182,6 +210,7 @@ class UserController extends Controller
         $role = Role::create([
             'name' => $request->input('name'), // Thiết lập tên cho role
             'description' => $request->input('description'), // Thiết lập mô tả cho role
+            'guard_name'=> 'web',
             // Các thuộc tính khác của role
         ]);
         $responseData = [
@@ -192,6 +221,87 @@ class UserController extends Controller
         return response()->json($responseData);
     }
 
+    /**
+     * edit roles.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateRole($id,Request $request)
+    {
+        $permissions = Permission::where('status', 1)->get();
+        $role = Role::find($id);
+        if($role){
+            foreach ($permissions as $permission) {
+                if ($request->has('permission_'. $permission->id) && $request->input('permission_'. $permission->id) == true){
+                    $role->givePermissionTo([$permission->name]);
+                }else{
+                    $role->revokePermissionTo([$permission->name]);
+                }
+            }
+            $role->description = $request->input('description'); // Cập nhật giá trị của trường description
+            $role->name = $request->input('name');
+            $role->save(); // Lưu lại thay đổi vào cơ sở dữ liệu
+        }else{
+            $responseData = [
+                'status' => 200,
+                'success'=>false,
+                'message' => 'The role not found'
+            ];
+            return response()->json($responseData);
+        }
+        
+        
+        $responseData = [
+            'status' => 200,
+            'success'=>true,
+            'message' => 'The role successfully added',
+            'data'=>['role_update'=>$role]
+        ];
+        return response()->json($responseData);
+    }
+
+    // delete role
+    public function updateStatusRole($id,Request $request)
+    {
+
+        try {
+            // Tìm vai trò dựa trên ID
+            $role = Role::findOrFail($id);
+            
+            if ($role->name !== 'admin') {
+                // Xóa vai trò
+                $statusOld = $role->status;
+                $statusNew = $statusOld == 1 ? 0 : 1;
+                $role->status = $statusNew;
+                $role->save();
+        
+                // Thông báo thành công
+                $responseData = [
+                    'status' => 200,
+                    'success' => true,
+                    'message' => 'The role successfully deleted'
+                ];
+            } else {
+                // Thông báo lỗi nếu role.name là 'admin'
+                $responseData = [
+                    'status' => 200,
+                    'success' => false,
+                    'message' => 'Cannot delete role with name "admin"'
+                ];
+            }
+            return response()->json($responseData);
+        } catch (\Exception $e) {
+            // Xử lý lỗi nếu cần thiết
+            $responseData = [
+                'status' => 200,
+                'success'=>false,
+                'message' => 'False to delete role'
+            ];
+            return response()->json($responseData);
+        }
+    }
+    
     /**
      * Get all permissions.
      *
@@ -221,6 +331,7 @@ class UserController extends Controller
         $permission = Permission::create([
             'name' => $request->input('name'), // Thiết lập tên cho role
             'description' => $request->input('description'), // Thiết lập mô tả cho role
+            'guard_name'=> 'web',
             // Các thuộc tính khác của role
         ]);
         $responseData = [
@@ -229,5 +340,68 @@ class UserController extends Controller
             'message' => 'The permission successfully added'
         ];
         return response()->json($responseData);
+    }
+
+    /**
+     * edit permission.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updatePermission($id,Request $request)
+    {
+        $permission = Permission::find($id);
+        if($permission){
+            $permission->description = $request->input('description'); // Cập nhật giá trị của trường description
+            $permission->name = $request->input('name');
+            $permission->save(); // Lưu lại thay đổi vào cơ sở dữ liệu
+        }else{
+            $responseData = [
+                'status' => 200,
+                'success'=>false,
+                'message' => 'The permission not found'
+            ];
+            return response()->json($responseData);
+        }
+        
+        
+        $responseData = [
+            'status' => 200,
+            'success'=>true,
+            'message' => 'The permission successfully added',
+            'data'=>['permission_update'=>$permission]
+        ];
+        return response()->json($responseData);
+    }
+    
+    // update permission
+    public function updateStatusPermission($id,Request $request)
+    {
+
+        try {
+            // Tìm vai trò dựa trên ID
+            $permission = Permission::findOrFail($id);
+            
+            $statusOld = $permission->status;
+            $statusNew = $statusOld == 1 ? 0 : 1;
+            $permission->status = $statusNew;
+            $permission->save();
+    
+            // Thông báo thành công
+            $responseData = [
+                'status' => 200,
+                'success' => true,
+                'message' => 'The permission successfully update'
+            ];
+            return response()->json($responseData);
+        } catch (\Exception $e) {
+            // Xử lý lỗi nếu cần thiết
+            $responseData = [
+                'status' => 200,
+                'success'=>false,
+                'message' => 'False to update permision'
+            ];
+            return response()->json($responseData);
+        }
     }
 }

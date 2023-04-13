@@ -169,7 +169,9 @@
 
 .all_languages,
 .log_import,
-.all_word {
+.all_word,
+.all_roles,
+.all_permissions {
     tbody {
         input[type=checkbox] {
             height: 0;
@@ -222,12 +224,16 @@
 
         td {
             max-width: 500px;
+            height: 100%;
         }
     }
 }
-.all_word{
+
+.all_word {
     tbody {
-         td:nth-child(3), td:nth-child(5){
+
+        td:nth-child(3),
+        td:nth-child(5) {
             display: flex;
             justify-content: space-between;
             align-items: center;
