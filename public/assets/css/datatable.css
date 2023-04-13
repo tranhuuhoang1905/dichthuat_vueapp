@@ -143,14 +143,18 @@
 
 .all_languages tbody input[type=checkbox],
 .log_import tbody input[type=checkbox],
-.all_word tbody input[type=checkbox] {
+.all_word tbody input[type=checkbox],
+.all_roles tbody input[type=checkbox],
+.all_permissions tbody input[type=checkbox] {
   height: 0;
   width: 0;
   visibility: hidden;
 }
 .all_languages tbody label,
 .log_import tbody label,
-.all_word tbody label {
+.all_word tbody label,
+.all_roles tbody label,
+.all_permissions tbody label {
   cursor: pointer;
   text-indent: -9999px;
   width: 60px;
@@ -163,7 +167,9 @@
 }
 .all_languages tbody label:after,
 .log_import tbody label:after,
-.all_word tbody label:after {
+.all_word tbody label:after,
+.all_roles tbody label:after,
+.all_permissions tbody label:after {
   content: "";
   position: absolute;
   top: 0;
@@ -177,33 +183,45 @@
 }
 .all_languages tbody input:checked + label,
 .log_import tbody input:checked + label,
-.all_word tbody input:checked + label {
+.all_word tbody input:checked + label,
+.all_roles tbody input:checked + label,
+.all_permissions tbody input:checked + label {
   background: grey;
 }
 .all_languages tbody input:checked + label:after,
 .log_import tbody input:checked + label:after,
-.all_word tbody input:checked + label:after {
+.all_word tbody input:checked + label:after,
+.all_roles tbody input:checked + label:after,
+.all_permissions tbody input:checked + label:after {
   right: 100%;
   transform: translateX(100%);
 }
 .all_languages tbody label:active:after,
 .log_import tbody label:active:after,
-.all_word tbody label:active:after {
+.all_word tbody label:active:after,
+.all_roles tbody label:active:after,
+.all_permissions tbody label:active:after {
   width: 30px;
 }
 .all_languages tbody td:nth-child(7),
 .log_import tbody td:nth-child(7),
-.all_word tbody td:nth-child(7) {
+.all_word tbody td:nth-child(7),
+.all_roles tbody td:nth-child(7),
+.all_permissions tbody td:nth-child(7) {
   display: flex;
   justify-content: center;
 }
 .all_languages tbody td,
 .log_import tbody td,
-.all_word tbody td {
+.all_word tbody td,
+.all_roles tbody td,
+.all_permissions tbody td {
   max-width: 500px;
+  height: 100%;
 }
 
-.all_word tbody td:nth-child(3), .all_word tbody td:nth-child(5) {
+.all_word tbody td:nth-child(3),
+.all_word tbody td:nth-child(5) {
   display: flex;
   justify-content: space-between;
   align-items: center;
