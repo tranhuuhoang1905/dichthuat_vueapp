@@ -81,6 +81,7 @@ import { createApp, h } from "vue";
 import router from '@resources/js/router/index';
 DataTable.use(DataTablesCore);
 import { saveAs } from "file-saver";
+import { mapGetters, mapMutations, mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -103,6 +104,7 @@ export default {
     this.fetchData();
   },
   methods: {
+    ...mapActions(["logout"]),
     // thêm mới người dùng
     addUser() {
       // thực hiện các xử lý để thêm mới người dùng vào danh sách
@@ -232,20 +234,33 @@ export default {
       ];
     },
     fetchData() {
-      this.axios.get("/api/user/allusers").then((response) => {
-        if (response.data.message === "success" && response.data.status == 200) {
+      this.axios.get("/api/user/allusers")
+        .then((response) => {
+          if (response.data.message === "success" && response.data.status == 200) {
 
 
-          this.DataTableData = response.data.data.users;
-          this.roles = response.data.data.roles;
-          this.setColumns();
-          this.table = $(this.$refs.myTable).DataTable({
-            data: this.DataTableData,
-            columns: this.columns,
-            scrollX: true,
-          });
-        }
-      });
+            this.DataTableData = response.data.data.users;
+            this.roles = response.data.data.roles;
+            this.setColumns();
+            this.table = $(this.$refs.myTable).DataTable({
+              data: this.DataTableData,
+              columns: this.columns,
+              scrollX: true,
+            });
+          }
+        })
+        .catch((error) => {
+          if (error.response.status == 403) {
+            this.logout();
+            this.$swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: `Error ${error.response.status}: ${error.response.data.message}`,
+            });
+          }
+
+          // alert(`Error ${error.response.status}: ${error.response.data.message}`);
+        });
     },
     isRolesChecked(roles, roleId) {
       // return true;

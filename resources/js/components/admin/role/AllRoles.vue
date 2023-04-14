@@ -188,19 +188,32 @@ export default {
       ];
     },
     fetchData() {
-      this.axios.get("/api/role/all").then((response) => {
-        if (response.data.success === true && response.data.status == 200) {
-          console.log("check response.data", response.data);
-          this.permissions = response.data.data.permissions;
-          this.setColumns();
-          this.DataTableData = response.data.data.roles
-          this.table = $(this.$refs.myTable).DataTable({
-            data: this.DataTableData,
-            columns: this.columns,
-            scrollX: true,
-          });
-        }
-      });
+      this.axios.get("/api/role/all")
+        .then((response) => {
+          if (response.data.success === true && response.data.status == 200) {
+            console.log("check response.data", response.data);
+            this.permissions = response.data.data.permissions;
+            this.setColumns();
+            this.DataTableData = response.data.data.roles
+            this.table = $(this.$refs.myTable).DataTable({
+              data: this.DataTableData,
+              columns: this.columns,
+              scrollX: true,
+            });
+          }
+        })
+        .catch((error) => {
+          if (error.response.status == 403) {
+            this.logout();
+            this.$swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: `Error ${error.response.status}: ${error.response.data.message}`,
+            });
+          }
+
+          // alert(`Error ${error.response.status}: ${error.response.data.message}`);
+        });
     },
     updateRole() {
       this.axios
@@ -261,10 +274,12 @@ export default {
       if (elementToUpdate) {
         elementToUpdate.permissions = newRole.permissions;
         elementToUpdate.name = newRole.name;
+        elementToUpdate.status = newRole.status;
         elementToUpdate.description = newRole.description;
       };
 
       $(this.$refs.myTable).DataTable().destroy();
+      // this.setColumns();
       this.table = $(this.$refs.myTable).DataTable({
         data: this.DataTableData,
         columns: this.columns,

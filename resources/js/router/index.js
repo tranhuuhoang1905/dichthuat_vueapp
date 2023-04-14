@@ -24,7 +24,6 @@ import WordParent from '../components/admin/word/WordParent.vue';
 import AllWords from '../components/admin/word/AllWords.vue';
 import AddWord from '../components/admin/word/AddWord.vue';
 
-import Example from '../components/admin/word/Example.vue';
 import ImportWordFromExcel from '../components/admin/word/ImportWordFromExcel.vue';
 import TranslateWordFromExcel from '../components/admin/word/TranslateWordFromExcel.vue';
 import EditWord from '../components/admin/word/EditWord.vue';
@@ -80,65 +79,58 @@ export const routes = [
         path: '/admin',
         name: 'Dashboard',
         component: AdminParent,
-        meta: { requiresAuth: true, roles: ['admin', 'leader'] },
+        meta: { requiresAuth: true },
         children: [
             { name: 'Admin Dashboard', path: 'dashboard', component: Dashboard },
             {
                 path: 'word',
                 name: 'Word',
                 component: WordParent,
+                // meta: { permissions: ['Word Manager', 'Import excel', 'Translate file excel'] },
                 children: [
                     {
                         name: 'All Word',
                         path: 'all',
                         component: AllWords,
-                        meta: { requiresAuth: true },
+                        meta: { permissions: ['Word Manager'] },
                         props: (route) => ({ message: route.params.test }),
                     },
                     {
                         name: 'Add Word',
                         path: 'add',
                         component: AddWord,
-                        meta: { requiresAuth: true }
-                    },
-                    {
-                        name: 'Example',
-                        path: 'example',
-                        component: Example,
-                        meta: { requiresAuth: true }
+                        meta: { permissions: ['Word Manager'] },
                     },
 
                     {
                         name: 'Import Word From Excel',
                         path: 'import-word-from-excel',
                         component: ImportWordFromExcel,
-                        meta: {
-                            requiresAuth: true, roles: ['admin']
-                        }
+                        meta: { permissions: ['Import Excel'] },
                     },
                     {
                         name: 'Translate Word From Excel',
                         path: 'translate-word-from-excel',
                         component: TranslateWordFromExcel,
-                        meta: { requiresAuth: true }
+                        meta: { permissions: ['Translate File Excel'] },
                     },
                     {
                         name: 'Edit Word',
                         path: 'edit/:id',
                         component: EditWord,
-                        meta: { requiresAuth: true }
+                        meta: { permissions: ['Word Manager'] },
                     },
                     {
                         name: 'Word Default',
                         path: 'default/:id',
                         component: WordDefault,
-                        meta: { requiresAuth: true }
+                        meta: { permissions: ['Word Manager'] },
                     },
                     {
                         name: 'Edit Translate',
                         path: 'translate/edit/:id',
                         component: EditTranslate,
-                        meta: { requiresAuth: true }
+                        meta: { permissions: ['Word Manager'] },
                     }
                 ]
             },
@@ -146,24 +138,22 @@ export const routes = [
                 path: 'language',
                 name: 'Language',
                 component: LanguageParent,
+                meta: { permissions: ['Language Manager'] },
                 children: [
                     {
                         name: 'All Language',
                         path: 'all',
                         component: AllLanguages,
-                        meta: { requiresAuth: true }
                     },
                     {
                         name: 'Add Language',
                         path: 'add',
                         component: AddLanguage,
-                        meta: { requiresAuth: true, roles: ['admin'] }
                     },
                     {
                         name: 'Edit Language',
                         path: 'edit/:id',
                         component: EditLanguage,
-                        meta: { requiresAuth: true, roles: ['admin'] }
                     }
                 ]
             },
@@ -171,31 +161,25 @@ export const routes = [
                 path: 'role',
                 name: 'Role',
                 component: RoleParent,
+                meta: { permissions: ['Role Manager'] },
                 children: [
                     {
                         name: 'All Roles',
                         path: 'all',
                         component: AllRoles,
-                        meta: { requiresAuth: true }
                     },
                     {
                         name: 'Add Role',
                         path: 'add',
                         component: AddRole,
-                        meta: { requiresAuth: true, roles: ['admin'] }
                     },
-                    // {
-                    //     name: 'Edit Language',
-                    //     path: 'edit/:id',
-                    //     component: EditLanguage,
-                    //     meta: { requiresAuth: true, roles: ['admin'] }
-                    // }
                 ]
             },
             {
                 path: 'permission',
                 name: 'Permission',
                 component: PermissionParent,
+                meta: { permissions: ['Permission Manager'] },
                 children: [
                     {
                         name: 'All Permissions',
@@ -209,43 +193,33 @@ export const routes = [
                         component: AddPermission,
                         meta: { requiresAuth: true, roles: ['admin'] }
                     },
-                    // {
-                    //     name: 'Edit Language',
-                    //     path: 'edit/:id',
-                    //     component: EditLanguage,
-                    //     meta: { requiresAuth: true, roles: ['admin'] }
-                    // }
                 ]
             },
             {
                 name: 'User Manager',
                 path: 'user-manager',
                 component: UserParent,
-                meta: { requiresAuth: true, roles: ['admin', 'leader'] }, // chỉ cho phép admin truy cập
+                meta: { permissions: ['User Manager'] },
                 children: [
                     {
                         name: 'All User',
                         path: '',
                         component: AllUser,
-                        meta: { requiresAuth: true, roles: ['admin', 'leader'] }
                     },
                     {
                         name: 'Create New User',
                         path: 'create-new-user',
                         component: CreateNewUser,
-                        meta: { requiresAuth: true, roles: ['admin'] }
                     },
                     {
                         name: 'Change Role User',
                         path: 'change-role-user/:id',
                         component: ChangeRoleUser,
-                        meta: { requiresAuth: true, roles: ['admin'] }
                     },
                     {
                         name: 'Change Password User',
                         path: 'change-pasword-user/:id',
                         component: ChangePasswordUser,
-                        meta: { requiresAuth: true, roles: ['admin'] }
                     }
                 ]
             },
@@ -253,19 +227,16 @@ export const routes = [
                 name: 'Profile',
                 path: 'profile',
                 component: ProfileParent,
-                meta: { requiresAuth: true },
                 children: [
                     {
                         name: 'Profile User',
                         path: 'profile-user',
                         component: Profile,
-                        meta: { requiresAuth: true }
                     },
                     {
                         name: 'Change Password',
                         path: 'change-pasword',
                         component: ChangePasswordProfile,
-                        meta: { requiresAuth: true }
                     }
                 ]
             },
@@ -273,6 +244,7 @@ export const routes = [
                 name: 'Log Import File Excel',
                 path: 'log-import-excel',
                 component: LogImportExcelParent,
+                meta: { permissions: ['Log Import'] },
                 children: [
                     {
                         name: 'All Log',
@@ -284,11 +256,6 @@ export const routes = [
             },
         ]
     },
-    // {
-    //     path: '/register',
-    //     name: 'register',
-    //     component: Register
-    // },
     {
         path: '/login',
         name: 'login',
@@ -317,10 +284,12 @@ const router = createRouter({
     routes
 })
 import { store } from '../store/store';
+import permissions from '../store/Modules/permissions';
 router.beforeEach((to, from, next) => {
     const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
     const isAuthenticated = store.getters.getLoginResponse.authenticated || JSON.parse(localStorage.getItem('loginResponse'))?.authenticated
     const roles = to.meta.roles
+    const permissions = to.meta.permissions
     let authUser = undefined
     if (store.getters.getAuthUser.id !== undefined) {
         authUser = store.getters.getAuthUser;
@@ -329,26 +298,36 @@ router.beforeEach((to, from, next) => {
     if (requiresAuth) {
         // kiểm tra xem người dùng đã đăng nhập hay chưa
         if (!isAuthenticated) {
-            next('/login')
-        } else {
-            // kiểm tra vai trò của người dùng
-            if (roles && roles.length > 0) {
-                const userRoles = authUser.roles
-                console.log("--------------");
-                console.log(authUser.roles);
-                const hasAccess = userRoles.some(role => roles.includes(role.name));
-                if (hasAccess) {
-                    next()
-                } else {
-                    next('/error');
-                    // alert("You do not have permission to access this page."); // hiển thị trang lỗi khi không có quyền truy cập
-                }
-            } else {
-                next()
+            next('/login');
+            return
+        }
+    }
+    if (roles && roles.length > 0) {
+        const userRoles = authUser.roles
+        console.log("--------------roles", authUser.roles);
+        const hasAccess = userRoles.some(role => roles.includes(role.name));
+        if (!hasAccess) {
+            next('/error');
+            return;
+        }
+    }
+    if (permissions && permissions.length > 0) {
+        const userRoles = authUser.roles
+        console.log("--------------permissions", permissions);
+        let hasAccess = false;
+
+        for (const role of userRoles) {
+            if (role.permissions.some(permission => permissions.includes(permission.name))) {
+                hasAccess = true;
+                break;
             }
         }
-    } else {
-        next()
+        if (!hasAccess) {
+            next('/error');
+            return;
+        }
     }
+    next();
+
 })
 export default router

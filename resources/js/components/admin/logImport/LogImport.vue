@@ -154,7 +154,19 @@ export default {
             data: response.data.data,
             columns: this.columns,
             scrollX: true,
-          });
+          })
+            .catch((error) => {
+              if (error.response.status == 403) {
+                this.logout();
+                this.$swal.fire({
+                  icon: "error",
+                  title: "Oops...",
+                  text: `Error ${error.response.status}: ${error.response.data.message}`,
+                });
+              }
+
+              // alert(`Error ${error.response.status}: ${error.response.data.message}`);
+            });
         }
       });
     }

@@ -17,8 +17,7 @@
                         </router-link>
                     </li>
                     <li>
-                        <router-link :to="{ name: 'All User' }" class=" waves-effect" v-if="userHasAdmin" exact tag="li"
-                            active-class="active">
+                        <router-link :to="{ name: 'All User' }" class=" waves-effect" exact tag="li" active-class="active">
                             <i class="ri-calendar-2-line"></i>
                             <span>User manager</span>
                         </router-link>
@@ -93,6 +92,9 @@ export default {
         return {
             isExpanded: false
         }
+    },
+    created() {
+        console.log("check userHasAdmin:", checkAccess(['admin']));
     },
     methods: {
         toggleExpand() {

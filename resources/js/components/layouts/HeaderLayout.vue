@@ -420,7 +420,7 @@ export default {
     methods: {
         ...mapActions(["logout"]),
         logoutSubmit() {
-            this.logout(this.loginData);
+            this.logout();
         },
         reloadPage() {
             location.reload();
