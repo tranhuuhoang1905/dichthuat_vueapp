@@ -3,11 +3,15 @@
     <div class="row position-relative">
       <div class="col-md-12">
         <div class="card show border border-0">
-          <router-link
-            :to="{ name: 'Create New User' }"
-            class="btn btn-all-add-edit my-3 mx-3 position-absolute"
-            >Add user</router-link
-          >
+          <button
+      ref="myModalAddUserBtn"
+      type="button"
+      class="btn btn-all-add-edit my-3 mx-3 position-absolute"
+      data-toggle="modal"
+      data-target="#ModalAddUser"
+    >
+    Add user
+    </button>
           <div class="card-body">
             <h4 class="card-title text-md-center fs-4 my-3 text-right">
               User Manager
@@ -109,8 +113,7 @@
       </div>
     </div>
   </div>
-
-  <!-- modal change password -->
+ <!-- modal change password -->
   <div class="row">
     <button
       ref="myModalPasswordBtn"
@@ -203,6 +206,68 @@
       </div>
     </div>
   </div>
+  <!-- add user -->
+  <div class="row">
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="ModalAddUser"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="ModalLabel"
+      aria-hidden="true"
+    >
+      <div
+        class="modal-dialog p-5 d-flex justify-content-center"
+        role="document"
+      >
+        <div class="modal-content col-md-7">
+          <div class="word_default p-4">
+            <h3 class="text-center">Create New User</h3>
+            <div class="row">
+              <div class="col-md-12 d-flex flex-column align-items-center">
+                <form @submit.prevent="createNewUser" class="col-md-12">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label>Email</label>
+                      <input type="email" placeholder="Enter description" class="form-control" v-model="newUser.email"
+                        required />
+                    </div>
+                    <div class="form-group">
+                      <label>Username</label>
+                      <input type="text" placeholder="Enter description" class="form-control" v-model="newUser.name"
+                        required />
+                    </div>
+                    <!-- <div class="form-group">
+                      <label>Password</label>
+                      <input type="password" placeholder="Enter password" class="form-control" v-model="newUser.password"
+                        required />
+                    </div> -->
+                    <div class="form-group">
+                      <label>Role</label>
+                      <select class="form-select" aria-label="Default select example" v-model="newUser.role" required>
+                        <option v-for="role in roles" :key="role.id" :value="`${role.id}`">
+                          {{ role.name }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="d-flex justify-content-center">
+                  <button type="submit" class="btn btn-all-add-edit py-2 px-5">
+                    Add User
+                  </button>
+                </div>
+              </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
   
 <style lang="scss">
@@ -238,6 +303,11 @@ export default {
     };
   },
   created() {
+    this.axios.get("/api/user/roles").then((response) => {
+      if (response.data.message === 'success') {
+        this.roles = response.data.data;
+      }
+    });
     this.fetchData();
   },
   methods: {
@@ -252,6 +322,35 @@ export default {
         role: "",
       };
       this.showUserForm = false;
+    },
+    createNewUser() {
+      console.log(this.newUser);
+      this.axios
+        .post("/api/user/create-new-user", this.newUser)
+        .then((response) => {
+          if (response.data.status === 200) {
+            this.$swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: `Add new user ${this.newUser.name} success`,
+              showConfirmButton: false,
+              timer: this.$config.notificationTimer ?? 1000
+            })
+            this.newUser = {};
+            // alert(response.data.message);
+          }
+        })
+        .catch((error) => {
+          this.$swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `Error ${error.response.status}: ${error.response.data.message}`,
+            // footer: '<a href="">Why do I have this issue?</a>'
+          })
+          // alert(`Error ${error.response.status}: ${error.response.data.message}`);
+
+        })
+        .finally(() => (this.loading = false));
     },
     updateRolesUser() {
       console.log("check userForm:", this.userForm);
