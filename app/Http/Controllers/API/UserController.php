@@ -93,16 +93,25 @@ class UserController extends Controller
     {
         $user = User::find($id);
         if($user){
-            $user->load('roles');
+            
+            $user->load([
+                'roles' => function ($query) {
+                    $query->where('status', 1);
+                }
+            ]);
             $roles = Role::where('status', 1)->get();
             foreach ($roles as $role) {
                 if ($request->has('role_'. $role->id) && $request->input('role_'. $role->id) == true){
-                    
                     $user->assignRole($role->name);
                 }else{
                     $user->removeRole($role->name);
                 }
             }
+            $user->load([
+                'roles' => function ($query) {
+                    $query->where('status', 1);
+                },
+            ]);
             $responseData = [
                 'status' => 200,
                 'success'=>true,

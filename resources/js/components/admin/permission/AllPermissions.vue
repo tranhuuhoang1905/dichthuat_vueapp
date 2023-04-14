@@ -63,7 +63,6 @@ import DataTable from "datatables.net-vue3";
 import DataTablesCore from "datatables.net";
 import $ from "jquery";
 DataTable.use(DataTablesCore);
-import checkAccess from '@resources/js/middleware/access.js';
 import { createApp, h } from 'vue';
 import router from '@resources/js/router/index'; // import router từ file router.js
 export default {
@@ -164,7 +163,19 @@ export default {
             scrollX: true,
           });
         }
-      });
+      })
+        .catch((error) => {
+          if (error.response.status == 403) {
+            this.logout();
+            this.$swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: `Error ${error.response.status}: ${error.response.data.message}`,
+            });
+          }
+
+          // alert(`Error ${error.response.status}: ${error.response.data.message}`);
+        });
     },
 
     updatePermission() {
@@ -203,12 +214,12 @@ export default {
           })
         });
     },
-    updateRowData(id, newRole) {
+    updateRowData(id, newPermission) {
       let elementToUpdate = this.DataTableData.find(item => item.id === id);
       if (elementToUpdate) {
-        elementToUpdate.permissions = newRole.permissions;
-        elementToUpdate.name = newRole.name;
-        elementToUpdate.description = newRole.description;
+        elementToUpdate.name = newPermission.name;
+        elementToUpdate.status = newPermission.status;
+        elementToUpdate.description = newPermission.description;
       };
 
       $(this.$refs.myTable).DataTable().destroy();

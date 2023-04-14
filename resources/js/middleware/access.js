@@ -1,5 +1,4 @@
 import { store } from '../store/store';
-
 export default function checkAccess(roles) {
     if (roles.length === 0) {
         return true;
@@ -14,5 +13,6 @@ export default function checkAccess(roles) {
         return false;
     }
     const userRoles = authUser.roles;
+    console.log("check roles user:", userRoles);
     return userRoles.some((role) => roles.includes(role.name));
 }

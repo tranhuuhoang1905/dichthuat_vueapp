@@ -35,7 +35,7 @@ class WordsController extends Controller
     }
     
     // all words có các từ bị ẩn
-    public function allWord()
+    public function allWord(Request $request)
     {
         $wordsTest = DB::table('words')
             ->select('words.id as word_id', 'words.status as status',
@@ -54,7 +54,8 @@ class WordsController extends Controller
             'data'=> [
                 'words'=>$words,
                 'words_test'=>$wordsTest,
-                'languages'=>$languages
+                'languages'=>$languages,
+                'draw'=>$request->input('draw'),
             ]
         ];
         return response()->json($responseData);

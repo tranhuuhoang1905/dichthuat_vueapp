@@ -15,7 +15,7 @@
                     <th>Status</th>
                     <th>Created At</th>
                     <th>Updated At</th>
-                    <th v-if="userHasAdmin">Actions</th>
+                    <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -27,7 +27,7 @@
                     <td>{{ language.created_at }}</td>
                     <td>{{ language.updated_at }}</td>
 
-                    <td v-if="userHasAdmin">
+                    <td>
                       <div class="btn-group" role="group">
                         <router-link :to="{
                           name: 'edit-language',
@@ -148,31 +148,28 @@ export default {
           },
         },
       ];
-
-      if (this.userHasAdmin) {
-        this.columns.push({
-          data: "id",
-          createdCell: function (cell, cellData, rowData, rowIndex, colIndex) {
-            const app = createApp({
-              render() {
-                return h('a', {
-                  to: `/admin/language/edit/${rowData.id}`,
-                  class: 'btn btn-all-add-edit',
-                  onClick: () => {
-                    router.push({ name: 'Edit Language', params: { id: rowData.id } });
-                  }
-                }, 'edit')
-              },
-              data() {
-                return {
-                  rowData: rowData
+      this.columns.push({
+        data: "id",
+        createdCell: function (cell, cellData, rowData, rowIndex, colIndex) {
+          const app = createApp({
+            render() {
+              return h('a', {
+                to: `/admin/language/edit/${rowData.id}`,
+                class: 'btn btn-all-add-edit',
+                onClick: () => {
+                  router.push({ name: 'Edit Language', params: { id: rowData.id } });
                 }
+              }, 'edit')
+            },
+            data() {
+              return {
+                rowData: rowData
               }
-            })
-            app.mount(cell);
-          }
-        });
-      }
+            }
+          })
+          app.mount(cell);
+        }
+      });
 
     },
     fetchData() {
@@ -184,7 +181,19 @@ export default {
             scrollX: true,
           });
         }
-      });
+      })
+        .catch((error) => {
+          if (error.response.status == 403) {
+            this.logout();
+            this.$swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: `Error ${error.response.status}: ${error.response.data.message}`,
+            });
+          }
+
+          // alert(`Error ${error.response.status}: ${error.response.data.message}`);
+        });
     }
   },
   computed: {
