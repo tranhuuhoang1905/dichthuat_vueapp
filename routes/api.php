@@ -48,12 +48,12 @@ Route::group(['prefix' => 'language','middleware' => ['auth:sanctum, permission:
 
 // Route::group(['prefix' => 'word','middleware' => ['auth:sanctum', 'leader']], function () {
 Route::group(['prefix' => 'word','middleware' => ['auth:sanctum']], function () {
-    Route::post('all-word', [WordsController::class, 'allWord'])->middleware('permission:Word manager');
-    Route::post('add', [WordsController::class, 'add'])->middleware('permission:Word manager');
-    Route::get('edit/{id}', [WordsController::class, 'edit'])->middleware('permission:Word manager');
-    Route::get('alldata/{id}', [WordsController::class, 'alldata'])->middleware('permission:Word manager');
-    Route::post('update/{id}', [WordsController::class, 'update'])->middleware('permission:Word manager');
-    Route::post('suggestions', [WordsController::class, 'suggestions'])->middleware('permission:Word manager');
+    Route::post('all-word', [WordsController::class, 'allWord'])->middleware('permission:Word Manager');
+    Route::post('add', [WordsController::class, 'add'])->middleware('permission:Word Manager');
+    Route::get('edit/{id}', [WordsController::class, 'edit'])->middleware('permission:Word Manager');
+    Route::get('alldata/{id}', [WordsController::class, 'alldata'])->middleware('permission:Word Manager');
+    Route::post('update/{id}', [WordsController::class, 'update'])->middleware('permission:Word Manager');
+    Route::post('suggestions', [WordsController::class, 'suggestions'])->middleware('permission:Word Manager');
     //người có role:admin mới có quyền truy cập link api/posts/delete 
     // Route::delete('delete/{id}', [WordsController::class, 'delete']);
     Route::post('/save-words-from-excel', [WordsController::class, 'importWordsFromExcel'])->middleware('permission:Import Excel');
@@ -63,9 +63,9 @@ Route::group(['prefix' => 'word','middleware' => ['auth:sanctum']], function () 
 Route::group(['prefix' => 'translate'], function () {
     Route::post('/search', [TranslateController::class, 'search']);
     Route::post('/top-search-words', [TranslateController::class, 'getTopSearchWords']);
-    Route::get('edit/{id}', [TranslateController::class, 'edit'])->middleware('auth:sanctum, permission:Word manager');
-    Route::post('update/{id}', [TranslateController::class, 'update'])->middleware('auth:sanctum, permission:Word manager');
-    Route::post('get-translate-with-language', [TranslateController::class, 'getTranslateWithLanguage'])->middleware('auth:sanctum, permission:Word manager');
+    Route::get('edit/{id}', [TranslateController::class, 'edit'])->middleware('auth:sanctum, permission:Word Manager');
+    Route::post('update/{id}', [TranslateController::class, 'update'])->middleware('auth:sanctum, permission:Word Manager');
+    Route::post('get-translate-with-language', [TranslateController::class, 'getTranslateWithLanguage'])->middleware('auth:sanctum, permission:Word Manager');
 });
 Route::group(['prefix' => 'user','middleware' => ['auth:sanctum']], function() {
     // Route::get('/logout', [LanguagesController::class, 'index']);

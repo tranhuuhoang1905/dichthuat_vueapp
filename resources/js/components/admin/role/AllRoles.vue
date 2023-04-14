@@ -40,7 +40,7 @@
                       <textarea id="role-description" type="text" placeholder="Enter description" class="form-control"
                         cols="70" rows="4" v-model="roleForm.description"></textarea>
                     </div>
-                    <div class="form-check" v-for="(permission, index) in permissions" :key="index">
+                    <div v-if="showCheckbox" class="form-check" v-for="(permission, index) in permissions" :key="index">
                       <label class="form-check-label">
                         <input type="checkbox" class="form-check-input" value=""
                           :checked="isPermissionChecked(rolePermissions, permission.id)"
@@ -83,6 +83,7 @@ export default {
       rolePermissions: {},
       DataTableData: [],
       activeUpdateData: 1,
+      showCheckbox: true,
     };
   },
   created() {
@@ -170,9 +171,13 @@ export default {
                   class: 'btn btn-all-add-edit',
                   onClick: () => {
                     self.roleForm = { name: rowData.name, description: rowData.description, id: rowData.id };
-                    self.rolePermissions = rowData.permissions;
-                    self.$refs.myModalBtn.click();
-                    // router.push({ name: 'Edit Role', params: { id: rowData.id } });
+
+                    self.showCheckbox = false;
+                    setTimeout(() => {
+                      self.showCheckbox = true;
+                      self.rolePermissions = rowData.permissions;
+                      self.$refs.myModalBtn.click();
+                    }, 10);// xử lý chờ 10 ms để rolePermissions kịp xóa list checkbox cũ
                   }
                 }, 'edit')
               },

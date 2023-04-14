@@ -194,9 +194,10 @@ export default {
       return this.$store.getters.getLoginResponse.authenticated || loginResponse.authenticated || false;
     },
     isGotoAdmin() {
-      const authUser = JSON.parse(localStorage.getItem('authUser')) ?? {};
-      const loginRoles = authUser.roles[0].name;
-      return loginRoles === "admin" || loginRoles === "leader";
+      return true;
+      // const authUser = JSON.parse(localStorage.getItem('authUser')) ?? {};
+      // const loginRoles = authUser.roles[0].name;
+      // return loginRoles === "admin" || loginRoles === "leader";
     },
 
   },

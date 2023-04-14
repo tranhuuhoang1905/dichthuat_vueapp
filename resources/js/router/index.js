@@ -38,8 +38,6 @@ import EditTranslate from '../components/translate/EditTranslate.vue';
 import UserParent from '../components/admin/user/UserParent.vue';
 import AllUser from '../components/admin/user/AllUser.vue';
 import CreateNewUser from '../components/admin/user/CreateNewUser.vue';
-import ChangeRoleUser from '../components/admin/user/ChangeRoleUser.vue';
-import ChangePasswordUser from '../components/admin/user/ChangePasswordUser.vue';
 
 
 import ProfileParent from '../components/admin/profile/ProfileParent.vue';
@@ -188,7 +186,7 @@ export const routes = [
                         meta: { requiresAuth: true }
                     },
                     {
-                        name: 'Add Pemission',
+                        name: 'Add Permission',
                         path: 'add',
                         component: AddPermission,
                         meta: { requiresAuth: true, roles: ['admin'] }
@@ -211,16 +209,6 @@ export const routes = [
                         path: 'create-new-user',
                         component: CreateNewUser,
                     },
-                    {
-                        name: 'Change Role User',
-                        path: 'change-role-user/:id',
-                        component: ChangeRoleUser,
-                    },
-                    {
-                        name: 'Change Password User',
-                        path: 'change-pasword-user/:id',
-                        component: ChangePasswordUser,
-                    }
                 ]
             },
             {

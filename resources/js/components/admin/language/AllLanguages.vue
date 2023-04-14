@@ -55,7 +55,7 @@ import DataTable from "datatables.net-vue3";
 import DataTablesCore from "datatables.net";
 import $ from "jquery";
 DataTable.use(DataTablesCore);
-import checkAccess from '@resources/js/middleware/access.js';
+import { checkRolesAccess } from '@resources/js/middleware/access.js';
 import { createApp, h } from 'vue';
 import router from '@resources/js/router/index'; // import router từ file router.js
 export default {
@@ -198,7 +198,7 @@ export default {
   },
   computed: {
     userHasAdmin() {
-      return checkAccess(['admin']);
+      return checkRolesAccess(['admin']);
     }
   }
 };

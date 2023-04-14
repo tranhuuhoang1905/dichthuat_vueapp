@@ -17,12 +17,53 @@
                         </router-link>
                     </li>
                     <li>
-                        <router-link :to="{ name: 'All User' }" class=" waves-effect" exact tag="li" active-class="active">
+                        <router-link :to="{ name: 'All User' }" class=" waves-effect" exact tag="li" active-class="active"
+                            v-if="checkPermission(['User Manager'])">
                             <i class="ri-calendar-2-line"></i>
                             <span>User manager</span>
                         </router-link>
                     </li>
-                    <li :class="{ 'mm-active': $route.name === 'All Language' || $route.name === 'Add Language' }">
+                    <li :class="{ 'mm-active': $route.name === 'All Roles' || $route.name === 'Add Role' }"
+                        v-if="checkPermission(['Role Manager'])">
+                        <a href="javascript: void(0);"
+                            :class="{ 'mm-active': $route.name === 'All Roles' || $route.name === 'Add Role' }"
+                            class="has-arrow waves-effect">
+                            <i class="ri-store-2-line"></i>
+                            <span>Role Manager</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li>
+                                <router-link :to="{ name: 'All Roles' }" exact tag="li" exact-active-class="active">All
+                                    Roles</router-link>
+                            </li>
+                            <li>
+                                <router-link :to="{ name: 'Add Role' }" exact tag="li" exact-active-class="active">Add
+                                    Role</router-link>
+                            </li>
+                        </ul>
+                    </li>
+                    <li :class="{ 'mm-active': $route.name === 'All Permissions' || $route.name === 'Add Permission' }"
+                        v-if="checkPermission(['Role Manager'])">
+                        <a href="javascript: void(0);"
+                            :class="{ 'mm-active': $route.name === 'All Permissions' || $route.name === 'Add Permission' }"
+                            class="has-arrow waves-effect">
+                            <i class="ri-store-2-line"></i>
+                            <span>Permission Manager</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li>
+                                <router-link :to="{ name: 'All Permissions' }" exact tag="li"
+                                    exact-active-class="active">All
+                                    Permissions</router-link>
+                            </li>
+                            <li>
+                                <router-link :to="{ name: 'Add Permission' }" exact tag="li" exact-active-class="active">Add
+                                    Permission</router-link>
+                            </li>
+                        </ul>
+                    </li>
+                    <li :class="{ 'mm-active': $route.name === 'All Language' || $route.name === 'Add Language' }"
+                        v-if="checkPermission(['Language Manager'])">
                         <a href="javascript: void(0);"
                             :class="{ 'mm-active': $route.name === 'All Language' || $route.name === 'Add Language' }"
                             class="has-arrow waves-effect">
@@ -34,13 +75,14 @@
                                 <router-link :to="{ name: 'All Language' }" exact tag="li" exact-active-class="active">All
                                     Languages</router-link>
                             </li>
-                            <li v-if="userHasAdmin">
+                            <li>
                                 <router-link :to="{ name: 'Add Language' }" exact tag="li" exact-active-class="active">Add
                                     Languages</router-link>
                             </li>
                         </ul>
                     </li>
-                    <li :class="{ 'mm-active': $route.name === 'All Word' || $route.name === 'Add Word' }">
+                    <li :class="{ 'mm-active': $route.name === 'All Word' || $route.name === 'Add Word' }"
+                        v-if="checkPermission(['Word Manager'])">
                         <a href="javascript: void(0);" class="has-arrow waves-effect"
                             :class="{ 'mm-active': $route.name === 'All Word' || $route.name === 'Add Word' }">
                             <i class="ri-mail-send-line"></i>
@@ -59,25 +101,28 @@
                     </li>
                     <li class="menu-title">Pages</li>
                     <li>
-                        <router-link :to="{ name: 'Import Word From Excel' }" class=" waves-effect" v-if="userHasAdmin"
-                            exact tag="li" active-class="active">
+                        <router-link :to="{ name: 'Import Word From Excel' }" class=" waves-effect"
+                            v-if="checkPermission(['Import Excel'])" exact tag="li" active-class="active">
                             <i class="ri-calendar-2-line"></i>
                             <span>Import file excel</span>
                         </router-link>
                     </li>
                     <li>
-                        <router-link :to="{ name: 'All Log' }" class=" waves-effect" exact tag="li" active-class="active">
+                        <router-link :to="{ name: 'All Log' }" class=" waves-effect" exact tag="li" active-class="active"
+                            v-if="checkPermission(['Log Import'])">
                             <i class="ri-calendar-2-line"></i>
                             <span>Log Import file excel</span>
                         </router-link>
                     </li>
                     <li>
                         <router-link :to="{ name: 'Translate Word From Excel' }" class=" waves-effect" exact tag="li"
-                            active-class="active">
+                            active-class="active" v-if="checkPermission(['Translate File Excel'])">
                             <i class="ri-calendar-2-line"></i>
                             <span>Translate file excel</span>
                         </router-link>
                     </li>
+
+
                 </ul>
             </div>
             <!-- Sidebar -->
@@ -86,7 +131,7 @@
     <!-- Left Sidebar End -->
 </template>
 <script>
-import checkAccess from '@resources/js/middleware/access.js';
+import { checkRolesAccess, checkPermissionAccess } from '@resources/js/middleware/access.js';
 export default {
     data() {
         return {
@@ -94,11 +139,10 @@ export default {
         }
     },
     created() {
-        console.log("check userHasAdmin:", checkAccess(['admin']));
     },
     methods: {
-        toggleExpand() {
-            this.isExpanded = !this.isExpanded;
+        checkPermission(permissions) {
+            return checkPermissionAccess(permissions);
         }
     },
     mounted() {
@@ -114,7 +158,7 @@ export default {
     },
     computed: {
         userHasAdmin() {
-            return checkAccess(['admin'])
+            return checkRolesAccess(['admin'])
         },
     }
 }

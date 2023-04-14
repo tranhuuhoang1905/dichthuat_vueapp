@@ -31,10 +31,10 @@
         <div class="modal-content col-md-12">
           <div class="row">
             <div class="word_default p-4">
-              <h3 class="text-center">Word Default</h3>
+              <h3 class="text-center">Change Roles</h3>
               <div class="row ">
                 <div class="col-md-12 d-flex flex-column align-items-center">
-                  <form @submit.prevent="updateUser">
+                  <form @submit.prevent="updateRolesUser">
                     <div class="row">
                       <div class="col-md-12">
                         <div class="form-group">
@@ -47,13 +47,70 @@
                           <input type="text" placeholder="Enter description" class="form-control" v-model="userForm.name"
                             required disabled />
                         </div>
-                        <div class="form-check" v-for="(role, index) in roles" :key="index">
+                        <div v-if="showCheckbox" class="form-check" v-for="(role, index) in roles"
+                          :key="`checkbox_${role.id}`">
                           <label class="form-check-label">
-                            <input type="checkbox" class="form-check-input" value=""
+                            <input type="checkbox" class="form-check-input" value="" :key="`checkbox_${role.id}`"
                               :checked="isRolesChecked(userRoles, role.id)"
                               @click="handleCheckboxClick(role.id, $event.target.checked)">{{
                                 role.name }}
                           </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                      <button type="submit" class="btn btn-all-add-edit py-2 px-5">Change</button>
+                    </div>
+                  </form>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- modal change password -->
+  <div class="row">
+    <button ref="myModalPasswordBtn" type="button" class="btn btn-primary d-none" data-toggle="modal"
+      data-target="#ModalPassword">
+      Launch demo modal
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="ModalPassword" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog row p-5" role="document">
+        <div class="modal-content col-md-12">
+          <div class="row">
+            <div class="word_default p-4">
+              <h3 class="text-center">Change Password</h3>
+              <div class="row ">
+                <div class="col-md-12 d-flex flex-column align-items-center">
+                  <form @submit.prevent="updatePasswordUser">
+                    <div class="row">
+                      <div class=" col-md-12">
+                        <div class="form-group">
+                          <label>Email</label>
+                          <input type="email" placeholder="Enter description" class="form-control"
+                            v-model="userPasswwordForm.email" required disabled />
+                        </div>
+                        <div class="form-group">
+                          <label>Username</label>
+                          <input type="text" placeholder="Enter description" class="form-control"
+                            v-model="userPasswwordForm.name" required disabled />
+                        </div>
+                        <div class="form-group">
+                          <label>Password</label>
+                          <input type="password" placeholder="Enter description" class="form-control"
+                            v-model="userPasswwordForm.password" required />
+                        </div>
+                        <div class="form-group">
+                          <label>Repassword</label>
+                          <input type="password" placeholder="Enter description" class="form-control"
+                            v-model="userPasswwordForm.repassword" required />
                         </div>
                       </div>
                     </div>
@@ -94,12 +151,13 @@ export default {
         role: "",
       },
       userForm: [],
+      userPasswwordForm: [],
       userRoles: [],
       roles: [],
-      DataTableData: []
+      DataTableData: [],
+      showCheckbox: true,
     };
   },
-
   created() {
     this.fetchData();
   },
@@ -116,7 +174,7 @@ export default {
       };
       this.showUserForm = false;
     },
-    updateUser() {
+    updateRolesUser() {
       console.log("check userForm:", this.userForm);
       this.axios
         .post(
@@ -135,6 +193,38 @@ export default {
             });
 
             // alert(response.data.message);
+          }
+        })
+        .catch((error) => {
+          this.$swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: `Error ${error.response.status}: ${error.response.data.message}`,
+          });
+          // alert(`Error ${error.response.status}: ${error.response.data.message}`);
+        })
+        .finally(() => (this.loading = false));
+    },
+    updatePasswordUser() {
+      this.axios
+        .post(
+          `/api/user/admin-change-password-user/${this.userPasswwordForm.id}`,
+          this.userPasswwordForm
+        )
+        .then((response) => {
+          if (response.data.status === 200) {
+            // alert(response.data.message);
+            this.$swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: `Change password ${this.userPasswwordForm.name} success`,
+              showConfirmButton: false,
+              timer: this.$config.notificationTimer ?? 1000,
+            });
+            this.userPasswwordForm.password = null;
+            this.userPasswwordForm.repassword = null;
+            // if (response.data.success === true) {
+            // }
           }
         })
         .catch((error) => {
@@ -195,13 +285,13 @@ export default {
                       to: `/admin/user-manager/change-role-user/${rowData.id}`,
                       class: "btn btn-all-add-edit",
                       onClick: () => {
-                        // router.push({
-                        //   name: "Change Role User",
-                        //   params: { id: rowData.id },
-                        // });
                         self.userForm = { name: rowData.name, email: rowData.email, id: rowData.id };
-                        self.userRoles = rowData.roles;
-                        self.$refs.myModalBtn.click();
+                        self.showCheckbox = false;
+                        setTimeout(() => {
+                          self.showCheckbox = true;
+                          self.userRoles = rowData.roles;
+                          self.$refs.myModalBtn.click();
+                        }, 10);// xử lý chờ 10 ms để userRoles kịp xóa list checkbox cũ
                       },
                     },
                     "Change Role"
@@ -212,10 +302,10 @@ export default {
                       to: `/admin/user-manager/change-pasword-user/${rowData.id}`,
                       class: "btn btn-all-add-edit",
                       onClick: () => {
-                        router.push({
-                          name: "Change Password User",
-                          params: { id: rowData.id },
-                        });
+                        self.showCheckbox = false;
+                        self.userPasswwordForm = { name: rowData.name, email: rowData.email, id: rowData.id };
+
+                        self.$refs.myModalPasswordBtn.click();
                       },
                     },
                     "Change Password"
@@ -264,14 +354,14 @@ export default {
     },
     isRolesChecked(roles, roleId) {
       // return true;
-      this.userForm['role_' + roleId] = false;
+      console.log("check isRolesChecked roles", roles);
       if (Array.isArray(roles)) {
         const isCheck = roles.some(role => role.id === roleId)
-        if (isCheck) {
-          this.userForm['role_' + roleId] = true;
-        }
+        this.userForm['role_' + roleId] = isCheck;
+        console.log("check isCheck : roleId", roleId, isCheck);
         return isCheck;
       } else {
+        console.log("check isCheck: roleId", roleId, false);
         return false;
       }
       // return true;
