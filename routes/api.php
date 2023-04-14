@@ -88,7 +88,8 @@ Route::group(['prefix' => 'user','middleware' => ['auth:sanctum']], function() {
         ];
         return response()->json($responseData);
     });
-    Route::get('allusers' , [UserController::class, 'allusers'])->middleware('permission:User Manager');
+    // Route::get('allusers' , [UserController::class, 'allusers'])->middleware('permission:User Manager');
+    Route::get('allusers' , [UserController::class, 'allusers']);
     Route::get('roles', [UserController::class, 'roles'])->middleware('permission:User Manager');
     Route::post('create-new-user', [UserController::class, 'createNewUser'])->middleware('permission:User Manager');
     Route::get('edit/{id}', [UserController::class, 'edit'])->middleware('permission:User Manager');

@@ -197,7 +197,7 @@ export const routes = [
                 name: 'User Manager',
                 path: 'user-manager',
                 component: UserParent,
-                meta: { permissions: ['User Manager'] },
+                // meta: { permissions: ['User Manager'] },
                 children: [
                     {
                         name: 'All User',
