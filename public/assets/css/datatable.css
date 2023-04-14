@@ -86,9 +86,20 @@
   width: 100% !important;
 }
 
-.user_manager tbody td:nth-child(7) {
-  display: flex;
-  justify-content: space-evenly;
+.all_permissions tbody td:nth-child(4), .all_permissions tbody td:nth-child(5) {
+  text-align: center;
+}
+
+.all_roles tbody td:nth-child(5), .all_roles tbody td:nth-child(6) {
+  text-align: center;
+}
+
+.all_languages tbody td:nth-child(4), .all_languages tbody td:nth-child(7) {
+  text-align: center;
+}
+
+.all_word tbody td:nth-child(2), .all_word tbody td:nth-child(7) {
+  text-align: center;
 }
 
 .all_languages tbody input[type=checkbox],
@@ -141,6 +152,7 @@
   width: 30px;
 }
 
+.user_manager tbody input[type=checkbox],
 .all_languages tbody input[type=checkbox],
 .log_import tbody input[type=checkbox],
 .all_word tbody input[type=checkbox],
@@ -150,6 +162,7 @@
   width: 0;
   visibility: hidden;
 }
+.user_manager tbody label,
 .all_languages tbody label,
 .log_import tbody label,
 .all_word tbody label,
@@ -165,6 +178,7 @@
   margin-bottom: 0;
   margin-right: 0 !important;
 }
+.user_manager tbody label:after,
 .all_languages tbody label:after,
 .log_import tbody label:after,
 .all_word tbody label:after,
@@ -181,6 +195,7 @@
   border-radius: 90px;
   transition: 0.3s;
 }
+.user_manager tbody input:checked + label,
 .all_languages tbody input:checked + label,
 .log_import tbody input:checked + label,
 .all_word tbody input:checked + label,
@@ -188,6 +203,7 @@
 .all_permissions tbody input:checked + label {
   background: grey;
 }
+.user_manager tbody input:checked + label:after,
 .all_languages tbody input:checked + label:after,
 .log_import tbody input:checked + label:after,
 .all_word tbody input:checked + label:after,
@@ -196,6 +212,7 @@
   right: 100%;
   transform: translateX(100%);
 }
+.user_manager tbody label:active:after,
 .all_languages tbody label:active:after,
 .log_import tbody label:active:after,
 .all_word tbody label:active:after,
@@ -203,20 +220,14 @@
 .all_permissions tbody label:active:after {
   width: 30px;
 }
-.all_languages tbody td:nth-child(7),
-.log_import tbody td:nth-child(7),
-.all_word tbody td:nth-child(7),
-.all_roles tbody td:nth-child(7),
-.all_permissions tbody td:nth-child(7) {
-  display: flex;
-  justify-content: center;
-}
+.user_manager tbody td,
 .all_languages tbody td,
 .log_import tbody td,
 .all_word tbody td,
 .all_roles tbody td,
 .all_permissions tbody td {
-  max-width: 500px;
+  vertical-align: middle;
+  max-width: 300px;
   height: 100%;
 }
 

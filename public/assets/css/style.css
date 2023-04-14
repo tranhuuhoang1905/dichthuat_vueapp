@@ -336,8 +336,8 @@ textarea {
 
 .ul-list {
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
-  list-style: none;
   min-width: 300px;
 }
 .ul-list li {
