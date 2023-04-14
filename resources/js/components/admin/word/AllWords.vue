@@ -46,27 +46,17 @@
                   <h4>Word</h4>
                   <div class="word-default-data shadow-lg border border-0">
                     <div class="word-content">
-                      <div class="box_mean">
+                      <div class="box_mean" v-for="(translate, index) in dataWord"
+                      :key="index">
                         <div class="title">
                           <p>
-                            Xin Chao
-                            <!-- {{ languages.translate }} -->
+                            {{ translate.translate }}
                           </p>
                         </div>
                         <p class="box_mean-language">
-                          Language: Tiếng việt
-                          {{ languages.name }}
+                          Language:
+                          {{ translate.language }}
                         </p>
-                        <!-- Tiếng việt {{ wordDefault.language }} -->
-                        <div class="box_mean_router pt-2">
-                          <!-- <router-link
-                            :to="{ name: 'Edit Word',
-                            //  params: { id: wordId } 
-                             }"
-                            class="btn btn-all-add-edit word-botton"
-                            ><i class="fas fa-edit"></i> Edit
-                          </router-link> -->
-                        </div>
                       </div>
                     </div>
                   </div>
@@ -74,10 +64,11 @@
                 <div class="col-md-8">
                   <h4>Translate</h4>
                   <div class="shadow-lg border border-0 word-default-data">
-                    <div
+                    <div  v-for="(translate, index) in dataWord"
+                      :key="index">
+                      <form @submit.prevent="updateTranslate(id)" >
+                      <div
                       class="word-content"
-                      v-for="(translate, index) in languages"
-                      :key="index"
                     >
                       <hr v-if="index > 0" />
                       <div class="icon_dot">
@@ -87,34 +78,32 @@
                           <input
                             type="text"
                             class="form-control"
-                            v-model="translate.name"
+                            v-model="translate.language"
                             disabled
                           />
-                          <!-- {{ translate.language }} -->
                         </div>
                       </div>
                       <div class="box_mean">
                         <div class="form-group box_mean-translate">
                           <label>Translate:</label>
-                          <input type="text" class="form-control" />
+                          <input type="text" class="form-control" v-model="translate.translate"/>
                         </div>
-                        <!-- {{ dataLanguage.translate }} -->
                         <div class="form-group box_mean-description">
                           <label>Description:</label>
-                          <input type="text" class="form-control" />
+                          <input type="text" class="form-control" v-model="translate.description"/>
                         </div>
-                        <!-- {{ translate.description }} -->
                         <div class="form-group box_mean-description">
                           <label> Description in original language:</label>
-                          <input type="text" class="form-control" />
+                          <input type="text" class="form-control" v-model="translate.original_language_description"/>
                         </div>
-                        <!-- {{ translate.original_language_description }} -->
                         <div class="box_mean_router">
-                          <button class="btn btn-all-add-edit word-botton">
+                          <button type="submit" class="btn btn-all-add-edit word-botton">
                              Save
                           </button>
                         </div>
                       </div>
+                    </div>
+                    </form>
                     </div>
                   </div>
                 </div>
@@ -125,7 +114,7 @@
       </div>
     </div>
   </div>
-  <div class="row">
+  <!-- <div class="row">
     <button
       ref="myModalBtnAdd"
       type="button"
@@ -160,7 +149,7 @@
                               type="text"
                               placeholder="Enter translated word"
                               class="form-control"
-                              v-model="languages.translate"
+                              v-model="dataWord.translate"
                               required
                             />
                           </div>
@@ -170,7 +159,7 @@
                               type="text"
                               placeholder="Enter description"
                               class="form-control"
-                              v-model="languages.description"
+                              v-model="dataWord.description"
                               rows="4"
                               required
                             ></textarea>
@@ -221,7 +210,7 @@
                             <select
                               class="form-select"
                               aria-label="Default select example"
-                              v-model="languages.language_translate_id"
+                              v-model="wordDetail.language_id"
                               required
                             >
                               <option
@@ -249,7 +238,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 </template>
  
 <script>
@@ -266,6 +255,7 @@ export default {
       words: [],
       words_test: [],
       languages: [],
+      dataWord:{},
     };
   },
   mounted() {
@@ -275,6 +265,30 @@ export default {
     this.fetchData();
   },
   methods: {
+    updateTranslate() {
+      console.log("chdekk ------:",this.dataWord);
+      this.axios
+        .post(`/api/translate/update/1589`, this.dataWord)
+        .then((response) => {
+          if (response.data.status === 200) {
+            this.$swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: `Update Word abc Success`,
+              showConfirmButton: false,
+              timer: this.$config.notificationTimer ?? 1000,
+            });
+          }
+        })
+        .catch((error) => {
+          this.$swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: `Error ${error.response.status}: ${error.response.data.message}`,
+          });
+        })
+        .finally(() => (this.loading = false));
+    },
     fetchData() {
       this.axios.post("/api/word/all-word").then((response) => {
         // this.words = response.data;
@@ -357,7 +371,13 @@ export default {
                       {
                         class: "btn btn-all-add-edit",
                         onClick: () => {
-                          self.$refs.myModalBtn.click();
+                          self.axios.post("/api/translate/get-translate-with-language",
+                              {'word_id':rowData.word_id,'language_id':language.id}).then((response) => {
+                            if (response.data.status === 200 && response.data.success == true) {
+                                self.dataWord = response.data.data.translations
+                            }
+                           });
+                          self.$refs.myModalBtn.click();  
                         },
                       },
                       "edit"

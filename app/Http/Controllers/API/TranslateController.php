@@ -74,10 +74,12 @@ class TranslateController extends Controller
     {
         $languageId = $request->input('language_id');
         $wordId = $request->input('word_id');
-        $translations = TranslationWord::select('id','language_id', 'word_id','description','original_language_description') // Chỉ định các cột cần lấy
+        $translations = TranslationWord::join('languages', 'translation_word.language_id', '=', 'languages.id')
+            ->select('translation_word.id as id','languages.name as language','language_id','translate', 'word_id','translation_word.description as description','original_language_description') // Chỉ định các cột cần lấy
             ->where('word_id',$wordId)
             ->where('language_id', $languageId)
             ->get(); // Thực hiện truy vấn và lấy tất cả các dòng kết quả
+
 
         // Chuyển đổi kết quả thành mảng
         $translations = $translations->toArray();
