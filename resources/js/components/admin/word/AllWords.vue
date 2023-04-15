@@ -31,15 +31,15 @@
                   <h4>Word</h4>
                   <div class="word-default-data shadow-lg border border-0">
                     <div class="word-content">
-                      <div class="box_mean" v-for="(translate, index) in dataWords" :key="index">
+                      <div class="box_mean">
                         <div class="title">
                           <p>
-                            {{ translate.translate }}
+                            {{ dataTranslateWord.word }}
                           </p>
                         </div>
                         <p class="box_mean-language">
                           Language:
-                          {{ translate.language }}
+                          {{ dataLanguageWord.name }}
                         </p>
                       </div>
                     </div>
@@ -182,6 +182,8 @@ export default {
       words_test: [],
       languages: [],
       dataWords: {},
+      dataLanguageWord: {},
+      dataTranslateWord: {},
       formAddWordData: {},
       rowAction: null,
       dataTableData: [],
@@ -336,6 +338,7 @@ export default {
         return {
           data: "word_id",
           title: language.name,
+          // class:"td_space-between",
           createdCell: function (cell, cellData, rowData, rowIndex, colIndex) {
             const app = createApp({
               render() {
@@ -360,6 +363,8 @@ export default {
                               { 'word_id': rowData.word_id, 'language_id': language.id }).then((response) => {
                                 if (response.data.status === 200 && response.data.success == true) {
                                   self.dataWords = response.data.data.translations
+                                  self.dataLanguageWord = self.languages[0]
+                                  self.dataTranslateWord = rowData
                                 }
                               });
                             self.rowAction = rowData;
@@ -377,7 +382,7 @@ export default {
                     {
                       class: "btn btn-all-add-edit",
                       onClick: () => {
-                        console.log("check self.rowData", rowData);
+                        // console.log("check self.rowData", rowData);
                         self.rowAction = rowData;
                         self.formAddWordData = {
                           language_id: rowData.language_id,
