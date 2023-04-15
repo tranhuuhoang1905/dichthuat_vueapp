@@ -1,21 +1,34 @@
 <template>
   <div class="add_permission">
-    <div class="row">
-      <div class="row d-flex justify-content-center">
+    <div class="row d-flex justify-content-center">
+      <div class="col-md-7">
         <div class="card show border border-0">
           <div class="card-body">
             <h4 class="card-title text-center fs-4">Add Permission</h4>
-            <div class="col-md-12 d-flex flex-column align-items-center">
+            <div class="col-md-12">
               <form @submit.prevent="addPermission">
                 <div class="form-group">
                   <label for="permission-name">Permission name</label>
-                  <input id="permission-name" type="text" placeholder="Enter permission name" class="form-control"
-                    v-model="permission.name" required />
+                  <input
+                    id="permission-name"
+                    type="text"
+                    placeholder="Enter permission name"
+                    class="form-control"
+                    v-model="permission.name"
+                    required
+                  />
                 </div>
                 <div class="form-group">
                   <label for="permission-description">Description</label>
-                  <textarea id="permission-description" type="text" placeholder="Enter description" class="form-control"
-                    cols="70" rows="7" v-model="permission.description"></textarea>
+                  <textarea
+                    id="permission-description"
+                    type="text"
+                    placeholder="Enter description"
+                    class="form-control"
+                    cols="70"
+                    rows="7"
+                    v-model="permission.description"
+                  ></textarea>
                 </div>
                 <div class="d-flex justify-content-center">
                   <button type="submit" class="btn btn-all-add-edit">
@@ -31,7 +44,6 @@
   </div>
 </template>
 <script>
-
 export default {
   data() {
     return {
@@ -46,12 +58,12 @@ export default {
         .then((response) => {
           if (response.data.status === 200) {
             this.$swal.fire({
-              position: 'top-end',
-              icon: 'success',
+              position: "top-end",
+              icon: "success",
               title: `Add permission ${this.permission.name} success`,
               showConfirmButton: false,
-              timer: this.$config.notificationTimer ?? 1000
-            })
+              timer: this.$config.notificationTimer ?? 1000,
+            });
             this.permission = {};
           }
         })
@@ -60,11 +72,11 @@ export default {
           console.log(error);
           // alert(`Error ${error.response.status}: ${error.response.data.message}`);
           this.$swal.fire({
-            icon: 'error',
-            title: 'Oops...',
+            icon: "error",
+            title: "Oops...",
             text: `Error ${error.response.status}: ${error.response.data.message}`,
             // footer: '<a href="">Why do I have this issue?</a>'
-          })
+          });
         });
     },
   },

@@ -6,8 +6,10 @@
           <div class="card-body">
             <h4 class="card-title text-center fs-4 mb-3">All Roles</h4>
             <div class="">
-              <table ref="myTable" class="table table-bordered table-striped table-hover display nowrap">
-              </table>
+              <table
+                ref="myTable"
+                class="table table-bordered table-striped table-hover display nowrap"
+              ></table>
             </div>
           </div>
         </div>
@@ -15,37 +17,81 @@
     </div>
   </div>
   <div class="row">
-    <button ref="myModalBtn" type="button" class="btn btn-primary d-none" data-toggle="modal" data-target="#exampleModal">
+    <button
+      ref="myModalBtn"
+      type="button"
+      class="btn btn-primary d-none"
+      data-toggle="modal"
+      data-target="#exampleModal"
+    >
       Launch demo modal
     </button>
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-      aria-hidden="true">
-      <div class="modal-dialog row p-5" role="document">
-        <div class="modal-content col-md-12">
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div
+        class="modal-dialog p-5 d-flex justify-content-center"
+        role="document"
+      >
+        <div class="modal-content col-md-7">
           <div class="row">
             <div class="word_default p-4">
-              <h3 class="text-center">Word Default</h3>
-              <div class="row ">
+              <h3 class="text-center">Edit Role</h3>
+              <div class="row">
                 <div class="col-md-12 d-flex flex-column align-items-center">
                   <form @submit.prevent="updateRole">
                     <div class="form-group">
                       <label for="role-name">Role name</label>
-                      <input id="role-name" type="text" placeholder="Enter role name" class="form-control"
-                        v-model="roleForm.name" required />
+                      <input
+                        id="role-name"
+                        type="text"
+                        placeholder="Enter role name"
+                        class="form-control"
+                        v-model="roleForm.name"
+                        required
+                      />
                     </div>
                     <div class="form-group">
                       <label for="role-description">Description</label>
-                      <textarea id="role-description" type="text" placeholder="Enter description" class="form-control"
-                        cols="70" rows="4" v-model="roleForm.description"></textarea>
+                      <textarea
+                        id="role-description"
+                        type="text"
+                        placeholder="Enter description"
+                        class="form-control"
+                        cols="70"
+                        rows="4"
+                        v-model="roleForm.description"
+                      ></textarea>
                     </div>
-                    <div v-if="showCheckbox" class="form-check" v-for="(permission, index) in permissions" :key="index">
+                    <label> List Permission</label>
+                    <div
+                      v-if="showCheckbox"
+                      class="form-check"
+                      v-for="(permission, index) in permissions"
+                      :key="index"
+                    >
                       <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" value=""
-                          :checked="isPermissionChecked(rolePermissions, permission.id)"
-                          @click="handleCheckboxClick(permission.id, $event.target.checked)">{{
-                            permission.name }}
+                        <input
+                          type="checkbox"
+                          class="form-check-input"
+                          value=""
+                          :checked="
+                            isPermissionChecked(rolePermissions, permission.id)
+                          "
+                          @click="
+                            handleCheckboxClick(
+                              permission.id,
+                              $event.target.checked
+                            )
+                          "
+                        />{{ permission.name }}
                       </label>
                     </div>
                     <div class="d-flex justify-content-center">
@@ -55,7 +101,6 @@
                     </div>
                   </form>
                 </div>
-
               </div>
             </div>
           </div>
@@ -71,9 +116,9 @@ import DataTable from "datatables.net-vue3";
 import DataTablesCore from "datatables.net";
 import $ from "jquery";
 DataTable.use(DataTablesCore);
-import checkAccess from '@resources/js/middleware/access.js';
-import { createApp, h } from 'vue';
-import router from '@resources/js/router/index'; // import router từ file router.js
+import checkAccess from "@resources/js/middleware/access.js";
+import { createApp, h } from "vue";
+import router from "@resources/js/router/index"; // import router từ file router.js
 export default {
   data() {
     return {
@@ -121,28 +166,37 @@ export default {
         { data: "name", title: "Role" },
         { data: "description", title: "Description" },
         {
-          data: "id", title: "Permissions",
+          data: "id",
+          title: "Permissions",
           class: "columns-list",
           createdCell: function (cell, cellData, rowData, rowIndex, colIndex) {
             const app = createApp({
               render() {
-                return h('ul', { class: 'ul-list' }, rowData.permissions.map(permission => {
-                  return h('li', {}, [
-                    h('p', {
-                      to: `/admin/role/edit/${rowData.id}`,
-                      class: 'btn btn-all-add-edit',
-                    }, permission.name)
-                  ]);
-                }));
+                return h(
+                  "ul",
+                  { class: "ul-list" },
+                  rowData.permissions.map((permission) => {
+                    return h("li", {}, [
+                      h(
+                        "p",
+                        {
+                          to: `/admin/role/edit/${rowData.id}`,
+                          class: "",
+                        },
+                        permission.name
+                      ),
+                    ]);
+                  })
+                );
               },
               data() {
                 return {
-                  rowData: rowData
-                }
-              }
-            })
+                  rowData: rowData,
+                };
+              },
+            });
             app.mount(cell);
-          }
+          },
         },
         {
           data: "status",
@@ -162,44 +216,54 @@ export default {
           },
         },
         {
-          data: "id", title: "Action",
+          data: "id",
+          title: "Action",
           createdCell: function (cell, cellData, rowData, rowIndex, colIndex) {
             const app = createApp({
               render() {
-                return h('a', {
-                  to: `/admin/role/edit/${rowData.id}`,
-                  class: 'btn btn-all-add-edit',
-                  onClick: () => {
-                    self.roleForm = { name: rowData.name, description: rowData.description, id: rowData.id };
+                return h(
+                  "a",
+                  {
+                    to: `/admin/role/edit/${rowData.id}`,
+                    class: "btn btn-all-add-edit",
+                    onClick: () => {
+                      self.roleForm = {
+                        name: rowData.name,
+                        description: rowData.description,
+                        id: rowData.id,
+                      };
 
-                    self.showCheckbox = false;
-                    setTimeout(() => {
-                      self.showCheckbox = true;
-                      self.rolePermissions = rowData.permissions;
-                      self.$refs.myModalBtn.click();
-                    }, 10);// xử lý chờ 10 ms để rolePermissions kịp xóa list checkbox cũ
-                  }
-                }, 'edit')
+                      self.showCheckbox = false;
+                      setTimeout(() => {
+                        self.showCheckbox = true;
+                        self.rolePermissions = rowData.permissions;
+                        self.$refs.myModalBtn.click();
+                      }, 10); // xử lý chờ 10 ms để rolePermissions kịp xóa list checkbox cũ
+                    },
+                  },
+                  "edit"
+                );
               },
               data() {
                 return {
-                  rowData: rowData
-                }
-              }
-            })
+                  rowData: rowData,
+                };
+              },
+            });
             app.mount(cell);
-          }
-        }
+          },
+        },
       ];
     },
     fetchData() {
-      this.axios.get("/api/role/all")
+      this.axios
+        .get("/api/role/all")
         .then((response) => {
           if (response.data.success === true && response.data.status == 200) {
             console.log("check response.data", response.data);
             this.permissions = response.data.data.permissions;
             this.setColumns();
-            this.DataTableData = response.data.data.roles
+            this.DataTableData = response.data.data.roles;
             this.table = $(this.$refs.myTable).DataTable({
               data: this.DataTableData,
               columns: this.columns,
@@ -225,22 +289,24 @@ export default {
         .post(`/api/role/update/${this.roleForm.id}`, this.roleForm)
         .then((response) => {
           if (response.data.status === 200 && response.data.success == true) {
-
-            this.updateRowData(this.roleForm.id, response.data.data.role_update);
+            this.updateRowData(
+              this.roleForm.id,
+              response.data.data.role_update
+            );
             this.$swal.fire({
-              position: 'top-end',
-              icon: 'success',
+              position: "top-end",
+              icon: "success",
               title: `Add role ${this.roleForm.name} success`,
               showConfirmButton: false,
-              timer: this.$config.notificationTimer ?? 1000
-            })
+              timer: this.$config.notificationTimer ?? 1000,
+            });
           } else {
             this.$swal.fire({
-              icon: 'error',
-              title: 'Oops...',
+              icon: "error",
+              title: "Oops...",
               text: `Error ${error.response.status}: ${error.response.data.message}`,
               // footer: '<a href="">Why do I have this issue?</a>'
-            })
+            });
           }
         })
         .catch((error) => {
@@ -248,40 +314,41 @@ export default {
           console.log(error);
           // alert(`Error ${error.response.status}: ${error.response.data.message}`);
           this.$swal.fire({
-            icon: 'error',
-            title: 'Oops...',
+            icon: "error",
+            title: "Oops...",
             text: `Error ${error.response.status}: ${error.response.data.message}`,
             // footer: '<a href="">Why do I have this issue?</a>'
-          })
+          });
         });
     },
     isPermissionChecked(permissions, permissionId) {
       // return true;
-      this.roleForm['permission_' + permissionId] = false;
+      this.roleForm["permission_" + permissionId] = false;
       if (Array.isArray(permissions)) {
-        const isCheck = permissions.some(permission => permission.id === permissionId)
+        const isCheck = permissions.some(
+          (permission) => permission.id === permissionId
+        );
         if (isCheck) {
-          this.roleForm['permission_' + permissionId] = true;
+          this.roleForm["permission_" + permissionId] = true;
         }
         return isCheck;
       } else {
         return false;
       }
       // return true;
-
     },
     handleCheckboxClick(permissionId, checked) {
-      this.roleForm['permission_' + permissionId] = checked;
+      this.roleForm["permission_" + permissionId] = checked;
     },
 
     updateRowData(id, newRole) {
-      let elementToUpdate = this.DataTableData.find(item => item.id === id);
+      let elementToUpdate = this.DataTableData.find((item) => item.id === id);
       if (elementToUpdate) {
         elementToUpdate.permissions = newRole.permissions;
         elementToUpdate.name = newRole.name;
         elementToUpdate.status = newRole.status;
         elementToUpdate.description = newRole.description;
-      };
+      }
 
       $(this.$refs.myTable).DataTable().destroy();
       // this.setColumns();
@@ -290,9 +357,8 @@ export default {
         columns: this.columns,
         scrollX: true,
       });
-    }
+    },
   },
-  computed: {
-  }
+  computed: {},
 };
 </script>

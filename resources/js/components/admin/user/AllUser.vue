@@ -3,16 +3,24 @@
     <div class="row position-relative">
       <div class="col-md-12">
         <div class="card show border border-0">
-          <router-link :to="{ name: 'Create New User' }" class="btn btn-all-add-edit my-3 mx-3 position-absolute">Add
-            user</router-link>
+          <button
+      ref="myModalAddUserBtn"
+      type="button"
+      class="btn btn-all-add-edit my-3 mx-3 position-absolute"
+      data-toggle="modal"
+      data-target="#ModalAddUser"
+    >
+    Add user
+    </button>
           <div class="card-body">
             <h4 class="card-title text-md-center fs-4 my-3 text-right">
               User Manager
             </h4>
             <div class="table-responsive-lg">
-              <table ref="myTable" class="table table-bordered table-striped table-hover display nowrap">
-
-              </table>
+              <table
+                ref="myTable"
+                class="table table-bordered table-striped table-hover display nowrap"
+              ></table>
             </div>
           </div>
         </div>
@@ -20,50 +28,177 @@
     </div>
   </div>
   <div class="row">
-    <button ref="myModalBtn" type="button" class="btn btn-primary d-none" data-toggle="modal" data-target="#exampleModal">
+    <button
+      ref="myModalBtn"
+      type="button"
+      class="btn btn-primary d-none"
+      data-toggle="modal"
+      data-target="#exampleModal"
+    >
       Launch demo modal
     </button>
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-      aria-hidden="true">
-      <div class="modal-dialog row p-5" role="document">
-        <div class="modal-content col-md-12">
-          <div class="row">
-            <div class="word_default p-4">
-              <h3 class="text-center">Change Roles</h3>
-              <div class="row ">
-                <div class="col-md-12 d-flex flex-column align-items-center">
-                  <form @submit.prevent="updateRolesUser">
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="form-group">
-                          <label>Email</label>
-                          <input type="email" placeholder="Enter description" class="form-control"
-                            v-model="userForm.email" disabled required />
-                        </div>
-                        <div class="form-group">
-                          <label>Username</label>
-                          <input type="text" placeholder="Enter description" class="form-control" v-model="userForm.name"
-                            required disabled />
-                        </div>
-                        <div v-if="showCheckbox" class="form-check" v-for="(role, index) in roles"
-                          :key="`checkbox_${role.id}`">
-                          <label class="form-check-label">
-                            <input type="checkbox" class="form-check-input" value="" :key="`checkbox_${role.id}`"
-                              :checked="isRolesChecked(userRoles, role.id)"
-                              @click="handleCheckboxClick(role.id, $event.target.checked)">{{
-                                role.name }}
-                          </label>
-                        </div>
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div
+        class="modal-dialog p-5 d-flex justify-content-center"
+        role="document"
+      >
+        <div class="modal-content col-md-7">
+          <div class="word_default p-4">
+            <h3 class="text-center">Change Roles</h3>
+            <div class="col-md-12 d-flex flex-column align-items-center">
+              <form @submit.prevent="updateRolesUser" class="col-md-12">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label>Email</label>
+                      <input
+                        type="email"
+                        placeholder="Enter description"
+                        class="form-control"
+                        v-model="userForm.email"
+                        disabled
+                        required
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label>Username</label>
+                      <input
+                        type="text"
+                        placeholder="Enter description"
+                        class="form-control"
+                        v-model="userForm.name"
+                        required
+                        disabled
+                      />
+                    </div>
+                    <div
+                      v-if="showCheckbox"
+                      class="form-check"
+                      v-for="(role, index) in roles"
+                      :key="`checkbox_${role.id}`"
+                    >
+                      <label class="form-check-label">
+                        <input
+                          type="checkbox"
+                          class="form-check-input"
+                          value=""
+                          :key="`checkbox_${role.id}`"
+                          :checked="isRolesChecked(userRoles, role.id)"
+                          @click="
+                            handleCheckboxClick(role.id, $event.target.checked)
+                          "
+                        />{{ role.name }}
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-center">
+                  <button type="submit" class="btn btn-all-add-edit py-2 px-5">
+                    Change
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+ <!-- modal change password -->
+  <div class="row">
+    <button
+      ref="myModalPasswordBtn"
+      type="button"
+      class="btn btn-primary d-none"
+      data-toggle="modal"
+      data-target="#ModalPassword"
+    >
+      Launch demo modal
+    </button>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="ModalPassword"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="ModalLabel"
+      aria-hidden="true"
+    >
+      <div
+        class="modal-dialog p-5 d-flex justify-content-center"
+        role="document"
+      >
+        <div class="modal-content col-md-7">
+          <div class="word_default p-4">
+            <h3 class="text-center">Change Password</h3>
+            <div class="row">
+              <div class="col-md-12 d-flex flex-column align-items-center">
+                <form @submit.prevent="updatePasswordUser" class="col-md-12">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label>Email</label>
+                        <input
+                          type="email"
+                          placeholder="Enter description"
+                          class="form-control"
+                          v-model="userPasswwordForm.email"
+                          required
+                          disabled
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label>Username</label>
+                        <input
+                          type="text"
+                          placeholder="Enter description"
+                          class="form-control"
+                          v-model="userPasswwordForm.name"
+                          required
+                          disabled
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label>Password</label>
+                        <input
+                          type="password"
+                          placeholder="Enter description"
+                          class="form-control"
+                          v-model="userPasswwordForm.password"
+                          required
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label>Repassword</label>
+                        <input
+                          type="password"
+                          placeholder="Enter description"
+                          class="form-control"
+                          v-model="userPasswwordForm.repassword"
+                          required
+                        />
                       </div>
                     </div>
-                    <div class="d-flex justify-content-center">
-                      <button type="submit" class="btn btn-all-add-edit py-2 px-5">Change</button>
-                    </div>
-                  </form>
-                </div>
-
+                  </div>
+                  <div class="d-flex justify-content-center">
+                    <button
+                      type="submit"
+                      class="btn btn-all-add-edit py-2 px-5"
+                    >
+                      Change
+                    </button>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
@@ -71,55 +206,61 @@
       </div>
     </div>
   </div>
-
-  <!-- modal change password -->
+  <!-- add user -->
   <div class="row">
-    <button ref="myModalPasswordBtn" type="button" class="btn btn-primary d-none" data-toggle="modal"
-      data-target="#ModalPassword">
-      Launch demo modal
-    </button>
-
     <!-- Modal -->
-    <div class="modal fade" id="ModalPassword" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-      aria-hidden="true">
-      <div class="modal-dialog row p-5" role="document">
-        <div class="modal-content col-md-12">
-          <div class="row">
-            <div class="word_default p-4">
-              <h3 class="text-center">Change Password</h3>
-              <div class="row ">
-                <div class="col-md-12 d-flex flex-column align-items-center">
-                  <form @submit.prevent="updatePasswordUser">
-                    <div class="row">
-                      <div class=" col-md-12">
-                        <div class="form-group">
-                          <label>Email</label>
-                          <input type="email" placeholder="Enter description" class="form-control"
-                            v-model="userPasswwordForm.email" required disabled />
-                        </div>
-                        <div class="form-group">
-                          <label>Username</label>
-                          <input type="text" placeholder="Enter description" class="form-control"
-                            v-model="userPasswwordForm.name" required disabled />
-                        </div>
-                        <div class="form-group">
-                          <label>Password</label>
-                          <input type="password" placeholder="Enter description" class="form-control"
-                            v-model="userPasswwordForm.password" required />
-                        </div>
-                        <div class="form-group">
-                          <label>Repassword</label>
-                          <input type="password" placeholder="Enter description" class="form-control"
-                            v-model="userPasswwordForm.repassword" required />
-                        </div>
-                      </div>
+    <div
+      class="modal fade"
+      id="ModalAddUser"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="ModalLabel"
+      aria-hidden="true"
+    >
+      <div
+        class="modal-dialog p-5 d-flex justify-content-center"
+        role="document"
+      >
+        <div class="modal-content col-md-7">
+          <div class="word_default p-4">
+            <h3 class="text-center">Create New User</h3>
+            <div class="row">
+              <div class="col-md-12 d-flex flex-column align-items-center">
+                <form @submit.prevent="createNewUser" class="col-md-12">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label>Email</label>
+                      <input type="email" placeholder="Enter description" class="form-control" v-model="newUser.email"
+                        required />
                     </div>
-                    <div class="d-flex justify-content-center">
-                      <button type="submit" class="btn btn-all-add-edit py-2 px-5">Change</button>
+                    <div class="form-group">
+                      <label>Username</label>
+                      <input type="text" placeholder="Enter description" class="form-control" v-model="newUser.name"
+                        required />
                     </div>
-                  </form>
+                    <!-- <div class="form-group">
+                      <label>Password</label>
+                      <input type="password" placeholder="Enter password" class="form-control" v-model="newUser.password"
+                        required />
+                    </div> -->
+                    <div class="form-group">
+                      <label>Role</label>
+                      <select class="form-select" aria-label="Default select example" v-model="newUser.role" required>
+                        <option v-for="role in roles" :key="role.id" :value="`${role.id}`">
+                          {{ role.name }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
                 </div>
 
+                <div class="d-flex justify-content-center">
+                  <button type="submit" class="btn btn-all-add-edit py-2 px-5">
+                    Add User
+                  </button>
+                </div>
+              </form>
               </div>
             </div>
           </div>
@@ -129,13 +270,16 @@
   </div>
 </template>
   
+<style lang="scss">
+</style>
+
 <script>
 import { exit } from "process";
 import DataTable from "datatables.net-vue3";
 import DataTablesCore from "datatables.net";
 import $ from "jquery";
 import { createApp, h } from "vue";
-import router from '@resources/js/router/index';
+import router from "@resources/js/router/index";
 DataTable.use(DataTablesCore);
 import { saveAs } from "file-saver";
 import { mapGetters, mapMutations, mapActions } from "vuex";
@@ -159,6 +303,11 @@ export default {
     };
   },
   created() {
+    this.axios.get("/api/user/roles").then((response) => {
+      if (response.data.message === 'success') {
+        this.roles = response.data.data;
+      }
+    });
     this.fetchData();
   },
   methods: {
@@ -174,16 +323,45 @@ export default {
       };
       this.showUserForm = false;
     },
+    createNewUser() {
+      console.log(this.newUser);
+      this.axios
+        .post("/api/user/create-new-user", this.newUser)
+        .then((response) => {
+          if (response.data.status === 200) {
+            this.$swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: `Add new user ${this.newUser.name} success`,
+              showConfirmButton: false,
+              timer: this.$config.notificationTimer ?? 1000
+            })
+            this.newUser = {};
+            // alert(response.data.message);
+          }
+        })
+        .catch((error) => {
+          this.$swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `Error ${error.response.status}: ${error.response.data.message}`,
+            // footer: '<a href="">Why do I have this issue?</a>'
+          })
+          // alert(`Error ${error.response.status}: ${error.response.data.message}`);
+
+        })
+        .finally(() => (this.loading = false));
+    },
     updateRolesUser() {
       console.log("check userForm:", this.userForm);
       this.axios
-        .post(
-          `/api/user/change-role-user/${this.userForm.id}`,
-          this.userForm
-        )
+        .post(`/api/user/change-role-user/${this.userForm.id}`, this.userForm)
         .then((response) => {
           if (response.data.status === 200) {
-            this.updateRowData(this.userForm.id, response.data.data.user_update);
+            this.updateRowData(
+              this.userForm.id,
+              response.data.data.user_update
+            );
             this.$swal.fire({
               position: "top-end",
               icon: "success",
@@ -245,37 +423,41 @@ export default {
         { data: "email", title: "Email" },
 
         {
-          data: "id", title: "Roles",
+          data: "id",
+          title: "Roles",
           class: "columns-list",
           createdCell: function (cell, cellData, rowData, rowIndex, colIndex) {
             const app = createApp({
               render() {
-                return h('ul', { class: 'ul-list' }, rowData.roles.map(role => {
-                  return h('li', {}, [
-                    h('p', {
-                      class: 'btn btn-all-add-edit',
-                    }, role.name)
-                  ]);
-                }));
+                return h(
+                  "ul",
+                  { class: "ul-list" },
+                  rowData.roles.map((role) => {
+                    return h("li", {}, [
+                      h(
+                        "p",
+                        {
+                          class: "",
+                        },
+                        role.name
+                      ),
+                    ]);
+                  })
+                );
               },
               data() {
                 return {
-                  rowData: rowData
-                }
-              }
-            })
+                  rowData: rowData,
+                };
+              },
+            });
             app.mount(cell);
-          }
+          },
         },
         {
-          data: "id", title: "Action",
-          createdCell: function (
-            cell,
-            cellData,
-            rowData,
-            rowIndex,
-            colIndex
-          ) {
+          data: "id",
+          title: "Action",
+          createdCell: function (cell, cellData, rowData, rowIndex, colIndex) {
             const app = createApp({
               render() {
                 return [
@@ -283,15 +465,19 @@ export default {
                     "a",
                     {
                       to: `/admin/user-manager/change-role-user/${rowData.id}`,
-                      class: "btn btn-all-add-edit",
+                      class: "btn btn-all-add-edit me-2",
                       onClick: () => {
-                        self.userForm = { name: rowData.name, email: rowData.email, id: rowData.id };
+                        self.userForm = {
+                          name: rowData.name,
+                          email: rowData.email,
+                          id: rowData.id,
+                        };
                         self.showCheckbox = false;
                         setTimeout(() => {
                           self.showCheckbox = true;
                           self.userRoles = rowData.roles;
                           self.$refs.myModalBtn.click();
-                        }, 10);// xử lý chờ 10 ms để userRoles kịp xóa list checkbox cũ
+                        }, 10); // xử lý chờ 10 ms để userRoles kịp xóa list checkbox cũ
                       },
                     },
                     "Change Role"
@@ -303,7 +489,11 @@ export default {
                       class: "btn btn-all-add-edit",
                       onClick: () => {
                         self.showCheckbox = false;
-                        self.userPasswwordForm = { name: rowData.name, email: rowData.email, id: rowData.id };
+                        self.userPasswwordForm = {
+                          name: rowData.name,
+                          email: rowData.email,
+                          id: rowData.id,
+                        };
 
                         self.$refs.myModalPasswordBtn.click();
                       },
@@ -324,11 +514,13 @@ export default {
       ];
     },
     fetchData() {
-      this.axios.get("/api/user/allusers")
+      this.axios
+        .get("/api/user/allusers")
         .then((response) => {
-          if (response.data.message === "success" && response.data.status == 200) {
-
-
+          if (
+            response.data.message === "success" &&
+            response.data.status == 200
+          ) {
             this.DataTableData = response.data.data.users;
             this.roles = response.data.data.roles;
             this.setColumns();
@@ -356,8 +548,8 @@ export default {
       // return true;
       console.log("check isRolesChecked roles", roles);
       if (Array.isArray(roles)) {
-        const isCheck = roles.some(role => role.id === roleId)
-        this.userForm['role_' + roleId] = isCheck;
+        const isCheck = roles.some((role) => role.id === roleId);
+        this.userForm["role_" + roleId] = isCheck;
         console.log("check isCheck : roleId", roleId, isCheck);
         return isCheck;
       } else {
@@ -365,16 +557,15 @@ export default {
         return false;
       }
       // return true;
-
     },
     handleCheckboxClick(roleId, checked) {
-      this.userForm['role_' + roleId] = checked;
+      this.userForm["role_" + roleId] = checked;
     },
     updateRowData(id, newUser) {
-      let elementToUpdate = this.DataTableData.find(item => item.id === id);
+      let elementToUpdate = this.DataTableData.find((item) => item.id === id);
       if (elementToUpdate) {
         elementToUpdate.roles = newUser.roles;
-      };
+      }
 
       $(this.$refs.myTable).DataTable().destroy();
       this.table = $(this.$refs.myTable).DataTable({
@@ -382,7 +573,7 @@ export default {
         columns: this.columns,
         scrollX: true,
       });
-    }
+    },
   },
 };
 </script>

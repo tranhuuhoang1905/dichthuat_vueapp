@@ -107,12 +107,31 @@
         }
     }
 }
-
-.user_manager {
+.all_permissions {
     tbody {
-        td:nth-child(7) {
-            display: flex;
-            justify-content: space-evenly;
+        td:nth-child(4),td:nth-child(5) {
+            text-align: center;
+        }
+    }
+}
+.all_roles {
+    tbody {
+        td:nth-child(5),td:nth-child(6) {
+           text-align: center;
+        }
+    }
+}
+.all_languages {
+    tbody {
+        td:nth-child(4),td:nth-child(7) {
+           text-align: center;
+        }
+    }
+}
+.all_word {
+    tbody {
+        td:nth-child(2),td:nth-child(7) {
+           text-align: center;
         }
     }
 }
@@ -166,7 +185,7 @@
 .all_word tbody label:active:after {
     width: 30px;
 }
-
+.user_manager,
 .all_languages,
 .log_import,
 .all_word,
@@ -217,13 +236,9 @@
             width: 30px;
         }
 
-        td:nth-child(7) {
-            display: flex;
-            justify-content: center;
-        }
-
         td {
-            max-width: 500px;
+            vertical-align:middle;
+            max-width: 300px;
             height: 100%;
         }
     }
@@ -231,7 +246,6 @@
 
 .all_word {
     tbody {
-
         td:nth-child(3),
         td:nth-child(5) {
             display: flex;
