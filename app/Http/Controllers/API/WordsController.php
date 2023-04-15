@@ -38,21 +38,21 @@ class WordsController extends Controller
     public function allWord()
     {
         $wordsTest = DB::table('words')
-            ->select('words.id as word_id','words.word as word','words.description as description','words.language_id as language_id', 'words.status as status',
-                    DB::raw('GROUP_CONCAT(CONCAT("{\"language_id\":", translation_word.language_id, ",\"translate\":\"", translation_word.translate, "\"}") SEPARATOR ",") as data'))
+            ->select('words.id as word_id', 'words.word as word', 'words.description as description', 'words.language_id as language_id', 'words.status as status',
+                DB::raw('GROUP_CONCAT(CONCAT("{\"language_id\":", translation_word.language_id, ",\"translate\":\"", translation_word.translate, "\",\"id\":", translation_word.id, "}") SEPARATOR ",") as data'))
             ->join('translation_word', 'words.id', '=', 'translation_word.word_id')
-            ->groupBy('words.id', 'words.status') // Bao gồm tất cả các cột trong GROUP BY
-            ->distinct('words.id', 'words.status', 'translation_word.language_id') // Bao gồm tất cả các cột trong DISTINCT
-            ->limit(10)
+            ->groupBy('words.id', 'words.status')
+            ->distinct('words.id', 'words.status', 'translation_word.language_id')
+            // ->limit(10)
             ->get();
-        $words = Words::all()->toArray();
+        // $words = Words::all()->toArray();
         $languages = Languages::all()->where('status', '>', 0)->toArray();
         $responseData = [
             'status' => 200,
             'success'=>true,
             'message' => 'The new word successfully added',
             'data'=> [
-                'words'=>$words,
+                // 'words'=>$words,
                 'words_test'=>$wordsTest,
                 'languages'=>$languages
             ]

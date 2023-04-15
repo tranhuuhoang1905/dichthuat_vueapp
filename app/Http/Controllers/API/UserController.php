@@ -63,10 +63,27 @@ class UserController extends Controller
                 'first_login'=> 1
             ]);
             $user->assignRole($role->name);
-            $responseData = [    'status' => 200,'success'=>true,    'message' => 'The user successfully created'];
+            $user->load([
+                'roles' => function ($query) {
+                    $query->where('status', 1);
+                },
+                'roles.permissions' => function ($query) {
+                    $query->where('status', 1);
+                }
+            ]);
+            $responseData = [
+                'status' => 200,
+                'success'=>true,
+                'message' => 'The user successfully created',
+                'data'=>['user_created'=>$user]
+            ];
             return response()->json($responseData);
         }else{
-            $responseData = [    'success'=>true,    'message' => 'Role not found'];
+            $responseData = [
+                'status' => 200,
+                'success'=>false,
+                'message' => 'Role not found'
+            ];
             return response()->json($responseData);
         }
     }

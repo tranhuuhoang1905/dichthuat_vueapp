@@ -111,18 +111,18 @@
                     <div class="col-md-6 col-sm-12">
                       <div class="form-group">
                         <label>Word:</label>
-                        <input type="text" placeholder="Enter word" class="form-control" v-model="FormAddWordData.word"
+                        <input type="text" placeholder="Enter word" class="form-control" v-model="formAddWordData.word"
                           required />
                       </div>
                       <div class="form-group">
                         <label>Description</label>
                         <textarea type="text" placeholder="Enter description" class="form-control"
-                          v-model="FormAddWordData.description" rows="4" required></textarea>
+                          v-model="formAddWordData.description" rows="4" required></textarea>
                       </div>
                       <div class="form-group">
                         <label>Language</label>
                         <select class="form-select" aria-label="Default select example"
-                          v-model="FormAddWordData.language_id" required>
+                          v-model="formAddWordData.language_id" required>
                           <option v-for="language in languages" :key="language.id" :value="`${language.id}`">
                             {{ language.name }}
                           </option>
@@ -134,17 +134,17 @@
                       <div class="form-group">
                         <label>Translate</label>
                         <input type="text" placeholder="Enter translated word" class="form-control"
-                          v-model="FormAddWordData.translate" required />
+                          v-model="formAddWordData.translate" required />
                       </div>
                       <div class="form-group">
                         <label>Translate description</label>
                         <textarea type="text" placeholder="Enter description" class="form-control"
-                          v-model="FormAddWordData.translate_description" rows="4" required></textarea>
+                          v-model="formAddWordData.translate_description" rows="4" required></textarea>
                       </div>
                       <div class="form-group">
                         <label>Language translate id</label>
                         <select class="form-select" aria-label="Default select example"
-                          v-model="FormAddWordData.language_translate_id" required>
+                          v-model="formAddWordData.language_translate_id" required>
                           <option v-for="language in languages" :key="language.id" :value="`${language.id}`">
                             {{ language.name }}
                           </option>
@@ -182,7 +182,9 @@ export default {
       words_test: [],
       languages: [],
       dataWords: {},
-      FormAddWordData: {},
+      formAddWordData: {},
+      rowAction: null,
+      dataTableData: [],
     };
   },
   mounted() {
@@ -194,7 +196,9 @@ export default {
   methods: {
     updateTranslate(id) {
       const foundWord = this.dataWords.find(word => word.id === id); // Tìm kiếm từ trong mảng
+
       if (foundWord) {
+
         this.axios
           .post(`/api/translate/update/${id}`, {
             translate: foundWord.translate,
@@ -203,6 +207,15 @@ export default {
           })
           .then((response) => {
             if (response.data.status === 200) {
+              //xử lý data và update dataTable
+              let dataUpdate = JSON.parse(`[${this.rowAction.data}]`);
+              let elementToUpdate = dataUpdate.find((item) => item.id === id);
+              if (elementToUpdate) {
+                elementToUpdate.translate = foundWord.translate;
+                let stringDataUpdate = JSON.stringify(dataUpdate).replace(/\[|\]/g, '');
+                this.rowAction.data = stringDataUpdate;
+                this.updateRowData(this.rowAction);
+              };
               this.$swal.fire({
                 position: "top-end",
                 icon: "success",
@@ -230,20 +243,31 @@ export default {
 
     },
     addWord() {
+
+      // Xử lý data để update dataTable
+      let dataUpdate = JSON.parse(`[${this.rowAction.data}]`);
+      dataUpdate.push({
+        language_id: this.formAddWordData.language_translate_id,
+        translate: this.formAddWordData.translate
+      });
+      let dataUpdateString = JSON.stringify(dataUpdate);
+      dataUpdateString = dataUpdateString.replace(/\[|\]/g, '');
+      this.rowAction.data = dataUpdateString;
+      console.log("check this.rowAction", this.rowAction);
+      // this.updateRowData(this.rowAction);
+
       this.axios
-        .post("/api/word/add", this.FormAddWordData)
+        .post("/api/word/add", this.formAddWordData)
         .then((response) => {
-          if (response.data.status === 200) {
+          if (response.data.status === 200 && response.data.success == true) {
+            this.updateRowData(this.rowAction);
             this.$swal.fire({
               position: "top-end",
               icon: "success",
-              title: `Add Word ${this.FormAddWordData.word} success`,
+              title: `Add Word ${this.formAddWordData.word} success`,
               showConfirmButton: false,
               timer: this.$config.notificationTimer ?? 1000,
             });
-            // alert(response.data.message);
-            // this.FormAddWordData = {};
-            // this.$router.push({ name: "All Word"});
           }
         })
         .catch((error) => {
@@ -265,9 +289,11 @@ export default {
           const isSmallScreen = window.innerWidth < 760;
           const pagingType = isSmallScreen ? "simple" : "simple_numbers";
           this.setColumns();
+          this.dataTableData = response.data.data.words_test;
           this.table = $(this.$refs.myTable).DataTable({
             responsive: true,
-            data: response.data.data.words_test,
+
+            data: this.dataTableData,
             columns: this.columns,
             // lengthMenu: [[5, 10, 15, 20, -1], [5, 10, 15, 20, "All"]], // set number of records per page
             pagingType: pagingType, // display only a few page buttons
@@ -336,6 +362,7 @@ export default {
                                   self.dataWords = response.data.data.translations
                                 }
                               });
+                            self.rowAction = rowData;
                             self.$refs.myModalBtn.click();
                           },
                         },
@@ -351,7 +378,8 @@ export default {
                       class: "btn btn-all-add-edit",
                       onClick: () => {
                         console.log("check self.rowData", rowData);
-                        self.FormAddWordData = {
+                        self.rowAction = rowData;
+                        self.formAddWordData = {
                           language_id: rowData.language_id,
                           language_translate_id: language.id,
                           description: rowData.description,
@@ -385,10 +413,10 @@ export default {
           // }
         };
       });
-
-      // G�n d?ng 3 h�ng ng�n ng? v�o bi?n columns
       this.columns = [
         { data: "word_id", title: "Word ID" },
+
+        ...languageColumns,
         {
           data: "status",
           title: "Status",
@@ -406,7 +434,6 @@ export default {
             );
           },
         },
-        ...languageColumns, // �?ng 3 h�ng ng�n ng? v�o d�y
         {
           data: "word_id",
           title: "action",
@@ -438,6 +465,21 @@ export default {
           },
         },
       ];
+    },
+    updateRowData(newRow) {
+
+      let elementToUpdate = this.dataTableData.find((item) => item.word_id === newRow.word_id);
+      if (elementToUpdate) {
+        elementToUpdate.data = newRow.data;
+      }
+      console.log("check this.dataTableData:", this.dataTableData);
+      $(this.$refs.myTable).DataTable().destroy();
+      this.setColumns();
+      $(this.$refs.myTable).DataTable({
+        data: this.dataTableData,
+        columns: this.columns,
+        scrollX: true,
+      });
     },
   },
 };

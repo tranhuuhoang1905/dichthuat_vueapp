@@ -15,8 +15,18 @@ class LogImportController extends Controller
     public function index(Request $request)
     {
 
-        $LogImport = LogImport::all()->toArray();
-        $responseData = [    'status' => 200,'success'=>true,    'message' => 'success',    'data' => $LogImport];
+        // $LogImport = LogImport::all()->toArray();
+        $LogImport = DB::table('log_import')
+            ->select('log_import.*', 'language.name as language_name', 'language_translate.name as language_translate_name')
+            ->join('languages as language', 'log_import.language_id', '=', 'language.id')
+            ->join('languages as language_translate', 'log_import.language_translate_id', '=', 'language_translate.id')
+            ->get()->toArray();
+        $responseData = [
+            'status' => 200,
+            'success'=>true,
+            'message' => 'success',
+            'data' => ['log_import'=>$LogImport]
+        ];
         return response()->json($responseData);
     }
  

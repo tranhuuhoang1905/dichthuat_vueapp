@@ -180,11 +180,8 @@ export default {
               timer: this.$config.notificationTimer ?? 1000,
             });
             // alert(response.data.message);
-            this.FormData = {};
-            if (this.languages.length > 0) {
-              this.FormData.language_id = this.FormData.language_translate_id =
-                this.languages[0].id;
-            }
+            this.FormData.translate = "";
+            this.FormData.translate_description = "";
             // this.$router.push({ name: "All Word"});
           }
         })
