@@ -41,7 +41,7 @@ class WordsController extends Controller
             ->select('words.id as word_id', 'words.word as word', 'words.description as description', 'words.language_id as language_id', 'words.status as status',
                 DB::raw('GROUP_CONCAT(CONCAT("{\"language_id\":", translation_word.language_id, ",\"translate\":\"", translation_word.translate, "\",\"id\":", translation_word.id, "}") SEPARATOR ",") as data'))
             ->join('translation_word', 'words.id', '=', 'translation_word.word_id')
-            ->groupBy('words.id', 'words.status')
+            ->groupBy('words.id', 'words.word', 'words.description', 'words.language_id', 'words.status') // Include all selected columns from 'words' in GROUP BY
             ->distinct('words.id', 'words.status', 'translation_word.language_id')
             // ->limit(10)
             ->get();
