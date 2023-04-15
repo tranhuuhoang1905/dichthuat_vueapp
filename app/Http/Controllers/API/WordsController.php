@@ -180,12 +180,36 @@ class WordsController extends Controller
         if (!$file->isValid() || $file->getClientOriginalExtension() != 'xlsx' && $file->getClientOriginalExtension() != 'xls') {
             return 'Tệp không phải là tệp Excel';
         }
+        $data = Excel::toArray(new Excel(), $file);
+        if(!$data[0] || !$data[0][0] ){
+            $responseData = ['status' => 200,
+                'success'=>false,
+                'message' => 'Language code not found',
+            ];
+            return response()->json($responseData);
+        }
+        if($data[0][0][0] !== "VN"){
+            $responseData = ['status' => 200,
+                'success'=>false,
+                'message' => 'Column A must be in Vietnamese',
+            ];
+            return response()->json($responseData);
+        }
+        $language = Languages::where('iso_code', $data[0][0][1])->first();
+        if(!$language){
+            $responseData = ['status' => 200,
+                'success'=>false,
+                'message' => 'Language not support'
+            ];
+            return response()->json($responseData);
+        }
+
         $user = $request->user();
         
-        $languageId = $request->input('language_id');
-        $languageTranslateId = $request->input('language_translate_id');
+        $languageId = 1;// language gốc bằng tiếng việt
+        $languageTranslateId = $language->id;
         
-        $data = Excel::toArray(new Excel(), $file);
+        
         $logImport = new LogImport([
             'user_id' => $user->id,
             'language_id' => $languageId,
@@ -195,7 +219,7 @@ class WordsController extends Controller
         $logImport->save();
         foreach ($data[0] as $key => $element){
             // if ($key > 0 && !empty($element[0]) && !empty($element[1]) && !empty($element[2]) && !empty($element[3])) {
-            if ($key > 0 && !empty($element[0]) && !empty($element[1]) ) {
+            if ($key > 1 && !empty($element[0]) && !empty($element[1]) ) {
                 $word = $element[0];
                 $translate = $element[1];
                 $description = $element[2] ?? $element[3] ?? "";
@@ -210,7 +234,10 @@ class WordsController extends Controller
                 $words->saveWithTranslation($languageId, $languageId, $word, $word, $description, $description,$logImport->id);
             }
         }
-        $responseData = ['status' => 200,'success'=>true, 'message' => 'The file word successfully imported'];
+        $responseData = ['status' => 200,
+            'success'=>true,
+            'message' => 'The file word successfully imported',
+        ];
         return response()->json($responseData);
     }
     public function translateWordsFromExcel(Request $request)
@@ -220,17 +247,41 @@ class WordsController extends Controller
             return 'Tệp không phải là tệp Excel';
         }
         $data = Excel::toArray(new Excel(), $file);
-        $data = $data[0];
-        $languageId = $request->input('language_id');
-        $languageTranslateId = $request->input('language_translate_id');
+        if(!$data[0] || !$data[0][0] ){
+            $responseData = ['status' => 200,
+                'success'=>false,
+                'message' => 'Language code not found',
+            ];
+            return response()->json($responseData);
+        }
+        if(!$data[0][0][0] =="VN" && !$data[0][0][1]=="VN"){
+            $responseData = ['status' => 200,
+                'success'=>false,
+                'message' => 'Language pair is not supported',
+            ];
+            return response()->json($responseData);
+        }
+        $language = Languages::where('iso_code', $data[0][0][0])->first();
+        $languageTranslate = Languages::where('iso_code', $data[0][0][1])->first();
+        if(!$language || !$languageTranslate){
+            $responseData = ['status' => 200,
+                'success'=>false,
+                'message' => 'Language not support'
+            ];
+            return response()->json($responseData);
+        }
+        $languageId = $language->id;
+        $languageTranslateId = $languageTranslate->id;
+        $dataAction = $data[0];
+        array_shift($dataAction);
         $words = array_map(function($subarray) {
             return $subarray[0];
-        }, $data);
+        }, $dataAction);
         $words = array_filter($words, function ($value) {
             return !is_null($value) && $value !== ''&& $value !== ' ';
         });
 
-        
+        // return response()->json(["check words"=>$words]);
         $translations = DB::table('translation_word')
         ->join('words', 'words.id', '=', 'translation_word.word_id')
         ->select(
@@ -248,12 +299,25 @@ class WordsController extends Controller
         })
         ->get()
         ->toArray();
+        $translations_test = DB::table('words')
+            ->select('words.word as word',  'words.status as status',
+                DB::raw('GROUP_CONCAT(CASE WHEN translation_word.language_id = ' . $languageTranslateId . ' THEN CONCAT("{\"language_id\":", translation_word.language_id, ",\"translate\":\"", translation_word.translate, "\",\"description\":\"", translation_word.description, "\",\"original_language_description\":\"", translation_word.original_language_description, "\",\"id\":", translation_word.id, "}") END SEPARATOR ",") as data'))
+            ->join('translation_word', 'words.id', '=', 'translation_word.word_id')
+            ->groupBy('words.id', 'words.word', 'words.description', 'words.language_id', 'words.status') // Include all selected columns from 'words' in GROUP BY
+            ->distinct('words.id', 'words.status', 'translation_word.language_id')
+            ->whereIn('words.word', $words)
+            ->where('words.status',1)
+            ->get()->toArray();
         $dataResponse = [];
-        foreach ($data as $element){
-            $key = array_search($element[0], array_column($translations, 'word'));
+        foreach ($dataAction as $element){
+            $key = array_search($element[0], array_column($translations_test, 'word'));
             if ($key !== false) {
-                $foundElement = $translations[$key];
-                $dataResponse[] = [$element[0],$foundElement->translate,$foundElement->description,$foundElement->original_language_description];
+
+                $foundElement = $translations_test[$key];
+                $arrayTranslates = json_decode('[' . $foundElement->data . ']', true);
+                foreach($arrayTranslates as $translate){
+                    $dataResponse[] = [$element[0],$translate['translate'],$translate['description'],$translate['original_language_description']];
+                }
             } else {
                 $dataResponse[] = [$element[0]];
             }
