@@ -7,26 +7,6 @@
             <h4 class="card-title text-center fs-4">Import Word From Excel</h4>
             <div class="col-md-12">
               <form @submit.prevent="importWordsFromExcel">
-                <div class="form-group">
-                  <label>Language</label>
-                  <select class="form-select" aria-label="Default select example" v-model="WordsFromExcel.language_id"
-                    required>
-                    <option v-for="language in languages" :key="language.id" :value="`${language.id}`">
-                      {{ language.name }}
-                    </option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label>Language translate id</label>
-                  <select class="form-select" aria-label="Default select example"
-                    v-model="WordsFromExcel.language_translate_id" required>
-                    <!-- <option :value="-1" selected>Open this select menu</option> -->
-                    <option v-for="language in languages" :key="language.id" :value="`${language.id}`">
-                      {{ language.name }}
-                    </option>
-                  </select>
-                  <!-- <input type="text" class="form-control" v-model="word.language_translate_id"> -->
-                </div>
                 <div class="choose-file">
                   <!-- <label> -->
                   <input class="px-0 py-2" type="file" accept=".xlsx, .xls" ref="fileInput" required

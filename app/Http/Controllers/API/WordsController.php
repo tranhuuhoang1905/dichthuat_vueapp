@@ -282,24 +282,8 @@ class WordsController extends Controller
         });
 
         // return response()->json(["check words"=>$words]);
-        $translations = DB::table('translation_word')
-        ->join('words', 'words.id', '=', 'translation_word.word_id')
-        ->select(
-            'translation_word.translate',
-            'translation_word.description',
-            'translation_word.original_language_description',
-            'words.word as word')
-        ->whereIn('words.word', $words)
-        ->where('words.language_id', '=', $languageId)
-        ->where('translation_word.language_id', '=', $languageTranslateId)
-        ->whereIn('translation_word.id', function ($query) {
-            $query->select(DB::raw('MAX(id)'))
-                ->from('translation_word')
-                ->groupBy('word_id');
-        })
-        ->get()
-        ->toArray();
-        $translations_test = DB::table('words')
+        
+        $translations = DB::table('words')
             ->select('words.word as word',  'words.status as status',
                 DB::raw('GROUP_CONCAT(CASE WHEN translation_word.language_id = ' . $languageTranslateId . ' THEN CONCAT("{\"language_id\":", translation_word.language_id, ",\"translate\":\"", translation_word.translate, "\",\"description\":\"", translation_word.description, "\",\"original_language_description\":\"", translation_word.original_language_description, "\",\"id\":", translation_word.id, "}") END SEPARATOR ",") as data'))
             ->join('translation_word', 'words.id', '=', 'translation_word.word_id')
@@ -308,12 +292,14 @@ class WordsController extends Controller
             ->whereIn('words.word', $words)
             ->where('words.status',1)
             ->get()->toArray();
+            
+        return response()->json(["check translations"=>$translations,"words"=>$words]);
         $dataResponse = [];
         foreach ($dataAction as $element){
-            $key = array_search($element[0], array_column($translations_test, 'word'));
+            $key = array_search($element[0], array_column($translations, 'word'));
             if ($key !== false) {
 
-                $foundElement = $translations_test[$key];
+                $foundElement = $translations[$key];
                 $arrayTranslates = json_decode('[' . $foundElement->data . ']', true);
                 foreach($arrayTranslates as $translate){
                     $dataResponse[] = [$element[0],$translate['translate'],$translate['description'],$translate['original_language_description']];
