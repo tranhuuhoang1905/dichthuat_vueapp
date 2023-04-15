@@ -22,13 +22,13 @@
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
       aria-hidden="true">
-      <div class="modal-dialog row p-5" role="document">
-        <div class="modal-content col-md-12">
+      <div class="modal-dialog p-5  d-flex flex-column align-items-center" role="document">
+        <div class="modal-content col-md-7">
           <div class="row">
             <div class="word_default p-4">
-              <h3 class="text-center">Word Default</h3>
+              <h3 class="text-center">Edit Permission</h3>
               <div class="row ">
-                <div class="col-md-12 d-flex flex-column align-items-center">
+                <div class="col-md-12  d-flex flex-column align-items-center">
                   <form @submit.prevent="updatePermission">
                     <div class="form-group">
                       <label for="permission-name">Permission name</label>
