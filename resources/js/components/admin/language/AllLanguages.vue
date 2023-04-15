@@ -12,6 +12,7 @@
                     <th>ID</th>
                     <th>Name</th>
                     <th>Description</th>
+                    <th>Language Key</th>
                     <th>Status</th>
                     <th>Created At</th>
                     <th>Updated At</th>
@@ -23,6 +24,7 @@
                     <td>{{ language.id }}</td>
                     <td>{{ language.name }}</td>
                     <td>{{ language.description }}</td>
+                    <td>{{ language.iso_code }}</td>
                     <td>{{ language.status }}</td>
                     <td>{{ language.created_at }}</td>
                     <td>{{ language.updated_at }}</td>
@@ -117,6 +119,7 @@ export default {
         { data: "id" },
         { data: "name" },
         { data: "description" },
+        { data: "iso_code" },
         {
           data: "status",
           render: function (data, type, row) {

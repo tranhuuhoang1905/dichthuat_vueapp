@@ -121,13 +121,6 @@
         }
     }
 }
-.all_languages {
-    tbody {
-        td:nth-child(4),td:nth-child(7) {
-           text-align: center;
-        }
-    }
-}
 .all_word {
     tbody {
         td:nth-child(2),td:nth-child(7) {
@@ -136,6 +129,32 @@
     }
 }
 
+
+.all_languages{
+    tbody {
+       td:last-child{
+        text-align: center;
+       }
+       td:nth-child(4),td:nth-child(5) {
+        text-align: center;
+     }
+    }
+}
+.all_word {
+    tbody {
+       td{
+        text-align: center;
+       }
+       td:nth-child(1){
+        text-align: left;
+       }
+       .td_space-between{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+       }
+    }
+}
 .all_languages tbody input[type=checkbox],
 .all_word tbody input[type=checkbox] {
     height: 0;
@@ -240,17 +259,6 @@
             vertical-align:middle;
             max-width: 300px;
             height: 100%;
-        }
-    }
-}
-
-.all_word {
-    tbody {
-        td:nth-child(3),
-        td:nth-child(5) {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
     }
 }

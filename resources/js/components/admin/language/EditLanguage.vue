@@ -12,6 +12,10 @@
                   <input id="language-name" type="text" class="form-control" v-model="language.name" required />
                 </div>
                 <div class="form-group">
+                  <label for="language-name">Key Language</label>
+                  <input id="language-name" type="text" class="form-control" v-model="language.iso_code" required />
+                </div>
+                <div class="form-group">
                   <label for="language-description">Description</label>
                   <textarea id="language-description" rows="7" cols="70" type="text" class="form-control"
                     v-model="language.description" required></textarea>

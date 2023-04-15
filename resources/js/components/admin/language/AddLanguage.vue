@@ -13,6 +13,11 @@
                     v-model="language.name" required />
                 </div>
                 <div class="form-group">
+                  <label for="language-name">Key Language</label>
+                  <input id="language-name" type="text" placeholder="Enter key language" class="form-control"
+                    v-model="language.iso_code" required />
+                </div>
+                <div class="form-group">
                   <label for="language-description">Description</label>
                   <textarea id="language-description" type="text" placeholder="Enter description" class="form-control"
                     cols="70" rows="7" v-model="language.description" required></textarea>

@@ -31,6 +31,7 @@ class LanguagesController extends Controller
     {
         $language = new Languages([
             'name' => $request->input('name'),
+            'iso_code' => $request->input('iso_code'),
             'description' => $request->input('description')
         ]);
         $language->save();
