@@ -113,8 +113,9 @@ export default {
           // this.$router.push({ name: 'All Word' });
         })
         .catch((error) => {
+          console.log("check error.response", error.response);
           swalLoading.update({
-            title: `Error ${error.response.status}`,
+            title: `Error : File translation failed`,
             icon: "error",
             showConfirmButton: false,
           });

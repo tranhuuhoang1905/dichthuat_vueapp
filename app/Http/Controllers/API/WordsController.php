@@ -244,7 +244,12 @@ class WordsController extends Controller
     {
         $file = $request->file('file');
         if (!$file->isValid() || $file->getClientOriginalExtension() != 'xlsx' && $file->getClientOriginalExtension() != 'xls') {
-            return 'Tệp không phải là tệp Excel';
+            // return 'Tệp không phải là tệp Excel';
+            $responseData = ['status' => 200,
+                'success'=>false,
+                'message' => 'Tệp không phải là tệp Excel',
+            ];
+            return response()->json($responseData,400);
         }
         $data = Excel::toArray(new Excel(), $file);
         if(!$data[0] || !$data[0][0] ){
@@ -252,14 +257,14 @@ class WordsController extends Controller
                 'success'=>false,
                 'message' => 'Language code not found',
             ];
-            return response()->json($responseData);
+            return response()->json($responseData,400);
         }
         if(!$data[0][0][0] =="VN" && !$data[0][0][1]=="VN"){
             $responseData = ['status' => 200,
                 'success'=>false,
                 'message' => 'Language pair is not supported',
             ];
-            return response()->json($responseData);
+            return response()->json($responseData,400);
         }
         $language = Languages::where('iso_code', $data[0][0][0])->first();
         $languageTranslate = Languages::where('iso_code', $data[0][0][1])->first();
@@ -268,7 +273,7 @@ class WordsController extends Controller
                 'success'=>false,
                 'message' => 'Language not support'
             ];
-            return response()->json($responseData);
+            return response()->json($responseData,400);
         }
         $languageId = $language->id;
         $languageTranslateId = $languageTranslate->id;
@@ -309,7 +314,8 @@ class WordsController extends Controller
         }
         $export = new DataExport(collect($dataResponse));
         $fileName = 'translatecallback.xlsx';
-        return Excel::download($export, $fileName);
+        $response = Excel::download($export, $fileName);
+        return $response;
         // return response()->json(["success"=>"success",'data'=>$data,'translations'=>$dataResponse]);
     }
     
