@@ -26,9 +26,10 @@
                   </button>
                 </div>
                 <p>
-                  *: Provide an Excel file with the words you want to translate
-                  in column A. We'll send back a file with search results in
-                  column B (blank if the word isn't in our database).
+                  *: Provide an Excel file containing the word to be translated in column A. We will return the file with
+                  the search results in column B (leave blank if the word is not in our database), cell A1 is the keyword
+                  of language to translate, cell B1 is the keyword of the language to be translated, row 2 is the
+                  description, start translating from row 3.
                 </p>
               </form>
             </div>

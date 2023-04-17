@@ -278,6 +278,7 @@ class WordsController extends Controller
         $languageId = $language->id;
         $languageTranslateId = $languageTranslate->id;
         $dataAction = $data[0];
+        array_shift($dataAction);   //remove 2 row first
         array_shift($dataAction);
         $words = array_map(function($subarray) {
             return $subarray[0];
