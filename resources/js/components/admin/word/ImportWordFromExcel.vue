@@ -24,11 +24,15 @@
                   </button>
                 </div>
                 <p>
-                  *: Provide an Excel file. Use column A for new words, column B
-                  for translations, column C for descriptions in the original
-                  language (optional), and column D for translations (optional).
-                  Leave the description columns blank if there is no
-                  information.
+                  *: Please provide an Excel file with the following format:<br>
+
+                  Column A: New words (Vietnamese language)<br>
+                  Column B: Translations<br>
+                  Column C: Descriptions in original language (optional)<br>
+                  Column D: Translations of descriptions (optional)<br>
+                  Leave the description columns blank if there is no information. Cell A1 should contain the keyword for
+                  the Vietnamese language (VN), and cell B1 should contain the keyword for the translated language. The
+                  second row can be used for descriptions, and the translation process can start from row 3.
                 </p>
               </form>
             </div>

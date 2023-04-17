@@ -26,10 +26,14 @@
                   </button>
                 </div>
                 <p>
-                  *: Provide an Excel file containing the word to be translated in column A. We will return the file with
-                  the search results in column B (leave blank if the word is not in our database), cell A1 is the keyword
-                  of language to translate, cell B1 is the keyword of the language to be translated, row 2 is the
-                  description, start translating from row 3.
+                  *: Please provide an Excel file with the following format:<br>
+
+                  Column A: Words to be translated<br>
+                  Column B: Search results (leave blank if the word is not in our database)<br>
+                  Cell A1: Keyword for the language to be translated<br>
+                  Cell B1: Keyword for the language to translate<br>
+                  Row 2: Descriptions<br>
+                  Start translating from row 3.<br>
                 </p>
               </form>
             </div>
