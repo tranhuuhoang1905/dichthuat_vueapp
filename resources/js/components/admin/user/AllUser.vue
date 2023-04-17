@@ -48,16 +48,27 @@
       aria-hidden="true"
     >
       <div
-        class="modal-dialog p-5 d-flex justify-content-center"
+        class="modal-dialog p-lg-5 p-1 pt-5 pt-lg-5 d-flex justify-content-center"
         role="document"
       >
         <div class="modal-content col-md-7">
           <div class="word_default p-4">
             <h3 class="text-center">Change Roles</h3>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
             <div class="col-md-12 d-flex flex-column align-items-center">
-              <form @submit.prevent="updateRolesUser" class="col-md-12">
+              <form
+                @submit.prevent="updateRolesUser"
+                class="col-md-12 p-0 p-md-4"
+              >
                 <div class="row">
-                  <div class="col-md-12">
+                  <div class="col-md-12 p-0 p-md-4">
                     <div class="form-group">
                       <label>Email</label>
                       <input
@@ -135,17 +146,28 @@
       aria-hidden="true"
     >
       <div
-        class="modal-dialog p-5 d-flex justify-content-center"
+        class="modal-dialog p-lg-5 p-1 pt-5 pt-lg-5 d-flex justify-content-center"
         role="document"
       >
         <div class="modal-content col-md-7">
           <div class="word_default p-4">
             <h3 class="text-center">Change Password</h3>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
             <div class="row">
               <div class="col-md-12 d-flex flex-column align-items-center">
-                <form @submit.prevent="updatePasswordUser" class="col-md-12">
+                <form
+                  @submit.prevent="updatePasswordUser"
+                  class="col-md-12 p-0 p-md-4"
+                >
                   <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-12 p-0 p-md-4">
                       <div class="form-group">
                         <label>Email</label>
                         <input
@@ -218,12 +240,20 @@
       aria-hidden="true"
     >
       <div
-        class="modal-dialog p-5 d-flex justify-content-center"
+        class="modal-dialog p-lg-5 p-1 pt-5 pt-lg-5 d-flex justify-content-center"
         role="document"
       >
         <div class="modal-content col-md-7">
           <div class="word_default p-4">
             <h3 class="text-center">Create New User</h3>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
             <div class="row">
               <div class="col-md-12 d-flex flex-column align-items-center">
                 <form @submit.prevent="createNewUser" class="col-md-12">

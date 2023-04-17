@@ -8,27 +8,55 @@
               Translate Word From Excel
             </h4>
             <div class="col-md-12">
-              <form @submit.prevent="translateWordsFromExcel">
-                <div class="choose-file">
-                  <!-- <label> -->
-                  <input class="px-0 py-2" type="file" accept=".xlsx, .xls" ref="fileInput" required
-                    @change="onFileChange" />
-                  <button class="btn-choose-file" @click.prevent="openFileDialog">
-                    Choose file
-                  </button>
-                  <span v-if="!fileSelected">No file chosen</span>
-                  <span v-else>{{ selectedFile }}</span>
-                  <!-- </label> -->
-                </div>
-                <div class="d-flex justify-content-center">
-                  <button type="submit" class="btn-all-add-edit py-2 px-5 rounded border border-0 my-3">
+              
+              <form
+                class="form-container"
+                enctype="multipart/form-data"
+                @submit.prevent="translateWordsFromExcel"
+              >
+                <div class="upload-files-container col-md-12">
+                  <div class="drag-file-area col-md-12">
+                    <span class="material-icons-outlined upload-icon">
+                      File Upload
+                    </span>
+                    <h3 class="dynamic-message">Drag & drop any file here</h3>
+                    <div class="choose-file">
+                      <!-- <label> -->
+                      <input
+                        class="px-0 py-2"
+                        type="file"
+                        accept=".xlsx, .xls"
+                        ref="fileInput"
+                        required
+                        @change="onFileChange"
+                      />
+                      <button
+                        class="btn-choose-file border border-2 shadow rounded"
+                        @click.prevent="openFileDialog"
+                      >
+                        Choose file
+                      </button>
+                      <span v-if="!fileSelected">No file chosen</span>
+                      <span v-else>{{ selectedFile }}</span>
+                      <!-- </label> -->
+                    </div>
+                  </div>
+                  <button
+                    type="submit"
+                    class="btn-all-add-edit py-2 px-5 rounded border border-0 my-3"
+                  >
                     Upload
                   </button>
                 </div>
                 <p>
-                  *: Provide an Excel file with the words you want to translate
-                  in column A. We'll send back a file with search results in
-                  column B (blank if the word isn't in our database).
+                  *: Please provide an Excel file with the following format:<br />
+                  Column A: Words to be translated<br />
+                  Column B: Search results (leave blank if the word is not in
+                  our database)<br />
+                  Cell A1: Keyword for the language to be translated<br />
+                  Cell B1: Keyword for the language to translate<br />
+                  Row 2: Descriptions<br />
+                  Start translating from row 3.<br />
                 </p>
               </form>
             </div>

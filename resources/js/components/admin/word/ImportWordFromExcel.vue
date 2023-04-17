@@ -5,30 +5,58 @@
         <div class="card show border border-0">
           <div class="card-body">
             <h4 class="card-title text-center fs-4">Import Word From Excel</h4>
+
             <div class="col-md-12">
-              <form @submit.prevent="importWordsFromExcel">
-                <div class="choose-file">
-                  <!-- <label> -->
-                  <input class="px-0 py-2" type="file" accept=".xlsx, .xls" ref="fileInput" required
-                    @change="onFileChange" />
-                  <button class="btn-choose-file" @click.prevent="openFileDialog">
-                    Choose file
-                  </button>
-                  <span v-if="!fileSelected">No file chosen</span>
-                  <span v-else>{{ selectedFile }}</span>
-                  <!-- </label> -->
-                </div>
-                <div class="d-flex justify-content-center">
-                  <button type="submit " class="btn-all-add-edit py-2 px-5 rounded border border-0 my-3">
+              
+              <form
+                class="form-container"
+                enctype="multipart/form-data"
+                @submit.prevent="importWordsFromExcel"
+              >
+                <div class="upload-files-container col-md-12">
+                  <div class="drag-file-area col-md-12">
+                    <span class="material-icons-outlined upload-icon">
+                      File Upload
+                    </span>
+                    <h3 class="dynamic-message">Drag & drop any file here</h3>
+                    <div class="choose-file">
+                      <input
+                        class="px-0 py-2"
+                        type="file"
+                        accept=".xlsx, .xls"
+                        ref="fileInput"
+                        required
+                        @change="onFileChange"
+                      />
+                      <button
+                        class="btn-choose-file border border-2 shadow rounded"
+                        @click.prevent="openFileDialog"
+                      >
+                        Choose file
+                      </button>
+                      <span v-if="!fileSelected">No file chosen</span>
+                      <span v-else>{{ selectedFile }}</span>
+                    </div>
+                  </div>
+                  <button
+                    type="submit"
+                    class="btn-all-add-edit py-2 px-5 rounded border border-0 my-3"
+                  >
                     Upload
                   </button>
                 </div>
                 <p>
-                  *: Provide an Excel file. Use column A for new words, column B
-                  for translations, column C for descriptions in the original
-                  language (optional), and column D for translations (optional).
+                  *: Please provide an Excel file with the following format:<br />
+                  Column A: New words (Vietnamese language)<br />
+                  Column B: Translations<br />
+                  Column C: Descriptions in original language (optional)<br />
+                  Column D: Translations of descriptions (optional)<br />
                   Leave the description columns blank if there is no
-                  information.
+                  information. Cell A1 should contain the keyword for the
+                  Vietnamese language (VN), and cell B1 should contain the
+                  keyword for the translated language. The second row can be
+                  used for descriptions, and the translation process can start
+                  from row 3.
                 </p>
               </form>
             </div>
@@ -38,7 +66,6 @@
     </div>
   </div>
 </template>
- 
 <script>
 export default {
   data() {
@@ -50,22 +77,22 @@ export default {
       selectedFile: "",
     };
   },
+
   created() {
     this.axios.get("/api/languages").then((response) => {
-      if (response.data.message === 'success') {
+      if (response.data.message === "success") {
         this.languages = response.data.data;
         if (response.data.data.length > 0) {
           this.word.language_id = this.word.language_translate_id =
             response.data.data[0].id;
         }
       }
-
     });
   },
   methods: {
     async importWordsFromExcel() {
       const swalLoading = this.$swal.fire({
-        title: 'Loading',
+        title: "Loading",
         allowOutsideClick: false,
         allowEscapeKey: false,
         didOpen: () => {
@@ -90,34 +117,32 @@ export default {
         .then((response) => {
           if (response.status === 200) {
             swalLoading.update({
-              title: 'File import successful',
-              icon: 'success',
+              title: "File import successful",
+              icon: "success",
               showConfirmButton: false,
             });
           } else {
             swalLoading.update({
-              title: 'File import false',
-              icon: 'error',
+              title: "File import false",
+              icon: "error",
               showConfirmButton: false,
             });
           }
           setTimeout(() => {
             swalLoading.close();
           }, 1500);
-
         })
         .catch((error) => {
           swalLoading.update({
             title: `Error ${error.response.status}`,
-            icon: 'error',
+            icon: "error",
             showConfirmButton: false,
           });
           setTimeout(() => {
             swalLoading.close();
           }, 1500);
         })
-        .finally(
-      );
+        .finally();
     },
     openFileDialog() {
       this.$refs.fileInput.click();

@@ -37,13 +37,21 @@
       aria-hidden="true"
     >
       <div
-        class="modal-dialog p-5 d-flex justify-content-center"
+        class="modal-dialog p-lg-5 p-1 pt-5 pt-lg-5 d-flex justify-content-center"
         role="document"
       >
         <div class="modal-content col-md-7">
           <div class="row">
             <div class="word_default p-4">
               <h3 class="text-center">Edit Role</h3>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
               <div class="row">
                 <div class="col-md-12 d-flex flex-column align-items-center">
                   <form @submit.prevent="updateRole">
