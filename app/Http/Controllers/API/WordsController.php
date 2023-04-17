@@ -293,7 +293,6 @@ class WordsController extends Controller
             ->where('words.status',1)
             ->get()->toArray();
             
-        return response()->json(["check translations"=>$translations,"words"=>$words]);
         $dataResponse = [];
         foreach ($dataAction as $element){
             $key = array_search($element[0], array_column($translations, 'word'));
