@@ -142,16 +142,20 @@
 }
 .all_word {
     tbody {
-       td{
-        text-align: center;
-       }
        td:nth-child(1){
         text-align: left;
        }
        .td_space-between{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 4px;
+       }
+       .td_space-center{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
        }
     }
 }

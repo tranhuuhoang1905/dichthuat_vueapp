@@ -105,16 +105,20 @@
   text-align: center;
 }
 
-.all_word tbody td {
-  text-align: center;
-}
 .all_word tbody td:nth-child(1) {
   text-align: left;
 }
 .all_word tbody .td_space-between {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 4px;
+}
+.all_word tbody .td_space-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .all_languages tbody input[type=checkbox],

@@ -440,7 +440,7 @@ export default {
         return {
           data: "word_id",
           title: language.name,
-          // class:"td_space-between",
+          class:"position-relative",
           createdCell: function (cell, cellData, rowData, rowIndex, colIndex) {
             const app = createApp({
               render() {
@@ -459,7 +459,7 @@ export default {
                       h(
                         "button",
                         {
-                          class: "btn btn-all-add-edit",
+                          class: "btn btn-all-add-edit td_space-between",
                           onClick: () => {
                             self.axios
                               .post(
@@ -492,7 +492,7 @@ export default {
                   return h(
                     "button",
                     {
-                      class: "btn btn-all-add-edit",
+                      class: "btn btn-all-add-edit td_space-center",
                       onClick: () => {
                         // console.log("check self.rowData", rowData);
                         self.rowAction = rowData;
@@ -536,6 +536,7 @@ export default {
         {
           data: "status",
           title: "Status",
+          class:"text-center",
           render: function (data, type, row) {
             const checked = row.status == 0 ? "checked" : "";
             return `<input type="checkbox" id="${row.word_id}" ${checked}/><label for="${row.word_id}">Toggle</label>`;
@@ -552,7 +553,7 @@ export default {
         },
         {
           data: "word_id",
-          title: "action",
+          title: "Action",
           createdCell: function (cell, cellData, rowData, rowIndex, colIndex) {
             const app = createApp({
               render() {
