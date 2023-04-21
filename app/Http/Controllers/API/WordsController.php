@@ -14,11 +14,21 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\UsersExport;
 use App\Exports\DataExport;
 use Illuminate\Support\Collection;
+use App\Traits\StringHelper;
+use App\Repositories\WordRepository;
 // export file excel
 use Validator;
 
 class WordsController extends Controller
 {
+    use StringHelper;
+    protected $wordRepository;
+
+    public function __construct(WordRepository $wordRepository)
+    {
+        $this->wordRepository = $wordRepository;
+    }
+
     // all words không hiện từ bị ẩn
     public function index()
     {
@@ -43,7 +53,7 @@ class WordsController extends Controller
             ->join('translation_word', 'words.id', '=', 'translation_word.word_id')
             ->groupBy('words.id', 'words.word', 'words.description', 'words.language_id', 'words.status') // Include all selected columns from 'words' in GROUP BY
             ->distinct('words.id', 'words.status', 'translation_word.language_id')
-            // ->limit(10)
+            ->limit(20)
             ->get();
         // $words = Words::all()->toArray();
         $languages = Languages::all()->where('status', '>', 0)->toArray();
@@ -170,9 +180,6 @@ class WordsController extends Controller
         return response()->json($responseData);
         
     }
- 
-    
-
     public function importWordsFromExcel(Request $request)
     {
         $file = $request->file('file');
@@ -182,14 +189,16 @@ class WordsController extends Controller
         }
         $data = Excel::toArray(new Excel(), $file);
         if(!$data[0] || !$data[0][0] ){
-            $responseData = ['status' => 200,
+            $responseData = [
+                'status' => 200,
                 'success'=>false,
                 'message' => 'Language code not found',
             ];
             return response()->json($responseData);
         }
         if($data[0][0][0] !== "VN"){
-            $responseData = ['status' => 200,
+            $responseData = [
+                'status' => 200,
                 'success'=>false,
                 'message' => 'Column A must be in Vietnamese',
             ];
@@ -197,7 +206,8 @@ class WordsController extends Controller
         }
         $language = Languages::where('iso_code', $data[0][0][1])->first();
         if(!$language){
-            $responseData = ['status' => 200,
+            $responseData = [
+                'status' => 200,
                 'success'=>false,
                 'message' => 'Language not support'
             ];
@@ -208,8 +218,6 @@ class WordsController extends Controller
         
         $languageId = 1;// language gốc bằng tiếng việt
         $languageTranslateId = $language->id;
-        
-        
         $logImport = new LogImport([
             'user_id' => $user->id,
             'language_id' => $languageId,
@@ -217,29 +225,48 @@ class WordsController extends Controller
             'file_name'=>$fileName
         ]);
         $logImport->save();
+        $array = [];
+        $string = "";
+        $stringTranslate = "";
+        
+        array_shift($data[0]);   //remove 2 row first
+        array_shift($data[0]);
         foreach ($data[0] as $key => $element){
-            // if ($key > 0 && !empty($element[0]) && !empty($element[1]) && !empty($element[2]) && !empty($element[3])) {
-            if ($key > 1 && !empty($element[0]) && !empty($element[1]) ) {
-                $word = $element[0];
-                $translate = $element[1];
-                $description = $element[2] ?? $element[3] ?? "";
-                $translateDescription = $element[3] ?? $element[2] ?? "";
-                $words = new Words();
-                // $words->saveWithTranslation($languageId, $languageTranslateId, $word, $translate, $description, $translateDescription,$logImport->id);
-                // // lưu chéo ngược lại
-                // $words->saveWithTranslation($languageTranslateId, $languageId, $translate, $word, $translateDescription, $description,$logImport->id);
-
-                $words->saveWithTranslation($languageId, $languageTranslateId, $word, $translate, $description, $translateDescription,$logImport->id);
-                // lưu phiên bảng tiếng việt
-                $words->saveWithTranslation($languageId, $languageId, $word, $word, $description, $description,$logImport->id);
+            if (!empty($element[0]) && !empty($element[1]) ) {
+                //check 
+                $string = $element[0];
+                $stringTranslate = $element[1];
+                $array =$this->splitWord($element[0]);
+                $arrayTranslates = $this->splitWord($element[1]);
+                if(count($array)!==count($arrayTranslates)){
+                    continue;
+                }
+                $logImportId = $logImport->id;
+                $wordData = [
+                    "language_id"=> $languageId,
+                    "data"=> array_values($array),
+                    "description"=>$element[2]??""
+                ];
+                $translateData = [
+                    "language_id"=> $languageTranslateId,
+                    "data"=> array_values($arrayTranslates),
+                    "description"=>$element[3]??""
+                ];
+                $this->wordRepository->saveWord($wordData,$translateData,$logImportId);
             }
         }
-        $responseData = ['status' => 200,
+        $responseData = [
+            'status' => 200,
             'success'=>true,
             'message' => 'The file word successfully imported',
+            'data'=>[]
+            ,
         ];
         return response()->json($responseData);
     }
+
+    
+
     public function translateWordsFromExcel(Request $request)
     {
         $file = $request->file('file');
@@ -283,41 +310,55 @@ class WordsController extends Controller
         $words = array_map(function($subarray) {
             return $subarray[0];
         }, $dataAction);
-        $words = array_filter($words, function ($value) {
-            return !is_null($value) && $value !== ''&& $value !== ' ';
-        });
-
-        // return response()->json(["check words"=>$words]);
-        
-        $translations = DB::table('words')
+        $words =$this->removeEmptyElements($words);
+        if(false){
+        // if($language->iso_code =="VN"){
+            $translations = DB::table('words')
             ->select('words.word as word',  'words.status as status',
                 DB::raw('GROUP_CONCAT(CASE WHEN translation_word.language_id = ' . $languageTranslateId . ' THEN CONCAT("{\"language_id\":", translation_word.language_id, ",\"translate\":\"", translation_word.translate, "\",\"description\":\"", translation_word.description, "\",\"original_language_description\":\"", translation_word.original_language_description, "\",\"id\":", translation_word.id, "}") END SEPARATOR ",") as data'))
             ->join('translation_word', 'words.id', '=', 'translation_word.word_id')
             ->groupBy('words.id', 'words.word', 'words.description', 'words.language_id', 'words.status') // Include all selected columns from 'words' in GROUP BY
             ->distinct('words.id', 'words.status', 'translation_word.language_id')
             ->whereIn('words.word', $words)
+            // ->where('translation_word.language_id',$languageId)
             ->where('words.status',1)
             ->get()->toArray();
-            
-        $dataResponse = [];
-        foreach ($dataAction as $element){
-            $key = array_search($element[0], array_column($translations, 'word'));
-            if ($key !== false) {
+        }else{
+            $translations = DB::table('translation_word')
+            ->join('words', 'translation_word.word_id', '=', 'words.id')
+            ->select('translation_word.translate as word', 'translation_word.status as status',
+            DB::raw("GROUP_CONCAT(CONCAT('{\"language_id\":', words.language_id, ',\"translate\":\"', words.word, '\", \"description\":\"', COALESCE(words.description, ''), '\", \"original_language_description\":\"\", \"id\":', words.id, '}') SEPARATOR ', ') AS data")
 
+                )
+            ->where('translation_word.language_id', '=', 4)
+            ->whereIn('translation_word.translate', $words)
+            ->groupBy('translation_word.translate','translation_word.status')
+            ->get()->toArray();
+        }
+        
+        foreach ($dataAction as $element){
+            $word = $element[0];
+            $arrayWords = $this->splitWordExport($word);
+            $key = array_search(strtolower($arrayWords[0]), array_column($translations, 'word'));
+            if ($key !== false) {
                 $foundElement = $translations[$key];
                 $arrayTranslates = json_decode('[' . $foundElement->data . ']', true);
+                if(!is_array($arrayTranslates)){
+                    $dataResponse[] = [$word];
+                }
                 foreach($arrayTranslates as $translate){
-                    $dataResponse[] = [$element[0],$translate['translate'],$translate['description'],$translate['original_language_description']];
+                    $dataResponse[] = [$word,$translate['translate'],$translate['description'],$translate['original_language_description']];
                 }
             } else {
-                $dataResponse[] = [$element[0]];
+                $dataResponse[] = [$word];
             }
         }
+        // return response()->json(["success"=>"success",'data'=>$data,'translations'=>$dataResponse]);
         $export = new DataExport(collect($dataResponse));
         $fileName = 'translatecallback.xlsx';
         $response = Excel::download($export, $fileName);
         return $response;
-        // return response()->json(["success"=>"success",'data'=>$data,'translations'=>$dataResponse]);
+        
     }
     
 }

@@ -126,7 +126,7 @@ class AuthController extends Controller
             return response()->json($res, 200);
         }
     }
-/**
+    /**
      * Xử lý yêu cầu đăng nhập.
      *
      * @param  \Illuminate\Http\Request  $request

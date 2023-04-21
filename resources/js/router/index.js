@@ -189,7 +189,7 @@ export const routes = [
                         name: 'Add Permission',
                         path: 'add',
                         component: AddPermission,
-                        meta: { requiresAuth: true, roles: ['admin'] }
+                        meta: { requiresAuth: true }
                     },
                 ]
             },
@@ -249,12 +249,6 @@ export const routes = [
         name: 'login',
         component: LoginIdentifier
     },
-    {
-        path: "/login-challenge/:email/:is_first_login",
-        name: "Login Challenge",
-        component: LoginChallengeComponent
-    },
-
     {
         path: "/login-challenge/:email/:is_first_login",
         name: "Login Challenge",
