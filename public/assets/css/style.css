@@ -12,6 +12,12 @@ body .btn-all-add-edit:hover {
 body .text-login-register {
   color: #5664d2;
 }
+body .modal-content .close {
+  position: absolute;
+  top: 0;
+  font-size: 30px;
+  right: 10px;
+}
 
 textarea {
   overflow: hidden;
@@ -133,6 +139,7 @@ textarea {
   cursor: pointer;
 }
 .translate .language {
+  margin-bottom: 10px;
   margin-right: 10px;
   background: #252b3b;
   color: #fff;
@@ -264,6 +271,37 @@ textarea {
   color: red;
 }
 
+.import_word_from_excel .form-container, .translate_word_from_excel .form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.import_word_from_excel .upload-files-container, .translate_word_from_excel .upload-files-container {
+  border-radius: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.import_word_from_excel .drag-file-area, .translate_word_from_excel .drag-file-area {
+  border: 2px dashed #f4a03f;
+  border-radius: 40px;
+  margin: 10px 0 15px;
+  padding: 30px 50px;
+  text-align: center;
+}
+.import_word_from_excel .drag-file-area .upload-icon, .translate_word_from_excel .drag-file-area .upload-icon {
+  font-size: 50px;
+}
+.import_word_from_excel .drag-file-area h3, .translate_word_from_excel .drag-file-area h3 {
+  font-size: 26px;
+  margin: 15px 0;
+}
+.import_word_from_excel .drag-file-area label, .translate_word_from_excel .drag-file-area label {
+  font-size: 19px;
+}
+
 .profile .form-group .label-item::before {
   content: "*";
   color: #ff4949;
@@ -351,5 +389,20 @@ textarea {
 @media screen and (max-width: 768px) {
   .btn-clear-input i {
     right: 130px !important;
+  }
+  .import_word_from_excel .drag-file-area .upload-icon, .translate_word_from_excel .drag-file-area .upload-icon {
+    font-size: 20px;
+  }
+  .import_word_from_excel .drag-file-area h3, .translate_word_from_excel .drag-file-area h3 {
+    font-size: 16px;
+    margin: 15px 0;
+  }
+  .import_word_from_excel .drag-file-area label, .translate_word_from_excel .drag-file-area label {
+    font-size: 11px;
+  }
+  .import_word_from_excel .drag-file-area .choose-file, .translate_word_from_excel .drag-file-area .choose-file {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 }

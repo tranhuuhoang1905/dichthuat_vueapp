@@ -6,8 +6,10 @@
           <div class="card-body">
             <h4 class="card-title text-center fs-4 mb-3">All Permissions</h4>
             <div class="">
-              <table ref="myTable" class="table table-bordered table-striped table-hover display nowrap">
-              </table>
+              <table
+                ref="myTable"
+                class="table table-bordered table-striped table-hover display nowrap"
+              ></table>
             </div>
           </div>
         </div>
@@ -15,30 +17,66 @@
     </div>
   </div>
   <div class="row">
-    <button ref="myModalBtn" type="button" class="btn btn-primary d-none" data-toggle="modal" data-target="#exampleModal">
+    <button
+      ref="myModalBtn"
+      type="button"
+      class="btn btn-primary d-none"
+      data-toggle="modal"
+      data-target="#exampleModal"
+    >
       Launch demo modal
     </button>
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-      aria-hidden="true">
-      <div class="modal-dialog p-5  d-flex flex-column align-items-center" role="document">
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div
+        class="modal-dialog p-lg-5 p-1 pt-5 pt-lg-5 d-flex flex-column align-items-center"
+        role="document"
+      >
         <div class="modal-content col-md-7">
           <div class="row">
             <div class="word_default p-4">
               <h3 class="text-center">Edit Permission</h3>
-              <div class="row ">
-                <div class="col-md-12  d-flex flex-column align-items-center">
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <div class="row">
+                <div class="col-md-12 d-flex flex-column align-items-center">
                   <form @submit.prevent="updatePermission">
                     <div class="form-group">
                       <label for="permission-name">Permission name</label>
-                      <input id="permission-name" type="text" placeholder="Enter permission name" class="form-control"
-                        v-model="permissionForm.name" required />
+                      <input
+                        id="permission-name"
+                        type="text"
+                        placeholder="Enter permission name"
+                        class="form-control"
+                        v-model="permissionForm.name"
+                        required
+                      />
                     </div>
                     <div class="form-group">
                       <label for="permission-description">Description</label>
-                      <textarea id="permission-description" type="text" placeholder="Enter description"
-                        class="form-control" cols="70" rows="4" v-model="permissionForm.description"></textarea>
+                      <textarea
+                        id="permission-description"
+                        type="text"
+                        placeholder="Enter description"
+                        class="form-control"
+                        cols="70"
+                        rows="4"
+                        v-model="permissionForm.description"
+                      ></textarea>
                     </div>
                     <div class="d-flex justify-content-center">
                       <button type="submit" class="btn btn-all-add-edit">
@@ -47,7 +85,6 @@
                     </div>
                   </form>
                 </div>
-
               </div>
             </div>
           </div>
@@ -63,14 +100,14 @@ import DataTable from "datatables.net-vue3";
 import DataTablesCore from "datatables.net";
 import $ from "jquery";
 DataTable.use(DataTablesCore);
-import { createApp, h } from 'vue';
-import router from '@resources/js/router/index'; // import router từ file router.js
+import { createApp, h } from "vue";
+import router from "@resources/js/router/index"; // import router từ file router.js
 export default {
   data() {
     return {
       permissions: [],
       permissionForm: [],
-      DataTableData: []
+      DataTableData: [],
     };
   },
   created() {
@@ -125,45 +162,56 @@ export default {
           },
         },
         {
-          data: "id", title: "Action",
+          data: "id",
+          title: "Action",
           createdCell: function (cell, cellData, rowData, rowIndex, colIndex) {
             const app = createApp({
               render() {
-                return h('a', {
-                  to: `/admin/permission/edit/${rowData.id}`,
-                  class: 'btn btn-all-add-edit',
-                  onClick: () => {
-                    self.permissionForm = { name: rowData.name, description: rowData.description, id: rowData.id };
-                    self.$refs.myModalBtn.click();
-                    // router.push({ name: 'Edit Permission', params: { id: rowData.id } });
-                  }
-                }, 'edit')
+                return h(
+                  "a",
+                  {
+                    to: `/admin/permission/edit/${rowData.id}`,
+                    class: "btn btn-all-add-edit",
+                    onClick: () => {
+                      self.permissionForm = {
+                        name: rowData.name,
+                        description: rowData.description,
+                        id: rowData.id,
+                      };
+                      self.$refs.myModalBtn.click();
+                      // router.push({ name: 'Edit Permission', params: { id: rowData.id } });
+                    },
+                  },
+                  "edit"
+                );
               },
               data() {
                 return {
-                  rowData: rowData
-                }
-              }
-            })
+                  rowData: rowData,
+                };
+              },
+            });
             app.mount(cell);
-          }
-        }
+          },
+        },
       ];
     },
     fetchData() {
-      this.axios.get("/api/permission/all").then((response) => {
-        if (response.data.success === true && response.data.status == 200) {
-          console.log("check response.data", response.data);
-          this.setColumns();
+      this.axios
+        .get("/api/permission/all")
+        .then((response) => {
+          if (response.data.success === true && response.data.status == 200) {
+            console.log("check response.data", response.data);
+            this.setColumns();
 
-          this.DataTableData = response.data.data.permissions
-          this.table = $(this.$refs.myTable).DataTable({
-            data: this.DataTableData,
-            columns: this.columns,
-            scrollX: true,
-          });
-        }
-      })
+            this.DataTableData = response.data.data.permissions;
+            this.table = $(this.$refs.myTable).DataTable({
+              data: this.DataTableData,
+              columns: this.columns,
+              scrollX: true,
+            });
+          }
+        })
         .catch((error) => {
           if (error.response.status == 403) {
             this.logout();
@@ -181,25 +229,30 @@ export default {
     updatePermission() {
       console.log("check role: ", this.permissionForm);
       this.axios
-        .post(`/api/permission/update/${this.permissionForm.id}`, this.permissionForm)
+        .post(
+          `/api/permission/update/${this.permissionForm.id}`,
+          this.permissionForm
+        )
         .then((response) => {
           if (response.data.status === 200 && response.data.success == true) {
-
-            this.updateRowData(this.permissionForm.id, response.data.data.permission_update);
+            this.updateRowData(
+              this.permissionForm.id,
+              response.data.data.permission_update
+            );
             this.$swal.fire({
-              position: 'top-end',
-              icon: 'success',
+              position: "top-end",
+              icon: "success",
               title: `Add role ${this.permissionForm.name} success`,
               showConfirmButton: false,
-              timer: this.$config.notificationTimer ?? 1000
-            })
+              timer: this.$config.notificationTimer ?? 1000,
+            });
           } else {
             this.$swal.fire({
-              icon: 'error',
-              title: 'Oops...',
+              icon: "error",
+              title: "Oops...",
               text: `Error ${error.response.status}: ${error.response.data.message}`,
               // footer: '<a href="">Why do I have this issue?</a>'
-            })
+            });
           }
         })
         .catch((error) => {
@@ -207,20 +260,20 @@ export default {
           console.log(error);
           // alert(`Error ${error.response.status}: ${error.response.data.message}`);
           this.$swal.fire({
-            icon: 'error',
-            title: 'Oops...',
+            icon: "error",
+            title: "Oops...",
             text: `Error ${error.response.status}: ${error.response.data.message}`,
             // footer: '<a href="">Why do I have this issue?</a>'
-          })
+          });
         });
     },
     updateRowData(id, newPermission) {
-      let elementToUpdate = this.DataTableData.find(item => item.id === id);
+      let elementToUpdate = this.DataTableData.find((item) => item.id === id);
       if (elementToUpdate) {
         elementToUpdate.name = newPermission.name;
         elementToUpdate.status = newPermission.status;
         elementToUpdate.description = newPermission.description;
-      };
+      }
 
       $(this.$refs.myTable).DataTable().destroy();
       this.table = $(this.$refs.myTable).DataTable({
@@ -228,10 +281,8 @@ export default {
         columns: this.columns,
         scrollX: true,
       });
-
-    }
+    },
   },
-  computed: {
-  }
+  computed: {},
 };
 </script>

@@ -91,7 +91,7 @@ export const routes = [
                         path: 'all',
                         component: AllWords,
                         meta: { permissions: ['Word Manager'] },
-                        props: (route) => ({ message: route.params.test }),
+                        // props: (route) => ({ message: route.params.test }),
                     },
                     {
                         name: 'Add Word',
