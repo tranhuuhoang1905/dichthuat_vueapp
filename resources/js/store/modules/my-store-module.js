@@ -11,7 +11,6 @@ export const myModule = {
     // },
     getters: {
         getUser(state) {
-            console.log(state);
             return state.username;
         },
         getAge(state) {

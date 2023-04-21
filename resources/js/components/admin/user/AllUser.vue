@@ -285,7 +285,6 @@ export default {
       this.showUserForm = false;
     },
     createNewUser() {
-      console.log(this.newUser);
       this.axios
         .post("/api/user/create-new-user", this.newUser)
         .then((response) => {
@@ -317,7 +316,6 @@ export default {
         .finally(() => (this.loading = false));
     },
     updateRolesUser() {
-      console.log("check userForm:", this.userForm);
       this.axios
         .post(`/api/user/change-role-user/${this.userForm.id}`, this.userForm)
         .then((response) => {
@@ -503,14 +501,11 @@ export default {
     },
     isRolesChecked(roles, roleId) {
       // return true;
-      console.log("check isRolesChecked roles", roles);
       if (Array.isArray(roles)) {
         const isCheck = roles.some((role) => role.id === roleId);
         this.userForm["role_" + roleId] = isCheck;
-        console.log("check isCheck : roleId", roleId, isCheck);
         return isCheck;
       } else {
-        console.log("check isCheck: roleId", roleId, false);
         return false;
       }
       // return true;

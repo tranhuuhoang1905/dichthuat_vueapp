@@ -358,7 +358,6 @@ export default {
       let dataUpdateString = JSON.stringify(dataUpdate);
       dataUpdateString = dataUpdateString.replace(/\[|\]/g, "");
       this.rowAction.data = dataUpdateString;
-      console.log("check this.rowAction", this.rowAction);
       // this.updateRowData(this.rowAction);
 
       this.axios
@@ -590,7 +589,6 @@ export default {
       if (elementToUpdate) {
         elementToUpdate.data = newRow.data;
       }
-      console.log("check this.dataTableData:", this.dataTableData);
       $(this.$refs.myTable).DataTable().destroy();
       this.setColumns();
       $(this.$refs.myTable).DataTable({

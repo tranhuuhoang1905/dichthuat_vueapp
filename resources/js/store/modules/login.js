@@ -98,7 +98,6 @@ const actions = {
                             }
                         });
                     } else {
-                        console.log("check --------------", getters.getLoginResponse.response_data);
                         // alert(getters.getLoginResponse.response_data[0]);
                         Swal.fire({
                             icon: 'error',
@@ -134,8 +133,6 @@ const actions = {
                         'loginResponse',
                         JSON.stringify(response.data)
                     );
-                    console.log('getters.getLoginResponse.response_type');
-                    console.log(getters.getLoginResponse.response_type);
                     if (getters.getLoginResponse.response_type == 'success') {
                         axios.get('/api/user').then(response => {
                             if (response.data.status === 200) {

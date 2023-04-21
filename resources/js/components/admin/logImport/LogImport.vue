@@ -99,7 +99,6 @@ export default {
       ];
     },
     rollback(id) {
-      console.log(id);
       this.axios.post(`/api/log-import/rollback/${id}`)
         .then((response) => {
           if (response.data.success == true) {
