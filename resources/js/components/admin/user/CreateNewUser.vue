@@ -73,7 +73,6 @@ export default {
   },
   methods: {
     createNewUser() {
-      console.log(this.newUser);
       this.axios
         .post("/api/user/create-new-user", this.newUser)
         .then((response) => {

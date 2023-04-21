@@ -207,9 +207,7 @@ export default {
             this.searchAction();
         },
         'searchData.keyword': function (newValue, oldValue) {
-            console.log("check keywword", newValue);
             if (newValue === "") {
-                console.log("check keywword", newValue);
                 this.topSearch();
                 this.searchAction();
             }

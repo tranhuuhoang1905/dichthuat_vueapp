@@ -123,12 +123,10 @@ export default {
         {
           data: "status",
           render: function (data, type, row) {
-            console.log("check row.status", row);
             const checked = row.status == 0 ? "checked" : "";
             return `<input type="checkbox" id="${row.id}" ${checked}/><label for="${row.id}">Toggle</label>`
           },
           createdCell: function (cell, cellData, rowData, rowIndex, colIndex) {
-            console.log("check rowData", rowData);
             const checkbox = cell.querySelector('input[type="checkbox"]');
             checkbox.addEventListener('click', function () {
               self.actionEditStatus(rowData);

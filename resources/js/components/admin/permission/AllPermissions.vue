@@ -201,7 +201,6 @@ export default {
         .get("/api/permission/all")
         .then((response) => {
           if (response.data.success === true && response.data.status == 200) {
-            console.log("check response.data", response.data);
             this.setColumns();
 
             this.DataTableData = response.data.data.permissions;
@@ -227,7 +226,6 @@ export default {
     },
 
     updatePermission() {
-      console.log("check role: ", this.permissionForm);
       this.axios
         .post(
           `/api/permission/update/${this.permissionForm.id}`,

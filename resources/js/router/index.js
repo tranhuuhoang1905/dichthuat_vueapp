@@ -292,7 +292,6 @@ router.beforeEach((to, from, next) => {
     }
     if (roles && roles.length > 0) {
         const userRoles = authUser.roles
-        console.log("--------------roles", authUser.roles);
         const hasAccess = userRoles.some(role => roles.includes(role.name));
         if (!hasAccess) {
             next('/error');
@@ -301,7 +300,6 @@ router.beforeEach((to, from, next) => {
     }
     if (permissions && permissions.length > 0) {
         const userRoles = authUser.roles
-        console.log("--------------permissions", permissions);
         let hasAccess = false;
 
         for (const role of userRoles) {

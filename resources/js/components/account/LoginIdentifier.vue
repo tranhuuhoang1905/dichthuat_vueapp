@@ -21,7 +21,6 @@ export default {
       axios
         .post('/api/check-login', this.loginData)
         .then(response => {
-          console.log(response.data);
           if (response.data.success === true) {
             this.userExist = response.data.data.is_user;
             this.$router.push({

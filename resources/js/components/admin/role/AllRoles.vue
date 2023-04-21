@@ -268,7 +268,6 @@ export default {
         .get("/api/role/all")
         .then((response) => {
           if (response.data.success === true && response.data.status == 200) {
-            console.log("check response.data", response.data);
             this.permissions = response.data.data.permissions;
             this.setColumns();
             this.DataTableData = response.data.data.roles;

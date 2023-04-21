@@ -148,7 +148,6 @@ export default {
     };
   },
   created() {
-    console.log(this.$config.notificationTimer);
     this.axios.get("/api/languages").then((response) => {
       if (response.data.message === "success") {
         this.languages = response.data.data;
