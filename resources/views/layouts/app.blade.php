@@ -27,7 +27,7 @@
         <link href="{{ mix('assets/css/simple-typeahead.css') }}" type="text/css" rel="stylesheet"/>
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.24/datatables.min.css"/>
         <!-- <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script> -->
-        
+        <script src="https://cdn.jsdelivr.net/npm/he@1.2.0/he.js"></script>
        <style>
         .bg-light {
             background-color: #eae9e9 !important;
@@ -37,10 +37,11 @@
 <body data-sidebar="dark">
 <div id="app">
 </div>
+
+<script src="{{ asset('assets/libs/jquery/jquery.min.js') }}"></script>
 <!-- <script src="cdn.datatables.net/scroller/2.1.1/js/dataTables.scroller.min.js"></script> -->
 <script src="{{ mix('assets/js/app.js') }}" type="text/javascript"></script>
 <!-- JAVASCRIPT -->
-<script src="{{ asset('assets/libs/jquery/jquery.min.js') }}"></script>
 <script src="{{ asset('assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('assets/libs/metismenu/metisMenu.min.js') }}"></script>
 <script src="{{ asset('assets/libs/simplebar/simplebar.min.js') }}"></script>

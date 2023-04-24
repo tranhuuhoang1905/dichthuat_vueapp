@@ -43,18 +43,28 @@ class WordsController extends Controller
         ];
         return response()->json($responseData);
     }
-    
-    // all words có các từ bị ẩn
-    public function allWord()
+
+    // all words không hiện từ bị ẩn
+    public function dataTablesAllWord()
     {
         $wordsTest = DB::table('words')
             ->select('words.id as word_id', 'words.word as word', 'words.description as description', 'words.language_id as language_id', 'words.status as status',
                 DB::raw('GROUP_CONCAT(CONCAT("{\"language_id\":", translation_word.language_id, ",\"translate\":\"", translation_word.translate, "\",\"id\":", translation_word.id, "}") SEPARATOR ",") as data'))
             ->join('translation_word', 'words.id', '=', 'translation_word.word_id')
             ->groupBy('words.id', 'words.word', 'words.description', 'words.language_id', 'words.status') // Include all selected columns from 'words' in GROUP BY
-            ->distinct('words.id', 'words.status', 'translation_word.language_id')
-            ->limit(20)
-            ->get();
+            ->distinct('words.id', 'words.status', 'translation_word.language_id')->get();
+        return datatables($wordsTest)->make(true);
+        // return response()->json($responseData);
+    }
+    
+
+
+
+    
+    // all words có các từ bị ẩn
+    public function allWord()
+    {
+        
         // $words = Words::all()->toArray();
         $languages = Languages::all()->where('status', '>', 0)->toArray();
         $responseData = [
@@ -62,8 +72,6 @@ class WordsController extends Controller
             'success'=>true,
             'message' => 'The new word successfully added',
             'data'=> [
-                // 'words'=>$words,
-                'words_test'=>$wordsTest,
                 'languages'=>$languages
             ]
         ];

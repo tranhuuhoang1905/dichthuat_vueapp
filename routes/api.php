@@ -46,6 +46,7 @@ Route::group(['prefix' => 'language','middleware' => ['auth:sanctum, permission:
 
 // Route::post('/words', [WordsController::class, 'index'])->middleware('auth:sanctum');
 
+Route::get('/word-data', [WordsController::class, 'dataTablesAllWord']);
 // Route::group(['prefix' => 'word','middleware' => ['auth:sanctum', 'leader']], function () {
 Route::group(['prefix' => 'word','middleware' => ['auth:sanctum']], function () {
     Route::post('all-word', [WordsController::class, 'allWord'])->middleware('permission:Word Manager');

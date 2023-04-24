@@ -6,10 +6,23 @@
           <div class="card-body">
             <h4 class="card-title text-center fs-4">All Words</h4>
             <div class="">
-              <table
-                ref="myTable"
-                class="table table-bordered table-striped table-hover display nowrap"
-              ></table>
+              <table id="myTable" ref="myTable" class="table table-bordered table-striped table-hover display nowrap">
+                <thead>
+                  <tr>
+                    <td>ID</td>
+                    <td>Status</td>
+                    <td>Status</td>
+                    <td>Status</td>
+                    <td>Status</td>
+                    <td>Status</td>
+
+                    <td>Action</td>
+                  </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -17,36 +30,19 @@
     </div>
   </div>
   <div class="row">
-    <button
-      ref="myModalBtn"
-      type="button"
-      class="btn btn-primary d-none"
-      data-toggle="modal"
-      data-target="#exampleModal"
-    >
+    <button ref="myModalBtn" type="button" class="btn btn-primary d-none" data-toggle="modal" data-target="#exampleModal">
       Launch demo modal
     </button>
 
     <!-- Modal -->
-    <div
-      class="modal fade"
-      id="exampleModal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
       <div class="modal-dialog row p-lg-5 p-1 pt-5 pt-lg-5" role="document">
         <div class="modal-content col-md-12">
           <div class="row">
             <div class="word_default p-4">
               <h3 class="text-center">Word Default</h3>
-              <button
-                type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
               <div class="row">
@@ -70,9 +66,7 @@
                 </div>
                 <div class="col-md-8">
                   <h4>Translate</h4>
-                  <div
-                    class="shadow-lg border border-0 word-default-data p-4 p-lg-5"
-                  >
+                  <div class="shadow-lg border border-0 word-default-data p-4 p-lg-5">
                     <div v-for="(translate, index) in dataWords" :key="index">
                       <form @submit.prevent="updateTranslate(translate.id)">
                         <div class="word-content">
@@ -81,46 +75,26 @@
                             {{ index + 1 }}) &nbsp;
                             <div class="form-group box_mean-language">
                               <label>Language:</label>
-                              <input
-                                type="text"
-                                class="form-control"
-                                v-model="translate.language"
-                                disabled
-                              />
+                              <input type="text" class="form-control" v-model="translate.language" disabled />
                             </div>
                           </div>
                           <div class="box_mean">
                             <div class="form-group box_mean-translate">
                               <label>Translate:</label>
-                              <input
-                                type="text"
-                                class="form-control"
-                                v-model="translate.translate"
-                              />
+                              <input type="text" class="form-control" v-model="translate.translate" />
                             </div>
                             <div class="form-group box_mean-description">
                               <label>Description:</label>
-                              <input
-                                type="text"
-                                class="form-control"
-                                v-model="translate.description"
-                              />
+                              <input type="text" class="form-control" v-model="translate.description" />
                             </div>
                             <div class="form-group box_mean-description">
                               <label> Description in original language:</label>
-                              <input
-                                type="text"
-                                class="form-control"
-                                v-model="
-                                  translate.original_language_description
-                                "
-                              />
+                              <input type="text" class="form-control" v-model="
+                                translate.original_language_description
+                              " />
                             </div>
                             <div class="box_mean_router">
-                              <button
-                                type="submit"
-                                class="btn btn-all-add-edit word-botton"
-                              >
+                              <button type="submit" class="btn btn-all-add-edit word-botton">
                                 Save
                               </button>
                             </div>
@@ -139,36 +113,20 @@
   </div>
   <!-- add transalte -->
   <div class="row">
-    <button
-      ref="myModalAddTranslateBtn"
-      type="button"
-      class="btn btn-primary d-none"
-      data-toggle="modal"
-      data-target="#ModalAddTranslate"
-    >
+    <button ref="myModalAddTranslateBtn" type="button" class="btn btn-primary d-none" data-toggle="modal"
+      data-target="#ModalAddTranslate">
       Launch demo modal
     </button>
 
     <!-- Modal -->
-    <div
-      class="modal fade"
-      id="ModalAddTranslate"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
+    <div class="modal fade" id="ModalAddTranslate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
       <div class="modal-dialog p-lg-5 p-1 pt-5 pt-lg-5" role="document">
         <div class="modal-content col-md-12">
           <div class="row">
             <div class="word_default p-4">
               <h3 class="text-center">Add Translate</h3>
-              <button
-                type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
               <div class="col-md-12">
@@ -177,38 +135,19 @@
                     <div class="col-md-6 col-sm-12">
                       <div class="form-group">
                         <label>Word:</label>
-                        <input
-                          type="text"
-                          placeholder="Enter word"
-                          class="form-control"
-                          v-model="formAddWordData.word"
-                          required
-                        />
+                        <input type="text" placeholder="Enter word" class="form-control" v-model="formAddWordData.word"
+                          required />
                       </div>
                       <div class="form-group">
                         <label>Description</label>
-                        <textarea
-                          type="text"
-                          placeholder="Enter description"
-                          class="form-control"
-                          v-model="formAddWordData.description"
-                          rows="4"
-                          required
-                        ></textarea>
+                        <textarea type="text" placeholder="Enter description" class="form-control"
+                          v-model="formAddWordData.description" rows="4" required></textarea>
                       </div>
                       <div class="form-group">
                         <label>Language</label>
-                        <select
-                          class="form-select"
-                          aria-label="Default select example"
-                          v-model="formAddWordData.language_id"
-                          required
-                        >
-                          <option
-                            v-for="language in languages"
-                            :key="language.id"
-                            :value="`${language.id}`"
-                          >
+                        <select class="form-select" aria-label="Default select example"
+                          v-model="formAddWordData.language_id" required>
+                          <option v-for="language in languages" :key="language.id" :value="`${language.id}`">
                             {{ language.name }}
                           </option>
                         </select>
@@ -218,38 +157,19 @@
                     <div class="col-md-6 col-sm-12">
                       <div class="form-group">
                         <label>Translate</label>
-                        <input
-                          type="text"
-                          placeholder="Enter translated word"
-                          class="form-control"
-                          v-model="formAddWordData.translate"
-                          required
-                        />
+                        <input type="text" placeholder="Enter translated word" class="form-control"
+                          v-model="formAddWordData.translate" required />
                       </div>
                       <div class="form-group">
                         <label>Translate description</label>
-                        <textarea
-                          type="text"
-                          placeholder="Enter description"
-                          class="form-control"
-                          v-model="formAddWordData.translate_description"
-                          rows="4"
-                          required
-                        ></textarea>
+                        <textarea type="text" placeholder="Enter description" class="form-control"
+                          v-model="formAddWordData.translate_description" rows="4" required></textarea>
                       </div>
                       <div class="form-group">
                         <label>Language translate id</label>
-                        <select
-                          class="form-select"
-                          aria-label="Default select example"
-                          v-model="formAddWordData.language_translate_id"
-                          required
-                        >
-                          <option
-                            v-for="language in languages"
-                            :key="language.id"
-                            :value="`${language.id}`"
-                          >
+                        <select class="form-select" aria-label="Default select example"
+                          v-model="formAddWordData.language_translate_id" required>
+                          <option v-for="language in languages" :key="language.id" :value="`${language.id}`">
                             {{ language.name }}
                           </option>
                         </select>
@@ -293,7 +213,7 @@ export default {
       dataTableData: [],
     };
   },
-  mounted() {},
+  mounted() { },
   created() {
     this.fetchData();
   },
@@ -386,23 +306,173 @@ export default {
         .finally(() => (this.loading = false));
     },
     fetchData() {
+
       this.axios.post("/api/word/all-word").then((response) => {
         // this.words = response.data;
         if (response.data.status === 200 && response.data.success == true) {
           this.languages = response.data.data.languages;
           const isSmallScreen = window.innerWidth < 760;
           const pagingType = isSmallScreen ? "simple" : "simple_numbers";
-          this.setColumns();
-          this.dataTableData = response.data.data.words_test;
-          this.table = $(this.$refs.myTable).DataTable({
-            responsive: true,
+          console.log(this.columns);
+          const self = this;
+          const languageColumns = this.languages.map((language) => {
+            return {
+              "data": "word_id",
+              "title": language.name,
+              "class": "position-relative",
+              "createdCell": function (cell, cellData, rowData, rowIndex, colIndex) {
+                const app = createApp({
+                  render() {
+                    var decodedJSON = he.decode(rowData.data);
+                    const dataLanguage = JSON.parse(`[${decodedJSON}]`);
+                    if (
+                      dataLanguage.find((lang) => lang.language_id === language.id)
+                    ) {
+                      const translate = dataLanguage.find(
+                        (lang) => lang.language_id === language.id
+                      ).translate;
+                      if (language.id == 1) {
+                        return translate;
+                      } else {
+                        return [
+                          translate,
+                          h(
+                            "button",
+                            {
+                              class: "btn btn-all-add-edit td_space-between",
+                              onClick: () => {
+                                self.axios
+                                  .post(
+                                    "/api/translate/get-translate-with-language",
+                                    {
+                                      word_id: rowData.word_id,
+                                      language_id: language.id,
+                                    }
+                                  )
+                                  .then((response) => {
+                                    if (
+                                      response.data.status === 200 &&
+                                      response.data.success == true
+                                    ) {
+                                      self.dataWords =
+                                        response.data.data.translations;
+                                      self.dataLanguageWord = self.languages[0];
+                                      self.dataTranslateWord = rowData;
+                                    }
+                                  });
+                                self.rowAction = rowData;
+                                self.$refs.myModalBtn.click();
+                              },
+                            },
+                            "edit"
+                          ),
+                        ];
+                      }
+                    } else {
+                      return h(
+                        "button",
+                        {
+                          class: "btn btn-all-add-edit td_space-center",
+                          onClick: () => {
+                            // console.log("check self.rowData", rowData);
+                            self.rowAction = rowData;
+                            self.formAddWordData = {
+                              language_id: rowData.language_id,
+                              language_translate_id: language.id,
+                              description: rowData.description,
+                              word: rowData.word,
+                            };
+                            self.$refs.myModalAddTranslateBtn.click();
+                          },
+                        },
+                        "add"
+                      );
+                    }
+                  },
+                  data() {
+                    return {
+                      rowData: rowData,
+                    };
+                  },
+                });
+                app.mount(cell);
+              },
+              render: function (data, type, row) {
+                var decodedJSON = he.decode(row.data);
+                const dataLanguage = JSON.parse(`[${decodedJSON}]`);
+                if (dataLanguage.find(lang => lang.language_id === language.id)) {
+                  const translate = dataLanguage.find(lang => lang.language_id === language.id).translate;
+                  return translate;
+                } else {
+                  return 'abc';
+                }
 
-            data: this.dataTableData,
-            columns: this.columns,
-            // lengthMenu: [[5, 10, 15, 20, -1], [5, 10, 15, 20, "All"]], // set number of records per page
-            pagingType: pagingType, // display only a few page buttons
-            scrollX: true,
+              }
+            };
           });
+          $(document).ready(function () {
+            $.noConflict();
+            $('#myTable').DataTable({
+              "processing": true,
+              "serverSide": true,
+              "ajax": "http://localhost:8000/api/word-data",
+              "columns": [
+                { "data": "word_id", "title": "Word ID" },
+
+                ...languageColumns,
+                {
+                  "data": "status",
+                  "title": "Status",
+                  "class": "text-center",
+                  "render": function (data, type, row) {
+                    const checked = row.status == 0 ? "checked" : "";
+                    return `<input type="checkbox" id="${row.word_id}" ${checked}/><label for="${row.word_id}">Toggle</label>`;
+                  },
+                  "createdCell": function (cell, cellData, rowData, rowIndex, colIndex) {
+                    const checkbox = cell.querySelector('input[type="checkbox"]');
+                    checkbox.addEventListener(
+                      "click",
+                      function () {
+                        self.actionEditStatus(rowData);
+                      }.bind(this)
+                    );
+                  },
+                },
+                {
+                  "data": "word_id",
+                  "title": "Action",
+                  "createdCell": function (cell, cellData, rowData, rowIndex, colIndex) {
+                    const app = createApp({
+                      render() {
+                        return h(
+                          "a",
+                          {
+                            to: `/admin/word/default/${rowData.word_id}`,
+                            class: "btn btn-all-add-edit",
+                            onClick: () => {
+                              router.push({
+                                name: "Word Default",
+                                params: { id: rowData.word_id },
+                              });
+                            },
+                          },
+                          "Default"
+                        );
+                      },
+                      data() {
+                        return {
+                          rowData: rowData,
+                        };
+                      },
+                    });
+                    app.mount(cell);
+                  },
+                },
+              ],
+              "pagingType": pagingType, // display only a few page buttons
+              "scrollX": true,
+            });
+          })
         }
       });
     },
@@ -432,157 +502,157 @@ export default {
         .finally(() => (this.loading = false));
     },
 
-    setColumns() {
-      const self = this;
-      // T?o d?ng 3 h�ng ng�n ng?
+    // setColumns() {
+    //   const self = this;
+    //   // T?o d?ng 3 h�ng ng�n ng?
 
-      const languageColumns = this.languages.map((language) => {
-        return {
-          data: "word_id",
-          title: language.name,
-          class:"position-relative",
-          createdCell: function (cell, cellData, rowData, rowIndex, colIndex) {
-            const app = createApp({
-              render() {
-                const dataLanguage = JSON.parse(`[${rowData.data}]`);
-                if (
-                  dataLanguage.find((lang) => lang.language_id === language.id)
-                ) {
-                  const translate = dataLanguage.find(
-                    (lang) => lang.language_id === language.id
-                  ).translate;
-                  if (language.id == 1) {
-                    return translate;
-                  } else {
-                    return [
-                      translate,
-                      h(
-                        "button",
-                        {
-                          class: "btn btn-all-add-edit td_space-between",
-                          onClick: () => {
-                            self.axios
-                              .post(
-                                "/api/translate/get-translate-with-language",
-                                {
-                                  word_id: rowData.word_id,
-                                  language_id: language.id,
-                                }
-                              )
-                              .then((response) => {
-                                if (
-                                  response.data.status === 200 &&
-                                  response.data.success == true
-                                ) {
-                                  self.dataWords =
-                                    response.data.data.translations;
-                                  self.dataLanguageWord = self.languages[0];
-                                  self.dataTranslateWord = rowData;
-                                }
-                              });
-                            self.rowAction = rowData;
-                            self.$refs.myModalBtn.click();
-                          },
-                        },
-                        "edit"
-                      ),
-                    ];
-                  }
-                } else {
-                  return h(
-                    "button",
-                    {
-                      class: "btn btn-all-add-edit td_space-center",
-                      onClick: () => {
-                        // console.log("check self.rowData", rowData);
-                        self.rowAction = rowData;
-                        self.formAddWordData = {
-                          language_id: rowData.language_id,
-                          language_translate_id: language.id,
-                          description: rowData.description,
-                          word: rowData.word,
-                        };
-                        self.$refs.myModalAddTranslateBtn.click();
-                      },
-                    },
-                    "add"
-                  );
-                }
-              },
-              data() {
-                return {
-                  rowData: rowData,
-                };
-              },
-            });
-            app.mount(cell);
-          },
-          // render: function (data, type, row) {
-          //   const dataLanguage = JSON.parse(`[${row.data}]`);
-          //   if (dataLanguage.find(lang => lang.language_id === language.id)) {
-          //     const translate = dataLanguage.find(lang => lang.language_id === language.id).translate;
-          //     return translate;
-          //   } else {
-          //     return 'abc';
-          //   }
+    //   const languageColumns = this.languages.map((language) => {
+    //     return {
+    //       "data": "word_id",
+    //       "title": "language.name",
+    //       "class": "position-relative",
+    //       "createdCell": function (cell, cellData, rowData, rowIndex, colIndex) {
+    //         const app = createApp({
+    //           render() {
+    //             const dataLanguage = JSON.parse(`[${rowData.data}]`);
+    //             if (
+    //               dataLanguage.find((lang) => lang.language_id === language.id)
+    //             ) {
+    //               const translate = dataLanguage.find(
+    //                 (lang) => lang.language_id === language.id
+    //               ).translate;
+    //               if (language.id == 1) {
+    //                 return translate;
+    //               } else {
+    //                 return [
+    //                   translate,
+    //                   h(
+    //                     "button",
+    //                     {
+    //                       class: "btn btn-all-add-edit td_space-between",
+    //                       onClick: () => {
+    //                         self.axios
+    //                           .post(
+    //                             "/api/translate/get-translate-with-language",
+    //                             {
+    //                               word_id: rowData.word_id,
+    //                               language_id: language.id,
+    //                             }
+    //                           )
+    //                           .then((response) => {
+    //                             if (
+    //                               response.data.status === 200 &&
+    //                               response.data.success == true
+    //                             ) {
+    //                               self.dataWords =
+    //                                 response.data.data.translations;
+    //                               self.dataLanguageWord = self.languages[0];
+    //                               self.dataTranslateWord = rowData;
+    //                             }
+    //                           });
+    //                         self.rowAction = rowData;
+    //                         self.$refs.myModalBtn.click();
+    //                       },
+    //                     },
+    //                     "edit"
+    //                   ),
+    //                 ];
+    //               }
+    //             } else {
+    //               return h(
+    //                 "button",
+    //                 {
+    //                   class: "btn btn-all-add-edit td_space-center",
+    //                   onClick: () => {
+    //                     // console.log("check self.rowData", rowData);
+    //                     self.rowAction = rowData;
+    //                     self.formAddWordData = {
+    //                       language_id: rowData.language_id,
+    //                       language_translate_id: language.id,
+    //                       description: rowData.description,
+    //                       word: rowData.word,
+    //                     };
+    //                     self.$refs.myModalAddTranslateBtn.click();
+    //                   },
+    //                 },
+    //                 "add"
+    //               );
+    //             }
+    //           },
+    //           data() {
+    //             return {
+    //               rowData: rowData,
+    //             };
+    //           },
+    //         });
+    //         app.mount(cell);
+    //       },
+    //       render: function (data, type, row) {
+    //         const dataLanguage = JSON.parse(`[${row.data}]`);
+    //         if (dataLanguage.find(lang => lang.language_id === language.id)) {
+    //           const translate = dataLanguage.find(lang => lang.language_id === language.id).translate;
+    //           return translate;
+    //         } else {
+    //           return 'abc';
+    //         }
 
-          // }
-        };
-      });
-      this.columns = [
-        { data: "word_id", title: "Word ID" },
+    //       }
+    //     };
+    //   });
+    //   this.columns = [
+    //     { "data": "word_id", "title": "Word ID" },
 
-        ...languageColumns,
-        {
-          data: "status",
-          title: "Status",
-          class:"text-center",
-          render: function (data, type, row) {
-            const checked = row.status == 0 ? "checked" : "";
-            return `<input type="checkbox" id="${row.word_id}" ${checked}/><label for="${row.word_id}">Toggle</label>`;
-          },
-          createdCell: function (cell, cellData, rowData, rowIndex, colIndex) {
-            const checkbox = cell.querySelector('input[type="checkbox"]');
-            checkbox.addEventListener(
-              "click",
-              function () {
-                self.actionEditStatus(rowData);
-              }.bind(this)
-            );
-          },
-        },
-        {
-          data: "word_id",
-          title: "Action",
-          createdCell: function (cell, cellData, rowData, rowIndex, colIndex) {
-            const app = createApp({
-              render() {
-                return h(
-                  "a",
-                  {
-                    to: `/admin/word/default/${rowData.word_id}`,
-                    class: "btn btn-all-add-edit",
-                    onClick: () => {
-                      router.push({
-                        name: "Word Default",
-                        params: { id: rowData.word_id },
-                      });
-                    },
-                  },
-                  "Default"
-                );
-              },
-              data() {
-                return {
-                  rowData: rowData,
-                };
-              },
-            });
-            app.mount(cell);
-          },
-        },
-      ];
-    },
+    //     // ...languageColumns,
+    //     {
+    //       "data": "status",
+    //       "title": "Status",
+    //       "class": "text-center",
+    //       "render": function (data, type, row) {
+    //         const checked = row.status == 0 ? "checked" : "";
+    //         return `<input type="checkbox" id="${row.word_id}" ${checked}/><label for="${row.word_id}">Toggle</label>`;
+    //       },
+    //       "createdCell": function (cell, cellData, rowData, rowIndex, colIndex) {
+    //         const checkbox = cell.querySelector('input[type="checkbox"]');
+    //         checkbox.addEventListener(
+    //           "click",
+    //           function () {
+    //             self.actionEditStatus(rowData);
+    //           }.bind(this)
+    //         );
+    //       },
+    //     },
+    //     {
+    //       "data": "word_id",
+    //       "title": "Action",
+    //       "createdCell": function (cell, cellData, rowData, rowIndex, colIndex) {
+    //         const app = createApp({
+    //           render() {
+    //             return h(
+    //               "a",
+    //               {
+    //                 to: `/admin/word/default/${rowData.word_id}`,
+    //                 class: "btn btn-all-add-edit",
+    //                 onClick: () => {
+    //                   router.push({
+    //                     name: "Word Default",
+    //                     params: { id: rowData.word_id },
+    //                   });
+    //                 },
+    //               },
+    //               "Default"
+    //             );
+    //           },
+    //           data() {
+    //             return {
+    //               rowData: rowData,
+    //             };
+    //           },
+    //         });
+    //         app.mount(cell);
+    //       },
+    //     },
+    //   ];
+    // },
     updateRowData(newRow) {
       let elementToUpdate = this.dataTableData.find(
         (item) => item.word_id === newRow.word_id
@@ -591,7 +661,7 @@ export default {
         elementToUpdate.data = newRow.data;
       }
       $(this.$refs.myTable).DataTable().destroy();
-      this.setColumns();
+      // this.setColumns();
       $(this.$refs.myTable).DataTable({
         data: this.dataTableData,
         columns: this.columns,
