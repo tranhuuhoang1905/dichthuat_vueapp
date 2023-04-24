@@ -7,18 +7,6 @@
             <h4 class="card-title text-center fs-4">All Words</h4>
             <div class="">
               <table id="myTable" ref="myTable" class="table table-bordered table-striped table-hover display nowrap">
-                <thead>
-                  <tr>
-                    <td>ID</td>
-                    <td>Status</td>
-                    <td v-for="(language, index) in languages" :key="index">{{ language.name }}</td>
-
-                    <td>Action</td>
-                  </tr>
-                </thead>
-                <tbody>
-
-                </tbody>
               </table>
             </div>
           </div>
@@ -227,19 +215,10 @@ export default {
               foundWord.original_language_description,
           })
           .then((response) => {
+            console.log("response.data", response.data);
             if (response.data.status === 200) {
               //xử lý data và update dataTable
-              let dataUpdate = JSON.parse(`[${this.rowAction.data}]`);
-              let elementToUpdate = dataUpdate.find((item) => item.id === id);
-              if (elementToUpdate) {
-                elementToUpdate.translate = foundWord.translate;
-                let stringDataUpdate = JSON.stringify(dataUpdate).replace(
-                  /\[|\]/g,
-                  ""
-                );
-                this.rowAction.data = stringDataUpdate;
-                this.updateRowData(this.rowAction);
-              }
+              this.updateRowData();
               this.$swal.fire({
                 position: "top-end",
                 icon: "success",
@@ -250,10 +229,12 @@ export default {
             }
           })
           .catch((error) => {
+
+            console.log("error", error);
             this.$swal.fire({
               icon: "error",
               title: "Oops...",
-              text: `Error ${error.response.status}: ${error.response.data.message}`,
+              text: `Error `,
             });
           })
           .finally(() => (this.loading = false));
@@ -266,22 +247,12 @@ export default {
       }
     },
     addWord() {
-      // Xử lý data để update dataTable
-      let dataUpdate = JSON.parse(`[${this.rowAction.data}]`);
-      dataUpdate.push({
-        language_id: this.formAddWordData.language_translate_id,
-        translate: this.formAddWordData.translate,
-      });
-      let dataUpdateString = JSON.stringify(dataUpdate);
-      dataUpdateString = dataUpdateString.replace(/\[|\]/g, "");
-      this.rowAction.data = dataUpdateString;
-      // this.updateRowData(this.rowAction);
 
       this.axios
         .post("/api/word/add", this.formAddWordData)
         .then((response) => {
           if (response.data.status === 200 && response.data.success == true) {
-            this.updateRowData(this.rowAction);
+            this.updateRowData();
             this.$swal.fire({
               position: "top-end",
               icon: "success",
@@ -499,20 +470,9 @@ export default {
     },
 
 
-    updateRowData(newRow) {
-      let elementToUpdate = this.dataTableData.find(
-        (item) => item.word_id === newRow.word_id
-      );
-      if (elementToUpdate) {
-        elementToUpdate.data = newRow.data;
-      }
-      $(this.$refs.myTable).DataTable().destroy();
-      // this.setColumns();
-      $(this.$refs.myTable).DataTable({
-        data: this.dataTableData,
-        columns: this.columns,
-        scrollX: true,
-      });
+    updateRowData() {
+      $('#myTable').DataTable().ajax.reload();
+
     },
   },
 };
