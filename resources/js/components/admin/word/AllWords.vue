@@ -11,10 +11,7 @@
                   <tr>
                     <td>ID</td>
                     <td>Status</td>
-                    <td>Status</td>
-                    <td>Status</td>
-                    <td>Status</td>
-                    <td>Status</td>
+                    <td v-for="(language, index) in languages" :key="index">{{ language.name }}</td>
 
                     <td>Action</td>
                   </tr>
@@ -418,7 +415,6 @@ export default {
               "ajax": "http://localhost:8000/api/word-data",
               "columns": [
                 { "data": "word_id", "title": "Word ID" },
-
                 ...languageColumns,
                 {
                   "data": "status",
@@ -502,157 +498,7 @@ export default {
         .finally(() => (this.loading = false));
     },
 
-    // setColumns() {
-    //   const self = this;
-    //   // T?o d?ng 3 h�ng ng�n ng?
 
-    //   const languageColumns = this.languages.map((language) => {
-    //     return {
-    //       "data": "word_id",
-    //       "title": "language.name",
-    //       "class": "position-relative",
-    //       "createdCell": function (cell, cellData, rowData, rowIndex, colIndex) {
-    //         const app = createApp({
-    //           render() {
-    //             const dataLanguage = JSON.parse(`[${rowData.data}]`);
-    //             if (
-    //               dataLanguage.find((lang) => lang.language_id === language.id)
-    //             ) {
-    //               const translate = dataLanguage.find(
-    //                 (lang) => lang.language_id === language.id
-    //               ).translate;
-    //               if (language.id == 1) {
-    //                 return translate;
-    //               } else {
-    //                 return [
-    //                   translate,
-    //                   h(
-    //                     "button",
-    //                     {
-    //                       class: "btn btn-all-add-edit td_space-between",
-    //                       onClick: () => {
-    //                         self.axios
-    //                           .post(
-    //                             "/api/translate/get-translate-with-language",
-    //                             {
-    //                               word_id: rowData.word_id,
-    //                               language_id: language.id,
-    //                             }
-    //                           )
-    //                           .then((response) => {
-    //                             if (
-    //                               response.data.status === 200 &&
-    //                               response.data.success == true
-    //                             ) {
-    //                               self.dataWords =
-    //                                 response.data.data.translations;
-    //                               self.dataLanguageWord = self.languages[0];
-    //                               self.dataTranslateWord = rowData;
-    //                             }
-    //                           });
-    //                         self.rowAction = rowData;
-    //                         self.$refs.myModalBtn.click();
-    //                       },
-    //                     },
-    //                     "edit"
-    //                   ),
-    //                 ];
-    //               }
-    //             } else {
-    //               return h(
-    //                 "button",
-    //                 {
-    //                   class: "btn btn-all-add-edit td_space-center",
-    //                   onClick: () => {
-    //                     // console.log("check self.rowData", rowData);
-    //                     self.rowAction = rowData;
-    //                     self.formAddWordData = {
-    //                       language_id: rowData.language_id,
-    //                       language_translate_id: language.id,
-    //                       description: rowData.description,
-    //                       word: rowData.word,
-    //                     };
-    //                     self.$refs.myModalAddTranslateBtn.click();
-    //                   },
-    //                 },
-    //                 "add"
-    //               );
-    //             }
-    //           },
-    //           data() {
-    //             return {
-    //               rowData: rowData,
-    //             };
-    //           },
-    //         });
-    //         app.mount(cell);
-    //       },
-    //       render: function (data, type, row) {
-    //         const dataLanguage = JSON.parse(`[${row.data}]`);
-    //         if (dataLanguage.find(lang => lang.language_id === language.id)) {
-    //           const translate = dataLanguage.find(lang => lang.language_id === language.id).translate;
-    //           return translate;
-    //         } else {
-    //           return 'abc';
-    //         }
-
-    //       }
-    //     };
-    //   });
-    //   this.columns = [
-    //     { "data": "word_id", "title": "Word ID" },
-
-    //     // ...languageColumns,
-    //     {
-    //       "data": "status",
-    //       "title": "Status",
-    //       "class": "text-center",
-    //       "render": function (data, type, row) {
-    //         const checked = row.status == 0 ? "checked" : "";
-    //         return `<input type="checkbox" id="${row.word_id}" ${checked}/><label for="${row.word_id}">Toggle</label>`;
-    //       },
-    //       "createdCell": function (cell, cellData, rowData, rowIndex, colIndex) {
-    //         const checkbox = cell.querySelector('input[type="checkbox"]');
-    //         checkbox.addEventListener(
-    //           "click",
-    //           function () {
-    //             self.actionEditStatus(rowData);
-    //           }.bind(this)
-    //         );
-    //       },
-    //     },
-    //     {
-    //       "data": "word_id",
-    //       "title": "Action",
-    //       "createdCell": function (cell, cellData, rowData, rowIndex, colIndex) {
-    //         const app = createApp({
-    //           render() {
-    //             return h(
-    //               "a",
-    //               {
-    //                 to: `/admin/word/default/${rowData.word_id}`,
-    //                 class: "btn btn-all-add-edit",
-    //                 onClick: () => {
-    //                   router.push({
-    //                     name: "Word Default",
-    //                     params: { id: rowData.word_id },
-    //                   });
-    //                 },
-    //               },
-    //               "Default"
-    //             );
-    //           },
-    //           data() {
-    //             return {
-    //               rowData: rowData,
-    //             };
-    //           },
-    //         });
-    //         app.mount(cell);
-    //       },
-    //     },
-    //   ];
-    // },
     updateRowData(newRow) {
       let elementToUpdate = this.dataTableData.find(
         (item) => item.word_id === newRow.word_id
