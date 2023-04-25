@@ -6,8 +6,9 @@ use App\Models\Words;
 
 class WordRepository
 {
-    public function saveWord($wordData,$translateData,$logImportId){
-        $special_chars = '/[%{}+\-\*\'\"\“\/<>#$;,.\[\]():]/';
+    public function saveWord($wordData,$translateData,$logImportId,$languageISOTranslate){
+        $special_chars = '/[%{}$+\-\*\'\"\“\/<>#;.\[,\]():]/';
+        $special_cn_chars = '[\%\{\}\$\+\-\*\'\"\“\/\<\>\#\;\.\[\, \]\(\)\:]';
         $languageId = $wordData['language_id'];
         $language = Languages::find($languageId);
         
@@ -30,8 +31,18 @@ class WordRepository
             if($languageTranslate->iso_code == "CN"){
                 $translate = str_replace(" ", "", $translate);
             }
-            if (preg_match($special_chars, $word) or preg_match($special_chars, $translate)) {
+            if (preg_match($special_chars, $word) ) {
                 continue;
+            }
+            if($languageISOTranslate == "CN"){
+                mb_regex_encoding("UTF-8");
+                if (mb_ereg($special_cn_chars, $translate)) {
+                    continue; 
+                }
+            }else{
+                if(preg_match($special_chars, $translate)){
+                    continue; 
+                }
             }
             $words->saveWithTranslation($languageId, $languageTranslateId, mb_strtolower($word), mb_strtolower($translate), $description, $translateDescription, $logImportId);
             // lưu phiên bảng tiếng việt

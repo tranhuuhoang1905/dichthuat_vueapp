@@ -9,6 +9,11 @@ trait StringHelper {
         $array = array_filter($array, 'strlen');
         return $array;
     }
+    public function splitWordTranslate($string){
+        $pattern = '/(，|【|】|:)/u'; // biểu thức chính quy để tách chuỗi
+        $array = preg_split($pattern, $string, -1, PREG_SPLIT_DELIM_CAPTURE);
+        return $array;
+    }
 
     public function removeEmptyElements($words) {
         // $words = ["hoàng trần", "hoàng trần-1", "abc-123-xyz", "def-456", "", "hoàng trần"];

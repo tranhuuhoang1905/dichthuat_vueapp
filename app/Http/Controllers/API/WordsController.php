@@ -239,6 +239,7 @@ class WordsController extends Controller
         
         array_shift($data[0]);   //remove 2 row first
         array_shift($data[0]);
+
         foreach ($data[0] as $key => $element){
             if (!empty($element[0]) && !empty($element[1]) ) {
                 //check 
@@ -260,7 +261,8 @@ class WordsController extends Controller
                     "data"=> array_values($arrayTranslates),
                     "description"=>$element[3]??""
                 ];
-                $this->wordRepository->saveWord($wordData,$translateData,$logImportId);
+                
+                $this->wordRepository->saveWord($wordData,$translateData,$logImportId,$language->iso_code);
             }
         }
         $responseData = [
@@ -346,6 +348,15 @@ class WordsController extends Controller
         
         foreach ($dataAction as $element){
             $word = $element[0];
+
+            //xu ly cac doan van, chua lam xong
+            // $wordArray = $this->splitWordTranslate($word);
+            // foreach($wordArray as $wordElement){
+            //     $arrayWords = $this->splitWordExport($word);
+            // }
+
+
+            
             $arrayWords = $this->splitWordExport($word);
             $key = array_search(strtolower($arrayWords[0]), array_column($translations, 'word'));
             if ($key !== false) {
