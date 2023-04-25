@@ -6,11 +6,8 @@
           <div class="card-body">
             <h4 class="card-title text-center fs-4">All Words</h4>
             <div class="">
-              <table
-                id="myTable"
-                ref="myTable"
-                class="table table-bordered table-striped table-hover display nowrap"
-              ></table>
+              <table id="myTable" ref="myTable" class="table table-bordered table-striped table-hover display nowrap">
+              </table>
             </div>
           </div>
         </div>
@@ -18,36 +15,19 @@
     </div>
   </div>
   <div class="row">
-    <button
-      ref="myModalBtn"
-      type="button"
-      class="btn btn-primary d-none"
-      data-toggle="modal"
-      data-target="#exampleModal"
-    >
+    <button ref="myModalBtn" type="button" class="btn btn-primary d-none" data-toggle="modal" data-target="#exampleModal">
       Launch demo modal
     </button>
 
     <!-- Modal -->
-    <div
-      class="modal fade"
-      id="exampleModal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
       <div class="modal-dialog row p-lg-5 p-1 pt-5 pt-lg-5" role="document">
         <div class="modal-content col-md-12">
           <div class="row">
             <div class="word_default p-4">
               <h3 class="text-center">Word Default</h3>
-              <button
-                type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
               <div class="row">
@@ -71,9 +51,7 @@
                 </div>
                 <div class="col-md-8">
                   <h4>Translate</h4>
-                  <div
-                    class="shadow-lg border border-0 word-default-data p-4 p-lg-5"
-                  >
+                  <div class="shadow-lg border border-0 word-default-data p-4 p-lg-5">
                     <div v-for="(translate, index) in dataWords" :key="index">
                       <form @submit.prevent="updateTranslate(translate.id)">
                         <div class="word-content">
@@ -82,46 +60,25 @@
                             {{ index + 1 }}) &nbsp;
                             <div class="form-group box_mean-language">
                               <label>Language:</label>
-                              <input
-                                type="text"
-                                class="form-control"
-                                v-model="translate.language"
-                                disabled
-                              />
+                              <input type="text" class="form-control" v-model="translate.language" disabled />
                             </div>
                           </div>
                           <div class="box_mean">
                             <div class="form-group box_mean-translate">
                               <label>Translate:</label>
-                              <input
-                                type="text"
-                                class="form-control"
-                                v-model="translate.translate"
-                              />
+                              <input type="text" class="form-control" v-model="translate.translate" />
                             </div>
                             <div class="form-group box_mean-description">
                               <label>Description:</label>
-                              <input
-                                type="text"
-                                class="form-control"
-                                v-model="translate.description"
-                              />
+                              <input type="text" class="form-control" v-model="translate.description" />
                             </div>
                             <div class="form-group box_mean-description">
                               <label> Description in original language:</label>
-                              <input
-                                type="text"
-                                class="form-control"
-                                v-model="
-                                  translate.original_language_description
-                                "
-                              />
+                              <input type="text" class="form-control" v-model="translate.original_language_description
+                                " />
                             </div>
                             <div class="box_mean_router">
-                              <button
-                                type="submit"
-                                class="btn btn-all-add-edit word-botton"
-                              >
+                              <button type="submit" class="btn btn-all-add-edit word-botton">
                                 Save
                               </button>
                             </div>
@@ -140,36 +97,20 @@
   </div>
   <!-- add transalte -->
   <div class="row">
-    <button
-      ref="myModalAddTranslateBtn"
-      type="button"
-      class="btn btn-primary d-none"
-      data-toggle="modal"
-      data-target="#ModalAddTranslate"
-    >
+    <button ref="myModalAddTranslateBtn" type="button" class="btn btn-primary d-none" data-toggle="modal"
+      data-target="#ModalAddTranslate">
       Launch demo modal
     </button>
 
     <!-- Modal -->
-    <div
-      class="modal fade"
-      id="ModalAddTranslate"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
+    <div class="modal fade" id="ModalAddTranslate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
       <div class="modal-dialog p-lg-5 p-1 pt-5 pt-lg-5" role="document">
         <div class="modal-content col-md-12">
           <div class="row">
             <div class="word_default p-4">
               <h3 class="text-center">Add Translate</h3>
-              <button
-                type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
               <div class="col-md-12">
@@ -178,38 +119,19 @@
                     <div class="col-md-6 col-sm-12">
                       <div class="form-group">
                         <label>Word:</label>
-                        <input
-                          type="text"
-                          placeholder="Enter word"
-                          class="form-control"
-                          v-model="formAddWordData.word"
-                          required
-                        />
+                        <input type="text" placeholder="Enter word" class="form-control" v-model="formAddWordData.word"
+                          required />
                       </div>
                       <div class="form-group">
                         <label>Description</label>
-                        <textarea
-                          type="text"
-                          placeholder="Enter description"
-                          class="form-control"
-                          v-model="formAddWordData.description"
-                          rows="4"
-                          required
-                        ></textarea>
+                        <textarea type="text" placeholder="Enter description" class="form-control"
+                          v-model="formAddWordData.description" rows="4" required></textarea>
                       </div>
                       <div class="form-group">
                         <label>Language</label>
-                        <select
-                          class="form-select"
-                          aria-label="Default select example"
-                          v-model="formAddWordData.language_id"
-                          required
-                        >
-                          <option
-                            v-for="language in languages"
-                            :key="language.id"
-                            :value="`${language.id}`"
-                          >
+                        <select class="form-select" aria-label="Default select example"
+                          v-model="formAddWordData.language_id" required>
+                          <option v-for="language in languages" :key="language.id" :value="`${language.id}`">
                             {{ language.name }}
                           </option>
                         </select>
@@ -219,38 +141,19 @@
                     <div class="col-md-6 col-sm-12">
                       <div class="form-group">
                         <label>Translate</label>
-                        <input
-                          type="text"
-                          placeholder="Enter translated word"
-                          class="form-control"
-                          v-model="formAddWordData.translate"
-                          required
-                        />
+                        <input type="text" placeholder="Enter translated word" class="form-control"
+                          v-model="formAddWordData.translate" required />
                       </div>
                       <div class="form-group">
                         <label>Translate description</label>
-                        <textarea
-                          type="text"
-                          placeholder="Enter description"
-                          class="form-control"
-                          v-model="formAddWordData.translate_description"
-                          rows="4"
-                          required
-                        ></textarea>
+                        <textarea type="text" placeholder="Enter description" class="form-control"
+                          v-model="formAddWordData.translate_description" rows="4" required></textarea>
                       </div>
                       <div class="form-group">
                         <label>Language translate id</label>
-                        <select
-                          class="form-select"
-                          aria-label="Default select example"
-                          v-model="formAddWordData.language_translate_id"
-                          required
-                        >
-                          <option
-                            v-for="language in languages"
-                            :key="language.id"
-                            :value="`${language.id}`"
-                          >
+                        <select class="form-select" aria-label="Default select example"
+                          v-model="formAddWordData.language_translate_id" required>
+                          <option v-for="language in languages" :key="language.id" :value="`${language.id}`">
                             {{ language.name }}
                           </option>
                         </select>
@@ -294,7 +197,7 @@ export default {
       dataTableData: [],
     };
   },
-  mounted() {},
+  mounted() { },
   created() {
     this.fetchData();
   },
@@ -481,7 +384,7 @@ export default {
         $("#myTable").DataTable({
           "processing": true,
           "serverSide": true,
-          "ajax": "http://localhost:8000/api/word-data",
+          "ajax": "/api/word-data",
           "columns": [
             { "data": "word_id", "title": "Word ID" },
             ...languageColumns,
