@@ -483,9 +483,10 @@ export default {
             response.data.message === "success" &&
             response.data.status == 200
           ) {
-            this.dataTableData = response.data.data.users;
             this.roles = response.data.data.roles;
             this.setColumns();
+
+            this.dataTableData = response.data.data.users;
             this.table = $(this.$refs.myTable).DataTable({
               data: this.dataTableData,
               columns: this.columns,

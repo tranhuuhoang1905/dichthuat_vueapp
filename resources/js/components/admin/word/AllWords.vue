@@ -271,7 +271,10 @@
     </div>
   </div>
 </template>
- 
+ <style lang="scss">
+
+
+</style>
 <script>
 import { exit } from "process";
 import DataTable from "datatables.net-vue3";
@@ -384,7 +387,7 @@ export default {
         return {
           "data": "word_id",
           "title": language.name,
-          "class": "position-relative",
+          "class": "position-relative scroll-td",
           "createdCell": function (cell, cellData, rowData, rowIndex, colIndex) {
             const app = createApp({
               render() {
@@ -397,10 +400,21 @@ export default {
                     (lang) => lang.language_id === language.id
                   ).translate;
                   if (language.id == 1) {
-                    return translate;
+                    return [
+                      h(
+                      "p",
+                      translate
+                      )
+                    ]
                   } else {
                     return [
-                      translate,
+                      h(
+                        "div",
+                        h(
+                          "p",
+                            translate,
+                        )
+                      ),
                       h(
                         "button",
                         {
